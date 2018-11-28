@@ -15,7 +15,7 @@ TagManager:
   - 
   - Character
   - Walkable
-  - 
+  - Effect
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 948093905
+    locked: 0
+  - name: Effects
+    uniqueID: 4100246005
     locked: 0
