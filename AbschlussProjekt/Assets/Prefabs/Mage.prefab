@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4382513968510574}
   - component: {fileID: 212385517972435322}
   - component: {fileID: 95481055086828072}
-  - component: {fileID: 114149879698580142}
+  - component: {fileID: 114177353272888610}
   - component: {fileID: 61964251468660986}
   - component: {fileID: 50175882485568576}
   m_Layer: 8
@@ -107,7 +107,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114149879698580142
+--- !u!114 &114177353272888610
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,15 +115,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1720512568559498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c6dcb5343f59ac48b90c2bc170c73f8, type: 3}
+  m_Script: {fileID: 11500000, guid: c2147c9bf9540c744b95bdda96e504d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movespeedMod: 40
   jumpMod: 10
-  groundCheckDst: 0.9
   groundDrag: 10
   airDrag: 0.5
   attackDelay: 1
+  groundCheckDst: 0.9
   groundLayers:
     serializedVersion: 2
     m_Bits: 512
