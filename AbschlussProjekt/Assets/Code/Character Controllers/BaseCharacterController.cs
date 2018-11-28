@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BaseCharacterController : MonoBehaviour {
     #region Variables
@@ -11,13 +9,14 @@ public class BaseCharacterController : MonoBehaviour {
     [SerializeField] protected float attackDelay;
 
     //[Header("Ground Stuff")]
-    [SerializeField] protected float groundCheckDst;
     [SerializeField] protected LayerMask groundLayers;
 
     protected Animator ownAnimator;
     protected Rigidbody2D ownRigidbody;
     protected SpriteRenderer ownSpriteRenderer;
+    protected BoxCollider2D ownCollider;
 
+    protected Vector2 localFootPosition;
     protected bool grounded = false;
     protected float commandDelayCounter = 0f;
     #endregion
@@ -28,6 +27,9 @@ public class BaseCharacterController : MonoBehaviour {
         ownAnimator = GetComponent<Animator>();
         ownRigidbody = GetComponent<Rigidbody2D>();
         ownSpriteRenderer = GetComponent<SpriteRenderer>();
+        ownCollider = GetComponent<BoxCollider2D>();
+
+        localFootPosition = new Vector2(ownCollider.offset.x, ownCollider.offset.y - ownCollider.size.y * .5f);
 	}
 
     protected virtual void Update ()
@@ -45,7 +47,7 @@ public class BaseCharacterController : MonoBehaviour {
 
     private void CheckForGround()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDst, groundLayers);
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + localFootPosition, Vector2.down, .05f, groundLayers);
 
         if (hit.collider != null)
         {
@@ -77,8 +79,12 @@ public class BaseCharacterController : MonoBehaviour {
     private void TryMovement()
     {
         float hForce = Input.GetAxis("Horizontal");
+        if (hForce < 0) ownSpriteRenderer.flipX = true;
+        else if (hForce > 0) ownSpriteRenderer.flipX = false;
+
         if (grounded)
         {
+
             ownRigidbody.AddForce(new Vector2(hForce * movespeedMod, 0f));
             ownAnimator.SetFloat("Movespeed", Mathf.Abs(ownRigidbody.velocity.x));
 
@@ -89,8 +95,6 @@ public class BaseCharacterController : MonoBehaviour {
             }
         }
         else ownAnimator.SetFloat("Movespeed", 0f);
-        if (hForce < 0) ownSpriteRenderer.flipX = true;
-        else if (hForce > 0) ownSpriteRenderer.flipX = false;
     }
 
     private void TryBaseAttack()
