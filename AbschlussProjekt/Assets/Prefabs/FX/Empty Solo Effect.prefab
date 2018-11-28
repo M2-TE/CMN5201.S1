@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212957884576357166}
   - component: {fileID: 114647007557339312}
   m_Layer: 10
-  m_Name: Empty Effect
+  m_Name: Empty Solo Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,9 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f877282943cb8e848818f3e994e64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: []
-  frameRate: 12
   looping: 0
+  sprites: []
+  frameRateOverride: 0
 --- !u!212 &212957884576357166
 SpriteRenderer:
   m_ObjectHideFlags: 1

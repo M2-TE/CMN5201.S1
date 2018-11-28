@@ -9,64 +9,57 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1561797072090252}
+  m_RootGameObject: {fileID: 1526003299291896}
   m_IsPrefabAsset: 1
---- !u!1 &1561797072090252
+--- !u!1 &1526003299291896
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4742401165540368}
-  - component: {fileID: 212355009442282444}
-  - component: {fileID: 114304675012592564}
-  m_Layer: 10
-  m_Name: Knight Impact
+  - component: {fileID: 4565713465178006}
+  - component: {fileID: 212344677240700456}
+  - component: {fileID: 114955846769736978}
+  m_Layer: 0
+  m_Name: Empty Collective Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4742401165540368
+--- !u!4 &4565713465178006
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1561797072090252}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 1526003299291896}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114304675012592564
+--- !u!114 &114955846769736978
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1561797072090252}
+  m_GameObject: {fileID: 1526003299291896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f877282943cb8e848818f3e994e64e79, type: 3}
+  m_Script: {fileID: 11500000, guid: 40bb33beab3abf643af58b511b025ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 644a55a349a30f542995c623d3491b47, type: 3}
-  - {fileID: 21300000, guid: 1ca6ddf8bbeb4314490605e68c071acc, type: 3}
-  - {fileID: 21300000, guid: 3f008fcaf31c9124b92ebe21a67cfc46, type: 3}
-  - {fileID: 21300000, guid: d0f31f89a0ebae44884312da7dc92323, type: 3}
-  - {fileID: 21300000, guid: d654b31e438bb834b886e482455b8080, type: 3}
-  - {fileID: 21300000, guid: 809e7675cfec9994b90e169cbc35036a, type: 3}
-  looping: 0
-  framerateOverride: 16
---- !u!212 &212355009442282444
+  sprites: []
+  initialFrameOffset: 0
+--- !u!212 &212344677240700456
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1561797072090252}
+  m_GameObject: {fileID: 1526003299291896}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -101,7 +94,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.24, y: 0.39}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

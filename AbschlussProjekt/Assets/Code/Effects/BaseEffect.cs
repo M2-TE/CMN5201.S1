@@ -1,36 +1,21 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class BaseEffect : MonoBehaviour {
-    [SerializeField] public Sprite[] sprites;
-    [SerializeField] protected int frameRateOverride;
-    [SerializeField] protected bool looping;
+public abstract class BaseEffect : MonoBehaviour
+{
+    [SerializeField] protected Sprite[] sprites;
+    [SerializeField] protected int initialFrameOffset;
 
     protected SpriteRenderer ownSpriteRenderer;
-    protected float timeBetweenFrames;
     protected int currentFrame;
 
-	protected IEnumerator Start ()
+    protected virtual void Start()
     {
         ownSpriteRenderer = GetComponent<SpriteRenderer>();
-        timeBetweenFrames = 1f / ((frameRateOverride != 0) ? frameRateOverride : sprites.Length);
-        currentFrame = -1;
+        currentFrame = initialFrameOffset - 1;
+    }
 
-        WaitForSeconds waitTime = new WaitForSeconds(timeBetweenFrames);
-        while (true)
-        {
-            if (currentFrame < sprites.Length - 1) currentFrame++;
-            else if (looping) currentFrame = 0;
-            else break;
-
-            SetFrame();
-            yield return new WaitForSeconds(timeBetweenFrames);
-        }
-        Destroy(gameObject);
-	}
-
-    protected virtual void SetFrame()
+    public virtual void SetSprite()
     {
         ownSpriteRenderer.sprite = sprites[currentFrame];
     }

@@ -64,8 +64,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e361079714bab0542a1a710ddd9a891f, type: 3}
   - {fileID: 21300000, guid: 54d68eef618290445bf73d3fce3e6475, type: 3}
   - {fileID: 21300000, guid: b792609620187a24ca2ffaf5c933306d, type: 3}
-  frameRateOverride: 16
   looping: 0
+  framerateOverride: 16
 --- !u!212 &212651689854499338
 SpriteRenderer:
   m_ObjectHideFlags: 1
