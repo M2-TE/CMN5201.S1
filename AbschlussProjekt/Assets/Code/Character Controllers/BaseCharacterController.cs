@@ -15,8 +15,9 @@ public class BaseCharacterController : MonoBehaviour {
     protected Rigidbody2D ownRigidbody;
     protected SpriteRenderer ownSpriteRenderer;
     protected BoxCollider2D ownCollider;
-
-    protected Vector2 localFootPosition;
+    
+    protected Vector2 localGroundPosLeft;
+    protected Vector2 localGroundPosRight;
     protected bool grounded = false;
     protected float commandDelayCounter = 0f;
     #endregion
@@ -28,9 +29,10 @@ public class BaseCharacterController : MonoBehaviour {
         ownRigidbody = GetComponent<Rigidbody2D>();
         ownSpriteRenderer = GetComponent<SpriteRenderer>();
         ownCollider = GetComponent<BoxCollider2D>();
-
-        localFootPosition = new Vector2(ownCollider.offset.x, ownCollider.offset.y - ownCollider.size.y * .5f);
-	}
+        
+        localGroundPosLeft = new Vector2(ownCollider.offset.x - ownCollider.size.y * .5f, ownCollider.offset.y - ownCollider.size.y * .5f);
+        localGroundPosRight = new Vector2(ownCollider.offset.x + ownCollider.size.x * .5f, ownCollider.offset.y - ownCollider.size.y * .5f);
+    }
 
     protected virtual void Update ()
     {
@@ -47,9 +49,10 @@ public class BaseCharacterController : MonoBehaviour {
 
     private void CheckForGround()
     {
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + localFootPosition, Vector2.down, .05f, groundLayers);
+        RaycastHit2D hitLeft = Physics2D.Raycast((Vector2)transform.position + localGroundPosLeft, Vector2.down, .05f, groundLayers);
+        RaycastHit2D hitRight = Physics2D.Raycast((Vector2)transform.position + localGroundPosRight, Vector2.down, .05f, groundLayers);
 
-        if (hit.collider != null)
+        if (hitLeft.collider != null || hitRight.collider != null)
         {
             grounded = true;
             ownRigidbody.velocity = new Vector2(ownRigidbody.velocity.x, 0f);
@@ -73,7 +76,7 @@ public class BaseCharacterController : MonoBehaviour {
     protected virtual void CheckRequestedActions()
     {
         TryMovement();
-        TryBaseAttack();
+        //TryBaseAttack();
     }
 
     private void TryMovement()
