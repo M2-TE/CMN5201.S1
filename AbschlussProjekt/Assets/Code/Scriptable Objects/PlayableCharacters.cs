@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "New Character Container", menuName = "Asset Containers/Characters", order = 1)]
-public class AssetContainer : ScriptableObject
+[CreateAssetMenu(fileName = "Playable Characters", menuName = "Scriptable Object/Playable Characters", order = 1)]
+public class PlayableCharacters : ScriptableObject
 {
     public Character Knight;
     public Character Gunwoman;
     public Character Mage;
-    public float checkValue;
 
     [Serializable]
     public struct Character
@@ -18,5 +17,11 @@ public class AssetContainer : ScriptableObject
         public GameObject Prefab;
         public Sprite Portrait;
         public bool SkilltreeTODO;
+
+        public float MovespeedMod;
+        public float JumpMod;
+        public float GroundDrag;
+        public float AirDrag;
+        public float AttackDelay;
     }
 }

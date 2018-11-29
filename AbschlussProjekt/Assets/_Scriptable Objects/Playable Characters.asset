@@ -9,17 +9,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
-  m_Name: Characters
+  m_Name: Playable Characters
   m_EditorClassIdentifier: 
   Knight:
     Prefab: {fileID: 0}
     Portrait: {fileID: 0}
     SkilltreeTODO: 0
+    MovespeedMod: 0
+    JumpMod: 0
+    GroundDrag: 0
+    AirDrag: 0
+    AttackDelay: 0
   Gunwoman:
     Prefab: {fileID: 0}
     Portrait: {fileID: 0}
     SkilltreeTODO: 0
+    MovespeedMod: 0
+    JumpMod: 0
+    GroundDrag: 0
+    AirDrag: 0
+    AttackDelay: 0
   Mage:
     Prefab: {fileID: 1720512568559498, guid: 9d3af9e1d0dde28458843237c28d97f8, type: 2}
     Portrait: {fileID: 0}
     SkilltreeTODO: 0
+    MovespeedMod: 0
+    JumpMod: 0
+    GroundDrag: 0
+    AirDrag: 0
+    AttackDelay: 0
