@@ -2,10 +2,15 @@
 
 public class BaseCharacterController : MonoBehaviour {
     #region Variables
-    //[Header("Movement")]
-    [SerializeField] protected float movespeedMod, jumpMod, groundDrag, airDrag;
+    [HideInInspector] public static bool characterControlEnabled;
 
-    //[Header("Combat")]
+    [Header("Movement")]
+    [SerializeField] protected float movespeedMod;
+    [SerializeField] protected float jumpMod;
+    [SerializeField] protected float groundDrag;
+    [SerializeField] protected float airDrag;
+
+    [Header("Combat")]
     [SerializeField] protected float attackDelay;
 
     //[Header("Ground Stuff")]
@@ -69,6 +74,8 @@ public class BaseCharacterController : MonoBehaviour {
     #region Actions
     private void HandleActions()
     {
+        if (!characterControlEnabled) return;
+
         if (commandDelayCounter < 0f) CheckRequestedActions();
         else commandDelayCounter -= Time.deltaTime;
     }
@@ -76,7 +83,7 @@ public class BaseCharacterController : MonoBehaviour {
     protected virtual void CheckRequestedActions()
     {
         TryMovement();
-        //TryBaseAttack();
+        TryBaseAttack();
     }
 
     private void TryMovement()

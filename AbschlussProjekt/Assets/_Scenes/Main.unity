@@ -140,7 +140,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 231454982}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &10893794
 MonoBehaviour:
@@ -640,8 +640,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 10893793}
   - {fileID: 1803174185}
+  - {fileID: 10893793}
   - {fileID: 1642355722}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2463,7 +2463,7 @@ GameObject:
   - component: {fileID: 1803174185}
   - component: {fileID: 1803174186}
   m_Layer: 11
-  m_Name: GameManager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2480,7 +2480,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 231454982}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1803174186
 MonoBehaviour:
@@ -2493,6 +2493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ae420040370e047ab73e352d99b86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assetContainer: {fileID: 11400000, guid: 4e403b960c472714e86fffecf4de16f2, type: 2}
 --- !u!1 &1810949553
 GameObject:
   m_ObjectHideFlags: 0
