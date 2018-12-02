@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1077149120
+CRC: 3202155366
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1fb23e97858c9b3047f0fc1f074b9bdf
+    Hash: 1e99120a3b48fa594011bd93db9a24e2
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 7c903535615977a05f3b357f7ac50d1f
+    Hash: 20b3939f430ed1a7d41fa93e8ca9d438
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -32,11 +32,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 6e1c3da409d7c83489c13eb14bfa3119, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: c7fdafb0efc6fdd4a86f49647ad3f199, type: 3}
+  Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: d0233eb1556662b42bcb88c6511faefd, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 85ee74966ca18364e9a4de6095dc1c59, type: 3}
+  Script: {fileID: 11500000, guid: dbd492b2a4c3a8f449ed09133f908093, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -46,7 +44,9 @@ ClassTypes:
 - Class: 221
   Script: {instanceID: 0}
 Assets:
+- Assets/_Data Containers/Characters/Main Characters/Gunwoman.asset
 - Assets/_Data Containers/Characters/Main Characters/Mage.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight.asset
-- Assets/_Data Containers/Characters/Main Characters/Gunwoman.asset
-Dependencies: []
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/Assets/Asset Bundles/StandaloneWindows/skills/skill
+  pools

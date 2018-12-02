@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2665985481
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1a93f59d7ea59b3c9fa74de15bc6b211
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4470452311127e5a8fb536e9714e8e24
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Skills/Skills/Gunwoman Base Attack.asset
+Dependencies: []

@@ -8,14 +8,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0233eb1556662b42bcb88c6511faefd, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1202764721223520, guid: 0f0baea3ca27ecf49b16d137ac6b4b9f, type: 2}
   Portrait: {fileID: 21300000, guid: 64e052c0475d3c4408ca94e2e4a336a8, type: 3}
-  ImpactPrefab: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e,
-    type: 2}
-  SkilltreeTODO: 0
+  MaxHealth: 10
+  BaseAttack: 3
+  BaseDefense: 0
+  BaseSpeed: 100
+  FullSkillPool: {fileID: 11400000, guid: c21cf372713001f44a8d18c8483901e8, type: 2}
+  AvailableSkills: []
   MovespeedMod: 40
   JumpMod: 10
   GroundDrag: 10

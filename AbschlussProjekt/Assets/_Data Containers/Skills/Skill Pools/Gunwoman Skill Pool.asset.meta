@@ -1,10 +1,8 @@
 fileFormatVersion: 2
-guid: 149c06505a0577244a653cec7d3d9eb9
-labels:
-- Character
+guid: e4bf53f47bebfc640b0fab896c779fa1
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 
-  assetBundleName: characters/main characters
+  assetBundleName: 
   assetBundleVariant: 
