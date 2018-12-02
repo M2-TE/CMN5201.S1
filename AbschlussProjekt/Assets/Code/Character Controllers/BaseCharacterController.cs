@@ -1,29 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BaseCharacterController : MonoBehaviour {
     #region Variables
-    [HideInInspector] public static bool characterControlEnabled;
+    [NonSerialized] public static bool characterControlEnabled;
 
-    [Header("Movement")]
-    [SerializeField] protected float movespeedMod;
-    [SerializeField] protected float jumpMod;
-    [SerializeField] protected float groundDrag;
-    [SerializeField] protected float airDrag;
 
-    [Header("Combat")]
-    [SerializeField] protected float attackDelay;
+    [SerializeField]
+    protected PlayableCharacter charDataContainer;
+    protected MiscSettings miscSettings;
 
-    //[Header("Ground Stuff")]
-    [SerializeField] protected LayerMask groundLayers;
-
+    #region Components
     protected Animator ownAnimator;
     protected Rigidbody2D ownRigidbody;
     protected SpriteRenderer ownSpriteRenderer;
     protected BoxCollider2D ownCollider;
-    
+    #endregion
+
+    #region Ground Detection
     protected Vector2 localGroundPosLeft;
     protected Vector2 localGroundPosRight;
     protected bool grounded = false;
+    #endregion
+
     protected float commandDelayCounter = 0f;
     #endregion
 
@@ -34,6 +33,8 @@ public class BaseCharacterController : MonoBehaviour {
         ownRigidbody = GetComponent<Rigidbody2D>();
         ownSpriteRenderer = GetComponent<SpriteRenderer>();
         ownCollider = GetComponent<BoxCollider2D>();
+
+        miscSettings = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings");
         
         localGroundPosLeft = new Vector2(ownCollider.offset.x - ownCollider.size.y * .5f, ownCollider.offset.y - ownCollider.size.y * .5f);
         localGroundPosRight = new Vector2(ownCollider.offset.x + ownCollider.size.x * .5f, ownCollider.offset.y - ownCollider.size.y * .5f);
@@ -54,18 +55,18 @@ public class BaseCharacterController : MonoBehaviour {
 
     private void CheckForGround()
     {
-        RaycastHit2D hitLeft = Physics2D.Raycast((Vector2)transform.position + localGroundPosLeft, Vector2.down, .05f, groundLayers);
-        RaycastHit2D hitRight = Physics2D.Raycast((Vector2)transform.position + localGroundPosRight, Vector2.down, .05f, groundLayers);
+        RaycastHit2D hitLeft = Physics2D.Raycast((Vector2)transform.position + localGroundPosLeft, Vector2.down, .05f, miscSettings.GroundLayers);
+        RaycastHit2D hitRight = Physics2D.Raycast((Vector2)transform.position + localGroundPosRight, Vector2.down, .05f, miscSettings.GroundLayers);
 
         if (hitLeft.collider != null || hitRight.collider != null)
         {
             grounded = true;
             ownRigidbody.velocity = new Vector2(ownRigidbody.velocity.x, 0f);
-            ownRigidbody.drag = groundDrag;
+            ownRigidbody.drag = charDataContainer.GroundDrag;
         }
         else
         {
-            ownRigidbody.drag = airDrag;
+            ownRigidbody.drag = charDataContainer.AirDrag;
             grounded = false;
         }
     }
@@ -95,12 +96,12 @@ public class BaseCharacterController : MonoBehaviour {
         if (grounded)
         {
 
-            ownRigidbody.AddForce(new Vector2(hForce * movespeedMod, 0f));
+            ownRigidbody.AddForce(new Vector2(hForce * charDataContainer.MovespeedMod, 0f));
             ownAnimator.SetFloat("Movespeed", Mathf.Abs(ownRigidbody.velocity.x));
 
             if (Input.GetAxis("Jump") > 0)
             {
-                ownRigidbody.AddForce(new Vector2(0f, jumpMod), ForceMode2D.Impulse);
+                ownRigidbody.AddForce(new Vector2(0f, charDataContainer.JumpMod), ForceMode2D.Impulse);
                 grounded = false;
             }
         }
@@ -111,7 +112,7 @@ public class BaseCharacterController : MonoBehaviour {
     {
         if (Input.GetAxis("Fire1") > 0)
         {
-            commandDelayCounter = attackDelay;
+            commandDelayCounter = charDataContainer.AttackDelay;
             ownAnimator.SetFloat("Movespeed", 0f);
             ownAnimator.SetTrigger("Attack");
         }

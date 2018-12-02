@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour {
     
     private void Start ()
     {
-        BaseCharacterController.characterControlEnabled = false;
+        BaseCharacterController.characterControlEnabled = true;
+        Instantiate(AssetManager.Instance.PlayableCharacters.LoadAsset<Mage>("Mage").Prefab);
 	}
 }

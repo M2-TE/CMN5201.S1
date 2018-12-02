@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85ee74966ca18364e9a4de6095dc1c59, type: 3}
+  m_Name: Gunwoman
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 1972113827848756, guid: 07b4f56e15ecb74498f04da7c826da30, type: 2}
+  Portrait: {fileID: 21300000, guid: 73d61b000b9d6394ab55e9697f73a325, type: 3}
+  SkilltreeTODO: 0
+  MovespeedMod: 40
+  JumpMod: 10
+  GroundDrag: 10
+  AirDrag: 0.5
+  AttackDelay: 1.05

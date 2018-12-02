@@ -118,14 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1c3da409d7c83489c13eb14bfa3119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeedMod: 40
-  jumpMod: 10
-  groundDrag: 10
-  airDrag: 0.5
-  attackDelay: 1
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 512
+  charDataContainer: {fileID: 11400000, guid: 0c45b774548fdaa4c9a04715e93ce66f, type: 2}
 --- !u!212 &212227565381070874
 SpriteRenderer:
   m_ObjectHideFlags: 1

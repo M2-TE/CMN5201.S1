@@ -115,17 +115,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1720512568559498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2147c9bf9540c744b95bdda96e504d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e1c3da409d7c83489c13eb14bfa3119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeedMod: 40
-  jumpMod: 10
-  groundDrag: 10
-  airDrag: 0.5
-  attackDelay: 1.1
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 512
+  charDataContainer: {fileID: 11400000, guid: 28050753e13a2ef41a30b91bf47e3879, type: 2}
 --- !u!212 &212385517972435322
 SpriteRenderer:
   m_ObjectHideFlags: 1

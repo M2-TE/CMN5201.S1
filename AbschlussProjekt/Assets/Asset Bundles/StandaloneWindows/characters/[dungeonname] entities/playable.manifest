@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2667917407
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bf62ad8dc396da1c9ffad6252c8e8fe2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Characters/[DungeonName] Entities/dummydata.txt
+Dependencies: []
