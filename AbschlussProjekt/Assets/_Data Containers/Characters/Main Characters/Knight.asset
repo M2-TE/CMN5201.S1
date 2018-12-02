@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1202764721223520, guid: 0f0baea3ca27ecf49b16d137ac6b4b9f, type: 2}
   Portrait: {fileID: 21300000, guid: 64e052c0475d3c4408ca94e2e4a336a8, type: 3}
+  ImpactPrefab: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e,
+    type: 2}
   SkilltreeTODO: 0
   MovespeedMod: 40
   JumpMod: 10
