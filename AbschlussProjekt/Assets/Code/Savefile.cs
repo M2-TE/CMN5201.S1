@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [Serializable]
-public class Savefile
+public class Savestate
 {
     public List<Entity> OwnedCharacters;
     public Entity[] CurrentTeam;
@@ -10,4 +10,11 @@ public class Savefile
     public int Gold;
     public int Souls;
     [NonSerialized] public int Test;
+
+    public Entity[] InitializeTeam()
+    {
+        for(int index = 0; index < CurrentTeam.Length; index++)
+            if(CurrentTeam[index] != null) CurrentTeam[index].Init();
+        return CurrentTeam;
+    }
 }

@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd492b2a4c3a8f449ed09133f908093, type: 3}
-  m_Name: Mage Skill Pool
+  m_Script: {fileID: 11500000, guid: e37f3bd81d586e6449285f51029dc5a5, type: 3}
+  m_Name: Base Armor
   m_EditorClassIdentifier: 
-  Skills: []
+  defenseBonus: 0

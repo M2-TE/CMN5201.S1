@@ -14,5 +14,5 @@ public abstract class Character : DataContainer
     public int BaseSpeed;
 
     [Header("Combat Skills")]
-    public CombatSkillPool FullSkillPool;
+    public CombatSkill[] FullSkillPool;
 }

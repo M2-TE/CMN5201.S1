@@ -6,16 +6,14 @@ public class CombatManager : MonoBehaviour
 {
     public CombatPanel CombatPanel;
 
-    private Character[] playerTeam, opposingTeam;
+    private Entity[] playerTeam, opposingTeam;
     
     private void Start()
     {
-        PlayableCharacter chara = AssetManager.Instance.Characters.LoadAsset<PlayableCharacter>("Gunwoman");
-        PlayableCharacter oppChara = AssetManager.Instance.Characters.LoadAsset<PlayableCharacter>("Mage");
-        StartCombat(new Character[] { chara, chara, chara, chara } , new Character[] { oppChara, chara, oppChara, chara });
+
     }
 
-    public void StartCombat(Character[] playerTeam, Character[] opposingTeam)
+    public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
     {
         this.playerTeam = playerTeam;
         this.opposingTeam = opposingTeam;
@@ -29,13 +27,13 @@ public class CombatManager : MonoBehaviour
         {
             bool check = playerTeam[i] != null;
             CombatPanel.playerTeamPortraits[i].enabled = check;
-            CombatPanel.playerTeamPortraits[i].sprite = check ? playerTeam[i].Portrait : null;
+            CombatPanel.playerTeamPortraits[i].sprite = check ? playerTeam[i].CharDataContainer.Portrait : null;
         }
         for (int i = 0; i < CombatPanel.opposingTeamPortraits.Length; i++)
         {
             bool check = opposingTeam[i] != null;
             CombatPanel.opposingTeamPortraits[i].enabled = check;
-            CombatPanel.opposingTeamPortraits[i].sprite = check ? opposingTeam[i].Portrait : null;
+            CombatPanel.opposingTeamPortraits[i].sprite = check ? opposingTeam[i].CharDataContainer.Portrait : null;
         }
     }
 }

@@ -11,7 +11,9 @@ public class AssetManager
     
     private readonly string settingsPath = "settings";
     private readonly string playableCharactersPath = "characters/main characters";
-    
+    private readonly string equipmentPath = "equipment";
+    private readonly string skillsPath = "skills";
+
     #region Getters/Setters
     private AssetBundle settings;
     public AssetBundle Settings
@@ -41,9 +43,39 @@ public class AssetManager
             if (value == null) characters.Unload(true);
         }
     }
+
+    private AssetBundle equipment;
+    public AssetBundle Equipment
+    {
+        get
+        {
+            if (equipment != null) return equipment;
+            else return equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath);
+        }
+
+        set
+        {
+            if (value == null) equipment.Unload(true);
+        }
+    }
+
+    private AssetBundle skills;
+    public AssetBundle Skills
+    {
+        get
+        {
+            if (skills != null) return skills;
+            else return skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath);
+        }
+
+        set
+        {
+            if (value == null) skills.Unload(true);
+        }
+    }
     #endregion
 
-    public void Save(Savefile savefile)
+    public void Save(Savestate savefile)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + savefilePath;
@@ -53,14 +85,14 @@ public class AssetManager
         stream.Close();
     }
 
-    public Savefile Load()
+    public Savestate Load()
     {
         string path = Application.persistentDataPath + savefilePath;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-            Savefile savefile = formatter.Deserialize(stream) as Savefile;
+            Savestate savefile = formatter.Deserialize(stream) as Savestate;
             stream.Close();
             return savefile;
         }

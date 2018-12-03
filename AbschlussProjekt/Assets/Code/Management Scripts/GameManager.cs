@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-    private Savefile savefile;
+    private Savestate savefile;
     private CombatManager combatManager;
     private Entity[] playerTeam;
 
@@ -18,26 +18,36 @@ public class GameManager : MonoBehaviour {
 
 
 
-        //SAVE DEBUGGING
-        Savefile savefile = new Savefile();
-        Character gunwoman = AssetManager.Instance.Characters.LoadAsset<Character>("Gunwoman");
-        Entity testEntity = new Entity(gunwoman);
-        testEntity.currentHealth = 5;
-        savefile.CurrentTeam = new Entity[] { new Entity(gunwoman), testEntity, new Entity(gunwoman), new Entity(gunwoman) };
-        savefile.Gold = 42;
-        savefile.Souls = 420;
-        savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
-        savefile.Test = 50;
-        AssetManager.Instance.Save(savefile);
+        LoadCurrentTeam();
 
-        // LOAD DEBUGGING
+        Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
+        combatManager.StartCombat
+            (playerTeam, 
+            new Entity[] {
+                new Entity(mage),
+                new Entity(mage),
+                null,
+                null
+            });
+    }
+
+    private void LoadCurrentTeam()
+    {
         savefile = AssetManager.Instance.Load();
-        Debug.Log(savefile.Gold + " " + savefile.Souls + " " + savefile.Test);
+        savefile.InitializeTeam();
+        playerTeam = savefile.CurrentTeam;
+    }
 
-        Character[] chars = AssetManager.Instance.Characters.LoadAllAssets<Character>();
-        foreach (Entity e in savefile.OwnedCharacters)
-        {
-            Debug.Log(e.Start().CharDataContainer.name);
-        }
+    private void SaveDebugging()
+    {
+        Savestate savefile = new Savestate();
+        Character gunwoman = AssetManager.Instance.Characters.LoadAsset<Character>("Gunwoman");
+        Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
+        Character knight = AssetManager.Instance.Characters.LoadAsset<Character>("Knight");
+        savefile.CurrentTeam = new Entity[] { new Entity(knight), new Entity(gunwoman), new Entity(mage), null };
+        savefile.Gold = 0;
+        savefile.Souls = 0;
+        savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
+        AssetManager.Instance.Save(savefile);
     }
 }

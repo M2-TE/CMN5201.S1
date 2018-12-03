@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class Entity
@@ -14,10 +13,10 @@ public class Entity
     [NonSerialized] public CombatSkill[] EquippedCombatSkills;
 
     public string EquippedWeaponString;
-    // TODO
+    [NonSerialized] public Weapon EquippedWeapon;
 
     public string EquippedArmorString;
-    // TODO
+    [NonSerialized] public Armor EquippedArmor;
 
 
     #region Combat Stats
@@ -34,16 +33,17 @@ public class Entity
     public int currentSpeed;
     #endregion
 
-    public Entity Start()
+    public Entity Init()
     {
         CharDataContainer = AssetManager.Instance.Characters.LoadAsset<Character>(EntityType);
 
         EquippedCombatSkills = new CombatSkill[EquippedCombatSkillStrings.Length];
-        List<CombatSkill> combatSkillPool = new List<CombatSkill>(CharDataContainer.FullSkillPool.Skills);
+        List<CombatSkill> combatSkillPool = new List<CombatSkill>(CharDataContainer.FullSkillPool);
         for(int index = 0; index < EquippedCombatSkillStrings.Length; index++)
             EquippedCombatSkills[index] = combatSkillPool.Find(x => x.name == EquippedCombatSkillStrings[index]);
 
-        // TODO
+        if (EquippedWeaponString != "") EquippedWeapon = AssetManager.Instance.Equipment.LoadAsset<Weapon>(EquippedWeaponString);
+        if (EquippedArmorString != "") EquippedArmor = AssetManager.Instance.Equipment.LoadAsset<Armor>(EquippedArmorString);
 
         return this;
     }
@@ -52,17 +52,23 @@ public class Entity
     {
         CharDataContainer = null;
         EquippedCombatSkills = null;
-        // TODO
+        EquippedWeapon = null;
+        EquippedArmor = null;
     }
 
     public Entity(Character charDataContainer)
     {
         Name = "Generic Gunwoman";
-        EquippedCombatSkillStrings = new string[0];
-        EquippedWeaponString = "";
-        EquippedArmorString = "";
 
         EntityType = charDataContainer.name;
+        CharDataContainer = charDataContainer;
+
+        EquippedCombatSkillStrings = new string[0];
+
+        EquippedWeaponString = "";
+
+        EquippedArmorString = "";
+
 
         baseHealth = charDataContainer.BaseHealth;
         currentHealth = baseHealth;
