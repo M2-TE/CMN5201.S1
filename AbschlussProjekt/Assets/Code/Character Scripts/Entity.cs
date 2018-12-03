@@ -8,7 +8,7 @@ public class Entity
     public string Name;
 
     #region Getters and Setters
-    private string entityType;
+    private readonly string entityType;
     [NonSerialized] private Character charDataContainer;
     public Character CharDataContainer
     {
@@ -92,6 +92,7 @@ public class Entity
 
     public int baseSpeed;
     public int currentSpeed;
+    public int currentInitiative;
     #endregion
 
     public void Unload()
@@ -127,5 +128,6 @@ public class Entity
 
         baseSpeed = charDataContainer.BaseSpeed;
         currentSpeed = baseSpeed;
+        currentInitiative = 0;
     }
 }

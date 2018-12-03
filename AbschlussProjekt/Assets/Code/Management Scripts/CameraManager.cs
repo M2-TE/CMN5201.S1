@@ -9,6 +9,6 @@ public class CameraManager : MonoBehaviour
     void OnGUI()
     {
         float currentAspect = (float)Screen.width / (float)Screen.height;
-        mainCam.orthographicSize = horizontalResolution / currentAspect / 200;
+        mainCam.orthographicSize = horizontalResolution / currentAspect / 200f;
     }
 }

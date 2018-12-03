@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
+    // change this \/ to DataContainer ref
     public CombatPanel CombatPanel;
 
     private Entity[] playerTeam, opposingTeam;
-    
-    private void Start()
-    {
-
-    }
+    private bool combatOngoing;
 
     public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
     {
@@ -20,6 +17,20 @@ public class CombatManager : MonoBehaviour
 
         SetPortraits();
         UpdateSkillIcons();
+        ResetInitiatives();
+
+        StartCombatLoop();
+    }
+
+    private void StartCombatLoop()
+    {
+        combatOngoing = true;
+        while (combatOngoing)
+        {
+
+
+            break;
+        }
     }
 
     private void SetPortraits()
@@ -45,5 +56,19 @@ public class CombatManager : MonoBehaviour
             if (playerTeam[0].EquippedCombatSkills.Length > i)
                 CombatPanel.TeamSkillButtons[i].sprite = playerTeam[0].EquippedCombatSkills[i].SkillIcon;
         }
+    }
+
+    private void ResetInitiatives()
+    {
+        for (int i = 0; i < playerTeam.Length; i++)
+            if(playerTeam[i] != null) playerTeam[i].currentInitiative = 0;
+
+        for (int i = 0; i < opposingTeam.Length; i++)
+            if(opposingTeam[i] != null) opposingTeam[i].currentInitiative = 0;
+    }
+
+    public void OnSkillSelect(int skillID)
+    {
+        Debug.Log(skillID);
     }
 }

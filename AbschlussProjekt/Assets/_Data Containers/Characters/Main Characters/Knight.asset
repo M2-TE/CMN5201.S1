@@ -16,7 +16,7 @@ MonoBehaviour:
   BaseHealth: 10
   BaseAttack: 3
   BaseDefense: 0
-  BaseSpeed: 100
+  BaseSpeed: 10
   FullSkillPool:
   - {fileID: 11400000, guid: e280c0d716a3d174fa59f4fdb3037baa, type: 2}
   MovespeedMod: 40

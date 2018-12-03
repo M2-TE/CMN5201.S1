@@ -11,13 +11,7 @@ public class GameManager : MonoBehaviour {
     {
         combatManager = GetComponent<CombatManager>();
 
-        //savefile = AssetManager.Instance.Load();
-        //playerTeam = savefile.CurrentTeam;
-
-
-
-
-        SaveDebugging();
+        SaveDebugging(/* remove this later */);
         LoadCurrentTeam();
 
         Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
