@@ -19,21 +19,31 @@ public class CombatManager : MonoBehaviour
         this.opposingTeam = opposingTeam;
 
         SetPortraits();
+        UpdateSkillIcons();
     }
 
     private void SetPortraits()
     {
-        for (int i = 0; i < CombatPanel.playerTeamPortraits.Length; i++)
+        for (int i = 0; i < CombatPanel.PlayerTeamPortraits.Length; i++)
         {
             bool check = playerTeam[i] != null;
-            CombatPanel.playerTeamPortraits[i].enabled = check;
-            CombatPanel.playerTeamPortraits[i].sprite = check ? playerTeam[i].CharDataContainer.Portrait : null;
+            CombatPanel.PlayerTeamPortraits[i].enabled = check;
+            CombatPanel.PlayerTeamPortraits[i].sprite = check ? playerTeam[i].CharDataContainer.Portrait : null;
         }
-        for (int i = 0; i < CombatPanel.opposingTeamPortraits.Length; i++)
+        for (int i = 0; i < CombatPanel.OpposingTeamPortraits.Length; i++)
         {
             bool check = opposingTeam[i] != null;
-            CombatPanel.opposingTeamPortraits[i].enabled = check;
-            CombatPanel.opposingTeamPortraits[i].sprite = check ? opposingTeam[i].CharDataContainer.Portrait : null;
+            CombatPanel.OpposingTeamPortraits[i].enabled = check;
+            CombatPanel.OpposingTeamPortraits[i].sprite = check ? opposingTeam[i].CharDataContainer.Portrait : null;
+        }
+    }
+
+    private void UpdateSkillIcons()
+    {
+        for(int i = 0; i < CombatPanel.TeamSkillButtons.Length; i++)
+        {
+            if (playerTeam[0].EquippedCombatSkills.Length > i)
+                CombatPanel.TeamSkillButtons[i].sprite = playerTeam[0].EquippedCombatSkills[i].SkillIcon;
         }
     }
 }

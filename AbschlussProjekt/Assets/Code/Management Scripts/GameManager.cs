@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
 
 
 
-
+        SaveDebugging();
         LoadCurrentTeam();
 
         Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
@@ -31,12 +31,6 @@ public class GameManager : MonoBehaviour {
             });
     }
 
-    private void LoadCurrentTeam()
-    {
-        savefile = AssetManager.Instance.Load();
-        savefile.InitializeTeam();
-        playerTeam = savefile.CurrentTeam;
-    }
 
     private void SaveDebugging()
     {
@@ -48,6 +42,17 @@ public class GameManager : MonoBehaviour {
         savefile.Gold = 0;
         savefile.Souls = 0;
         savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
+
+        CombatSkill skill = savefile.CurrentTeam[0].CharDataContainer.FullSkillPool[0];
+        CombatSkill[] skills = new CombatSkill[] { skill };
+        savefile.CurrentTeam[0].EquippedCombatSkills = skills;
+
         AssetManager.Instance.Save(savefile);
+    }
+
+    private void LoadCurrentTeam()
+    {
+        savefile = AssetManager.Instance.Load();
+        playerTeam = savefile.CurrentTeam;
     }
 }

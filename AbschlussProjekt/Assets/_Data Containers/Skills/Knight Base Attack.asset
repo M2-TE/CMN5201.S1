@@ -11,4 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
   m_Name: Knight Base Attack
   m_EditorClassIdentifier: 
-  yesgurl: YOINK
+  SkillIcon: {fileID: 21300000, guid: e6e0ff50bfb01f742afa07da9c753611, type: 3}
+  DamageMultiplier: 0
+  Range: 0
+  AppliedEffects: 
+  SelfInflictedEffects: 

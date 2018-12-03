@@ -5,5 +5,5 @@ using UnityEngine.UI;
 
 public class CombatPanel : UIPanel
 {
-    public Image[] playerTeamPortraits, opposingTeamPortraits;
+    public Image[] PlayerTeamPortraits, OpposingTeamPortraits, TeamSkillButtons;
 }

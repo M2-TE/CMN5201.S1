@@ -17,7 +17,8 @@ MonoBehaviour:
   BaseAttack: 3
   BaseDefense: 0
   BaseSpeed: 100
-  FullSkillPool: {fileID: 11400000, guid: c21cf372713001f44a8d18c8483901e8, type: 2}
+  FullSkillPool:
+  - {fileID: 11400000, guid: e280c0d716a3d174fa59f4fdb3037baa, type: 2}
   MovespeedMod: 40
   JumpMod: 10
   GroundDrag: 10
