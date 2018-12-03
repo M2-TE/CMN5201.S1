@@ -8,12 +8,11 @@ public abstract class Character : DataContainer
     public Sprite Portrait;
 
     [Header("Combat Stats")]
-    public int MaxHealth;
+    public int BaseHealth;
     public int BaseAttack;
     public int BaseDefense;
     public int BaseSpeed;
 
     [Header("Combat Skills")]
     public CombatSkillPool FullSkillPool;
-    public CombatSkill[] AvailableSkills;
 }

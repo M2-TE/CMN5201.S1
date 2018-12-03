@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3202155366
+CRC: 4007556530
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1e99120a3b48fa594011bd93db9a24e2
+    Hash: 6eb372eee4ee081921b6606a3fed778e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 20b3939f430ed1a7d41fa93e8ca9d438
+    Hash: 3d84746f77cebe54bb0a78d6b6340c1e
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -30,11 +30,11 @@ ClassTypes:
 - Class: 95
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: dbd492b2a4c3a8f449ed09133f908093, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 6e1c3da409d7c83489c13eb14bfa3119, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: dbd492b2a4c3a8f449ed09133f908093, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -47,6 +47,4 @@ Assets:
 - Assets/_Data Containers/Characters/Main Characters/Gunwoman.asset
 - Assets/_Data Containers/Characters/Main Characters/Mage.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight.asset
-Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/Assets/Asset Bundles/StandaloneWindows/skills/skill
-  pools
+Dependencies: []

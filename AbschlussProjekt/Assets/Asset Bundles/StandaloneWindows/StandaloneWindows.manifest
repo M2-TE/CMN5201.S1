@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 4107904447
+CRC: 3679214563
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -7,8 +7,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_1:
       Name: characters/main characters
-      Dependencies:
-        Dependency_0: skills/skill pools
+      Dependencies: {}
     Info_2:
       Name: characters/[dungeonname] entities/playable
       Dependencies: {}
@@ -16,9 +15,5 @@ AssetBundleManifest:
       Name: characters/[dungeonname] entities/unplayable
       Dependencies: {}
     Info_4:
-      Name: skills/skill pools
-      Dependencies:
-        Dependency_0: skills/skill
-    Info_5:
       Name: skills/skill
       Dependencies: {}

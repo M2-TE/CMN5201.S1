@@ -11,14 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
   m_Name: Gunwoman
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1972113827848756, guid: 07b4f56e15ecb74498f04da7c826da30, type: 2}
+  Prefab: {fileID: 1258901681556162, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
   Portrait: {fileID: 21300000, guid: 73d61b000b9d6394ab55e9697f73a325, type: 3}
-  MaxHealth: 10
+  BaseHealth: 10
   BaseAttack: 3
   BaseDefense: 0
   BaseSpeed: 100
   FullSkillPool: {fileID: 11400000, guid: e4bf53f47bebfc640b0fab896c779fa1, type: 2}
-  AvailableSkills: []
   MovespeedMod: 40
   JumpMod: 10
   GroundDrag: 10

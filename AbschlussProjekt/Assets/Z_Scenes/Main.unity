@@ -159,11 +159,11 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -234,7 +234,7 @@ Transform:
   m_GameObject: {fileID: 308967932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.5, z: 0}
-  m_LocalScale: {x: 15, y: 5, z: 1}
+  m_LocalScale: {x: 20, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 1826862102}
   m_RootOrder: 0
@@ -404,7 +404,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -493,6 +493,67 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1001 &1167158064
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012171683351586, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1258901681556162, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_Name
+      value: Gunwoman
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: charDataContainer
+      value: 
+      objectReference: {fileID: 11400000, guid: 149c06505a0577244a653cec7d3d9eb9,
+        type: 2}
+    - target: {fileID: 114560822293384934, guid: ce0cc4abec5b48b41bd25b52f16b9ab3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1258901681556162, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: ce0cc4abec5b48b41bd25b52f16b9ab3, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!224 &1382339130 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224384630245785318, guid: 4c736a412b7192b41be057273c8b7c18,
@@ -676,6 +737,7 @@ GameObject:
   - component: {fileID: 1803174185}
   - component: {fileID: 1803174186}
   - component: {fileID: 1803174188}
+  - component: {fileID: 1803174187}
   m_Layer: 2
   m_Name: Managers
   m_TagString: Untagged
@@ -707,6 +769,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ae420040370e047ab73e352d99b86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1803174187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1803174184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104b8368c987e204a8bbf4e4d213852a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 839229358}
+  horizontalResolution: 1920
 --- !u!114 &1803174188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,7 +848,7 @@ Transform:
   m_GameObject: {fileID: 1967788052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.125, z: 0}
-  m_LocalScale: {x: 15, y: 0.25, z: 1}
+  m_LocalScale: {x: 20, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 1826862102}
   m_RootOrder: 1

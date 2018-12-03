@@ -7,13 +7,12 @@ public class CombatManager : MonoBehaviour
     public CombatPanel CombatPanel;
 
     private Character[] playerTeam, opposingTeam;
-
-
+    
     private void Start()
     {
-        PlayableCharacter chara = AssetManager.Instance.PlayableCharacters.LoadAsset<PlayableCharacter>("Gunwoman");
-        PlayableCharacter oppChara = AssetManager.Instance.PlayableCharacters.LoadAsset<PlayableCharacter>("Mage");
-        StartCombat(new Character[] { chara, null, chara, chara } , new Character[] { oppChara, null, oppChara, oppChara });
+        PlayableCharacter chara = AssetManager.Instance.Characters.LoadAsset<PlayableCharacter>("Gunwoman");
+        PlayableCharacter oppChara = AssetManager.Instance.Characters.LoadAsset<PlayableCharacter>("Mage");
+        StartCombat(new Character[] { chara, chara, chara, chara } , new Character[] { oppChara, chara, oppChara, chara });
     }
 
     public void StartCombat(Character[] playerTeam, Character[] opposingTeam)
