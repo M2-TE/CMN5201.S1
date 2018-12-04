@@ -320,7 +320,7 @@ namespace UnityEngine.EventSystems
                 pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
 
                 // DISABLED //
-                //DeselectIfSelectionChanged(currentOverGo, pointerEvent);
+                //if(currentOverGo != null) DeselectIfSelectionChanged(currentOverGo, pointerEvent);
 
                 // search for the control that will receive the press
                 // if we can't find a press handler set the press

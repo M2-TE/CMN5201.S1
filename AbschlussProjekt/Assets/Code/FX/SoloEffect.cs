@@ -4,7 +4,7 @@ using UnityEngine;
 public class SoloEffect : BaseEffect
 {
     [SerializeField] protected bool looping;
-    [SerializeField] protected int framerateOverride;
+    [SerializeField] protected int framerateOverride = 12;
     protected float timeBetweenFrames;
 
 	protected new IEnumerator Start ()

@@ -15,6 +15,16 @@ public class AssetManager
     private readonly string skillsPath = "skills";
 
     #region Getters/Setters
+    private Camera mainCam;
+    public Camera MainCam
+    {
+        get
+        {
+            if (mainCam != null) return mainCam;
+            else return mainCam = Camera.main;
+        }
+    }
+    
     private AssetBundle settings;
     public AssetBundle Settings
     {

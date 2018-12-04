@@ -3,8 +3,13 @@
 [ExecuteInEditMode]
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private Camera mainCam;
     public float horizontalResolution = 1920;
+    private Camera mainCam;
+
+    private void Start()
+    {
+        mainCam = AssetManager.Instance.MainCam;
+    }
 
     void OnGUI()
     {
