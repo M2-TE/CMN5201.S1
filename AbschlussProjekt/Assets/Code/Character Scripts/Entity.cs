@@ -103,9 +103,15 @@ public class Entity
         equippedArmor = null;
     }
 
+    public override string ToString()
+    {
+        return baseHealth + " / " + currentHealth + " HP | "
+            + currentAttack + " Atk | " + currentDefense + " Def | " + currentSpeed + " Spd";
+    }
+
     public Entity(Character charDataContainer)
     {
-        Name = "Generic Gunwoman";
+        Name = charDataContainer.name;
 
         entityType = charDataContainer.name;
         this.charDataContainer = charDataContainer;

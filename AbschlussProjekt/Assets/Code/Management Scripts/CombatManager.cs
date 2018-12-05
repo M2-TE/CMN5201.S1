@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,20 +9,21 @@ public class CombatManager : MonoBehaviour
     // change this \/ to DataContainer ref
     public CombatPanel CombatPanel;
 
-    private Entity[] playerTeam, opposingTeam;
-    private GameObject[] playerProxies, opposingProxies;
-
-    private Queue<Entity> upcomingTurns = new Queue<Entity>();
+    // first dimension for team (0 player, 1 opponent), second dimension for specific character
+    private Entity[,] combatants;
+    private GameObject[,] proxies;
+    private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
     private int totalTurns = 0;
-
-    private bool userInputGiven;
+    
     private bool combatOngoing;
+    // change this \/ (deprecated) read current turn through upcoming turn list
     private bool playerTeamTurn;
     private int currentlySelectedSkill;
     private int currentlyActiveEntity;
+    private float turnTime = 5f;
 
-    private bool debugActive = true;
     // DEBUGGING //
+    private bool debugActive = false;
     private void Update()
     {
         if (!debugActive) return;
@@ -41,139 +43,103 @@ public class CombatManager : MonoBehaviour
             currentlyActiveEntity++;
             UpdateSkillIcons();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-            userInputGiven = true;
     }
 
     public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
     {
-        this.playerTeam = playerTeam;
-        this.opposingTeam = opposingTeam;
+        combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
+        proxies = new GameObject[2, combatants.GetLength(1)];
+        for(int x = 0; x < combatants.GetLength(0); x++)
+        {
+            for(int y = 0; y < combatants.GetLength(1); y++)
+            {
+                combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
+            }
+        }
 
         SetPortraits();
         ResetInitiatives();
         InstantiateProxyPrefabs();
 
-        StartCoroutine(CombatLoop());
+        // start game loop
+        LaunchNextTurn();
     }
+    
 
-    // this is shit
-    private IEnumerator CombatLoop()
+    private void LaunchNextTurn()
     {
-        combatOngoing = true;
-        while (combatOngoing)
-        {
-            if (upcomingTurns.Count == 0) CalculateInitiatives();
-            else HandleTurn();
-
-            UpdateSkillIcons();
-
-            yield return null;
-        }
+        if (upcomingTurns.Count == 0) ProgressInits();
+        
     }
 
     #region Single Calls
     private void SetPortraits()
     {
-        for (int i = 0; i < CombatPanel.PlayerTeamPortraits.Length; i++)
+        for (int x = 0; x < combatants.GetLength(0); x++)
         {
-            bool check = playerTeam[i] != null;
-            CombatPanel.PlayerTeamPortraits[i].enabled = check;
-            CombatPanel.PlayerTeamPortraits[i].sprite = check ? playerTeam[i].CharDataContainer.Portrait : null;
-        }
-        for (int i = 0; i < CombatPanel.OpposingTeamPortraits.Length; i++)
-        {
-            bool check = opposingTeam[i] != null;
-            CombatPanel.OpposingTeamPortraits[i].enabled = check;
-            CombatPanel.OpposingTeamPortraits[i].sprite = check ? opposingTeam[i].CharDataContainer.Portrait : null;
+            for (int y = 0; y < combatants.GetLength(1); y++)
+            {
+                bool check = combatants[x, y] != null;
+                Image tempPortrait = (x == 0) ? CombatPanel.PlayerTeamPortraits[y] : CombatPanel.OpposingTeamPortraits[y];
+
+                tempPortrait.enabled = check;
+                tempPortrait.sprite = check ? combatants[x, y].CharDataContainer.Portrait : null;
+            }
         }
     }
 
     private void ResetInitiatives()
     {
-        for (int i = 0; i < playerTeam.Length; i++)
-            if(playerTeam[i] != null) playerTeam[i].currentInitiative = 0;
-
-        for (int i = 0; i < opposingTeam.Length; i++)
-            if(opposingTeam[i] != null) opposingTeam[i].currentInitiative = 0;
+        for (int x = 0; x < combatants.GetLength(0); x++)
+            for (int y = 0; y < combatants.GetLength(1); y++)
+                if (combatants[x, y] != null) combatants[x, y].currentInitiative = 0;
     }
 
     private void InstantiateProxyPrefabs()
     {
-        playerProxies = new GameObject[playerTeam.Length];
-        for (int i = 0; i < playerTeam.Length; i++)
+        for (int x = 0; x < combatants.GetLength(0); x++)
         {
-            if (playerTeam[i] == null)
+            for (int y = 0; y < combatants.GetLength(1); y++)
             {
-                CombatPanel.PlayerCombatPrefabs[i].gameObject.SetActive(false);
-                continue;
+                GameObject combatPrefab = (x == 0) ? CombatPanel.PlayerCombatPrefabs[y] : CombatPanel.OpposingCombatPrefabs[y];
+                if(combatants[x, y] == null)
+                {
+                    combatPrefab.gameObject.SetActive(false);
+                    continue;
+                }
+
+                combatPrefab.gameObject.SetActive(true);
+
+                GameObject tempProxy = Instantiate(combatants[x, y].CharDataContainer.Prefab);
+                Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
+                proxyPos.z = 0f;
+                if(x == 1) tempProxy.transform.localScale = new Vector3(-1f, 1f, 1f);
+                tempProxy.transform.position = proxyPos;
+                proxies[x, y] = tempProxy;
             }
-
-            CombatPanel.OpposingCombatPrefabs[i].gameObject.SetActive(true);
-            GameObject tempProxy = Instantiate(playerTeam[i].CharDataContainer.Prefab);
-            Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(CombatPanel.PlayerCombatPrefabs[i].transform.position);
-            proxyPos.z = 0f;
-            tempProxy.transform.position = proxyPos;
-            playerProxies[i] = tempProxy;
         }
-
-        opposingProxies = new GameObject[opposingTeam.Length];
-        for (int i = 0; i < opposingTeam.Length; i++)
-        {
-            if (opposingTeam[i] == null)
-            {
-                CombatPanel.OpposingCombatPrefabs[i].gameObject.SetActive(false);
-                continue;
-            }
-
-            CombatPanel.OpposingCombatPrefabs[i].gameObject.SetActive(true);
-            GameObject tempProxy = Instantiate(opposingTeam[i].CharDataContainer.Prefab);
-            Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(CombatPanel.OpposingCombatPrefabs[i].transform.position);
-            proxyPos.z = 0f;
-            tempProxy.transform.localScale = new Vector3(-1f, 1f, 1f);
-            tempProxy.transform.position = proxyPos;
-            opposingProxies[i] = tempProxy;
-        }
-
     }
     #endregion
 
     #region Repeated Calls
-    private void CalculateInitiatives()
+    private void ProgressInits()
     {
-        Entity tempEntity;
-        for(int i = 0; i < playerTeam.Length; i++)
+        for (int x = 0; x < combatants.GetLength(0); x++)
         {
-            tempEntity = playerTeam[i];
-            if (tempEntity == null) continue;
-
-            tempEntity.currentInitiative += tempEntity.currentSpeed;
-            if (tempEntity.currentInitiative <= 100)
+            for (int y = 0; y < combatants.GetLength(1); y++)
             {
-                upcomingTurns.Enqueue(tempEntity);
-                tempEntity.currentInitiative = 0;
+                Entity tempEntity = combatants[x, y];
+                if (tempEntity == null) continue;
+
+                tempEntity.currentInitiative += tempEntity.currentSpeed;
+                if (tempEntity.currentInitiative >= 100)
+                {
+                    upcomingTurns.Add(new Vector2Int(x, y));
+                    tempEntity.currentInitiative = 0;
+                }
             }
         }
-
-        for(int i = 0; i < opposingTeam.Length; i++)
-        {
-            tempEntity = opposingTeam[i];
-            if (tempEntity == null) continue;
-
-            tempEntity.currentInitiative += tempEntity.currentSpeed;
-            if (tempEntity.currentInitiative <= 100)
-            {
-                upcomingTurns.Enqueue(tempEntity);
-                tempEntity.currentInitiative = 0;
-            }
-        }
-    }
-
-    private void HandleTurn()
-    {
-        totalTurns++;
-        Entity tempEntity = upcomingTurns.Dequeue();
-        Debug.Log(tempEntity.CharDataContainer);
+        if (upcomingTurns.Count == 0) ProgressInits();
     }
 
     private void UpdateSkillIcons()
@@ -182,16 +148,28 @@ public class CombatManager : MonoBehaviour
         {
             CombatPanel.TeamSkillButtons[i].gameObject.SetActive(playerTeamTurn);
 
-            CombatPanel.TeamSkillButtons[i].sprite = (playerTeam[currentlyActiveEntity].EquippedCombatSkills.Length > i)
-                ? CombatPanel.TeamSkillButtons[i].sprite = playerTeam[currentlyActiveEntity].EquippedCombatSkills[i].SkillIcon
+            CombatPanel.TeamSkillButtons[i].sprite = (combatants[0, currentlyActiveEntity].EquippedCombatSkills.Length > i)
+                ? CombatPanel.TeamSkillButtons[i].sprite = combatants[0, currentlyActiveEntity].EquippedCombatSkills[i].SkillIcon
                 : null;
         }
     }
     #endregion
 
+    private void UseSkill(int skillID, Entity mainTarget)
+    {
+        Entity caster = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
+        CombatSkill usedSkill = caster.EquippedCombatSkills[skillID];
+    }
+
+    private IEnumerator NextTurnStarter()
+    {
+        yield return new WaitForSeconds(turnTime);
+        LaunchNextTurn();
+    }
+
     public void OnSkillSelect(int skillID)
     {
-        if (!playerTeamTurn || playerTeam[currentlyActiveEntity].EquippedCombatSkills.Length <= skillID) return;
+        if (!playerTeamTurn || combatants[0, currentlyActiveEntity].EquippedCombatSkills.Length <= skillID) return;
 
         CombatPanel.TeamSkillButtons[currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
         currentlySelectedSkill = skillID;
