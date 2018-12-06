@@ -15,12 +15,21 @@ public class CombatManager : MonoBehaviour
     private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
     private int totalTurns = 0;
     
-    private bool combatOngoing;
-    // change this \/ (deprecated) read current turn through upcoming turn list
-    private bool playerTeamTurn;
-    private int currentlySelectedSkill;
-    private int currentlyActiveEntity;
-    private float turnTime = 5f;
+    private int? m_currentlySelectedSkill;
+	private int? currentlySelectedSkill
+	{
+		get { return m_currentlySelectedSkill; }
+		set
+		{
+			// deselect previous skill if one was selected
+			if (m_currentlySelectedSkill != null) CombatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
+			m_currentlySelectedSkill = value;
+			if(value != null) CombatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
+		}
+	}
+	private bool playerTeamTurn;
+	private float turnTime = 3f;
+	private Entity currentlyActiveEntity;
 
     // DEBUGGING //
     private bool debugActive = false;
@@ -31,16 +40,6 @@ public class CombatManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
         {
             playerTeamTurn = (playerTeamTurn) ? false : true;
-            UpdateSkillIcons();
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            currentlyActiveEntity--;
-            UpdateSkillIcons();
-        }
-        else if (Input.GetKeyDown(KeyCode.G))
-        {
-            currentlyActiveEntity++;
             UpdateSkillIcons();
         }
     }
@@ -61,15 +60,17 @@ public class CombatManager : MonoBehaviour
         ResetInitiatives();
         InstantiateProxyPrefabs();
 
-        // start game loop
+
+
+        // initiate combat loop
         LaunchNextTurn();
     }
-    
 
     private void LaunchNextTurn()
     {
         if (upcomingTurns.Count == 0) ProgressInits();
-        
+		
+        HandleCurrentTurn();
     }
 
     #region Single Calls
@@ -121,7 +122,7 @@ public class CombatManager : MonoBehaviour
     }
     #endregion
 
-    #region Repeated Calls
+    #region Combat Loop Calls
     private void ProgressInits()
     {
         for (int x = 0; x < combatants.GetLength(0); x++)
@@ -139,7 +140,13 @@ public class CombatManager : MonoBehaviour
                 }
             }
         }
-        if (upcomingTurns.Count == 0) ProgressInits();
+		// Repeat until an entity gains a turn
+		if (upcomingTurns.Count == 0) ProgressInits();
+
+		// Sort all upcoming turns by total initiative (entities with higher init come first)
+		else upcomingTurns.Sort((first, second) 
+			=> combatants[first.x, first.y].currentInitiative.CompareTo
+			(combatants[second.x, second.y].currentInitiative));
     }
 
     private void UpdateSkillIcons()
@@ -148,31 +155,63 @@ public class CombatManager : MonoBehaviour
         {
             CombatPanel.TeamSkillButtons[i].gameObject.SetActive(playerTeamTurn);
 
-            CombatPanel.TeamSkillButtons[i].sprite = (combatants[0, currentlyActiveEntity].EquippedCombatSkills.Length > i)
-                ? CombatPanel.TeamSkillButtons[i].sprite = combatants[0, currentlyActiveEntity].EquippedCombatSkills[i].SkillIcon
+            CombatPanel.TeamSkillButtons[i].sprite = (currentlyActiveEntity.EquippedCombatSkills.Length > i)
+                ? CombatPanel.TeamSkillButtons[i].sprite = currentlyActiveEntity.EquippedCombatSkills[i].SkillIcon
                 : null;
         }
     }
-    #endregion
 
-    private void UseSkill(int skillID, Entity mainTarget)
+    private void HandleCurrentTurn()
     {
-        Entity caster = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
-        CombatSkill usedSkill = caster.EquippedCombatSkills[skillID];
+		playerTeamTurn = upcomingTurns[0].x == 0; // check if its the players turn
+		
+		currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
+		upcomingTurns.RemoveAt(0); // remember and delete from upcoming turn list
+
+		currentlySelectedSkill = null;
+		UpdateSkillIcons();
+
+		if (!playerTeamTurn) ControlOpponentTurn();
+		// else wait for player input;
+	}
+
+	private void ControlOpponentTurn()
+	{
+		LaunchNextTurn();
+	}
+
+
+	private void UseSkill(int skillID, Entity mainTarget)
+	{
+		Entity caster = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
+		CombatSkill usedSkill = caster.EquippedCombatSkills[skillID];
+
+		StartCoroutine(NextTurnStarter());
+	}
+
+	private IEnumerator NextTurnStarter()
+	{
+		yield return new WaitForSeconds(turnTime);
+		LaunchNextTurn();
+	}
+	#endregion
+
+	#region Button Calls
+	public void OnSkillSelect(int skillID)
+    {
+        if (!playerTeamTurn || currentlyActiveEntity.EquippedCombatSkills.Length <= skillID) return;
+
+		currentlySelectedSkill = skillID;
     }
 
-    private IEnumerator NextTurnStarter()
-    {
-        yield return new WaitForSeconds(turnTime);
-        LaunchNextTurn();
-    }
+	public void OnOpponentEntitySelect(int entityID)
+	{
+		if(currentlySelectedSkill != null) LaunchNextTurn();
+	}
 
-    public void OnSkillSelect(int skillID)
-    {
-        if (!playerTeamTurn || combatants[0, currentlyActiveEntity].EquippedCombatSkills.Length <= skillID) return;
-
-        CombatPanel.TeamSkillButtons[currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
-        currentlySelectedSkill = skillID;
-        CombatPanel.TeamSkillButtons[currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
-    }
+	public void OnPlayerEntitySelect(int entityID)
+	{
+		// if (currentlySelectedSkill != null) LaunchNextTurn();
+	}
+	#endregion
 }

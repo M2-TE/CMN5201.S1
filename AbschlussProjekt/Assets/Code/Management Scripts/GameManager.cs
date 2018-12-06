@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
         Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
         combatManager.StartCombat
-            (playerTeam, 
+            (playerTeam,
             new Entity[] {
                 new Entity(mage),
                 new Entity(mage),
@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour {
         CombatSkill skill = savefile.CurrentTeam[0].CharDataContainer.FullSkillPool[0];
         CombatSkill[] skills = new CombatSkill[] { skill };
         savefile.CurrentTeam[0].EquippedCombatSkills = skills;
+        savefile.CurrentTeam[1].EquippedCombatSkills = new CombatSkill[] { savefile.CurrentTeam[1].CharDataContainer.FullSkillPool[0] };
+        savefile.CurrentTeam[2].EquippedCombatSkills = new CombatSkill[] { savefile.CurrentTeam[2].CharDataContainer.FullSkillPool[0] };
 
         AssetManager.Instance.Save(savefile);
     }

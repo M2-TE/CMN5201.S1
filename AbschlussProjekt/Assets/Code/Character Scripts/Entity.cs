@@ -105,7 +105,7 @@ public class Entity
 
     public override string ToString()
     {
-        return baseHealth + " / " + currentHealth + " HP | "
+        return Name + ": " + baseHealth + " / " + currentHealth + " HP | "
             + currentAttack + " Atk | " + currentDefense + " Def | " + currentSpeed + " Spd";
     }
 
