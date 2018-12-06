@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4382513968510574}
   - component: {fileID: 212385517972435322}
   - component: {fileID: 95481055086828072}
-  - component: {fileID: 114177353272888610}
   - component: {fileID: 61964251468660986}
   - component: {fileID: 50175882485568576}
+  - component: {fileID: 114177353272888610}
   m_Layer: 8
-  m_Name: Mage
+  m_Name: Mage CC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.6504427}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4427083, y: 0.03125}
+    pivot: {x: 0.4427083, y: 0.39}
     oldSize: {x: 1.92, y: 1.92}
     newSize: {x: 1.92, y: 1.92}
     adaptiveTilingThreshold: 0.5

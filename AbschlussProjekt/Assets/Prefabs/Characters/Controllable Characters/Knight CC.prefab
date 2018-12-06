@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4317695618114228}
   - component: {fileID: 212227565381070874}
   - component: {fileID: 95995646528517822}
-  - component: {fileID: 114992550292293460}
   - component: {fileID: 61976938146503214}
   - component: {fileID: 50123657916905838}
+  - component: {fileID: 114992550292293460}
   m_Layer: 8
-  m_Name: Knight
+  m_Name: Knight CC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.6203238}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.43, y: 0.03125}
+    pivot: {x: 0.43, y: 0.4}
     oldSize: {x: 1.92, y: 1.92}
     newSize: {x: 1.92, y: 1.92}
     adaptiveTilingThreshold: 0.5

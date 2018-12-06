@@ -4,4 +4,5 @@
 public class MiscSettings : Settings
 {
     public LayerMask GroundLayers;
+	public LayerMask clickableLayers;
 }

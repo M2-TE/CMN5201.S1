@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
   m_Name: Mage
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1720512568559498, guid: 9d3af9e1d0dde28458843237c28d97f8, type: 2}
+  Prefab: {fileID: 1749674905455130, guid: ea1de41fc5e0318419fe582e515850ea, type: 2}
   Portrait: {fileID: 21300000, guid: 8cd8581e78286df4080051fc0c775590, type: 3}
   BaseHealth: 10
   BaseAttack: 3
@@ -19,6 +19,7 @@ MonoBehaviour:
   BaseSpeed: 9
   FullSkillPool:
   - {fileID: 11400000, guid: 22f4a96d88feda3449368a2d681ba626, type: 2}
+  CharacterControllerPrefab: {fileID: 0}
   MovespeedMod: 40
   JumpMod: 10
   GroundDrag: 10

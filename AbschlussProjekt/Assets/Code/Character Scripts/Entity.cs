@@ -93,6 +93,8 @@ public class Entity
     public int baseSpeed;
     public int currentSpeed;
     public int currentInitiative;
+	
+	[NonSerialized] public Vector2Int currentCombatPosition;
     #endregion
 
     public void Unload()
@@ -135,5 +137,8 @@ public class Entity
         baseSpeed = charDataContainer.BaseSpeed;
         currentSpeed = baseSpeed;
         currentInitiative = 0;
+
+		//startingCombatPosition = new Vector2Int(0, 0);
+		//currentCombatPosition
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class CombatSkill : DataContainer
 {
     public Sprite SkillIcon;
+	public GameObject FxPrefab;
     public float DamageMultiplier;
     public int Range;
     public bool[] AppliedEffects;
