@@ -4,7 +4,8 @@ using UnityEngine;
 public class SoloEffect : BaseEffect
 {
     [SerializeField] protected bool looping;
-    [SerializeField] protected int framerateOverride = 12;
+	[SerializeField] protected float lingeringDuration = 0f;
+	[SerializeField] protected int framerateOverride = 12;
     protected float timeBetweenFrames;
 
 	protected new IEnumerator Start ()
@@ -23,6 +24,10 @@ public class SoloEffect : BaseEffect
             SetSprite();
             yield return waitTime;
         }
+
+		ownSpriteRenderer.sprite = null;
+		yield return new WaitForSeconds(lingeringDuration);
+
         Destroy(gameObject);
 	}
 }

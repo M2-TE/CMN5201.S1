@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
-    // change this \/ to DataContainer ref
-    public CombatPanel CombatPanel;
+	#region Variables
+	// change this \/ to DataContainer ref
+	public CombatPanel CombatPanel;
 
     // first dimension for team (0 player, 1 opponent), second dimension for specific character
     private Entity[,] combatants;
@@ -29,13 +30,32 @@ public class CombatManager : MonoBehaviour
 	}
 
 	private LayerMask clickableLayers;
+	#endregion
 
-	#region User Input
+	#region Combat Startup
 	private void Start()
 	{
 		clickableLayers = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").clickableLayers;
 	}
 
+	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
+	{
+		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
+		proxies = new GameObject[2, combatants.GetLength(1)];
+		for (int x = 0; x < combatants.GetLength(0); x++)
+			for (int y = 0; y < combatants.GetLength(1); y++)
+				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
+
+		SetPortraits();
+		InitializeEntities();
+		InstantiateProxyPrefabs();
+
+		// initiate combat loop
+		LaunchNextTurn();
+	}
+	#endregion
+
+	#region User Input
 	private void Update()
 	{
 		CheckForUserInput();
@@ -49,33 +69,18 @@ public class CombatManager : MonoBehaviour
 			if (hit.collider != null) OnCharacterSelect(hit.transform.GetComponent<Proxy>().CombatPosition);
 		}
 	}
+
+	private void OnCharacterSelect(Vector2Int characterPos)
+	{
+		if (currentlySelectedSkill == null || !GetButtonsEnabled()) return;
+
+		SetButtonsEnabled(false);
+		UseSkill(characterPos);
+	}
 	#endregion
 
-	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
-    {
-        combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
-        proxies = new GameObject[2, combatants.GetLength(1)];
-        for(int x = 0; x < combatants.GetLength(0); x++)
-			for (int y = 0; y < combatants.GetLength(1); y++)
-				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
-
-		SetPortraits();
-        InitializeEntities();
-        InstantiateProxyPrefabs();
-
-        // initiate combat loop
-        LaunchNextTurn();
-    }
-
-    private void LaunchNextTurn()
-    {
-        if (upcomingTurns.Count == 0) ProgressInits();
-		
-        HandleCurrentTurn();
-    }
-
-    #region Single Calls
-    private void SetPortraits()
+	#region Single Calls
+	private void SetPortraits()
     {
         for (int x = 0; x < combatants.GetLength(0); x++)
         {
@@ -169,6 +174,13 @@ public class CombatManager : MonoBehaviour
     }
 
 	#region Turn Management
+	private void LaunchNextTurn()
+	{
+		if (upcomingTurns.Count == 0) ProgressInits();
+
+		HandleCurrentTurn();
+	}
+
 	private void HandleCurrentTurn()
     {
 		// change this to choose the last-selected or first skill of that character
@@ -176,7 +188,11 @@ public class CombatManager : MonoBehaviour
 		UpdateSkillIcons();
 
 		if (upcomingTurns[0].x == 1) ControlOpponentTurn();
-		// else wait for player input;
+		else
+		{
+			SetButtonsEnabled(true);
+			OnSkillSelect(0);
+		}
 	}
 
 	private void ControlOpponentTurn()
@@ -207,6 +223,7 @@ public class CombatManager : MonoBehaviour
 
 		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[(int)currentlySelectedSkill];
 		Instantiate(skill.FxPrefab, targets[0].transform);
+		
 
 		// wait until the dmg fx has faded
 		while (true)
@@ -220,34 +237,48 @@ public class CombatManager : MonoBehaviour
 	}
 	#endregion
 
+	#region Utility Methods
 	private Entity GetEntity(Vector2Int entityPos)
 	{
 		return combatants[entityPos.x, entityPos.y];
 	}
 	private Entity[] GetEntities(Vector2Int[] entityPosArr)
 	{
-		// TODO
-		return null;
+		Entity[] entityArr = new Entity[entityPosArr.Length];
+		for (int i = 0; i < entityPosArr.Length; i++)
+			entityArr[i] = combatants[entityPosArr[i].x, entityPosArr[i].y];
+		return entityArr;
 	}
 
 	private GameObject GetProxy(Vector2Int proxyPos)
 	{
 		return proxies[proxyPos.x, proxyPos.y];
 	}
-	private GameObject[] GetProxies(Vector2Int proxPosArr)
+	private GameObject[] GetProxies(Vector2Int[] proxPosArr)
 	{
-		// TODO
-		return null;
+		GameObject[] proxieArr = new GameObject[proxPosArr.Length];
+		for (int i = 0; i < proxPosArr.Length; i++)
+			proxieArr[i] = proxies[proxPosArr[i].x, proxPosArr[i].y];
+		return proxieArr;
 	}
 
-	#region User Interaction
-	private void OnCharacterSelect(Vector2Int characterPos)
+	private void SetButtonsEnabled(bool enableState)
 	{
-		if (currentlySelectedSkill == null) return;
-
-		UseSkill(characterPos);
+		for (int i = 0; i < CombatPanel.TeamSkillButtons.Length; i++)
+			CombatPanel.TeamSkillButtons[i].gameObject.SetActive(enableState);
 	}
+	private bool GetButtonsEnabled()
+	{
+		bool active = false;
 
+		for (int i = 0; i < CombatPanel.TeamSkillButtons.Length; i++)
+			if (CombatPanel.TeamSkillButtons[i].gameObject.activeSelf) active = true;
+
+		return active;
+	}
+	#endregion
+
+	#region Public Button Methods
 	public void OnSkillSelect(int skillID)
     {
         if (upcomingTurns[0].x == 1 || combatants[upcomingTurns[0].x, upcomingTurns[0].y].EquippedCombatSkills.Length <= skillID) return;
