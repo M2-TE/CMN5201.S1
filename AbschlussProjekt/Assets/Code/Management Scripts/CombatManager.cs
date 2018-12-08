@@ -172,7 +172,7 @@ public class CombatManager : MonoBehaviour
 	private void HandleCurrentTurn()
     {
 		// change this to choose the last-selected or first skill of that character
-		currentlySelectedSkill = null; 
+		currentlySelectedSkill = null;
 		UpdateSkillIcons();
 
 		if (upcomingTurns[0].x == 1) ControlOpponentTurn();
@@ -181,26 +181,71 @@ public class CombatManager : MonoBehaviour
 
 	private void ControlOpponentTurn()
 	{
+		// TODO
 		EndTurn();
-		LaunchNextTurn();
 	}
 
 	private void EndTurn()
 	{
 		upcomingTurns.RemoveAt(0);
+		LaunchNextTurn();
 	}
 	#endregion
 
 	private void UseSkill(Vector2Int mainTarget)
 	{
+		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
+		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
+		GameObject[] targets = new GameObject[] { GetProxy(mainTarget) };
+		StartCoroutine(DamageEnemies(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
+	}
+
+	private IEnumerator DamageEnemies(float attackDelay, GameObject[] targets)
+	{
+		yield return new WaitForSeconds(attackDelay);
+
+		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[(int)currentlySelectedSkill];
+		Instantiate(skill.FxPrefab, targets[0].transform);
+
+		// wait until the dmg fx has faded
+		while (true)
+		{
+			if (targets[0].transform.childCount == 0) break;
+			yield return null;
+		}
+
+		// initiate next turn by ending current
+		EndTurn();
 	}
 	#endregion
+
+	private Entity GetEntity(Vector2Int entityPos)
+	{
+		return combatants[entityPos.x, entityPos.y];
+	}
+	private Entity[] GetEntities(Vector2Int[] entityPosArr)
+	{
+		// TODO
+		return null;
+	}
+
+	private GameObject GetProxy(Vector2Int proxyPos)
+	{
+		return proxies[proxyPos.x, proxyPos.y];
+	}
+	private GameObject[] GetProxies(Vector2Int proxPosArr)
+	{
+		// TODO
+		return null;
+	}
 
 	#region User Interaction
 	private void OnCharacterSelect(Vector2Int characterPos)
 	{
-		Debug.Log(characterPos);
+		if (currentlySelectedSkill == null) return;
+
+		UseSkill(characterPos);
 	}
 
 	public void OnSkillSelect(int skillID)
