@@ -15,8 +15,8 @@ MonoBehaviour:
   Portrait: {fileID: 21300000, guid: 64e052c0475d3c4408ca94e2e4a336a8, type: 3}
   attackAnimDelay: 0.38
   BaseHealth: 10
-  BaseAttack: 3
-  BaseDefense: 0
+  BaseAttack: 4
+  BaseDefense: 2
   BaseSpeed: 10
   FullSkillPool:
   - {fileID: 11400000, guid: e280c0d716a3d174fa59f4fdb3037baa, type: 2}

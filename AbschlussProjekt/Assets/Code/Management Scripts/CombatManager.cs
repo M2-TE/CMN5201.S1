@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
 	#region Variables
 	// change this \/ to DataContainer ref
-	public CombatPanel CombatPanel;
+	[SerializeField] private CombatPanel combatPanel;
+	[SerializeField] private EventSystem eventSystem;
 
     // first dimension for team (0 player, 1 opponent), second dimension for specific character
     private Entity[,] combatants;
@@ -23,9 +25,9 @@ public class CombatManager : MonoBehaviour
 		set
 		{
 			// deselect previous skill if one was selected
-			if (m_currentlySelectedSkill != null) CombatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
+			if (m_currentlySelectedSkill != null) combatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
 			m_currentlySelectedSkill = value;
-			if(value != null) CombatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
+			if(value != null) combatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
 		}
 	}
 
@@ -87,8 +89,8 @@ public class CombatManager : MonoBehaviour
             for (int y = 0; y < combatants.GetLength(1); y++)
             {
                 bool check = combatants[x, y] != null;
-                CombatPanel.TeamPortraits[x, y].enabled = check;
-				CombatPanel.TeamPortraits[x, y].sprite = check ? combatants[x, y].CharDataContainer.Portrait : null;
+                combatPanel.TeamPortraits[x, y].enabled = check;
+				combatPanel.TeamPortraits[x, y].sprite = check ? combatants[x, y].CharDataContainer.Portrait : null;
             }
         }
     }
@@ -116,7 +118,7 @@ public class CombatManager : MonoBehaviour
         {
             for (int y = 0; y < combatants.GetLength(1); y++)
             {
-				GameObject combatPrefab = CombatPanel.CharacterPositions[x, y];
+				GameObject combatPrefab = combatPanel.CharacterPositions[x, y];
                 if(combatants[x, y] == null) continue;
 				
 				// spawn proxy (proxy => represents an entity in the world)
@@ -131,10 +133,45 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
-    #endregion
+	#endregion
 
-    #region Combat Loop Calls
-    private void ProgressInits()
+	#region Combat Loop Calls
+	#region Turn Management
+	private void LaunchNextTurn()
+	{
+		if (upcomingTurns.Count == 0) ProgressInits();
+
+		HandleCurrentTurn();
+	}
+
+	private void HandleCurrentTurn()
+	{
+		// change this to choose the last-selected or first skill of that character
+		currentlySelectedSkill = null;
+		UpdateSkillIcons();
+
+		if (upcomingTurns[0].x == 1) ControlOpponentTurn();
+		else
+		{
+			SetButtonsEnabled(true);
+			OnSkillSelect(0);
+		}
+	}
+
+	private void ControlOpponentTurn()
+	{
+		// TODO
+		EndTurn();
+	}
+
+	private void EndTurn()
+	{
+		upcomingTurns.RemoveAt(0);
+		LaunchNextTurn();
+	}
+	#endregion
+
+	private void ProgressInits()
     {
         for (int x = 0; x < combatants.GetLength(0); x++)
         {
@@ -162,78 +199,55 @@ public class CombatManager : MonoBehaviour
 
     private void UpdateSkillIcons()
     {
-        for (int i = 0; i < CombatPanel.TeamSkillButtons.Length; i++)
+        for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
         {
-            CombatPanel.TeamSkillButtons[i].gameObject.SetActive(upcomingTurns[0].x == 0);
+            combatPanel.TeamSkillButtons[i].gameObject.SetActive(upcomingTurns[0].x == 0);
 
 			Entity currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
-            CombatPanel.TeamSkillButtons[i].sprite = (currentlyActiveEntity.EquippedCombatSkills.Length > i)
-                ? CombatPanel.TeamSkillButtons[i].sprite = currentlyActiveEntity.EquippedCombatSkills[i].SkillIcon
+            combatPanel.TeamSkillButtons[i].sprite = (currentlyActiveEntity.EquippedCombatSkills.Length > i)
+                ? combatPanel.TeamSkillButtons[i].sprite = currentlyActiveEntity.EquippedCombatSkills[i].SkillIcon
                 : null;
         }
     }
-
-	#region Turn Management
-	private void LaunchNextTurn()
-	{
-		if (upcomingTurns.Count == 0) ProgressInits();
-
-		HandleCurrentTurn();
-	}
-
-	private void HandleCurrentTurn()
-    {
-		// change this to choose the last-selected or first skill of that character
-		currentlySelectedSkill = null;
-		UpdateSkillIcons();
-
-		if (upcomingTurns[0].x == 1) ControlOpponentTurn();
-		else
-		{
-			SetButtonsEnabled(true);
-			OnSkillSelect(0);
-		}
-	}
-
-	private void ControlOpponentTurn()
-	{
-		// TODO
-		EndTurn();
-	}
-
-	private void EndTurn()
-	{
-		upcomingTurns.RemoveAt(0);
-		LaunchNextTurn();
-	}
-	#endregion
 
 	private void UseSkill(Vector2Int mainTarget)
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		GameObject[] targets = new GameObject[] { GetProxy(mainTarget) };
-		StartCoroutine(DamageEnemies(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
+		Vector2Int[] targets = new Vector2Int[] { mainTarget};
+
+		StartCoroutine(ApplyFX(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
 	}
 
-	private IEnumerator DamageEnemies(float attackDelay, GameObject[] targets)
+	private IEnumerator ApplyFX(float attackDelay, Vector2Int[] targets)
 	{
 		yield return new WaitForSeconds(attackDelay);
 
 		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[(int)currentlySelectedSkill];
-		Instantiate(skill.FxPrefab, targets[0].transform);
-		
+		GameObject[] proxyArr = GetProxies(targets);
+		Entity[] entityArr = GetEntities(targets);
 
+		for(int i = 0; i < targets.Length; i++)
+		{
+			Instantiate(skill.FxPrefab, proxyArr[i].transform);
+			ApplySkillEffects(GetEntity(upcomingTurns[0]), entityArr[i], skill);
+		}
+		
 		// wait until the dmg fx has faded
 		while (true)
 		{
-			if (targets[0].transform.childCount == 0) break;
+			if (proxyArr[0].transform.childCount == 0) break;
 			yield return null;
 		}
 
 		// initiate next turn by ending current
 		EndTurn();
+	}
+	private void ApplySkillEffects(Entity caster, Entity target, CombatSkill skill)
+	{
+		int actualDamage = (int)Mathf.Max(0f, caster.currentAttack * skill.DamageMultiplier - target.currentDefense);
+		Debug.Log("DMG: " + actualDamage + " " + caster.currentAttack + " " + target.currentDefense + " " + skill.DamageMultiplier);
 	}
 	#endregion
 
@@ -264,15 +278,15 @@ public class CombatManager : MonoBehaviour
 
 	private void SetButtonsEnabled(bool enableState)
 	{
-		for (int i = 0; i < CombatPanel.TeamSkillButtons.Length; i++)
-			CombatPanel.TeamSkillButtons[i].gameObject.SetActive(enableState);
+		for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
+			combatPanel.TeamSkillButtons[i].gameObject.SetActive(enableState);
 	}
 	private bool GetButtonsEnabled()
 	{
 		bool active = false;
 
-		for (int i = 0; i < CombatPanel.TeamSkillButtons.Length; i++)
-			if (CombatPanel.TeamSkillButtons[i].gameObject.activeSelf) active = true;
+		for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
+			if (combatPanel.TeamSkillButtons[i].gameObject.activeSelf) active = true;
 
 		return active;
 	}
