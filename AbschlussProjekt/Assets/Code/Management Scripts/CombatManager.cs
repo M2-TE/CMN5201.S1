@@ -231,7 +231,7 @@ public class CombatManager : MonoBehaviour
 		for(int i = 0; i < targets.Length; i++)
 		{
 			Instantiate(skill.FxPrefab, proxyArr[i].transform);
-			ApplySkillEffects(GetEntity(upcomingTurns[0]), entityArr[i], skill);
+			ApplySkill(GetEntity(upcomingTurns[0]), entityArr[i], skill);
 		}
 		
 		// wait until the dmg fx has faded
@@ -244,7 +244,7 @@ public class CombatManager : MonoBehaviour
 		// initiate next turn by ending current
 		EndTurn();
 	}
-	private void ApplySkillEffects(Entity caster, Entity target, CombatSkill skill)
+	private void ApplySkill(Entity caster, Entity target, CombatSkill skill)
 	{
 		int actualDamage = (int)Mathf.Max(0f, caster.currentAttack * skill.DamageMultiplier - target.currentDefense);
 		Debug.Log("DMG: " + actualDamage + " " + caster.currentAttack + " " + target.currentDefense + " " + skill.DamageMultiplier);
