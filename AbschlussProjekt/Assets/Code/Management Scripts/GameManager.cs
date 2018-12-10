@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 		Character knight = AssetManager.Instance.Characters.LoadAsset<Character>("Knight");
 		Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
 		Character gunwoman = AssetManager.Instance.Characters.LoadAsset<Character>("Gunwoman");
+
 		combatManager.StartCombat
             (playerTeam,
             new Entity[] {
