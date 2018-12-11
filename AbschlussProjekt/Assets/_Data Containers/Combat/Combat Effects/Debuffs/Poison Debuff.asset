@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Poison Debuff
   m_EditorClassIdentifier: 
   IsBuff: 0
+  IsActivatedAtStart: 1
   FlatMaxHealthModifier: 0
   MaxHealthModifier: 0
   FlatHealthModifier: -1

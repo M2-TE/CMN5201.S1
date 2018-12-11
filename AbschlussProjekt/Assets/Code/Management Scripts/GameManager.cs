@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     {
         combatManager = GetComponent<CombatManager>();
 
-        //SaveDebugging(/* remove this later */);
+        SaveDebugging(/* remove this later */);
         LoadCurrentTeam();
 
 		Character knight = AssetManager.Instance.Characters.LoadAsset<Character>("Knight");
@@ -39,14 +39,12 @@ public class GameManager : MonoBehaviour {
         savefile.Gold = 0;
         savefile.Souls = 0;
         savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
+		
+		savefile.CurrentTeam[0].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[0].CharDataContainer.FullSkillPool[0], null, null, null });
+        savefile.CurrentTeam[1].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[1].CharDataContainer.FullSkillPool[0], null, null, null });
+		savefile.CurrentTeam[2].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[2].CharDataContainer.FullSkillPool[0], null, null, null });
 
-        CombatSkill skill = savefile.CurrentTeam[0].CharDataContainer.FullSkillPool[0];
-        CombatSkill[] skills = new CombatSkill[] { skill };
-        savefile.CurrentTeam[0].EquippedCombatSkills = skills;
-        savefile.CurrentTeam[1].EquippedCombatSkills = new CombatSkill[] { savefile.CurrentTeam[1].CharDataContainer.FullSkillPool[0] };
-        savefile.CurrentTeam[2].EquippedCombatSkills = new CombatSkill[] { savefile.CurrentTeam[2].CharDataContainer.FullSkillPool[0] };
-
-        AssetManager.Instance.Save(savefile);
+		AssetManager.Instance.Save(savefile);
     }
 
     private void LoadCurrentTeam()

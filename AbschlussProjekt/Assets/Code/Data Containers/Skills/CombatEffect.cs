@@ -4,6 +4,7 @@
 public class CombatEffect : DataContainer
 {
 	public bool IsBuff;
+	public bool IsActivatedAtStart;
 	[Space(10)]
 	public int FlatMaxHealthModifier;
 	public float MaxHealthModifier;

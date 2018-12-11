@@ -150,25 +150,29 @@ public class CombatManager : MonoBehaviour
 		currentlySelectedSkill = null;
 		UpdateSkillIcons();
 
-		if (upcomingTurns[0].x == 1) ControlOpponentTurn();
+		if (upcomingTurns[0].x == 1)
+		{
+			SetButtonsEnabled(false);
+			ControlOpponentTurn();
+		}
 		else
 		{
 			SetButtonsEnabled(true);
 			OnSkillSelect(0);
 		}
 	}
-
-	private void ControlOpponentTurn()
-	{
-		// TODO
-		EndTurn();
-	}
-
+	
 	private void EndTurn()
 	{
 		GetEntity(upcomingTurns[0]).currentInitiative = 0;
 		upcomingTurns.RemoveAt(0);
 		LaunchNextTurn();
+	}
+
+	private void ControlOpponentTurn()
+	{
+		currentlySelectedSkill = 0;
+		UseSkill(new Vector2Int(0, Random.Range(0, combatants.GetLength(0)) + 1));
 	}
 	#endregion
 
@@ -201,9 +205,9 @@ public class CombatManager : MonoBehaviour
             combatPanel.TeamSkillButtons[i].gameObject.SetActive(upcomingTurns[0].x == 0);
 
 			Entity currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
-            combatPanel.TeamSkillButtons[i].sprite = (currentlyActiveEntity.EquippedCombatSkills.Length > i)
-                ? combatPanel.TeamSkillButtons[i].sprite = currentlyActiveEntity.EquippedCombatSkills[i].SkillIcon
-                : null;
+			combatPanel.TeamSkillButtons[i].sprite = (currentlyActiveEntity.EquippedCombatSkills[i] == null) 
+				? null 
+				: currentlyActiveEntity.EquippedCombatSkills[i].SkillIcon;
         }
     }
 
@@ -212,7 +216,7 @@ public class CombatManager : MonoBehaviour
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		Vector2Int[] targets = new Vector2Int[] { mainTarget};
+		Vector2Int[] targets = new Vector2Int[] { mainTarget };
 
 		StartCoroutine(ApplyFX(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
 	}
@@ -238,7 +242,7 @@ public class CombatManager : MonoBehaviour
 			yield return null;
 		}
 
-		// initiate next turn by ending current
+		// initiate next turn by ending current one
 		EndTurn();
 	}
 

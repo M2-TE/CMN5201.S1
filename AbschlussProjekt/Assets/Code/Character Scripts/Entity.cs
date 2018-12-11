@@ -19,33 +19,18 @@ public class Entity
         }
     }
 
-    private string[] equippedCombatSkillStrings;
+	private string[] equippedCombatSkillStrings;
     [NonSerialized] private CombatSkill[] equippedCombatSkills;
     public CombatSkill[] EquippedCombatSkills
     {
         get
         {
             if (equippedCombatSkills != null) return equippedCombatSkills;
-            else if (equippedCombatSkillStrings.Length > 0)
-            {
-                List<CombatSkill> combatSkillPool = new List<CombatSkill>(CharDataContainer.FullSkillPool);
-                equippedCombatSkills = new CombatSkill[equippedCombatSkillStrings.Length];
-                for (int i = 0; i < equippedCombatSkillStrings.Length; i++)
-                    equippedCombatSkills[i] = combatSkillPool.Find(x => x.name == equippedCombatSkillStrings[i]);
-                return equippedCombatSkills;
-            }
-            else return equippedCombatSkills = new CombatSkill[0];
-        }
-        set
-        {
-            equippedCombatSkills = value;
-            equippedCombatSkillStrings = new string[equippedCombatSkills.Length];
-            for (int i = 0; i < equippedCombatSkills.Length; i++)
-                equippedCombatSkillStrings[i] = equippedCombatSkills[i].name;
-        }
+            else return LoadCombatSkills();
+		}
     }
 
-    private string equippedWeaponString;
+	private string equippedWeaponString;
     [NonSerialized] private Weapon equippedWeapon;
     public Weapon EquippedWeapon
     {
@@ -78,10 +63,47 @@ public class Entity
             equippedArmorString = equippedArmor.name;
         }
     }
-    #endregion
+	#endregion
 
-    #region Combat Stats
-    public int baseHealth;
+	#region Combat Skills
+	private CombatSkill[] LoadCombatSkills()
+	{
+		List<CombatSkill> combatSkillPool = new List<CombatSkill>(CharDataContainer.FullSkillPool);
+		equippedCombatSkills = new CombatSkill[equippedCombatSkillStrings.Length];
+		for (int i = 0; i < equippedCombatSkillStrings.Length; i++)
+			equippedCombatSkills[i] = combatSkillPool.Find(x => x.name == equippedCombatSkillStrings[i]);
+
+		if (equippedCombatSkills[0] == null) ResetCombatSkills();
+
+		return equippedCombatSkills;
+	}
+	public CombatSkill SetCombatSkill(int index, CombatSkill combatSkill)
+	{
+		equippedCombatSkillStrings[index] = combatSkill.name;
+		return equippedCombatSkills[index] = combatSkill;
+	}
+	public CombatSkill[] SetCombatSkills(CombatSkill[] skills)
+	{
+		if (skills.Length != 4)
+		{
+			equippedCombatSkills = new CombatSkill[4];
+			for (int i = 0; i < equippedCombatSkills.Length; i++)
+				equippedCombatSkills[i] = (skills.Length > i) ? skills[i] : null;
+		}
+		else  equippedCombatSkills = skills;
+
+		for (int i = 0; i < equippedCombatSkills.Length; i++)
+			equippedCombatSkillStrings[i] = (equippedCombatSkills[i] == null) ? null : equippedCombatSkills[i].name;
+		return equippedCombatSkills;
+	}
+	public void ResetCombatSkills()
+	{
+		SetCombatSkills(CharDataContainer.FallbackSkills);
+	}
+	#endregion
+
+	#region Combat Stats
+	public int baseHealth;
     public int currentHealth;
 
     public int baseAttack;
@@ -93,8 +115,7 @@ public class Entity
     public int baseSpeed;
     public int currentSpeed;
     public int currentInitiative;
-
-	[NonSerialized] public int meh;
+	
 	[NonSerialized] public Vector2Int currentCombatPosition;
     #endregion
 
@@ -119,11 +140,16 @@ public class Entity
         entityType = charDataContainer.name;
         this.charDataContainer = charDataContainer;
 
-        equippedCombatSkillStrings = new string[0];
+
+	  
+        equippedCombatSkillStrings = new string[4];
+		ResetCombatSkills();
 
         equippedWeaponString = "";
 
         equippedArmorString = "";
+
+
 
 
         baseHealth = charDataContainer.BaseHealth;
@@ -138,8 +164,5 @@ public class Entity
         baseSpeed = charDataContainer.BaseSpeed;
         currentSpeed = baseSpeed;
         currentInitiative = 0;
-
-		//startingCombatPosition = new Vector2Int(0, 0);
-		//currentCombatPosition
     }
 }
