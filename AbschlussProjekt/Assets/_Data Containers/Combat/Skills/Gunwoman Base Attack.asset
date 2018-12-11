@@ -15,5 +15,6 @@ MonoBehaviour:
   FxPrefab: {fileID: 1272641376283932, guid: 928a173350d362849a6addd6dfd941a5, type: 2}
   DamageMultiplier: 1
   Range: 7
-  AppliedEffects: 
-  SelfInflictedEffects: 
+  AppliedCombatEffects:
+  - {fileID: 11400000, guid: 3319ef80f68413743bb70a996cfd5826, type: 2}
+  SelfInflictedCombatEffects: []

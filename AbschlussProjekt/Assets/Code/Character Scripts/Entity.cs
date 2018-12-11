@@ -93,7 +93,8 @@ public class Entity
     public int baseSpeed;
     public int currentSpeed;
     public int currentInitiative;
-	
+
+	[NonSerialized] public int meh;
 	[NonSerialized] public Vector2Int currentCombatPosition;
     #endregion
 

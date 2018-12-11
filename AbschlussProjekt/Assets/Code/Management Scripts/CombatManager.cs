@@ -166,6 +166,7 @@ public class CombatManager : MonoBehaviour
 
 	private void EndTurn()
 	{
+		GetEntity(upcomingTurns[0]).currentInitiative = 0;
 		upcomingTurns.RemoveAt(0);
 		LaunchNextTurn();
 	}
@@ -182,20 +183,16 @@ public class CombatManager : MonoBehaviour
 
                 tempEntity.currentInitiative += tempEntity.currentSpeed;
                 if (tempEntity.currentInitiative >= 100)
-                {
-                    upcomingTurns.Add(new Vector2Int(x, y));
-                    tempEntity.currentInitiative = 0;
-                }
-            }
+					upcomingTurns.Add(new Vector2Int(x, y));
+			}
         }
 		// Repeat until an entity gains a turn
 		if (upcomingTurns.Count == 0) ProgressInits();
 
 		// Sort all upcoming turns by total initiative (entities with higher init come first)
-		else upcomingTurns.Sort((first, second) 
-			=> combatants[first.x, first.y].currentInitiative.CompareTo
-			(combatants[second.x, second.y].currentInitiative));
-    }
+		else upcomingTurns.Sort((first, second)
+				=> GetEntity(second).currentInitiative.CompareTo(GetEntity(first).currentInitiative));
+	}
 
     private void UpdateSkillIcons()
     {
@@ -244,10 +241,11 @@ public class CombatManager : MonoBehaviour
 		// initiate next turn by ending current
 		EndTurn();
 	}
+
 	private void ApplySkill(Entity caster, Entity target, CombatSkill skill)
 	{
 		int actualDamage = (int)Mathf.Max(0f, caster.currentAttack * skill.DamageMultiplier - target.currentDefense);
-		Debug.Log("DMG: " + actualDamage + " " + caster.currentAttack + " " + target.currentDefense + " " + skill.DamageMultiplier);
+		//Debug.Log("DMG: " + actualDamage + " " + caster.currentAttack + " " + target.currentDefense + " " + skill.DamageMultiplier);
 	}
 	#endregion
 
