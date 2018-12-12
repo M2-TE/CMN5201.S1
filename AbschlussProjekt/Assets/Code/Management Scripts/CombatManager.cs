@@ -58,7 +58,7 @@ public class CombatManager : MonoBehaviour
 	}
 	#endregion
 
-	#region Update
+	#region User Input, Health Bar Updates (TODO: this update doesnt need to be called every frame)
 	private void Update()
 	{
 		CheckForUserInput();
@@ -76,10 +76,10 @@ public class CombatManager : MonoBehaviour
 
 	private void OnCharacterSelect(Vector2Int characterPos)
 	{
-		if (currentlySelectedSkill == null || !GetButtonsEnabled()) return;
+		if (currentlySelectedSkill == null || !GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0) return;
 
 		SetButtonsEnabled(false);
-		UseSkill(characterPos);
+		UseCombatSkill(characterPos);
 	}
 	#endregion
 
@@ -161,13 +161,29 @@ public class CombatManager : MonoBehaviour
 	{
 		GetEntity(upcomingTurns[0]).currentInitiative = 0;
 		upcomingTurns.RemoveAt(0);
-		LaunchNextTurn();
+
+		// start next turn if combat is still ongoing
+		if(!CheckForCombatEnd()) LaunchNextTurn();
 	}
 
 	private void ControlOpponentTurn()
 	{
+		// select AI's skill
 		currentlySelectedSkill = 0;
-		UseSkill(new Vector2Int(0, Random.Range(0, combatants.GetLength(0)) + 1));
+
+		List<Vector2Int> validTargets = new List<Vector2Int>();
+		for (int i = 0; i < combatants.GetLength(1); i++)
+			if(combatants[0, i] != null && combatants[0, i].currentHealth != 0)
+				validTargets.Add(combatants[0, i].currentCombatPosition);
+
+		if(validTargets.Count > 0)
+		{
+			Vector2Int targetPos;
+			targetPos = validTargets[Random.Range(0, validTargets.Count)];
+			UseCombatSkill(targetPos);
+		}
+		else
+			EndTurn(); // -> do nothing and end turn if no valid target was found
 	}
 	#endregion
 
@@ -178,7 +194,7 @@ public class CombatManager : MonoBehaviour
             for (int y = 0; y < combatants.GetLength(1); y++)
             {
                 Entity tempEntity = combatants[x, y];
-                if (tempEntity == null) continue;
+                if (tempEntity == null || tempEntity.currentHealth == 0) continue;
 
                 tempEntity.currentInitiative += tempEntity.currentSpeed;
                 if (tempEntity.currentInitiative >= 100)
@@ -240,7 +256,8 @@ public class CombatManager : MonoBehaviour
 		}
 	}
 
-	private void UseSkill(Vector2Int mainTarget)
+	#region Character Action Handling
+	private void UseCombatSkill(Vector2Int mainTarget)
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
@@ -261,7 +278,7 @@ public class CombatManager : MonoBehaviour
 		for(int i = 0; i < targets.Length; i++)
 		{
 			Instantiate(skill.FxPrefab, proxyArr[i].transform);
-			ApplySkill(GetEntity(upcomingTurns[0]), entityArr[i], skill);
+			ApplyCombatSkill(GetEntity(upcomingTurns[0]), entityArr[i], skill);
 		}
 		
 		// wait until the dmg fx has faded
@@ -271,11 +288,14 @@ public class CombatManager : MonoBehaviour
 			yield return null;
 		}
 
-		// initiate next turn by ending current one
+		// check for targets death
+		for (int i = 0; i < targets.Length; i++)
+			if (GetEntity(targets[i]).currentHealth == 0) TriggerDeath(GetEntity(targets[i]).currentCombatPosition);
+	
 		EndTurn();
 	}
 
-	private void ApplySkill(Entity caster, Entity target, CombatSkill skill)
+	private void ApplyCombatSkill(Entity caster, Entity target, CombatSkill skill)
 	{
 		int actualDamage = (int)Mathf.Max(0f, caster.currentAttack * skill.DamageMultiplier - target.currentDefense);
 		ApplyDamage(target, actualDamage);
@@ -284,7 +304,53 @@ public class CombatManager : MonoBehaviour
 	private void ApplyDamage(Entity target, int trueDamage)
 	{
 		target.currentHealth = Mathf.Max(0, target.currentHealth - trueDamage);
-		Debug.Log(target.currentHealth);
+	}
+
+	private void TriggerDeath(Vector2Int dyingCharPos)
+	{
+		upcomingTurns.Remove(dyingCharPos); // TODO: check if this ever throws an exception
+		GetEntity(dyingCharPos).currentInitiative = 0;
+
+		GameObject proxy = GetProxy(dyingCharPos); 
+		proxy.GetComponent<Animator>().enabled = false; // pause anim
+		proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
+
+		// TODO edit portrait
+	}
+	#endregion
+
+	private bool CheckForCombatEnd()
+	{
+		bool playerAlive = false;
+		bool opponentAlive = false;
+
+		for(int x = 0; x < combatants.GetLength(0); x++)
+		{
+			for(int y = 0; y < combatants.GetLength(1); y++)
+			{
+				if (combatants[x, y] != null && combatants[x, y].currentHealth != 0)
+				{
+					if (x == 0) playerAlive = true;
+					else opponentAlive = true;
+				}
+			}
+		}
+
+		if (playerAlive && opponentAlive) return false;
+
+		// playerWon == null means a draw ocurred
+		bool? playerWon = null;
+		if (!playerAlive && opponentAlive) playerWon = false;
+		if (playerAlive && !opponentAlive) playerWon = true;
+		EndCombatPhase(playerWon);
+
+		// tell the combat loop that its love relationship is done
+		return true;
+	}
+
+	private void EndCombatPhase(bool? playerWon)
+	{
+		Debug.Log("Player Victory: " + playerWon);
 	}
 	#endregion
 
