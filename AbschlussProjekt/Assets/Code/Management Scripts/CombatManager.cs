@@ -32,6 +32,7 @@ public class CombatManager : MonoBehaviour
 	}
 
 	private LayerMask clickableLayers;
+	private float healthbarAdjustmentSpeed = 10f;
 	#endregion
 
 	#region Combat Startup
@@ -39,7 +40,7 @@ public class CombatManager : MonoBehaviour
 	{
 		clickableLayers = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").clickableLayers;
 	}
-
+	
 	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
 	{
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
@@ -48,7 +49,7 @@ public class CombatManager : MonoBehaviour
 			for (int y = 0; y < combatants.GetLength(1); y++)
 				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
 
-		SetPortraits();
+		InitializeUI();
 		InitializeEntities();
 		InstantiateProxyPrefabs();
 
@@ -57,10 +58,11 @@ public class CombatManager : MonoBehaviour
 	}
 	#endregion
 
-	#region User Input
+	#region Update
 	private void Update()
 	{
 		CheckForUserInput();
+		UpdateHealthBars();
 	}
 
 	private void CheckForUserInput()
@@ -82,17 +84,10 @@ public class CombatManager : MonoBehaviour
 	#endregion
 
 	#region Single Calls
-	private void SetPortraits()
+	private void InitializeUI()
     {
-        for (int x = 0; x < combatants.GetLength(0); x++)
-        {
-            for (int y = 0; y < combatants.GetLength(1); y++)
-            {
-                bool check = combatants[x, y] != null;
-                combatPanel.TeamPortraits[x, y].enabled = check;
-				combatPanel.TeamPortraits[x, y].sprite = check ? combatants[x, y].CharDataContainer.Portrait : null;
-            }
-        }
+		UpdatePortraits();
+		//UpdateHealthBars();
     }
 
     private void InitializeEntities()
@@ -211,6 +206,40 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+	private void UpdatePortraits()
+	{
+		for (int x = 0; x < combatants.GetLength(0); x++)
+		{
+			for (int y = 0; y < combatants.GetLength(1); y++)
+			{
+				bool check = combatants[x, y] != null;
+				combatPanel.TeamPortraits[x, y].enabled = check;
+				combatPanel.TeamPortraits[x, y].sprite = check ? combatants[x, y].CharDataContainer.Portrait : null;
+			}
+		}
+	}
+
+	private void UpdateHealthBars()
+	{
+		for (int x = 0; x < combatants.GetLength(0); x++)
+		{
+			for (int y = 0; y < combatants.GetLength(1); y++)
+			{
+				bool check = combatants[x, y] != null;
+				combatPanel.HealthBars[x, y].gameObject.SetActive(check);
+				if (check)
+				{
+					combatPanel.HealthBars[x, y].maxValue = combatants[x, y].currentMaxHealth;
+					combatPanel.HealthBars[x, y].value = 
+						Mathf.MoveTowards
+						(combatPanel.HealthBars[x, y].value,
+						combatants[x, y].currentHealth,
+						healthbarAdjustmentSpeed * Time.deltaTime);
+				}
+			}
+		}
+	}
+
 	private void UseSkill(Vector2Int mainTarget)
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
@@ -249,7 +278,13 @@ public class CombatManager : MonoBehaviour
 	private void ApplySkill(Entity caster, Entity target, CombatSkill skill)
 	{
 		int actualDamage = (int)Mathf.Max(0f, caster.currentAttack * skill.DamageMultiplier - target.currentDefense);
-		//Debug.Log("DMG: " + actualDamage + " " + caster.currentAttack + " " + target.currentDefense + " " + skill.DamageMultiplier);
+		ApplyDamage(target, actualDamage);
+	}
+
+	private void ApplyDamage(Entity target, int trueDamage)
+	{
+		target.currentHealth = Mathf.Max(0, target.currentHealth - trueDamage);
+		Debug.Log(target.currentHealth);
 	}
 	#endregion
 

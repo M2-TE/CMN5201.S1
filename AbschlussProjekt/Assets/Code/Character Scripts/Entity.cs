@@ -104,6 +104,7 @@ public class Entity
 
 	#region Combat Stats
 	public int baseHealth;
+	public int currentMaxHealth;
     public int currentHealth;
 
     public int baseAttack;
@@ -153,6 +154,7 @@ public class Entity
 
 
         baseHealth = charDataContainer.BaseHealth;
+		currentMaxHealth = baseHealth;
         currentHealth = baseHealth;
 
         baseAttack = charDataContainer.BaseAttack;

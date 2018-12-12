@@ -43,4 +43,23 @@ public class CombatPanel : UIPanel
 			return characterPositions;
 		}
 	}
+
+	[SerializeField] private Slider[] playerHealthBars, opposingTeamHealthBars;
+	private Slider[,] healthBars;
+	public Slider[,] HealthBars
+	{
+		get
+		{
+			if (healthBars != null) return healthBars;
+
+			healthBars = new Slider[2,
+				(playerHealthBars.Length > opposingTeamHealthBars.Length)
+				? playerHealthBars.Length
+				: opposingTeamHealthBars.Length];
+			for (int x = 0; x < healthBars.GetLength(0); x++)
+				for (int y = 0; y < healthBars.GetLength(1); y++)
+					healthBars[x, y] = (x == 0) ? playerHealthBars[y] : opposingTeamHealthBars[y];
+			return healthBars;
+		}
+	}
 }
