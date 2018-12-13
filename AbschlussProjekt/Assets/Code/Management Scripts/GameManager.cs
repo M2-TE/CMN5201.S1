@@ -39,10 +39,6 @@ public class GameManager : MonoBehaviour {
         savefile.Gold = 0;
         savefile.Souls = 0;
         savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
-		
-		savefile.CurrentTeam[0].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[0].CharDataContainer.FullSkillPool[0], null, null, null });
-        savefile.CurrentTeam[1].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[1].CharDataContainer.FullSkillPool[0], null, null, null });
-		savefile.CurrentTeam[2].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[2].CharDataContainer.FullSkillPool[0], null, null, null });
 
 		AssetManager.Instance.Save(savefile);
     }

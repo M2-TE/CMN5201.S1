@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
@@ -18,16 +16,16 @@ public class CombatManager : MonoBehaviour
     private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
     private int totalTurns = 0;
     
-    private int? m_currentlySelectedSkill;
-	private int? currentlySelectedSkill
+    private int m_currentlySelectedSkill;
+	private int currentlySelectedSkill
 	{
 		get { return m_currentlySelectedSkill; }
 		set
 		{
 			// deselect previous skill if one was selected
-			if (m_currentlySelectedSkill != null) combatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
+			combatPanel.TeamSkillButtons[m_currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
 			m_currentlySelectedSkill = value;
-			if(value != null) combatPanel.TeamSkillButtons[(int)currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
+			combatPanel.TeamSkillButtons[m_currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
 		}
 	}
 
@@ -76,7 +74,7 @@ public class CombatManager : MonoBehaviour
 
 	private void OnCharacterSelect(Vector2Int characterPos)
 	{
-		if (currentlySelectedSkill == null || !GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0) return;
+		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0) return;
 
 		SetButtonsEnabled(false);
 		UseCombatSkill(characterPos);
@@ -142,7 +140,7 @@ public class CombatManager : MonoBehaviour
 	private void HandleCurrentTurn()
 	{
 		// change this to choose the last-selected or first skill of that character
-		currentlySelectedSkill = null;
+		currentlySelectedSkill = 0;
 		UpdateSkillIcons();
 
 		if (upcomingTurns[0].x == 1)
@@ -153,7 +151,9 @@ public class CombatManager : MonoBehaviour
 		else
 		{
 			SetButtonsEnabled(true);
-			OnSkillSelect(0);
+			OnSkillSelect(currentlySelectedSkill);
+			combatPanel.EventSystem.SetSelectedGameObject(null);
+			combatPanel.EventSystem.SetSelectedGameObject(combatPanel.TeamSkillButtons[0].gameObject);
 		}
 	}
 	
@@ -185,22 +185,21 @@ public class CombatManager : MonoBehaviour
 		else
 			EndTurn(); // -> do nothing and end turn if no valid target was found
 	}
-	#endregion
 
 	private void ProgressInits()
-    {
-        for (int x = 0; x < combatants.GetLength(0); x++)
-        {
-            for (int y = 0; y < combatants.GetLength(1); y++)
-            {
-                Entity tempEntity = combatants[x, y];
-                if (tempEntity == null || tempEntity.currentHealth == 0) continue;
+	{
+		for (int x = 0; x < combatants.GetLength(0); x++)
+		{
+			for (int y = 0; y < combatants.GetLength(1); y++)
+			{
+				Entity tempEntity = combatants[x, y];
+				if (tempEntity == null || tempEntity.currentHealth == 0) continue;
 
-                tempEntity.currentInitiative += tempEntity.currentSpeed;
-                if (tempEntity.currentInitiative >= 100)
+				tempEntity.currentInitiative += tempEntity.currentSpeed;
+				if (tempEntity.currentInitiative >= 100)
 					upcomingTurns.Add(new Vector2Int(x, y));
 			}
-        }
+		}
 		// Repeat until an entity gains a turn
 		if (upcomingTurns.Count == 0) ProgressInits();
 
@@ -208,6 +207,7 @@ public class CombatManager : MonoBehaviour
 		else upcomingTurns.Sort((first, second)
 				=> GetEntity(second).currentInitiative.CompareTo(GetEntity(first).currentInitiative));
 	}
+	#endregion
 
 	#region UI Updates
 	private void UpdateSkillIcons()
@@ -256,6 +256,11 @@ public class CombatManager : MonoBehaviour
 			}
 		}
 	}
+
+	private void UpdateSelectableTargets()
+	{
+
+	}
 	#endregion
 
 	#region Character Action Handling
@@ -273,7 +278,7 @@ public class CombatManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(attackDelay);
 
-		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[(int)currentlySelectedSkill];
+		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
 		GameObject[] proxyArr = GetProxies(targets);
 		Transform effectTransform = null;
 
@@ -398,9 +403,11 @@ public class CombatManager : MonoBehaviour
 	#region Public Button Methods
 	public void OnSkillSelect(int skillID)
     {
-        if (upcomingTurns[0].x == 1 || combatants[upcomingTurns[0].x, upcomingTurns[0].y].EquippedCombatSkills.Length <= skillID) return;
+        if (upcomingTurns[0].x == 1 || GetEntity(upcomingTurns[0]).EquippedCombatSkills[skillID] == null) return;
 
 		currentlySelectedSkill = skillID;
+
+		UpdateSelectableTargets();
     }
 	#endregion
 }

@@ -1,9 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CombatPanel : UIPanel
 {
 	public Image[] TeamSkillButtons;
+
+	private EventSystem eventSystem;
+	public EventSystem EventSystem
+	{
+		get
+		{
+			return eventSystem ?? (eventSystem = transform.parent.GetComponentInChildren<EventSystem>());
+		}
+	}
 
 	[SerializeField] private Image[] playerTeamPortraits, opposingTeamPortraits;
 	private Image[,] teamPortraits;

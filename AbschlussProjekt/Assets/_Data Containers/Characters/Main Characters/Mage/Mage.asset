@@ -20,8 +20,10 @@ MonoBehaviour:
   BaseSpeed: 9
   FullSkillPool:
   - {fileID: 11400000, guid: 22f4a96d88feda3449368a2d681ba626, type: 2}
+  - {fileID: 11400000, guid: a7da474a669a8ec4483812691f9ce651, type: 2}
   FallbackSkills:
   - {fileID: 11400000, guid: 22f4a96d88feda3449368a2d681ba626, type: 2}
+  - {fileID: 11400000, guid: a7da474a669a8ec4483812691f9ce651, type: 2}
   CharacterControllerPrefab: {fileID: 0}
   MovespeedMod: 40
   JumpMod: 10

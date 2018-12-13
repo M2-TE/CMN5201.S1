@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67a174a5467150c438bd4237a0230095
+guid: 410110703fa9c7d4cb507b7970184ee1
 labels:
-- Character
+- Skill
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 
-  assetBundleName: characters/main characters
+  assetBundleName: 
   assetBundleVariant: 
