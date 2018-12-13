@@ -3,21 +3,24 @@
 [CreateAssetMenu(fileName = "New Combat Effect", menuName = "Data Container/Skills/Combat Effect")]
 public class CombatEffect : DataContainer
 {
-	public bool IsBuff;
 	public bool IsActivatedAtStart;
+	public Sprite EffectSprite;
 	[Space(10)]
-	public int FlatMaxHealthModifier;
-	public float MaxHealthModifier;
+	public int Duration = 1;
+
 	[Space(10)]
-	public int FlatHealthModifier;
-	public float HealthModifier;
+	public float MaxHealthModifier = 1;
+	public int FlatMaxHealthModifier = 0;
 	[Space(10)]
-	public int FlatAttackModifier;
-	public float AttackModifier;
+	public float HealthModifier = 1;
+	public int FlatHealthModifier = 0;
 	[Space(10)]
-	public int FlatDefenseModifier;
-	public float DefenseModifier;
+	public float AttackModifier = 1;
+	public int FlatAttackModifier = 0;
 	[Space(10)]
-	public int FlatSpeedModifier;
-	public float SpeedModifier;
+	public float DefenseModifier = 1;
+	public int FlatDefenseModifier = 0;
+	[Space(10)]
+	public float SpeedModifier = 1;
+	public int FlatSpeedModifier = 0;
 }

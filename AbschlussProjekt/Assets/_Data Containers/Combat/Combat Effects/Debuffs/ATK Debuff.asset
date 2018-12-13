@@ -9,17 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3c62f8a70bbbfe4eb87643469f5d814, type: 3}
-  m_Name: Heal Buff
+  m_Name: ATK Debuff
   m_EditorClassIdentifier: 
-  IsBuff: 1
-  IsActivatedAtStart: 1
+  IsActivatedAtStart: 0
+  EffectSprite: {fileID: 0}
+  Duration: 1
+  MaxHealthModifier: 1
   FlatMaxHealthModifier: 0
-  MaxHealthModifier: 0
-  FlatHealthModifier: 2
-  HealthModifier: 0
+  HealthModifier: 1
+  FlatHealthModifier: 0
+  AttackModifier: 0.5
   FlatAttackModifier: 0
-  AttackModifier: 0
+  DefenseModifier: 1
   FlatDefenseModifier: 0
-  DefenseModifier: 0
+  SpeedModifier: 1
   FlatSpeedModifier: 0
-  SpeedModifier: 0

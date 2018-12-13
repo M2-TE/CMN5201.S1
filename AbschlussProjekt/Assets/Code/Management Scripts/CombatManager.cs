@@ -209,7 +209,8 @@ public class CombatManager : MonoBehaviour
 				=> GetEntity(second).currentInitiative.CompareTo(GetEntity(first).currentInitiative));
 	}
 
-    private void UpdateSkillIcons()
+	#region UI Updates
+	private void UpdateSkillIcons()
     {
         for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
         {
@@ -255,6 +256,7 @@ public class CombatManager : MonoBehaviour
 			}
 		}
 	}
+	#endregion
 
 	#region Character Action Handling
 	private void UseCombatSkill(Vector2Int mainTarget)
@@ -264,21 +266,20 @@ public class CombatManager : MonoBehaviour
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
 		Vector2Int[] targets = new Vector2Int[] { mainTarget };
 
-		StartCoroutine(ApplyFX(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
+		StartCoroutine(LaunchAttack(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
 	}
 
-	private IEnumerator ApplyFX(float attackDelay, Vector2Int[] targets)
+	private IEnumerator LaunchAttack(float attackDelay, Vector2Int[] targets)
 	{
 		yield return new WaitForSeconds(attackDelay);
 
 		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[(int)currentlySelectedSkill];
 		GameObject[] proxyArr = GetProxies(targets);
-		Entity[] entityArr = GetEntities(targets);
 
 		for(int i = 0; i < targets.Length; i++)
 		{
 			Instantiate(skill.FxPrefab, proxyArr[i].transform);
-			ApplyCombatSkill(GetEntity(upcomingTurns[0]), entityArr[i], skill);
+			ApplyCombatSkill(upcomingTurns[0], targets[i], skill);
 		}
 		
 		// wait until the dmg fx has faded
@@ -295,15 +296,15 @@ public class CombatManager : MonoBehaviour
 		EndTurn();
 	}
 
-	private void ApplyCombatSkill(Entity caster, Entity target, CombatSkill skill)
+	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
-		int actualDamage = (int)Mathf.Max(0f, caster.currentAttack * skill.DamageMultiplier - target.currentDefense);
+		int actualDamage = (int)Mathf.Max(0f, GetEntity(caster).currentAttack * skill.DamageMultiplier - GetEntity(target).currentDefense);
 		ApplyDamage(target, actualDamage);
 	}
 
-	private void ApplyDamage(Entity target, int trueDamage)
+	private void ApplyDamage(Vector2Int target, int trueDamage)
 	{
-		target.currentHealth = Mathf.Max(0, target.currentHealth - trueDamage);
+		GetEntity(target).currentHealth = Mathf.Max(0, GetEntity(target).currentHealth - trueDamage);
 	}
 
 	private void TriggerDeath(Vector2Int dyingCharPos)
@@ -319,6 +320,7 @@ public class CombatManager : MonoBehaviour
 	}
 	#endregion
 
+	#region Combat End Handling
 	private bool CheckForCombatEnd()
 	{
 		bool playerAlive = false;
@@ -352,6 +354,7 @@ public class CombatManager : MonoBehaviour
 	{
 		Debug.Log("Player Victory: " + playerWon);
 	}
+	#endregion
 	#endregion
 
 	#region Utility Methods
