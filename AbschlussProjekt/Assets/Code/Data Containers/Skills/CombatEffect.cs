@@ -5,6 +5,7 @@ public class CombatEffect : DataContainer
 {
 	public bool IsActivatedRepeatedly;
 	public Sprite EffectSprite;
+	[TextArea] public string EffectDescription = "Missing Effect Description";
 	[Space(10)]
 	public int Duration = 1;
 

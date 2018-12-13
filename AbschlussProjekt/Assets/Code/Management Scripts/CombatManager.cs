@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CombatManager : MonoBehaviour
 	// change this \/ to DataContainer ref
 	[SerializeField] private CombatPanel combatPanel;
 	[SerializeField] private EventSystem eventSystem;
+	[SerializeField] private GameObject combatEffectPrefab;
 
     // first dimension for team (0 player, 1 opponent), second dimension for specific character
     private Entity[,] combatants;
@@ -50,16 +52,16 @@ public class CombatManager : MonoBehaviour
 			for (int y = 0; y < combatants.GetLength(1); y++)
 				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
 
-		InitializeUI();
 		InitializeEntities();
 		InstantiateProxyPrefabs();
+		InitializeUI();
 
 		// initiate combat loop
 		LaunchNextTurn();
 	}
 	#endregion
 
-	#region User Input, Health Bar Updates (TODO: this update doesnt need to be called every frame)
+	#region User Input
 	private void Update()
 	{
 		CheckForUserInput();
@@ -87,8 +89,8 @@ public class CombatManager : MonoBehaviour
 	private void InitializeUI()
     {
 		UpdatePortraits();
-		UpdateHealthBars();
-    }
+		StartCoroutine(UpdateHealthBars());
+	}
 
     private void InitializeEntities()
     {
@@ -102,6 +104,8 @@ public class CombatManager : MonoBehaviour
 				{
 					tempEntity.currentInitiative = 0;
 					tempEntity.currentCombatPosition = new Vector2Int(x, y);
+					tempEntity.currentCombatEffects = new Dictionary<CombatEffect, int>();
+					tempEntity.currentCombatEffectGOs = new Dictionary<CombatEffect, GameObject>();
 				}
 			}
 		}
@@ -363,7 +367,39 @@ public class CombatManager : MonoBehaviour
 	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
 		int actualDamage = (int)Mathf.Max(0f, GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense);
+		ApplyCombatEffects(caster, target, skill);
 		ApplyDamage(target, actualDamage);
+	}
+
+	private void ApplyCombatEffects(Vector2Int caster, Vector2Int target, CombatSkill skill)
+	{
+		// applied combat effects
+		for (int i = 0; i < skill.AppliedCombatEffects.Length; i++)
+		{
+			CombatEffect effect = skill.AppliedCombatEffects[i];
+			if (!GetEntity(target).currentCombatEffects.ContainsKey(effect))
+				AddEffectToEntity(target, effect);
+			else Debug.Log("Effect already on target");
+		}
+
+
+		// self inflicted combat effects
+		for (int i = 0; i < skill.SelfInflictedCombatEffects.Length; i++)
+		{
+
+		}
+	}
+
+	private void AddEffectToEntity(Vector2Int target, CombatEffect effect)
+	{
+		Entity targetEntity = GetEntity(target);
+		Transform parent = combatPanel.CombatEffectAnchors[target.x, target.y];
+
+		targetEntity.currentCombatEffects.Add(effect, effect.Duration);
+		targetEntity.currentCombatEffectGOs.Add(effect, Instantiate(combatEffectPrefab, parent));
+
+		targetEntity.currentCombatEffectGOs[effect].GetComponent<Image>().sprite = effect.EffectSprite;
+		targetEntity.currentCombatEffectGOs[effect].transform.Translate(new Vector3((targetEntity.currentCombatEffects.Count - 1) * 30f, 0f, 0f));
 	}
 
 	private void ApplyDamage(Vector2Int target, int trueDamage)

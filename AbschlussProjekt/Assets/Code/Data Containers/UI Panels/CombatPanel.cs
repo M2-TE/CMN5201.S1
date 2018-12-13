@@ -30,6 +30,21 @@ public class CombatPanel : UIPanel
 		}
 	}
 
+	private Transform[,] combatEffectAnchors;
+	public Transform[,] CombatEffectAnchors
+	{
+		get
+		{
+			if (combatEffectAnchors != null) return combatEffectAnchors;
+
+			combatEffectAnchors = new Transform[HealthBars.GetLength(0), HealthBars.GetLength(1)];
+			for (int x = 0; x < combatEffectAnchors.GetLength(0); x++)
+				for (int y = 0; y < combatEffectAnchors.GetLength(1); y++)
+					combatEffectAnchors[x, y] = HealthBars[x, y].transform.Find("Combat Effect Anchor").transform;
+			return combatEffectAnchors;
+		}
+	}
+
 	[SerializeField] private Image[] playerTeamPortraits, opposingTeamPortraits;
 	private Image[,] teamPortraits;
 	public Image[,] TeamPortraits
@@ -49,7 +64,6 @@ public class CombatPanel : UIPanel
 			return teamPortraits;
 		}
 	}
-
 
     [SerializeField] private GameObject[] playerCharacterPositions, opposingTeamCharacterPositions;
 	private GameObject[,] characterPositions;

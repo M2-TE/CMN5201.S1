@@ -118,6 +118,9 @@ public class Entity
     public int currentInitiative;
 	
 	[NonSerialized] public Vector2Int currentCombatPosition;
+	// value of this dictionary is the remaining duration of the corresponding effect
+	[NonSerialized] public Dictionary<CombatEffect, int> currentCombatEffects;
+	[NonSerialized] public Dictionary<CombatEffect, GameObject> currentCombatEffectGOs;
     #endregion
 
     public void Unload()
@@ -140,8 +143,6 @@ public class Entity
 
         entityType = charDataContainer.name;
         this.charDataContainer = charDataContainer;
-
-
 	  
         equippedCombatSkillStrings = new string[4];
 		ResetCombatSkills();
@@ -149,9 +150,6 @@ public class Entity
         equippedWeaponString = "";
 
         equippedArmorString = "";
-
-
-
 
         baseHealth = charDataContainer.BaseHealth;
 		currentMaxHealth = baseHealth;

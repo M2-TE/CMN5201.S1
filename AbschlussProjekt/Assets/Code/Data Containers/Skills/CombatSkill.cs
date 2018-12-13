@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Skill", menuName = "Data Container/Skills/Skill")]
 public class CombatSkill : DataContainer
 {
-    public Sprite SkillIcon;
+	public Sprite SkillIcon;
 	public GameObject FxPrefab;
+	[TextArea] public string SkillDescription = "Skill Description Missing";
 	public bool CanHitEnemies = true;
 	public bool CanHitAllies = false;
 	public bool CanHitSelf = false;
