@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "New Combat Effect", menuName = "Data Container/Skills/Combat Effect")]
 public class CombatEffect : DataContainer
 {
-	public bool IsActivatedAtStart;
+	public bool IsActivatedRepeatedly;
 	public Sprite EffectSprite;
 	[Space(10)]
 	public int Duration = 1;

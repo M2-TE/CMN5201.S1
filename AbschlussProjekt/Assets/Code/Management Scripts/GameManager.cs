@@ -2,13 +2,18 @@
 using UnityEditor;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-    private Savestate savefile;
+public class GameManager : MonoBehaviour
+{
+	[SerializeField] private Texture2D mouse;
+	[SerializeField] private CursorMode mode;
+
+	private Savestate savefile;
     private CombatManager combatManager;
     private Entity[] playerTeam;
-
     private void Start ()
     {
+		Cursor.SetCursor(mouse, Vector2.zero, mode);
+
         combatManager = GetComponent<CombatManager>();
 
         SaveDebugging(/* remove this later */);
@@ -39,10 +44,6 @@ public class GameManager : MonoBehaviour {
         savefile.Gold = 0;
         savefile.Souls = 0;
         savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
-		
-		savefile.CurrentTeam[0].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[0].CharDataContainer.FullSkillPool[0], null, null, null });
-        savefile.CurrentTeam[1].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[1].CharDataContainer.FullSkillPool[0], null, null, null });
-		savefile.CurrentTeam[2].SetCombatSkills(new CombatSkill[] { savefile.CurrentTeam[2].CharDataContainer.FullSkillPool[0], null, null, null });
 
 		AssetManager.Instance.Save(savefile);
     }

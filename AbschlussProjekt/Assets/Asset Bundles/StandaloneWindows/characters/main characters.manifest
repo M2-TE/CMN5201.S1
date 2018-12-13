@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3583359176
+CRC: 4193945294
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9b9ee70796332944dd65d911a36fa91a
+    Hash: ba730146f7806b11d99be38a9b2cdb04
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 375668f05b659a48a875096f33d98e78
+    Hash: 17bfc9e1660e1f375319d80b4608e0c6
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -50,7 +50,13 @@ ClassTypes:
 - Class: 221
   Script: {instanceID: 0}
 Assets:
-- Assets/_Data Containers/Characters/Main Characters/Gunwoman.asset
-- Assets/_Data Containers/Characters/Main Characters/Mage.asset
-- Assets/_Data Containers/Characters/Main Characters/Knight.asset
+- Assets/_Data Containers/Characters/Main Characters/Gunwoman/Gunwoman.asset
+- Assets/_Data Containers/Characters/Main Characters/Gunwoman/Skills/Haste.asset
+- Assets/_Data Containers/Characters/Main Characters/Mage/Mage.asset
+- Assets/_Data Containers/Characters/Main Characters/Knight/Knight.asset
+- Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Slash.asset
+- Assets/_Data Containers/Characters/Main Characters/Mage/Skills/Synthesis.asset
+- Assets/_Data Containers/Characters/Main Characters/Gunwoman/Skills/Shot.asset
+- Assets/_Data Containers/Characters/Main Characters/Mage/Skills/Blast.asset
+- Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Shield Up.asset
 Dependencies: []

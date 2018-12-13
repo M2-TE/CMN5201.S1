@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
+  m_Name: Gunwoman
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 1384919901097706, guid: f5ed942b2c6d51d41966cc1d21e4ee68, type: 2}
+  Portrait: {fileID: 21300000, guid: 73d61b000b9d6394ab55e9697f73a325, type: 3}
+  attackAnimDelay: 0.65
+  BaseHealth: 10
+  BaseAttack: 4
+  BaseDefense: 0
+  BaseSpeed: 11
+  FullSkillPool:
+  - {fileID: 11400000, guid: e6a79bfcb47739249b5c4b98f1cf8722, type: 2}
+  - {fileID: 11400000, guid: 410110703fa9c7d4cb507b7970184ee1, type: 2}
+  FallbackSkills:
+  - {fileID: 11400000, guid: e6a79bfcb47739249b5c4b98f1cf8722, type: 2}
+  - {fileID: 11400000, guid: 410110703fa9c7d4cb507b7970184ee1, type: 2}
+  CharacterControllerPrefab: {fileID: 1258901681556162, guid: ce0cc4abec5b48b41bd25b52f16b9ab3,
+    type: 2}
+  MovespeedMod: 20
+  GroundDrag: 10
+  AirDrag: 0.5
+  AttackDelay: 1.05
+  JumpMod: 0.6
+  MaxJumps: 2
+  GaugePerSecond: 3
+  DashDuration: 0.1
+  DashMod: 6
+  AirJumpDirMod: 3
+  AirJumpMod: 0.5
