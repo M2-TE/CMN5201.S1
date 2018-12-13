@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-    private Savestate savefile;
+public class GameManager : MonoBehaviour
+{
+	private Savestate savefile;
     private CombatManager combatManager;
     private Entity[] playerTeam;
-
     private void Start ()
     {
         combatManager = GetComponent<CombatManager>();

@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 410110703fa9c7d4cb507b7970184ee1, type: 2}
   CharacterControllerPrefab: {fileID: 1258901681556162, guid: ce0cc4abec5b48b41bd25b52f16b9ab3,
     type: 2}
-  MovespeedMod: 40
+  MovespeedMod: 20
   JumpMod: 10
   GroundDrag: 10
   AirDrag: 0.5

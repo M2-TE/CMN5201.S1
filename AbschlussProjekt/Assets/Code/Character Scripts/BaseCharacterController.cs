@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class BaseCharacterController : MonoBehaviour {
     #region Variables
-    [NonSerialized] public static bool characterControlEnabled;
-
+    [NonSerialized] public static bool characterControlEnabled = true;
+	 
 
     [SerializeField]
     protected PlayableCharacter charDataContainer;
