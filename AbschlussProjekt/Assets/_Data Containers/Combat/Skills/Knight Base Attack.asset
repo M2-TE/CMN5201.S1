@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
+  m_Name: Knight Base Attack
+  m_EditorClassIdentifier: 
+  SkillIcon: {fileID: 21300000, guid: e6e0ff50bfb01f742afa07da9c753611, type: 3}
+  FxPrefab: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e, type: 2}
+  DamageMultiplier: 1
+  Range: 2
+  AppliedCombatEffects: []
+  SelfInflictedCombatEffects:
+  - {fileID: 11400000, guid: ef3ae3f4d49922046ae82e0f51caa966, type: 2}
+  - {fileID: 11400000, guid: 91932b74780c40b4a9675f29cb0a3161, type: 2}

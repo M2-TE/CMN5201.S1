@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectiveEffectManager : MonoBehaviour
 {
-    [SerializeField] private int framerate = 16;
+    [SerializeField] private int framerate = 12;
 
     #region Static
     private static List<CollectiveEffect> effects = new List<CollectiveEffect>();

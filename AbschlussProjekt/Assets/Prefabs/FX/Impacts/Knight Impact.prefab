@@ -59,8 +59,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d0f31f89a0ebae44884312da7dc92323, type: 3}
   - {fileID: 21300000, guid: d654b31e438bb834b886e482455b8080, type: 3}
   - {fileID: 21300000, guid: 809e7675cfec9994b90e169cbc35036a, type: 3}
+  initialFrameOffset: 0
   looping: 0
-  framerateOverride: 16
+  lingeringDuration: 0.3
+  framerateOverride: 12
 --- !u!212 &212355009442282444
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -94,7 +96,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -194721291
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

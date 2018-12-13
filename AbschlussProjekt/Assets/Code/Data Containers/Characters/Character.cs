@@ -6,6 +6,7 @@ public abstract class Character : DataContainer
 {
     public GameObject Prefab;
     public Sprite Portrait;
+	public float attackAnimDelay;
 
     [Header("Combat Stats")]
     public int BaseHealth;
@@ -15,4 +16,5 @@ public abstract class Character : DataContainer
 
     [Header("Combat Skills")]
     public CombatSkill[] FullSkillPool;
+	public CombatSkill[] FallbackSkills;
 }
