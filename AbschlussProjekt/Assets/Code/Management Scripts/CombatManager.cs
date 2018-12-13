@@ -63,7 +63,6 @@ public class CombatManager : MonoBehaviour
 	private void Update()
 	{
 		CheckForUserInput();
-		UpdateHealthBars();
 	}
 
 	private void CheckForUserInput()
@@ -88,7 +87,7 @@ public class CombatManager : MonoBehaviour
 	private void InitializeUI()
     {
 		UpdatePortraits();
-		//UpdateHealthBars();
+		UpdateHealthBars();
     }
 
     private void InitializeEntities()
@@ -243,24 +242,53 @@ public class CombatManager : MonoBehaviour
 		}
 	}
 
-	private void UpdateHealthBars()
+	private IEnumerator UpdateHealthBar(Vector2Int target)
 	{
-		for (int x = 0; x < combatants.GetLength(0); x++)
+		Entity targetEntity = GetEntity(target);
+		while (true)
 		{
-			for (int y = 0; y < combatants.GetLength(1); y++)
+			bool check = targetEntity != null;
+			combatPanel.HealthBars[target.x, target.y].gameObject.SetActive(check);
+			if (check)
 			{
-				bool check = combatants[x, y] != null;
-				combatPanel.HealthBars[x, y].gameObject.SetActive(check);
-				if (check)
+				combatPanel.HealthBars[target.x, target.y].maxValue = targetEntity.currentMaxHealth;
+				combatPanel.HealthBars[target.x, target.y].value =
+					Mathf.MoveTowards
+					(combatPanel.HealthBars[target.x, target.y].value,
+					targetEntity.currentHealth,
+					healthbarAdjustmentSpeed * Time.deltaTime);
+				if (combatPanel.HealthBars[target.x, target.y].value == targetEntity.currentHealth) break;
+			}
+			else break;
+			yield return null;
+		}
+	}
+	private IEnumerator UpdateHealthBars()
+	{
+		bool done = false;
+		while (true)
+		{
+			done = true;
+			for (int x = 0; x < combatants.GetLength(0); x++)
+			{
+				for (int y = 0; y < combatants.GetLength(1); y++)
 				{
-					combatPanel.HealthBars[x, y].maxValue = combatants[x, y].currentMaxHealth;
-					combatPanel.HealthBars[x, y].value = 
-						Mathf.MoveTowards
-						(combatPanel.HealthBars[x, y].value,
-						combatants[x, y].currentHealth,
-						healthbarAdjustmentSpeed * Time.deltaTime);
+					bool check = combatants[x, y] != null;
+					combatPanel.HealthBars[x, y].gameObject.SetActive(check);
+					if (check)
+					{
+						combatPanel.HealthBars[x, y].maxValue = combatants[x, y].currentMaxHealth;
+						combatPanel.HealthBars[x, y].value =
+							Mathf.MoveTowards
+							(combatPanel.HealthBars[x, y].value,
+							combatants[x, y].currentHealth,
+							healthbarAdjustmentSpeed * Time.deltaTime);
+						if (combatPanel.HealthBars[x, y].value != combatants[x, y].currentHealth) done = false;
+					}
 				}
 			}
+			if (done) break;
+			yield return null;
 		}
 	}
 
@@ -341,6 +369,7 @@ public class CombatManager : MonoBehaviour
 	private void ApplyDamage(Vector2Int target, int trueDamage)
 	{
 		GetEntity(target).currentHealth = Mathf.Max(0, GetEntity(target).currentHealth - trueDamage);
+		StartCoroutine(UpdateHealthBar(target));
 	}
 
 	private void TriggerDeath(Vector2Int dyingCharPos)
