@@ -15,6 +15,21 @@ public class CombatPanel : UIPanel
 		}
 	}
 
+	private Image[,] selectableIndicators;
+	public Image[,] SelectableIndicators
+	{
+		get
+		{
+			if (selectableIndicators != null) return selectableIndicators;
+
+			selectableIndicators = new Image[CharacterPositions.GetLength(0), CharacterPositions.GetLength(1)];
+			for(int x = 0; x < selectableIndicators.GetLength(0); x++)
+				for (int y = 0; y < selectableIndicators.GetLength(1); y++)
+					selectableIndicators[x, y] = CharacterPositions[x, y].transform.Find("Target Indicator").GetComponent<Image>();
+			return selectableIndicators;
+		}
+	}
+
 	[SerializeField] private Image[] playerTeamPortraits, opposingTeamPortraits;
 	private Image[,] teamPortraits;
 	public Image[,] TeamPortraits
@@ -34,6 +49,7 @@ public class CombatPanel : UIPanel
 			return teamPortraits;
 		}
 	}
+
 
     [SerializeField] private GameObject[] playerCharacterPositions, opposingTeamCharacterPositions;
 	private GameObject[,] characterPositions;

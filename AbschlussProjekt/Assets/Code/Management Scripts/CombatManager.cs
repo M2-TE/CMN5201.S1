@@ -13,10 +13,11 @@ public class CombatManager : MonoBehaviour
     // first dimension for team (0 player, 1 opponent), second dimension for specific character
     private Entity[,] combatants;
     private GameObject[,] proxies;
-    private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
+	private bool[,] selectableTargets;
+	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
     private int totalTurns = 0;
-    
-    private int m_currentlySelectedSkill;
+	
+	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
 	{
 		get { return m_currentlySelectedSkill; }
@@ -43,6 +44,8 @@ public class CombatManager : MonoBehaviour
 	{
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
 		proxies = new GameObject[2, combatants.GetLength(1)];
+		selectableTargets = new bool[2, combatants.GetLength(1)];
+
 		for (int x = 0; x < combatants.GetLength(0); x++)
 			for (int y = 0; y < combatants.GetLength(1); y++)
 				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
@@ -145,16 +148,20 @@ public class CombatManager : MonoBehaviour
 
 		if (upcomingTurns[0].x == 1)
 		{
+			// -> Opponents Turn
 			SetButtonsEnabled(false);
 			ControlOpponentTurn();
 		}
 		else
 		{
+			// -> Players Turn
 			SetButtonsEnabled(true);
 			OnSkillSelect(currentlySelectedSkill);
 			combatPanel.EventSystem.SetSelectedGameObject(null);
 			combatPanel.EventSystem.SetSelectedGameObject(combatPanel.TeamSkillButtons[0].gameObject);
 		}
+
+		UpdateSelectableTargets();
 	}
 	
 	private void EndTurn()
@@ -259,7 +266,34 @@ public class CombatManager : MonoBehaviour
 
 	private void UpdateSelectableTargets()
 	{
+		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+		for (int x = 0; x < combatPanel.SelectableIndicators.GetLength(0); x++)
+		{
+			for (int y = 0; y < combatPanel.SelectableIndicators.GetLength(1); y++)
+			{
+				// dont show indicator if: 1: Its an enemy's turn. 2: The spot is empty. 3: The character is dead (and no revive skill is in use)
+				Vector2Int indicPos = new Vector2Int(x, y);
+				if (upcomingTurns[0].x == 1 
+					|| GetEntity(indicPos) == null 
+					|| GetEntity(indicPos).currentHealth == 0) selectableTargets[x, y] = false;
+				else
+				{
+					// player team indicator
+					if (x == 0)
+					{
+						if (y == upcomingTurns[0].y) selectableTargets[x, y] = skill.CanHitSelf;
+						else selectableTargets[x, y] = skill.CanHitAllies && (Mathf.Abs(upcomingTurns[0].y - y) <= skill.Range);
+					}
+					//enemy team indicator
+					else
+					{
+						selectableTargets[x, y] = skill.CanHitEnemies && (upcomingTurns[0].y + y + 1 <= skill.Range);
+					}
+				}
 
+				combatPanel.SelectableIndicators[x, y].enabled = selectableTargets[x, y];
+			}
+		}
 	}
 	#endregion
 
