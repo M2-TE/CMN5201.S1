@@ -77,7 +77,7 @@ public class CombatManager : MonoBehaviour
 
 	private void OnCharacterSelect(Vector2Int characterPos)
 	{
-		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0) return;
+		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0 || !selectableTargets[characterPos.x, characterPos.y]) return;
 
 		SetButtonsEnabled(false);
 		UseCombatSkill(characterPos);
