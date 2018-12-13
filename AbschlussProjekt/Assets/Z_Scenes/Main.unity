@@ -838,9 +838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ae420040370e047ab73e352d99b86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseIcon: {fileID: 2800000, guid: 8fbecc3a4cf4ea2448c16f5d2d8c7007, type: 3}
-  cursorMode: 1
-  hotSpot: {x: 5, y: 5}
+  mouse: {fileID: 2800000, guid: 8fbecc3a4cf4ea2448c16f5d2d8c7007, type: 3}
+  mode: 0
 --- !u!114 &1803174187
 MonoBehaviour:
   m_ObjectHideFlags: 0

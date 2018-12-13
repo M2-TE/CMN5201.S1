@@ -25,8 +25,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e280c0d716a3d174fa59f4fdb3037baa, type: 2}
   - {fileID: 11400000, guid: 9137e4bdc6b7d6941bc39390b355c163, type: 2}
   CharacterControllerPrefab: {fileID: 0}
-  MovespeedMod: 40
-  JumpMod: 10
+  MovespeedMod: 20
   GroundDrag: 10
   AirDrag: 0.5
   AttackDelay: 1
+  JumpMod: 0.6
+  MaxJumps: 2
+  GaugePerSecond: 3
+  DashDuration: 0.1
+  DashMod: 6
+  AirJumpDirMod: 3
+  AirJumpMod: 0.5
