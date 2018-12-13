@@ -275,19 +275,16 @@ public class CombatManager : MonoBehaviour
 
 		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[(int)currentlySelectedSkill];
 		GameObject[] proxyArr = GetProxies(targets);
+		Transform effectTransform = null;
 
 		for(int i = 0; i < targets.Length; i++)
 		{
-			Instantiate(skill.FxPrefab, proxyArr[i].transform);
+			effectTransform = Instantiate(skill.FxPrefab, proxyArr[i].transform).transform;
 			ApplyCombatSkill(upcomingTurns[0], targets[i], skill);
 		}
 		
 		// wait until the dmg fx has faded
-		while (true)
-		{
-			if (proxyArr[0].transform.childCount == 0) break;
-			yield return null;
-		}
+		while (effectTransform != null) yield return null;
 
 		// check for targets death
 		for (int i = 0; i < targets.Length; i++)
@@ -298,7 +295,7 @@ public class CombatManager : MonoBehaviour
 
 	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
-		int actualDamage = (int)Mathf.Max(0f, GetEntity(caster).currentAttack * skill.DamageMultiplier - GetEntity(target).currentDefense);
+		int actualDamage = (int)Mathf.Max(0f, GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense);
 		ApplyDamage(target, actualDamage);
 	}
 

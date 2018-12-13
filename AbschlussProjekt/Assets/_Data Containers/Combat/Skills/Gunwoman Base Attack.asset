@@ -13,8 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 043f958b093559f4c8826c6ca4f28cf9, type: 3}
   FxPrefab: {fileID: 1272641376283932, guid: 928a173350d362849a6addd6dfd941a5, type: 2}
-  DamageMultiplier: 1
+  CanHitEnemies: 1
+  CanHitAllies: 0
+  CanHitSelf: 0
+  AttackMultiplier: 1
   Range: 7
-  AppliedCombatEffects:
-  - {fileID: 11400000, guid: 3319ef80f68413743bb70a996cfd5826, type: 2}
+  SurroundingAffectedUnits: {x: 0, y: 0}
+  AppliedCombatEffects: []
   SelfInflictedCombatEffects: []
