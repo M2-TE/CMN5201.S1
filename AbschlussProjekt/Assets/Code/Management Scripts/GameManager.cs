@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
             new Entity[] {
                 new Entity(knight),
                 new Entity(mage),
-                new Entity(mage),
-                new Entity(gunwoman)
+                new Entity(gunwoman),
+                null
             });
     }
 

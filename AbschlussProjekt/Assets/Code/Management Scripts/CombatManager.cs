@@ -17,7 +17,6 @@ public class CombatManager : MonoBehaviour
     private GameObject[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
-    private int totalTurns = 0;
 	
 	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
@@ -314,15 +313,17 @@ public class CombatManager : MonoBehaviour
 					if (x == 0)
 					{
 						if (y == upcomingTurns[0].y) selectableTargets[x, y] = skill.CanHitSelf;
-						else selectableTargets[x, y] = skill.CanHitAllies && (Mathf.Abs(upcomingTurns[0].y - y) <= skill.Range);
+						else selectableTargets[x, y] =
+								skill.CanHitAllies
+								&& (Mathf.Abs(upcomingTurns[0].y - y) <= skill.MaxRange)
+								&& (Mathf.Abs(upcomingTurns[0].y - y) >= skill.MinRange);
 					}
 					//enemy team indicator
-					else
-					{
-						selectableTargets[x, y] = skill.CanHitEnemies && (upcomingTurns[0].y + y + 1 <= skill.Range);
-					}
+					else selectableTargets[x, y] =
+							skill.CanHitEnemies
+							&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
+							&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
 				}
-
 				combatPanel.SelectableIndicators[x, y].enabled = selectableTargets[x, y];
 			}
 		}
@@ -334,17 +335,54 @@ public class CombatManager : MonoBehaviour
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
-		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		Vector2Int[] targets = new Vector2Int[] { mainTarget };
+		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+		List<Vector2Int> targetList = new List<Vector2Int>();
+		targetList.Add(mainTarget);
+		#region AoE Calculations
+		// (surroundingAffectedUnits: x => left units; y => right units)
+		Vector2Int target;
+		for (int i = 1; i < skill.SurroundingAffectedUnits.x + 1; i++) // get left targets 
+		{
+			target = new Vector2Int(mainTarget.x, mainTarget.y);
+			if (target.y > combatants.GetLength(1)) continue;
+			
+			if (target.x == 0) target.y++;
+			else if (target.x == 1)
+			{
+				if (target.y - 1 < 0) Debug.Log("overlap from opponent team to player team"); // when the target overlaps teams
+				else target.y--;
+			}
 
-		StartCoroutine(LaunchAttack(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets));
+			if (GetEntity(target) == null) continue;
+			targetList.Add(target);
+		}
+
+		for (int i = 1; i < skill.SurroundingAffectedUnits.y + 1; i++) // get right targets 
+		{
+			target = new Vector2Int(mainTarget.x, mainTarget.y);
+			if (target.y > combatants.GetLength(1)) continue;
+			
+			if (target.x == 0)
+			{
+				if (target.y - i < 0) Debug.Log("overlap from player to opponent team"); // when the target overlaps teams
+				else target.y--;
+			}
+			else if (target.x == 1) target.y++;
+
+			if (GetEntity(target) == null) continue;
+			targetList.Add(target);
+		}
+		#endregion
+
+		Vector2Int[] targets = targetList.ToArray();
+		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
+		StartCoroutine(LaunchAttack(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets, skill));
 	}
 
-	private IEnumerator LaunchAttack(float attackDelay, Vector2Int[] targets)
+	private IEnumerator LaunchAttack(float attackDelay, Vector2Int[] targets, CombatSkill skill)
 	{
 		yield return new WaitForSeconds(attackDelay);
 
-		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
 		GameObject[] proxyArr = GetProxies(targets);
 		Transform effectTransform = null;
 
@@ -366,7 +404,12 @@ public class CombatManager : MonoBehaviour
 
 	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
-		int actualDamage = (int)Mathf.Max(0f, GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense);
+		int actualDamage = Mathf.Max(1, (int)
+			(GetEntity(caster).currentAttack 
+			* skill.AttackMultiplier 
+			- GetEntity(target).currentDefense));
+			
+
 		ApplyCombatEffects(caster, target, skill);
 		ApplyDamage(target, actualDamage);
 	}
@@ -386,7 +429,10 @@ public class CombatManager : MonoBehaviour
 		// self inflicted combat effects
 		for (int i = 0; i < skill.SelfInflictedCombatEffects.Length; i++)
 		{
-
+			CombatEffect effect = skill.SelfInflictedCombatEffects[i];
+			if (!GetEntity(target).currentCombatEffects.ContainsKey(effect))
+				AddEffectToEntity(target, effect);
+			else Debug.Log("Effect already on target");
 		}
 	}
 
@@ -404,7 +450,8 @@ public class CombatManager : MonoBehaviour
 
 	private void ApplyDamage(Vector2Int target, int trueDamage)
 	{
-		GetEntity(target).currentHealth = Mathf.Max(0, GetEntity(target).currentHealth - trueDamage);
+		// clamp new health between 0 and currentMaxHealth
+		GetEntity(target).currentHealth = Mathf.Clamp(GetEntity(target).currentHealth - trueDamage, 0, GetEntity(target).currentMaxHealth);
 		StartCoroutine(UpdateHealthBar(target));
 	}
 

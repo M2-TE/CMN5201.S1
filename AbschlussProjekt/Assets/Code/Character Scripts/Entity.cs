@@ -118,9 +118,10 @@ public class Entity
     public int currentInitiative;
 	
 	[NonSerialized] public Vector2Int currentCombatPosition;
-	// value of this dictionary is the remaining duration of the corresponding effect
-	[NonSerialized] public Dictionary<CombatEffect, int> currentCombatEffects;
-	[NonSerialized] public Dictionary<CombatEffect, GameObject> currentCombatEffectGOs;
+
+	[NonSerialized] public Dictionary<CombatSkill, int> currentSkillCooldowns; // CombatSkill -> cooldown
+	[NonSerialized] public Dictionary<CombatEffect, int> currentCombatEffects; // CombatEffect -> remaining duration
+	[NonSerialized] public Dictionary<CombatEffect, GameObject> currentCombatEffectGOs; // -> CombatEffect -> corresponding proxy effect icon
     #endregion
 
     public void Unload()
