@@ -21,7 +21,7 @@ MonoBehaviour:
   Cooldown: 3
   MinRange: 0
   MaxRange: 0
-  SurroundingAffectedUnits: {x: 4, y: 0}
+  SurroundingAffectedUnits: {x: 3, y: 0}
   AppliedCombatEffects:
   - {fileID: 11400000, guid: 6d7e423b3d156a54787bbd1673e248b6, type: 2}
   SelfInflictedCombatEffects: []

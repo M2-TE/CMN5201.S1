@@ -17,17 +17,18 @@ public class CombatManager : MonoBehaviour
     private GameObject[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
-	
+
 	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
 	{
-		get { return m_currentlySelectedSkill; }
+		get
+		{
+			return m_currentlySelectedSkill;
+		}
 		set
 		{
-			// deselect previous skill if one was selected
-			combatPanel.TeamSkillButtons[m_currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(false);
 			m_currentlySelectedSkill = value;
-			combatPanel.TeamSkillButtons[m_currentlySelectedSkill].transform.GetChild(2).gameObject.SetActive(true);
+			UpdateSelectableTargets();
 		}
 	}
 
@@ -84,7 +85,7 @@ public class CombatManager : MonoBehaviour
 	}
 	#endregion
 
-	#region Single Calls
+	#region Single Calls (Combat Setup)
 	private void InitializeUI()
     {
 		UpdatePortraits();
@@ -133,7 +134,7 @@ public class CombatManager : MonoBehaviour
     }
 	#endregion
 
-	#region Combat Loop Calls
+	#region Repeated Calls (Combat Loop)
 	#region Turn Management
 	private void LaunchNextTurn()
 	{
@@ -331,6 +332,7 @@ public class CombatManager : MonoBehaviour
 	#endregion
 
 	#region Character Action Handling
+	// attack initiator \/
 	private void UseCombatSkill(Vector2Int mainTarget)
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
@@ -338,39 +340,43 @@ public class CombatManager : MonoBehaviour
 		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
 		List<Vector2Int> targetList = new List<Vector2Int>();
 		targetList.Add(mainTarget);
-		#region AoE Calculations
+
+		#region Get characters affected by AoE of attack
 		// (surroundingAffectedUnits: x => left units; y => right units)
 		Vector2Int target;
-		for (int i = 1; i < skill.SurroundingAffectedUnits.x + 1; i++) // get left targets 
+		// get left targets
+		for (int i = 1; i <= skill.SurroundingAffectedUnits.x; i++)  
 		{
 			target = new Vector2Int(mainTarget.x, mainTarget.y);
+
 			if (target.y > combatants.GetLength(1)) continue;
 			
-			if (target.x == 0) target.y++;
+			if (target.x == 0) target.y += i;
 			else if (target.x == 1)
 			{
 				if (target.y - 1 < 0) Debug.Log("overlap from opponent team to player team"); // when the target overlaps teams
-				else target.y--;
+				else target.y -= i;
 			}
 
-			if (GetEntity(target) == null) continue;
-			targetList.Add(target);
+			if (target.y >= combatants.GetLength(1) || GetEntity(target) == null) continue;
+			if (GetEntity(target).currentHealth != 0) targetList.Add(target);
 		}
-
-		for (int i = 1; i < skill.SurroundingAffectedUnits.y + 1; i++) // get right targets 
+		// get right targets 
+		for (int i = 1; i <= skill.SurroundingAffectedUnits.y; i++) 
 		{
 			target = new Vector2Int(mainTarget.x, mainTarget.y);
+
 			if (target.y > combatants.GetLength(1)) continue;
 			
 			if (target.x == 0)
 			{
 				if (target.y - i < 0) Debug.Log("overlap from player to opponent team"); // when the target overlaps teams
-				else target.y--;
+				else target.y -= i;
 			}
-			else if (target.x == 1) target.y++;
+			else if (target.x == 1) target.y += i;
 
-			if (GetEntity(target) == null) continue;
-			targetList.Add(target);
+			if (target.y >= combatants.GetLength(1) || GetEntity(target) == null) continue;
+			if(GetEntity(target).currentHealth != 0) targetList.Add(target);
 		}
 		#endregion
 
@@ -404,16 +410,23 @@ public class CombatManager : MonoBehaviour
 
 	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
-		int actualDamage = Mathf.Max(1, (int)
-			(GetEntity(caster).currentAttack 
-			* skill.AttackMultiplier 
-			- GetEntity(target).currentDefense));
-			
+		int actualDamage = 
+			(skill.AttackMultiplier > 0) // if the attack multiplier is at zero, then its a buff, not an attack (min dmg circumvented) 
+			? Mathf.Max(1, (int) (GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense))
+			: (int)(GetEntity(caster).currentAttack * skill.AttackMultiplier);
 
 		ApplyCombatEffects(caster, target, skill);
 		ApplyDamage(target, actualDamage);
 	}
+	
+	private void ApplyDamage(Vector2Int target, int trueDamage)
+	{
+		// clamp new health between 0 and currentMaxHealth
+		GetEntity(target).currentHealth = Mathf.Clamp(GetEntity(target).currentHealth - trueDamage, 0, GetEntity(target).currentMaxHealth);
+		StartCoroutine(UpdateHealthBar(target));
+	}
 
+	#region Combat Effects
 	private void ApplyCombatEffects(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
 		// applied combat effects
@@ -421,7 +434,7 @@ public class CombatManager : MonoBehaviour
 		{
 			CombatEffect effect = skill.AppliedCombatEffects[i];
 			if (!GetEntity(target).currentCombatEffects.ContainsKey(effect))
-				AddEffectToEntity(target, effect);
+				AddCombatEffectToEntity(target, effect);
 			else Debug.Log("Effect already on target");
 		}
 
@@ -431,29 +444,27 @@ public class CombatManager : MonoBehaviour
 		{
 			CombatEffect effect = skill.SelfInflictedCombatEffects[i];
 			if (!GetEntity(target).currentCombatEffects.ContainsKey(effect))
-				AddEffectToEntity(target, effect);
+				AddCombatEffectToEntity(target, effect);
 			else Debug.Log("Effect already on target");
 		}
 	}
 
-	private void AddEffectToEntity(Vector2Int target, CombatEffect effect)
+	private void AddCombatEffectToEntity(Vector2Int target, CombatEffect effect)
 	{
 		Entity targetEntity = GetEntity(target);
 		Transform parent = combatPanel.CombatEffectAnchors[target.x, target.y];
 
+		// add remaining duration and GameObject reference to entity
 		targetEntity.currentCombatEffects.Add(effect, effect.Duration);
 		targetEntity.currentCombatEffectGOs.Add(effect, Instantiate(combatEffectPrefab, parent));
 
+		// setup for the UI icon under the character
 		targetEntity.currentCombatEffectGOs[effect].GetComponent<Image>().sprite = effect.EffectSprite;
 		targetEntity.currentCombatEffectGOs[effect].transform.Translate(new Vector3((targetEntity.currentCombatEffects.Count - 1) * 30f, 0f, 0f));
-	}
 
-	private void ApplyDamage(Vector2Int target, int trueDamage)
-	{
-		// clamp new health between 0 and currentMaxHealth
-		GetEntity(target).currentHealth = Mathf.Clamp(GetEntity(target).currentHealth - trueDamage, 0, GetEntity(target).currentMaxHealth);
-		StartCoroutine(UpdateHealthBar(target));
+		effect.ApplyCombatEffectModifiers(ref targetEntity);
 	}
+	#endregion
 
 	private void TriggerDeath(Vector2Int dyingCharPos)
 	{
@@ -500,7 +511,13 @@ public class CombatManager : MonoBehaviour
 
 	private void EndCombatPhase(bool? playerWon)
 	{
+		HideUIElements();
 		Debug.Log("Player Victory: " + playerWon);
+	}
+
+	private void HideUIElements()
+	{
+
 	}
 	#endregion
 	#endregion
@@ -533,7 +550,10 @@ public class CombatManager : MonoBehaviour
 	private void SetButtonsEnabled(bool enableState)
 	{
 		for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
-			combatPanel.TeamSkillButtons[i].gameObject.SetActive(enableState);
+			combatPanel.TeamSkillButtons[i].gameObject.SetActive(
+				(GetEntity(upcomingTurns[0]).EquippedCombatSkills[i] == null) 
+				? false 
+				: enableState);
 	}
 	private bool GetButtonsEnabled()
 	{
@@ -546,14 +566,10 @@ public class CombatManager : MonoBehaviour
 	}
 	#endregion
 
-	#region Public Button Methods
+	#region Event System Calls
 	public void OnSkillSelect(int skillID)
     {
-        if (upcomingTurns[0].x == 1 || GetEntity(upcomingTurns[0]).EquippedCombatSkills[skillID] == null) return;
-
 		currentlySelectedSkill = skillID;
-
-		UpdateSelectableTargets();
     }
 	#endregion
 }

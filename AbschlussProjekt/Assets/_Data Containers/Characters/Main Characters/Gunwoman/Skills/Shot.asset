@@ -19,7 +19,7 @@ MonoBehaviour:
   CanHitSelf: 0
   AttackMultiplier: 1
   Cooldown: 1
-  MinRange: 5
+  MinRange: 4
   MaxRange: 7
   SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects: []
