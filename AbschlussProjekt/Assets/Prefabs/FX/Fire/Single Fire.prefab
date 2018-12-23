@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4349714704207214}
   - component: {fileID: 212631853677457392}
   - component: {fileID: 114994964809241196}
+  - component: {fileID: 108640372021708810}
   m_Layer: 10
   m_Name: Single Fire
   m_TagString: Untagged
@@ -35,12 +36,49 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1753124648952878}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.036, y: 0.44, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &108640372021708810
+Light:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753124648952878}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.8584906, g: 0.6209161, b: 0.31990921, a: 1}
+  m_Intensity: 3
+  m_Range: 100
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!114 &114994964809241196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63,8 +101,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4162bd06ea8194f4a9eb1dc24d9b7f16, type: 3}
   - {fileID: 21300000, guid: 224b7af54b9e11246a8f1e8db1fd5210, type: 3}
   - {fileID: 21300000, guid: 11003e2cb33031a41812885b0b076d5c, type: 3}
-  frameRate: 12
+  initialFrameOffset: 0
   looping: 1
+  lingeringDuration: 0
+  framerateOverride: 12
 --- !u!212 &212631853677457392
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -80,7 +120,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d48a00c8478fdbf42b9776093821039a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +138,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -194721291
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 55834fbf54e68ea408e351ec7d642a3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
