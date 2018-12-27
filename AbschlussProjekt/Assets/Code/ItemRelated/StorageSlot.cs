@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class StorageSlot
 {
-    #region Variables
+    #region Fields & Properties
     private Vector2 position;
     private Item content;
 
     public bool IsEmpty { get { return content == null; } }
     public Item Content { get { return content; } }
+    public Vector2 Position { get { return position; } }
     public int Amount { get { return content ? content.currentlyStacked : 0 ; } }
     #endregion
 
@@ -25,22 +26,22 @@ public class StorageSlot
     #region SlotManagement
     public Item RemoveAllContent()
     {
-        return AddNewContent(null);
+        return SwitchItems(null);
     }
 
-    public Item AddNewContent(Item newContent)
+    public Item SwitchItems(Item item)
     {
         Item temp = content;
-        content = newContent;
+        content = item;
         return content;
     }
 
-    public bool TryAddContent(int amount)
+    public bool TryAddStacksToContent(int amount)
     {
         return content.TryAddItemAmount(amount);
     }
 
-    public bool TryRemoveContent(int amount, out Item removedContent)
+    public bool TryRemoveStacksFromContent(int amount, out Item removedContent)
     {
         if (content.TryRemoveItemAmount(amount))
         {
@@ -52,6 +53,12 @@ public class StorageSlot
         }
         removedContent = null;
         return false;
+    }
+
+    public StorageSlot ChangeToPosition(int posX,int posY)
+    {
+        position = new Vector2(posX, posY);
+        return this;
     }
     #endregion
 }

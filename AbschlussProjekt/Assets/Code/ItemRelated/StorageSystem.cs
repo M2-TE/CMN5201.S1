@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StorageSystem : MonoBehaviour
 {
-    #region Variables & Properties
+    #region Fields & Properties
     private List<StorageSlot> storageSlots;
     private int storageColumns;
     private int storageAmount;
@@ -13,7 +13,7 @@ public class StorageSystem : MonoBehaviour
     public int StorageColumns {  get { return storageColumns;  } }
     public int StorageRows { get { return (int)Mathf.Ceil(storageColumns-1 / storageAmount)+1; } }
     public int StorageAmount { get { return storageAmount;  } }
-    public int LastColumnStorage { get { return storageAmount % storageColumns; } }
+    public int LastRowStorageAmount { get { return storageAmount % storageColumns; } }
     #endregion
 
     #region Contructor
@@ -43,7 +43,7 @@ public class StorageSystem : MonoBehaviour
     {
         posX = (int)Mathf.Abs(posX);
         posY = (int)Mathf.Abs(posY);
-        if (posX >= storageColumns || posY >= StorageRows || (posY == StorageRows-1 && posX >= LastColumnStorage))
+        if (posX >= storageColumns || posY >= StorageRows || (posY == StorageRows-1 && posX >= LastRowStorageAmount))
             return null;
         else
             return storageSlots[posX - 1 + (posY-1)*StorageColumns];
@@ -56,14 +56,26 @@ public class StorageSystem : MonoBehaviour
 
     public bool ExtendStorageAmount(int amount)
     {
+        List<StorageSlot> extension = new List<StorageSlot>();
+        for (int iterator = 0; iterator < amount; iterator++)
+        {
+            extension[iterator] = new StorageSlot(0, 0);
+        }
+        return ExtendStorageAmount(extension);
+    }
+
+    public bool ExtendStorageAmount(List<StorageSlot> extension)
+    {
         int tempRowCount = StorageRows;
-        storageAmount += amount;
-        int x = LastColumnStorage;
-        for (int y = tempRowCount-1; y < StorageRows; y++)
+        storageAmount += extension.Count;
+        int x = LastRowStorageAmount;
+        int count = 0;
+        for (int y = tempRowCount - 1; y < StorageRows; y++)
         {
             for (; x < StorageColumns; x++)
             {
-                storageSlots.Add(new StorageSlot(x, y));
+                storageSlots.Add(extension[count].ChangeToPosition(x, y));
+                count++;
             }
             x = 0;
         }
@@ -85,21 +97,20 @@ public class StorageSystem : MonoBehaviour
         return true;
     }
 
-    public bool ExtendStorageColumns(int amount)
+    public bool TryStoreItemAtNextFreeSlot(Item item, out Vector2 position)
     {
-        storageAmount += amount;
-        storageColumns += amount;
-        for (int y = 0; y < StorageRows; y++)
+        position = new Vector2(-1,-1);
+        for (int i = 0; i < StorageAmount; i++)
         {
-            for (int x = storageColumns-amount; x < StorageColumns; x++)
+            if(storageSlots[i].IsEmpty)
             {
-                storageSlots.Insert(,)
+                storageSlots[i].SwitchItems(item);
+                position = storageSlots[i].Position;
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
-
     #endregion
 
 }
