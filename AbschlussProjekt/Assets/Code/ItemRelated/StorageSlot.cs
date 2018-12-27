@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class StorageSlot
 {
+    #region Variables
     private Vector2 position;
     private Item content;
 
     public bool IsEmpty { get { return content == null; } }
     public Item Content { get { return content; } }
     public int Amount { get { return content ? content.currentlyStacked : 0 ; } }
+    #endregion
 
+    #region Constructor
     public StorageSlot(int posX, int posY) : this(posX, posY, null) { }
     public StorageSlot(int posX, int posY, Item content)
     {
         position = new Vector2(posX, posY);
         this.content = content;
     }
+    #endregion
 
+    #region SlotManagement
     public Item RemoveAllContent()
     {
         return AddNewContent(null);
@@ -48,5 +53,5 @@ public class StorageSlot
         removedContent = null;
         return false;
     }
-
+    #endregion
 }
