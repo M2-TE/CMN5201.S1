@@ -37,7 +37,7 @@ public class Entity
         get
         {
             if (equippedWeapon != null) return equippedWeapon;
-            else if (equippedWeaponString != "") return equippedWeapon = AssetManager.Instance.Equipment.LoadAsset<Weapon>(equippedWeaponString);
+            else if (equippedWeaponString != "") return equippedWeapon = AssetManager.Instance.Items.LoadAsset<Weapon>(equippedWeaponString);
             else return null;
         }
         set
@@ -54,7 +54,7 @@ public class Entity
         get
         {
             if (equippedArmor != null) return equippedArmor;
-            else if (equippedArmorString != "") return equippedArmor = AssetManager.Instance.Equipment.LoadAsset<Armor>(equippedArmorString);
+            else if (equippedArmorString != "") return equippedArmor = AssetManager.Instance.Items.LoadAsset<Armor>(equippedArmorString);
             else return null;
         }
         set

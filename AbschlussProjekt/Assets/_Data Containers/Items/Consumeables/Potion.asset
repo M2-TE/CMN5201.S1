@@ -22,3 +22,10 @@ MonoBehaviour:
   StackingLimit: 0
   IsUsable: 2
   DestroyOnUse: 0
+  CanHitEnemies: 0
+  CanHitAllies: 1
+  Cooldown: 1
+  MinRange: 0
+  MaxRange: 2
+  SurroundingAffectedUnits: {x: 0, y: 0}
+  consumeEffects: []

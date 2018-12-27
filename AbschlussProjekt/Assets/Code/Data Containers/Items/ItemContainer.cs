@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : DataContainer
+public class ItemContainer : DataContainer
 {
     public string ItemName;
     public Sprite ItemIcon;
@@ -24,4 +24,5 @@ public class Item : DataContainer
     [Space(10)]
     [Tooltip("Optional value to limit the maximum number of items per itemslot; equals 1 if unstackable")]
     public int StackingLimit;
+
 }

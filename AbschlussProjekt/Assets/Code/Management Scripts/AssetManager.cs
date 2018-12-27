@@ -11,7 +11,7 @@ public class AssetManager
     
     private readonly string settingsPath = "settings";
     private readonly string playableCharactersPath = "characters/main characters";
-    private readonly string equipmentPath = "equipment";
+    private readonly string itemsPath = "items";
     private readonly string skillsPath = "skills";
 
     #region Getters/Setters
@@ -54,18 +54,21 @@ public class AssetManager
         }
     }
 
-    private AssetBundle equipment;
-    public AssetBundle Equipment
+    private AssetBundle items;
+    public AssetBundle Items
     {
         get
         {
-            if (equipment != null) return equipment;
-            else return equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath);
+            if (items != null)
+                return items;
+            else
+                return items = AssetBundle.LoadFromFile(assetBundlePath + itemsPath);
         }
 
         set
         {
-            if (value == null) equipment.Unload(true);
+            if (value == null)
+                items.Unload(true);
         }
     }
 
@@ -116,7 +119,7 @@ public class AssetManager
     #region Singleton Implementation
     private static AssetManager instance;
     public static AssetManager Instance
-    { get { return (instance != null) ? instance : instance = new AssetManager(); } }
+    { get { return instance ?? (instance = new AssetManager()); } }
     private AssetManager()
     {
         settings = Settings;
