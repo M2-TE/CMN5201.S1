@@ -15,8 +15,7 @@ public class BaseEffectEditor : Editor
 	
 	#region Flickering
 	SerializedProperty flickeringEnabled;
-
-	SerializedProperty preCalcFlickering;
+	
 	SerializedProperty lightRangeCurve;
 	SerializedProperty overrideLight;
 	SerializedProperty flickeringIntensity;
@@ -26,8 +25,7 @@ public class BaseEffectEditor : Editor
 
 	#region Color Changing
 	SerializedProperty changingLightColors;
-
-	SerializedProperty preCalcColors;
+	
 	SerializedProperty rCurve;
 	SerializedProperty gCurve;
 	SerializedProperty bCurve;
@@ -37,10 +35,7 @@ public class BaseEffectEditor : Editor
 	#endregion
 
 	#region On Enable
-	private void OnEnable()
-	{
-		SetupProperties();
-	}
+	private void OnEnable() { SetupProperties(); }
 
 	protected virtual void SetupProperties()
 	{
@@ -52,8 +47,7 @@ public class BaseEffectEditor : Editor
 
 		#region Flickering
 		flickeringEnabled = serializedObject.FindProperty("flickeringEnabled");
-
-		preCalcFlickering = serializedObject.FindProperty("preCalcFlickering");
+		
 		lightRangeCurve = serializedObject.FindProperty("lightRangeCurve");
 		overrideLight = serializedObject.FindProperty("overrideLight");
 		flickeringIntensity = serializedObject.FindProperty("flickeringIntensity");
@@ -63,8 +57,7 @@ public class BaseEffectEditor : Editor
 
 		#region Color Changing
 		changingLightColors = serializedObject.FindProperty("changingLightColors");
-
-		preCalcColors = serializedObject.FindProperty("preCalcColors");
+		
 		rCurve = serializedObject.FindProperty("rCurve");
 		gCurve = serializedObject.FindProperty("gCurve");
 		bCurve = serializedObject.FindProperty("bCurve");
@@ -129,19 +122,15 @@ public class BaseEffectEditor : Editor
 		{
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Lighting Range", EditorStyles.boldLabel);
-
 			
-			preCalcFlickering.boolValue = true;
-			preCalcFlickering.boolValue = EditorGUILayout.ToggleLeft(preCalcFlickering.displayName, preCalcFlickering.boolValue);
+			if (GUILayout.Button("Generate Color Curves"))
+				((BaseEffect)target).PreCalcLightRangeCurve();
+
 			EditorGUILayout.PropertyField(lightRangeCurve);
 			EditorGUILayout.PropertyField(overrideLight);
 			EditorGUILayout.Slider(flickeringIntensity, 0f, 1f);
 			EditorGUILayout.PropertyField(maxFlickerStep);
 			EditorGUILayout.PropertyField(maxFlickerMod);
-		}
-		else
-		{
-			preCalcFlickering.boolValue = false;
 		}
 	}
 
@@ -160,10 +149,6 @@ public class BaseEffectEditor : Editor
 			EditorGUILayout.PropertyField(bCurve);
 			EditorGUILayout.PropertyField(overrideAlpha);
 			EditorGUILayout.Slider(colorIntensity, 0f, 1f);
-		}
-		else
-		{
-			preCalcColors.boolValue = false;
 		}
 	}
 	#endregion

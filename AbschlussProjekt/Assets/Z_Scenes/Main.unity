@@ -922,6 +922,26 @@ Prefab:
       propertyPath: bCurve.m_Curve.Array.data[11].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 108158530638636850, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 108158530638636850, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.6202464
+      objectReference: {fileID: 0}
+    - target: {fileID: 108158530638636850, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.59233713
+      objectReference: {fileID: 0}
+    - target: {fileID: 108158530638636850, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32de11b59bb198242adb8e67d9071213, type: 2}
   m_IsPrefabAsset: 0
@@ -2890,6 +2910,10 @@ Prefab:
     - target: {fileID: 4877004834425772, guid: 153b041e7c00d194282f0821d453246c, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672595628262300, guid: 153b041e7c00d194282f0821d453246c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 153b041e7c00d194282f0821d453246c, type: 2}
@@ -9971,6 +9995,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4742401165540368, guid: 25dcc5a46399ffd49a7534a92af6834e, type: 2}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e, type: 2}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -119,12 +119,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f877282943cb8e848818f3e994e64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flickeringEnabled: 0
+  flickeringEnabled: 1
   changingLightColors: 1
-  preCalcFlickering: 0
   lightRangeCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 4
+      inSlope: 0.0010094643
+      outSlope: 0.0010094643
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 4.0010095
+      inSlope: 0.17717195
+      outSlope: 0.17717195
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 4.354344
+      inSlope: 0.031602383
+      outSlope: 0.031602383
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 4.064214
+      inSlope: 0.046106577
+      outSlope: 0.046106577
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 4
+      value: 4.446557
+      inSlope: -0.92046785
+      outSlope: -0.92046785
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 6
+      value: 0
+      inSlope: -2.2232785
+      outSlope: -2.2232785
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

@@ -7,17 +7,24 @@ public abstract class BaseEffect : MonoBehaviour
 	#region Lighting
 	[SerializeField] private bool flickeringEnabled = false;
 	[SerializeField] private bool changingLightColors = false;
-	private Light ownLight;
+
+	private Light m_ownLight;
+	private Light ownLight
+	{
+		get
+		{
+			return m_ownLight ?? (overrideLight != null)
+				? m_ownLight = overrideLight
+				: m_ownLight = GetComponent<Light>();
+		}
+	}
 
 	#region Range
-	[SerializeField] private bool preCalcFlickering = true;
 	[SerializeField] private AnimationCurve lightRangeCurve;
 	[SerializeField] private Light overrideLight;
 	[SerializeField] private float flickeringIntensity = .8f;
 	[SerializeField] private float maxFlickerStep = .4f;
 	[SerializeField] private float maxFlickerMod = .5f;
-	
-	private float baseLightRange;
 	#endregion
 
 	#region Color
@@ -25,8 +32,7 @@ public abstract class BaseEffect : MonoBehaviour
 	[SerializeField] private AnimationCurve gCurve;
 	[SerializeField] private AnimationCurve bCurve;
 	[SerializeField] private float overrideAlpha = 1f;
-	[Range(0f, 1f)] [SerializeField] private float colorIntensity = .25f;
-	
+	[SerializeField] private float colorIntensity = .25f;
 	private Color baseColor;
 	#endregion
 	#endregion
@@ -48,15 +54,8 @@ public abstract class BaseEffect : MonoBehaviour
 	protected virtual void Start()
     {
         ownSpriteRenderer = GetComponent<SpriteRenderer>();
-		ownLight = overrideLight ?? GetComponent<Light>();
-		ownLight = (overrideLight == null) ? GetComponent<Light>() : overrideLight;
-        currentFrame = initialFrameOffset - 1;
-
-		baseLightRange = ownLight.range;
 		baseColor = ownLight.color;
-		
-		if (preCalcFlickering) PreCalcLightRangeCurve();
-		//if (preCalcColors) PreCalcFrameColors();
+        currentFrame = initialFrameOffset - 1;
     }
 
 	public void PreCalcLightRangeCurve()
@@ -64,7 +63,7 @@ public abstract class BaseEffect : MonoBehaviour
 		lightRangeCurve = new AnimationCurve();
 
 		// set first key to base range
-		lightRangeCurve.AddKey(0, baseLightRange);
+		lightRangeCurve.AddKey(0, ownLight.range);
 
 		float randomVal;
 		for (int i = 1; i < sprites.Length - 1; i++)
@@ -74,11 +73,19 @@ public abstract class BaseEffect : MonoBehaviour
 			lightRangeCurve.AddKey(i, Mathf.Clamp(randomVal, ownLight.range - maxFlickerMod, ownLight.range + maxFlickerMod));
 		}
 
-		// smoothing of transition back to first key (continuous curve)
-		lightRangeCurve.AddKey(sprites.Length, baseLightRange);
+		if (looping)
+		{
+			// smoothing of transition back to first key (continuous curve)
+			lightRangeCurve.AddKey(sprites.Length, ownLight.range);
 
-		// add another key that wont be read during playmode (exists only for tangent smoothing during transition to first key)
-		lightRangeCurve.AddKey(sprites.Length + 1, lightRangeCurve.Evaluate(1f));
+			// add another key that wont be read during playmode (exists only for tangent smoothing during transition to first key)
+			lightRangeCurve.AddKey(sprites.Length + 1, lightRangeCurve.Evaluate(1f));
+		}
+		else
+		{
+			// rolloff
+			lightRangeCurve.AddKey(sprites.Length, 0f);
+		}
 	}
 
 	public void PreCalcFrameColors()
@@ -126,15 +133,9 @@ public abstract class BaseEffect : MonoBehaviour
 		else
 		{
 			// create rolloff
-
 			rCurve.AddKey(sprites.Length, 0f);
 			gCurve.AddKey(sprites.Length, 0f);
 			bCurve.AddKey(sprites.Length, 0f);
-
-
-			//rCurve.AddKey(sprites.Length + 1, 0f);
-			//gCurve.AddKey(sprites.Length + 1, 0f);
-			//bCurve.AddKey(sprites.Length + 1, 0f);
 		}
 	}
 	#endregion
@@ -150,7 +151,7 @@ public abstract class BaseEffect : MonoBehaviour
 	{
 		float timeStamp = currentFrame + updateCounter / timeBetweenFrames;
 
-		if (flickeringEnabled) ownLight.range = Mathf.Lerp(baseLightRange, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
+		if (flickeringEnabled) ownLight.range = Mathf.Lerp(ownLight.range, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
 		
 		if (changingLightColors) ownLight.color = Color.Lerp
 				(baseColor, 
