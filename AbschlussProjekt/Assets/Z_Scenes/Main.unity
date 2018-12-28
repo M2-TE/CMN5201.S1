@@ -711,7 +711,7 @@ Prefab:
         type: 2}
       propertyPath: overrideLight
       value: 
-      objectReference: {fileID: 543917536}
+      objectReference: {fileID: 507468799}
     - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
         type: 2}
       propertyPath: rCurve.m_Curve.Array.data[9].inSlope
@@ -1932,7 +1932,7 @@ Prefab:
         type: 2}
       propertyPath: overrideLight
       value: 
-      objectReference: {fileID: 543917536}
+      objectReference: {fileID: 498269022}
     - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
         type: 2}
       propertyPath: rCurve.m_Curve.Array.data[9].inSlope
@@ -2987,6 +2987,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!108 &498269022 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108158530638636850, guid: 32de11b59bb198242adb8e67d9071213,
+    type: 2}
+  m_PrefabInternal: {fileID: 281734310}
+--- !u!108 &507468799 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108158530638636850, guid: 32de11b59bb198242adb8e67d9071213,
+    type: 2}
+  m_PrefabInternal: {fileID: 72108230}
 --- !u!1 &542770864
 GameObject:
   m_ObjectHideFlags: 0
@@ -6976,11 +6986,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
-        type: 2}
-      propertyPath: overrideLight
-      value: 
-      objectReference: {fileID: 543917536}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32de11b59bb198242adb8e67d9071213, type: 2}
   m_IsPrefabAsset: 0
@@ -8180,7 +8185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1741757276
 Transform:
   m_ObjectHideFlags: 0
@@ -8629,12 +8634,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1809602590}
   m_Layer: 0
-  m_Name: Fires
+  m_Name: Debug Fires
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1809602590
 Transform:
   m_ObjectHideFlags: 0
