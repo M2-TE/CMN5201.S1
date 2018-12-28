@@ -2,20 +2,20 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(BaseEffect), true)]
+[CustomEditor(typeof(BaseEffect))]
 [CanEditMultipleObjects]
 public class BaseEffectEditor : Editor
 {
 	#region Variables
 	#region Animation
+	SerializedProperty looping;
 	SerializedProperty sprites;
 	SerializedProperty initialFrameOffset;
 	#endregion
-
-	SerializedProperty flickeringEnabled;
-	SerializedProperty changingLightColors;
-
+	
 	#region Flickering
+	SerializedProperty flickeringEnabled;
+
 	SerializedProperty preCalcFlickering;
 	SerializedProperty lightRangeCurve;
 	SerializedProperty overrideLight;
@@ -25,6 +25,8 @@ public class BaseEffectEditor : Editor
 	#endregion
 
 	#region Color Changing
+	SerializedProperty changingLightColors;
+
 	SerializedProperty preCalcColors;
 	SerializedProperty rCurve;
 	SerializedProperty gCurve;
@@ -34,17 +36,23 @@ public class BaseEffectEditor : Editor
 	#endregion
 	#endregion
 
-	void OnEnable()
+	#region On Enable
+	private void OnEnable()
+	{
+		SetupProperties();
+	}
+
+	protected virtual void SetupProperties()
 	{
 		#region Animation
+		looping = serializedObject.FindProperty("looping");
 		sprites = serializedObject.FindProperty("sprites");
 		initialFrameOffset = serializedObject.FindProperty("initialFrameOffset");
 		#endregion
 
-		flickeringEnabled = serializedObject.FindProperty("flickeringEnabled");
-		changingLightColors = serializedObject.FindProperty("changingLightColors");
-
 		#region Flickering
+		flickeringEnabled = serializedObject.FindProperty("flickeringEnabled");
+
 		preCalcFlickering = serializedObject.FindProperty("preCalcFlickering");
 		lightRangeCurve = serializedObject.FindProperty("lightRangeCurve");
 		overrideLight = serializedObject.FindProperty("overrideLight");
@@ -54,6 +62,8 @@ public class BaseEffectEditor : Editor
 		#endregion
 
 		#region Color Changing
+		changingLightColors = serializedObject.FindProperty("changingLightColors");
+
 		preCalcColors = serializedObject.FindProperty("preCalcColors");
 		rCurve = serializedObject.FindProperty("rCurve");
 		gCurve = serializedObject.FindProperty("gCurve");
@@ -62,27 +72,44 @@ public class BaseEffectEditor : Editor
 		colorIntensity = serializedObject.FindProperty("colorIntensity");
 		#endregion
 	}
+	#endregion
 
+	#region On Inspector GUI
 	public override void OnInspectorGUI()
 	{
-		EditorGUI.BeginChangeCheck();
+		OnInspectorGUIStart();
+	
+		HandleEffectProperties();
 
+		OnInspectorGUIEnd();
+	}
+
+	protected void OnInspectorGUIStart()
+	{
 		serializedObject.Update();
-		
+		EditorGUI.BeginChangeCheck();
+	}
+
+	protected void OnInspectorGUIEnd()
+	{
+		if (EditorGUI.EndChangeCheck()) Undo.RecordObject(target, "Effect Prop Changed");
+		serializedObject.ApplyModifiedProperties();
+	}
+	#endregion
+
+	#region Base Effect Property Handler
+	protected virtual void HandleEffectProperties()
+	{
 		HandleAnimProperties();
 		HandleDynamicProperties();
-		
-		serializedObject.ApplyModifiedProperties();
-
-		if (EditorGUI.EndChangeCheck())
-			Undo.RecordObject(target, "Changed Area Of Effect");
 	}
-	
+
 	private void HandleAnimProperties()
 	{
 		EditorGUILayout.Space();
-		EditorGUILayout.LabelField("Animation", EditorStyles.boldLabel);
-		EditorGUILayout.PropertyField(sprites);
+		EditorGUILayout.LabelField("Base", EditorStyles.boldLabel);
+		EditorGUILayout.PropertyField(looping);
+		EditorGUILayout.PropertyField(sprites, true);
 		EditorGUILayout.PropertyField(initialFrameOffset);
 	}
 
@@ -103,6 +130,7 @@ public class BaseEffectEditor : Editor
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Lighting Range", EditorStyles.boldLabel);
 
+			
 			preCalcFlickering.boolValue = true;
 			preCalcFlickering.boolValue = EditorGUILayout.ToggleLeft(preCalcFlickering.displayName, preCalcFlickering.boolValue);
 			EditorGUILayout.PropertyField(lightRangeCurve);
@@ -124,8 +152,9 @@ public class BaseEffectEditor : Editor
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Lighting Color", EditorStyles.boldLabel);
 
-			preCalcColors.boolValue = true;
-			preCalcColors.boolValue = EditorGUILayout.ToggleLeft(preCalcColors.displayName, preCalcColors.boolValue);
+			if (GUILayout.Button("Generate Color Curves"))
+				((BaseEffect)target).PreCalcFrameColors();
+
 			EditorGUILayout.PropertyField(rCurve);
 			EditorGUILayout.PropertyField(gCurve);
 			EditorGUILayout.PropertyField(bCurve);
@@ -137,4 +166,5 @@ public class BaseEffectEditor : Editor
 			preCalcColors.boolValue = false;
 		}
 	}
+	#endregion
 }

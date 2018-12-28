@@ -21,7 +21,6 @@ public abstract class BaseEffect : MonoBehaviour
 	#endregion
 
 	#region Color
-	[SerializeField] private bool preCalcColors = true;
 	[SerializeField] private AnimationCurve rCurve;
 	[SerializeField] private AnimationCurve gCurve;
 	[SerializeField] private AnimationCurve bCurve;
@@ -35,6 +34,7 @@ public abstract class BaseEffect : MonoBehaviour
 	#region Animation Settings
 	[SerializeField] protected Sprite[] sprites;
     [SerializeField] protected int initialFrameOffset;
+	[SerializeField] protected bool looping;
 
 	protected int currentFrame;
 	protected float timeBetweenFrames;
@@ -51,14 +51,16 @@ public abstract class BaseEffect : MonoBehaviour
 		ownLight = overrideLight ?? GetComponent<Light>();
 		ownLight = (overrideLight == null) ? GetComponent<Light>() : overrideLight;
         currentFrame = initialFrameOffset - 1;
+
+		baseLightRange = ownLight.range;
+		baseColor = ownLight.color;
 		
 		if (preCalcFlickering) PreCalcLightRangeCurve();
-		if (preCalcColors) PreCalcFrameColors();
+		//if (preCalcColors) PreCalcFrameColors();
     }
 
-	protected void PreCalcLightRangeCurve()
+	public void PreCalcLightRangeCurve()
 	{
-		baseLightRange = ownLight.range;
 		lightRangeCurve = new AnimationCurve();
 
 		// set first key to base range
@@ -73,15 +75,14 @@ public abstract class BaseEffect : MonoBehaviour
 		}
 
 		// smoothing of transition back to first key (continuous curve)
-		lightRangeCurve.AddKey(sprites.Length - 1, baseLightRange + baseLightRange - lightRangeCurve.Evaluate(1f));
 		lightRangeCurve.AddKey(sprites.Length, baseLightRange);
+
 		// add another key that wont be read during playmode (exists only for tangent smoothing during transition to first key)
 		lightRangeCurve.AddKey(sprites.Length + 1, lightRangeCurve.Evaluate(1f));
 	}
 
-	protected void PreCalcFrameColors()
+	public void PreCalcFrameColors()
 	{
-		baseColor = ownLight.color;
 		rCurve = new AnimationCurve();
 		gCurve = new AnimationCurve();
 		bCurve = new AnimationCurve();
@@ -109,6 +110,32 @@ public abstract class BaseEffect : MonoBehaviour
 			gCurve.AddKey(frame, sumCol.g);
 			bCurve.AddKey(frame, sumCol.b);
 		}
+
+		if (looping)
+		{
+			// smoothing of transition back to first key (continuous curve)
+			rCurve.AddKey(sprites.Length, rCurve.Evaluate(0f));
+			gCurve.AddKey(sprites.Length, gCurve.Evaluate(0f));
+			bCurve.AddKey(sprites.Length, bCurve.Evaluate(0f));
+
+			// add another key that wont be read during playmode (exists only for tangent smoothing during transition to first key)
+			rCurve.AddKey(sprites.Length + 1, rCurve.Evaluate(1f));
+			gCurve.AddKey(sprites.Length + 1, gCurve.Evaluate(1f));
+			bCurve.AddKey(sprites.Length + 1, bCurve.Evaluate(1f));
+		}
+		else
+		{
+			// create rolloff
+
+			rCurve.AddKey(sprites.Length, 0f);
+			gCurve.AddKey(sprites.Length, 0f);
+			bCurve.AddKey(sprites.Length, 0f);
+
+
+			//rCurve.AddKey(sprites.Length + 1, 0f);
+			//gCurve.AddKey(sprites.Length + 1, 0f);
+			//bCurve.AddKey(sprites.Length + 1, 0f);
+		}
 	}
 	#endregion
 
@@ -124,28 +151,13 @@ public abstract class BaseEffect : MonoBehaviour
 		float timeStamp = currentFrame + updateCounter / timeBetweenFrames;
 
 		if (flickeringEnabled) ownLight.range = Mathf.Lerp(baseLightRange, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
-		else ownLight.range = GetNextLightRange();
-
-		// TODO: color transition back to time: 0f with tangents
+		
 		if (changingLightColors) ownLight.color = Color.Lerp
 				(baseColor, 
 				new Color(rCurve.Evaluate(timeStamp), gCurve.Evaluate(timeStamp), bCurve.Evaluate(timeStamp), overrideAlpha), 
 				colorIntensity);
-		else GetNextLightColor();
 
 		updateCounter += Time.deltaTime;
-	}
-
-	protected float GetNextLightRange()
-	{
-		//Debug.Log("NYI");
-		return baseLightRange;
-	}
-
-	protected Color GetNextLightColor()
-	{
-		//Debug.Log("NYI");
-		return baseColor;
 	}
 	#endregion
 }

@@ -90,6 +90,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40bb33beab3abf643af58b511b025ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickeringEnabled: 0
+  changingLightColors: 0
+  preCalcFlickering: 0
+  lightRangeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  overrideLight: {fileID: 0}
+  flickeringIntensity: 0.8
+  maxFlickerStep: 0.4
+  maxFlickerMod: 0.5
+  preCalcColors: 0
+  rCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  overrideAlpha: 1
+  colorIntensity: 0.25
   sprites: []
   initialFrameOffset: 0
 --- !u!212 &212344677240700456
