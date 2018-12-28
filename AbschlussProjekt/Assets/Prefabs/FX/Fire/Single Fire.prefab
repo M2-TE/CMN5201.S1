@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flickeringEnabled: 1
+  changingLightColors: 1
   preCalcFlickering: 1
   lightRangeCurve:
     serializedVersion: 2
@@ -239,7 +240,6 @@ MonoBehaviour:
   flickeringIntensity: 0.8
   maxFlickerStep: 0.4
   maxFlickerMod: 0.5
-  changingLightColors: 1
   preCalcColors: 1
   rCurve:
     serializedVersion: 2

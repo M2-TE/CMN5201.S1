@@ -5,15 +5,15 @@ public abstract class BaseEffect : MonoBehaviour
 {
 	#region Variables
 	#region Lighting
+	[SerializeField] private bool flickeringEnabled = false;
+	[SerializeField] private bool changingLightColors = false;
 	private Light ownLight;
 
 	#region Range
-	[Header("FX Lighting Range")]
-	[SerializeField] private bool flickeringEnabled = false;
 	[SerializeField] private bool preCalcFlickering = true;
 	[SerializeField] private AnimationCurve lightRangeCurve;
 	[SerializeField] private Light overrideLight;
-	[Range(0f, 1f)] [SerializeField] private float flickeringIntensity = .8f;
+	[SerializeField] private float flickeringIntensity = .8f;
 	[SerializeField] private float maxFlickerStep = .4f;
 	[SerializeField] private float maxFlickerMod = .5f;
 	
@@ -21,8 +21,6 @@ public abstract class BaseEffect : MonoBehaviour
 	#endregion
 
 	#region Color
-	[Header("FX Lighting Color")]
-	[SerializeField] private bool changingLightColors = false;
 	[SerializeField] private bool preCalcColors = true;
 	[SerializeField] private AnimationCurve rCurve;
 	[SerializeField] private AnimationCurve gCurve;
@@ -35,7 +33,6 @@ public abstract class BaseEffect : MonoBehaviour
 	#endregion
 
 	#region Animation Settings
-	[Header("Anim Settings")]
 	[SerializeField] protected Sprite[] sprites;
     [SerializeField] protected int initialFrameOffset;
 

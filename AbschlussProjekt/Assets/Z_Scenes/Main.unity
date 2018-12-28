@@ -482,6 +482,11 @@ Prefab:
       propertyPath: flickeringIntensity
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: preCalcColors
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32de11b59bb198242adb8e67d9071213, type: 2}
   m_IsPrefabAsset: 0
@@ -2712,6 +2717,11 @@ Prefab:
       propertyPath: bCurve.m_Curve.Array.data[9].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: preCalcColors
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32de11b59bb198242adb8e67d9071213, type: 2}
   m_IsPrefabAsset: 0
@@ -4868,6 +4878,7 @@ GameObject:
   - component: {fileID: 839229361}
   - component: {fileID: 839229357}
   - component: {fileID: 839229360}
+  - component: {fileID: 839229362}
   m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5014,6 +5025,21 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &839229362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 839229356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6af5eaa8d821f4e93093fd37ee3484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderShadows: 1
+  requiresDepthTexture: 0
+  requiresColorTexture: 0
+  m_Version: 1
 --- !u!1 &881580027
 GameObject:
   m_ObjectHideFlags: 0
@@ -7632,6 +7658,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: flickeringEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: preCalcFlickering
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: changingLightColors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: preCalcColors
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32de11b59bb198242adb8e67d9071213, type: 2}
   m_IsPrefabAsset: 0
@@ -9418,6 +9464,11 @@ Prefab:
         type: 2}
       propertyPath: flickeringIntensity
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994964809241196, guid: 32de11b59bb198242adb8e67d9071213,
+        type: 2}
+      propertyPath: preCalcColors
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32de11b59bb198242adb8e67d9071213, type: 2}
