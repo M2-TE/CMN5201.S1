@@ -65,13 +65,17 @@ public class BaseEffectEditor : Editor
 
 	public override void OnInspectorGUI()
 	{
-		//base.OnInspectorGUI();
-		serializedObject.Update();
+		EditorGUI.BeginChangeCheck();
 
+		serializedObject.Update();
+		
 		HandleAnimProperties();
 		HandleDynamicProperties();
-
+		
 		serializedObject.ApplyModifiedProperties();
+
+		if (EditorGUI.EndChangeCheck())
+			Undo.RecordObject(target, "Changed Area Of Effect");
 	}
 	
 	private void HandleAnimProperties()
