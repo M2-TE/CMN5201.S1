@@ -120,8 +120,9 @@ public class Entity
 	[NonSerialized] public Vector2Int currentCombatPosition;
 
 	[NonSerialized] public Dictionary<CombatSkill, int> currentSkillCooldowns; // CombatSkill -> cooldown
-	[NonSerialized] public Dictionary<CombatEffect, int> currentCombatEffects; // CombatEffect -> remaining duration
-	[NonSerialized] public Dictionary<CombatEffect, GameObject> currentCombatEffectGOs; // -> CombatEffect -> corresponding proxy effect icon
+	//[NonSerialized] public Dictionary<CombatEffect, int> currentCombatEffects;
+	//[NonSerialized] public Dictionary<CombatEffect, GameObject> currentCombatEffectGOs;
+	[NonSerialized] public Dictionary<CombatEffect, Tuple<GameObject, int>> currentCombatEffects; // int => remaining duration; GameObject => corresponding effect icon in the scene
     #endregion
 
     public void Unload()

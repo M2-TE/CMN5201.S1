@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CombatPanel : UIPanel
 {
+	public TextMeshProUGUI skillDescriptionText;
+	public TextMeshProUGUI statDescriptionText;
+
+	public Image EntityInspectionPortrait;
+
 	public Image[] TeamSkillButtons;
 
 	private EventSystem eventSystem;

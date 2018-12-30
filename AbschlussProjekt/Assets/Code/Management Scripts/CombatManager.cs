@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,9 +12,11 @@ public class CombatManager : MonoBehaviour
 	[SerializeField] private CombatPanel combatPanel;
 	[SerializeField] private EventSystem eventSystem;
 	[SerializeField] private GameObject combatEffectPrefab;
+	[SerializeField] private Color greenColor;
+	[SerializeField] private Color redColor;
 
-    // first dimension for team (0 player, 1 opponent), second dimension for specific character
-    private Entity[,] combatants;
+	// first dimension for team (0 player, 1 opponent), second dimension for specific character
+	private Entity[,] combatants;
     private GameObject[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
@@ -29,6 +32,25 @@ public class CombatManager : MonoBehaviour
 		{
 			m_currentlySelectedSkill = value;
 			UpdateSelectableTargets();
+			UpdateSkillDescriptionText();
+		}
+	}
+
+	private Vector2Int m_currentlyInspectedEntityPos;
+	private Vector2Int currentlyInspectedEntityPos
+	{
+		get
+		{
+			return m_currentlyInspectedEntityPos;
+		}
+		set
+		{
+			if(m_currentlyInspectedEntityPos != value)
+			{
+				m_currentlyInspectedEntityPos = value;
+				UpdateEntityInspectionWindow();
+			}
+			
 		}
 	}
 
@@ -69,11 +91,13 @@ public class CombatManager : MonoBehaviour
 
 	private void CheckForUserInput()
 	{
-		if (Input.GetMouseButtonDown(0))
+		RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
+		if (hit.collider != null)
 		{
-			RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
-			if (hit.collider != null) OnCharacterSelect(hit.transform.GetComponent<Proxy>().CombatPosition);
+			if (Input.GetMouseButtonDown(0)) OnCharacterSelect(hit.transform.GetComponent<Proxy>().CombatPosition);
+			else currentlyInspectedEntityPos = hit.transform.GetComponent<Proxy>().CombatPosition;
 		}
+		else currentlyInspectedEntityPos = upcomingTurns[0];
 	}
 
 	private void OnCharacterSelect(Vector2Int characterPos)
@@ -104,8 +128,7 @@ public class CombatManager : MonoBehaviour
 				{
 					tempEntity.currentInitiative = 0;
 					tempEntity.currentCombatPosition = new Vector2Int(x, y);
-					tempEntity.currentCombatEffects = new Dictionary<CombatEffect, int>();
-					tempEntity.currentCombatEffectGOs = new Dictionary<CombatEffect, GameObject>();
+					tempEntity.currentCombatEffects = new Dictionary<CombatEffect, Tuple<GameObject, int>>();
 				}
 			}
 		}
@@ -148,6 +171,7 @@ public class CombatManager : MonoBehaviour
 		// change this to choose the last-selected or first skill of that character
 		currentlySelectedSkill = 0;
 		UpdateSkillIcons();
+		UpdateEntityInspectionWindow();
 
 		if (upcomingTurns[0].x == 1)
 		{
@@ -298,7 +322,7 @@ public class CombatManager : MonoBehaviour
 
 	private void UpdateSelectableTargets()
 	{
-		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+		CombatSkill skill = GetCurrentlySelectedSkill();
 		for (int x = 0; x < combatPanel.SelectableIndicators.GetLength(0); x++)
 		{
 			for (int y = 0; y < combatPanel.SelectableIndicators.GetLength(1); y++)
@@ -329,6 +353,39 @@ public class CombatManager : MonoBehaviour
 			}
 		}
 	}
+
+	// TODO: finish this \/
+	private void UpdateSkillDescriptionText()
+	{
+		string skillDescriptionText = "";
+		if (upcomingTurns[0].x == 0)
+		{
+			// player's turn
+			CombatSkill skill = GetCurrentlySelectedSkill();
+			skillDescriptionText = skill.SkillDescription;
+		}
+		else
+		{
+			// enemy's turn
+
+		}
+
+		combatPanel.skillDescriptionText.SetText(skillDescriptionText);
+	}
+	
+	private void UpdateEntityInspectionWindow()
+	{
+		Entity entity = GetEntity(currentlyInspectedEntityPos);
+
+		string statString =
+			"HP:	" + GetFormattedStatString(entity.currentHealth, entity.currentMaxHealth) + " / " + GetFormattedStatString(entity.currentMaxHealth, entity.baseHealth) +
+			"\nATK:	" + GetFormattedStatString(entity.currentAttack, entity.baseAttack) +
+			"\nDEF:	" + GetFormattedStatString(entity.currentDefense, entity.baseDefense) +
+			"\nSPD:	" + GetFormattedStatString(entity.currentSpeed, entity.baseSpeed);
+		combatPanel.statDescriptionText.SetText(statString);
+
+		combatPanel.EntityInspectionPortrait.sprite = entity.CharDataContainer.Portrait;
+	}
 	#endregion
 
 	#region Character Action Handling
@@ -337,7 +394,7 @@ public class CombatManager : MonoBehaviour
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
-		CombatSkill skill = GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+		CombatSkill skill = GetCurrentlySelectedSkill();
 		List<Vector2Int> targetList = new List<Vector2Int>();
 		targetList.Add(mainTarget);
 
@@ -437,8 +494,7 @@ public class CombatManager : MonoBehaviour
 				AddCombatEffectToEntity(target, effect);
 			else Debug.Log("Effect already on target");
 		}
-
-
+		
 		// self inflicted combat effects
 		for (int i = 0; i < skill.SelfInflictedCombatEffects.Length; i++)
 		{
@@ -453,16 +509,16 @@ public class CombatManager : MonoBehaviour
 	{
 		Entity targetEntity = GetEntity(target);
 		Transform parent = combatPanel.CombatEffectAnchors[target.x, target.y];
-
+		
 		// add remaining duration and GameObject reference to entity
-		targetEntity.currentCombatEffects.Add(effect, effect.Duration);
-		targetEntity.currentCombatEffectGOs.Add(effect, Instantiate(combatEffectPrefab, parent));
+		Tuple<GameObject, int> combatEffect = new Tuple<GameObject, int>(Instantiate(combatEffectPrefab, parent), effect.Duration);
+		targetEntity.currentCombatEffects.Add(effect, combatEffect);
 
 		// setup for the UI icon under the character
-		targetEntity.currentCombatEffectGOs[effect].GetComponent<Image>().sprite = effect.EffectSprite;
-		targetEntity.currentCombatEffectGOs[effect].transform.Translate(new Vector3((targetEntity.currentCombatEffects.Count - 1) * 30f, 0f, 0f));
-
-		effect.ApplyCombatEffectModifiers(ref targetEntity);
+		targetEntity.currentCombatEffects[effect].ValOne.GetComponent<Image>().sprite = effect.EffectSprite;
+		targetEntity.currentCombatEffects[effect].ValOne.transform.Translate(new Vector3((targetEntity.currentCombatEffects.Count - 1) * 30f, 0f, 0f));
+		
+		effect.ApplyCombatEffectModifiers(targetEntity);
 	}
 	#endregion
 
@@ -523,6 +579,22 @@ public class CombatManager : MonoBehaviour
 	#endregion
 
 	#region Utility Methods
+	private CombatSkill GetCurrentlySelectedSkill()
+	{
+		return GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+	}
+
+	private string GetFormattedStatString(int currentStat, int maxStat)
+	{
+		return 
+			(currentStat != maxStat)
+			? ("<color=#" + ColorUtility.ToHtmlStringRGB(
+				(currentStat < maxStat)
+				? redColor 
+				: greenColor) + ">" + currentStat + "</color>")
+			: currentStat.ToString();
+	}
+
 	private Entity GetEntity(Vector2Int entityPos)
 	{
 		return combatants[entityPos.x, entityPos.y];
@@ -546,7 +618,7 @@ public class CombatManager : MonoBehaviour
 			proxieArr[i] = proxies[proxPosArr[i].x, proxPosArr[i].y];
 		return proxieArr;
 	}
-
+	
 	private void SetButtonsEnabled(bool enableState)
 	{
 		for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
