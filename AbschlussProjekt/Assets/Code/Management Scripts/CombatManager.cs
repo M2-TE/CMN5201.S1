@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using CombatEffectElements;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
@@ -11,13 +10,12 @@ public class CombatManager : MonoBehaviour
 	// change this \/ to DataContainer ref
 	[SerializeField] private CombatPanel combatPanel;
 	[SerializeField] private EventSystem eventSystem;
-	[SerializeField] private GameObject combatEffectPrefab;
 	[SerializeField] private Color greenColor;
 	[SerializeField] private Color redColor;
 
 	// first dimension for team (0 player, 1 opponent), second dimension for specific character
 	private Entity[,] combatants;
-    private GameObject[,] proxies;
+    private Proxy[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
 
@@ -66,8 +64,9 @@ public class CombatManager : MonoBehaviour
 	
 	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
 	{
+		Debug.Log(playerTeam.Length + " " + playerTeam.Length);
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
-		proxies = new GameObject[2, combatants.GetLength(1)];
+		proxies = new Proxy[2, combatants.GetLength(1)];
 		selectableTargets = new bool[2, combatants.GetLength(1)];
 
 		for (int x = 0; x < combatants.GetLength(0); x++)
@@ -76,7 +75,7 @@ public class CombatManager : MonoBehaviour
 
 		InitializeEntities();
 		InstantiateProxyPrefabs();
-		InitializeUI();
+		StartCoroutine(UpdateHealthBars());
 
 		// initiate combat loop
 		LaunchNextTurn();
@@ -110,11 +109,6 @@ public class CombatManager : MonoBehaviour
 	#endregion
 
 	#region Single Calls (Combat Setup)
-	private void InitializeUI()
-    {
-		UpdatePortraits();
-		StartCoroutine(UpdateHealthBars());
-	}
 
     private void InitializeEntities()
     {
@@ -128,7 +122,6 @@ public class CombatManager : MonoBehaviour
 				{
 					tempEntity.currentInitiative = 0;
 					tempEntity.currentCombatPosition = new Vector2Int(x, y);
-					tempEntity.currentCombatEffects = new Dictionary<CombatEffect, Tuple<GameObject, int>>();
 				}
 			}
 		}
@@ -136,21 +129,30 @@ public class CombatManager : MonoBehaviour
 
     private void InstantiateProxyPrefabs()
     {
-        for (int x = 0; x < combatants.GetLength(0); x++)
+        for (int x = 0; x < proxies.GetLength(0); x++)
         {
-            for (int y = 0; y < combatants.GetLength(1); y++)
+            for (int y = 0; y < proxies.GetLength(1); y++)
             {
 				GameObject combatPrefab = combatPanel.CharacterPositions[x, y];
                 if(combatants[x, y] == null) continue;
 				
 				// spawn proxy (proxy => represents an entity in the world)
-                GameObject tempProxy = Instantiate(combatants[x, y].CharDataContainer.Prefab);
-				tempProxy.GetComponent<Proxy>().CombatPosition = new Vector2Int(x, y);
+                GameObject tempProxyGO = Instantiate(combatants[x, y].CharDataContainer.Prefab);
+				Proxy tempProxy = tempProxyGO.GetComponent<Proxy>();
+				tempProxy.CombatPosition = new Vector2Int(x, y);
 
-                Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
-				if (x == 1) tempProxy.transform.localScale = new Vector3(-1f, 1f, 1f); // flip if its an opponent proxy
+				Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
+				if (x == 1)
+				{
+					tempProxyGO.transform.localScale = new Vector3(-1f, 1f, 1f); // flip if its an opponent proxy
+					tempProxy.CombatEffectPool.transform.parent.localScale = 
+						new Vector3(
+							tempProxy.CombatEffectPool.transform.parent.localScale.x * -1f, 
+							tempProxy.CombatEffectPool.transform.parent.localScale.y, 
+							1f); // and counterflip status canvas
+				}
 				proxyPos.z = 0f;
-                tempProxy.transform.position = proxyPos;
+                tempProxyGO.transform.position = proxyPos;
                 proxies[x, y] = tempProxy;
             }
         }
@@ -273,19 +275,20 @@ public class CombatManager : MonoBehaviour
 	private IEnumerator UpdateHealthBar(Vector2Int target)
 	{
 		Entity targetEntity = GetEntity(target);
+		Proxy targetProxy = GetProxy(target);
 		while (true)
 		{
 			bool check = targetEntity != null;
-			combatPanel.HealthBars[target.x, target.y].gameObject.SetActive(check);
+			targetProxy.HealthBar.gameObject.SetActive(check);
 			if (check)
 			{
-				combatPanel.HealthBars[target.x, target.y].maxValue = targetEntity.currentMaxHealth;
-				combatPanel.HealthBars[target.x, target.y].value =
+				targetProxy.HealthBar.maxValue = targetEntity.currentMaxHealth;
+				targetProxy.HealthBar.value =
 					Mathf.MoveTowards
-					(combatPanel.HealthBars[target.x, target.y].value,
+					(targetProxy.HealthBar.value,
 					targetEntity.currentHealth,
 					healthbarAdjustmentSpeed * Time.deltaTime);
-				if (combatPanel.HealthBars[target.x, target.y].value == targetEntity.currentHealth) break;
+				if (targetProxy.HealthBar.value == targetEntity.currentHealth) break;
 			}
 			else break;
 			yield return null;
@@ -297,21 +300,21 @@ public class CombatManager : MonoBehaviour
 		while (true)
 		{
 			done = true;
-			for (int x = 0; x < combatants.GetLength(0); x++)
+			for (int x = 0; x < proxies.GetLength(0); x++)
 			{
-				for (int y = 0; y < combatants.GetLength(1); y++)
+				for (int y = 0; y < proxies.GetLength(1); y++)
 				{
 					bool check = combatants[x, y] != null;
-					combatPanel.HealthBars[x, y].gameObject.SetActive(check);
+					proxies[x, y].HealthBar.gameObject.SetActive(check);
 					if (check)
 					{
-						combatPanel.HealthBars[x, y].maxValue = combatants[x, y].currentMaxHealth;
-						combatPanel.HealthBars[x, y].value =
+						proxies[x, y].HealthBar.maxValue = combatants[x, y].currentMaxHealth;
+						proxies[x, y].HealthBar.value =
 							Mathf.MoveTowards
-							(combatPanel.HealthBars[x, y].value,
+							(proxies[x, y].HealthBar.value,
 							combatants[x, y].currentHealth,
 							healthbarAdjustmentSpeed * Time.deltaTime);
-						if (combatPanel.HealthBars[x, y].value != combatants[x, y].currentHealth) done = false;
+						if (proxies[x, y].HealthBar.value != combatants[x, y].currentHealth) done = false;
 					}
 				}
 			}
@@ -323,9 +326,9 @@ public class CombatManager : MonoBehaviour
 	private void UpdateSelectableTargets()
 	{
 		CombatSkill skill = GetCurrentlySelectedSkill();
-		for (int x = 0; x < combatPanel.SelectableIndicators.GetLength(0); x++)
+		for (int x = 0; x < proxies.GetLength(0); x++)
 		{
-			for (int y = 0; y < combatPanel.SelectableIndicators.GetLength(1); y++)
+			for (int y = 0; y < proxies.GetLength(1); y++)
 			{
 				// dont show indicator if: 1: Its an enemy's turn. 2: The spot is empty. 3: The character is dead (and no revive skill is in use)
 				Vector2Int indicPos = new Vector2Int(x, y);
@@ -349,7 +352,7 @@ public class CombatManager : MonoBehaviour
 							&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
 							&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
 				}
-				combatPanel.SelectableIndicators[x, y].enabled = selectableTargets[x, y];
+				proxies[x, y].TargetIndicator.enabled = selectableTargets[x, y];
 			}
 		}
 	}
@@ -385,6 +388,8 @@ public class CombatManager : MonoBehaviour
 		combatPanel.statDescriptionText.SetText(statString);
 
 		combatPanel.EntityInspectionPortrait.sprite = entity.CharDataContainer.Portrait;
+
+		combatPanel.EntityInspectionEffectPool.CopyCombatEffects(GetCombatEffectPool(currentlyInspectedEntityPos));
 	}
 	#endregion
 
@@ -446,7 +451,7 @@ public class CombatManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(attackDelay);
 
-		GameObject[] proxyArr = GetProxies(targets);
+		Proxy[] proxyArr = GetProxies(targets);
 		Transform effectTransform = null;
 
 		for(int i = 0; i < targets.Length; i++)
@@ -490,16 +495,16 @@ public class CombatManager : MonoBehaviour
 		for (int i = 0; i < skill.AppliedCombatEffects.Length; i++)
 		{
 			CombatEffect effect = skill.AppliedCombatEffects[i];
-			if (!GetEntity(target).currentCombatEffects.ContainsKey(effect))
+			if (!GetCombatEffectPool(target).Contains(effect))
 				AddCombatEffectToEntity(target, effect);
 			else Debug.Log("Effect already on target");
 		}
-		
+
 		// self inflicted combat effects
 		for (int i = 0; i < skill.SelfInflictedCombatEffects.Length; i++)
 		{
 			CombatEffect effect = skill.SelfInflictedCombatEffects[i];
-			if (!GetEntity(target).currentCombatEffects.ContainsKey(effect))
+			if (!GetCombatEffectPool(target).Contains(effect))
 				AddCombatEffectToEntity(target, effect);
 			else Debug.Log("Effect already on target");
 		}
@@ -508,16 +513,9 @@ public class CombatManager : MonoBehaviour
 	private void AddCombatEffectToEntity(Vector2Int target, CombatEffect effect)
 	{
 		Entity targetEntity = GetEntity(target);
-		Transform parent = combatPanel.CombatEffectAnchors[target.x, target.y];
+		CombatEffectPool combatEffectPool = GetCombatEffectPool(target);
 		
-		// add remaining duration and GameObject reference to entity
-		Tuple<GameObject, int> combatEffect = new Tuple<GameObject, int>(Instantiate(combatEffectPrefab, parent), effect.Duration);
-		targetEntity.currentCombatEffects.Add(effect, combatEffect);
-
-		// setup for the UI icon under the character
-		targetEntity.currentCombatEffects[effect].ValOne.GetComponent<Image>().sprite = effect.EffectSprite;
-		targetEntity.currentCombatEffects[effect].ValOne.transform.Translate(new Vector3((targetEntity.currentCombatEffects.Count - 1) * 30f, 0f, 0f));
-		
+		combatEffectPool.AddCombatEffect(effect);
 		effect.ApplyCombatEffectModifiers(targetEntity);
 	}
 	#endregion
@@ -527,9 +525,9 @@ public class CombatManager : MonoBehaviour
 		upcomingTurns.Remove(dyingCharPos); // TODO: check if this ever throws an exception
 		GetEntity(dyingCharPos).currentInitiative = 0;
 
-		GameObject proxy = GetProxy(dyingCharPos); 
-		proxy.GetComponent<Animator>().enabled = false; // pause anim
-		proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
+		//GameObject proxy = GetProxy(dyingCharPos); 
+		//proxy.GetComponent<Animator>().enabled = false; // pause anim
+		//proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
 
 		// TODO edit portrait
 	}
@@ -584,6 +582,11 @@ public class CombatManager : MonoBehaviour
 		return GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
 	}
 
+	private CombatEffectPool GetCombatEffectPool(Vector2Int proxyPos)
+	{
+		return proxies[proxyPos.x, proxyPos.y].CombatEffectPool;
+	}
+
 	private string GetFormattedStatString(int currentStat, int maxStat)
 	{
 		return 
@@ -607,13 +610,13 @@ public class CombatManager : MonoBehaviour
 		return entityArr;
 	}
 
-	private GameObject GetProxy(Vector2Int proxyPos)
+	private Proxy GetProxy(Vector2Int proxyPos)
 	{
 		return proxies[proxyPos.x, proxyPos.y];
 	}
-	private GameObject[] GetProxies(Vector2Int[] proxPosArr)
+	private Proxy[] GetProxies(Vector2Int[] proxPosArr)
 	{
-		GameObject[] proxieArr = new GameObject[proxPosArr.Length];
+		Proxy[] proxieArr = new Proxy[proxPosArr.Length];
 		for (int i = 0; i < proxPosArr.Length; i++)
 			proxieArr[i] = proxies[proxPosArr[i].x, proxPosArr[i].y];
 		return proxieArr;

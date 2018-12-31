@@ -29,8 +29,7 @@ public class GameManager : MonoBehaviour
             new Entity[] {
                 new Entity(knight),
                 new Entity(mage),
-                new Entity(gunwoman),
-                null
+                new Entity(gunwoman)
             });
     }
 
@@ -41,7 +40,7 @@ public class GameManager : MonoBehaviour
         Character gunwoman = AssetManager.Instance.Characters.LoadAsset<Character>("Gunwoman");
         Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
         Character knight = AssetManager.Instance.Characters.LoadAsset<Character>("Knight");
-        savefile.CurrentTeam = new Entity[] { new Entity(knight), new Entity(mage), new Entity(gunwoman), null };
+        savefile.CurrentTeam = new Entity[] { new Entity(knight), new Entity(mage), new Entity(gunwoman) };
         savefile.Gold = 0;
         savefile.Souls = 0;
         savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);

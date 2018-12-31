@@ -1,6 +1,13 @@
-﻿using UnityEngine;
+﻿using CombatEffectElements;
+using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Proxy : MonoBehaviour
 {
-	[System.NonSerialized] public Vector2Int CombatPosition;
+	[NonSerialized] public Vector2Int CombatPosition;
+
+	public Slider HealthBar;
+	public CombatEffectPool CombatEffectPool;
+	public Image TargetIndicator;
 }

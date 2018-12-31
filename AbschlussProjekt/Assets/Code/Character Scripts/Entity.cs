@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CombatEffectElements;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -118,11 +119,8 @@ public class Entity
     public int currentInitiative;
 	
 	[NonSerialized] public Vector2Int currentCombatPosition;
-
-	[NonSerialized] public Dictionary<CombatSkill, int> currentSkillCooldowns; // CombatSkill -> cooldown
-	//[NonSerialized] public Dictionary<CombatEffect, int> currentCombatEffects;
-	//[NonSerialized] public Dictionary<CombatEffect, GameObject> currentCombatEffectGOs;
-	[NonSerialized] public Dictionary<CombatEffect, Tuple<GameObject, int>> currentCombatEffects; // int => remaining duration; GameObject => corresponding effect icon in the scene
+	[NonSerialized] public Dictionary<CombatSkill, int> currentSkillCooldowns;
+	[NonSerialized] public CombatEffectPool currentCombatEffects;
     #endregion
 
     public void Unload()
