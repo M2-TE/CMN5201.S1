@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Combat Effect", menuName = "Data Container/Skills/Combat Effect")]
 public class CombatEffect : DataContainer
 {
-	public bool IsActivatedRepeatedly;
 	public Sprite EffectSprite;
 	[TextArea] public string EffectDescription = "Missing Effect Description";
 	[Space(10)]
@@ -25,20 +24,20 @@ public class CombatEffect : DataContainer
 	[Space(10)]
 	public float SpeedModifier = 1;
 	public int FlatSpeedModifier = 0;
-	
+
 	// Apply DoT (Damage over Time) or HoT (Heal over Time)
-	//public void ActivateActiveEffect(ref Entity affectedEntity)
-	//{
-	//	affectedEntity.currentHealth = (int)(affectedEntity.currentHealth * HealthModifier);
-	//	affectedEntity.currentHealth += FlatHealthModifier;
-	//}
+	public void ActivateActiveEffect(Entity affectedEntity)
+	{
+		//affectedEntity.currentHealth = (int)(affectedEntity.currentHealth * HealthModifier);
+		//affectedEntity.currentHealth += FlatHealthModifier;
+	}
 
 	public void ApplyCombatEffectModifiers(Entity affectedEntity)
 	{
 		HandleEffect(affectedEntity,(x, y) => (int)(x * y - x), x => x);
 	}
 
-	public void RemoveCombatEffectModifiers(ref Entity affectedEntity)
+	public void RemoveCombatEffectModifiers(Entity affectedEntity)
 	{
 		HandleEffect(affectedEntity, (x, y) => (int)(x * y - x) * -1, x => - x);
 	}

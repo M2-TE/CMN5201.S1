@@ -19,7 +19,7 @@ namespace CombatEffectElements
 			set
 			{
 				duration = value;
-				durationText.text = duration.ToString();
+				durationText.SetText(duration.ToString());
 			}
 		}
 

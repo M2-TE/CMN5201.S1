@@ -51,7 +51,7 @@ public class CombatManager : MonoBehaviour
 			
 		}
 	}
-
+	
 	private LayerMask clickableLayers;
 	private float healthbarAdjustmentSpeed = 10f;
 	#endregion
@@ -164,14 +164,13 @@ public class CombatManager : MonoBehaviour
 	private void LaunchNextTurn()
 	{
 		if (upcomingTurns.Count == 0) ProgressInits();
-
 		HandleCurrentTurn();
 	}
 
 	private void HandleCurrentTurn()
 	{
-		// change this to choose the last-selected or first skill of that character
-		currentlySelectedSkill = 0;
+		HandleCombatEffects(true);
+		currentlySelectedSkill = 0; // change this to irst skill of that character
 		UpdateSkillIcons();
 
 		if (upcomingTurns[0].x == 1)
@@ -194,11 +193,12 @@ public class CombatManager : MonoBehaviour
 	
 	private void EndTurn()
 	{
+		HandleCombatEffects(false);
 		GetEntity(upcomingTurns[0]).currentInitiative = 0;
 		upcomingTurns.RemoveAt(0);
 
 		// start next turn if combat is still ongoing
-		if(!CheckForCombatEnd()) LaunchNextTurn();
+		if (!CheckForCombatEnd()) LaunchNextTurn();
 	}
 
 	private void ControlOpponentTurn()
@@ -406,7 +406,6 @@ public class CombatManager : MonoBehaviour
 	#endregion
 
 	#region Character Action Handling
-	// attack initiator \/
 	private void UseCombatSkill(Vector2Int mainTarget)
 	{
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
@@ -529,8 +528,34 @@ public class CombatManager : MonoBehaviour
 		Entity targetEntity = GetEntity(target);
 		CombatEffectPool combatEffectPool = GetCombatEffectPool(target);
 		
-		combatEffectPool.AddCombatEffect(effect);
+		combatEffectPool.AddCombatEffect(effect).Duration++;
 		effect.ApplyCombatEffectModifiers(targetEntity);
+	}
+
+	private void HandleCombatEffects(bool turnStart)
+	{
+		Entity entity = GetEntity(upcomingTurns[0]);
+		CombatEffectPool pool = GetCombatEffectPool(upcomingTurns[0]);
+		CombatEffectUI[] combatEffectsUI = pool.activeCombatEffectElements.ToArray();
+
+		CombatEffectUI tempCEUI;
+		for(int i = 0; i < combatEffectsUI.Length; i++)
+		{
+			tempCEUI = combatEffectsUI[i];
+			if (turnStart)
+			{
+				tempCEUI.CombatEffect.ActivateActiveEffect(entity);
+			}
+			else
+			{
+				if (tempCEUI.Duration > 1) tempCEUI.Duration--;
+				else
+				{
+					tempCEUI.CombatEffect.RemoveCombatEffectModifiers(entity);
+					pool.RemoveCombatEffect(tempCEUI);
+				}
+			}
+		}
 	}
 	#endregion
 
