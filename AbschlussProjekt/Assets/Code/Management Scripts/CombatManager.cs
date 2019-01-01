@@ -64,7 +64,6 @@ public class CombatManager : MonoBehaviour
 	
 	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
 	{
-		Debug.Log(playerTeam.Length + " " + playerTeam.Length);
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
 		proxies = new Proxy[2, combatants.GetLength(1)];
 		selectableTargets = new bool[2, combatants.GetLength(1)];
@@ -144,12 +143,13 @@ public class CombatManager : MonoBehaviour
 				Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
 				if (x == 1)
 				{
-					tempProxyGO.transform.localScale = new Vector3(-1f, 1f, 1f); // flip if its an opponent proxy
-					tempProxy.CombatEffectPool.transform.parent.localScale = 
-						new Vector3(
-							tempProxy.CombatEffectPool.transform.parent.localScale.x * -1f, 
-							tempProxy.CombatEffectPool.transform.parent.localScale.y, 
-							1f); // and counterflip status canvas
+					tempProxyGO.GetComponent<SpriteRenderer>().flipX = true;
+					//tempProxyGO.transform.localScale = new Vector3(-1f, 1f, 1f); // flip if its an opponent proxy
+					//tempProxy.CombatEffectPool.transform.parent.localScale = 
+					//	new Vector3(
+					//		tempProxy.CombatEffectPool.transform.parent.localScale.x * -1f, 
+					//		tempProxy.CombatEffectPool.transform.parent.localScale.y, 
+					//		1f); // and counterflip status canvas
 				}
 				proxyPos.z = 0f;
                 tempProxyGO.transform.position = proxyPos;
@@ -173,7 +173,6 @@ public class CombatManager : MonoBehaviour
 		// change this to choose the last-selected or first skill of that character
 		currentlySelectedSkill = 0;
 		UpdateSkillIcons();
-		UpdateEntityInspectionWindow();
 
 		if (upcomingTurns[0].x == 1)
 		{
@@ -375,22 +374,35 @@ public class CombatManager : MonoBehaviour
 
 		combatPanel.skillDescriptionText.SetText(skillDescriptionText);
 	}
-	
+
+	#region Inspection Window
 	private void UpdateEntityInspectionWindow()
 	{
 		Entity entity = GetEntity(currentlyInspectedEntityPos);
+		UpdateInspectionWindowStatText(entity);
+		UpdateInspectionWindowPortrait(entity);
+		UpdateInspectionWindowCombatEffects(entity);
+	}
 
-		string statString =
+	private void UpdateInspectionWindowStatText(Entity entity)
+	{
+		combatPanel.statDescriptionText.SetText(
 			"HP:	" + GetFormattedStatString(entity.currentHealth, entity.currentMaxHealth) + " / " + GetFormattedStatString(entity.currentMaxHealth, entity.baseHealth) +
 			"\nATK:	" + GetFormattedStatString(entity.currentAttack, entity.baseAttack) +
 			"\nDEF:	" + GetFormattedStatString(entity.currentDefense, entity.baseDefense) +
-			"\nSPD:	" + GetFormattedStatString(entity.currentSpeed, entity.baseSpeed);
-		combatPanel.statDescriptionText.SetText(statString);
+			"\nSPD:	" + GetFormattedStatString(entity.currentSpeed, entity.baseSpeed));
+	}
 
+	private void UpdateInspectionWindowPortrait(Entity entity)
+	{
 		combatPanel.EntityInspectionPortrait.sprite = entity.CharDataContainer.Portrait;
+	}
 
+	private void UpdateInspectionWindowCombatEffects(Entity entity)
+	{
 		combatPanel.EntityInspectionEffectPool.CopyCombatEffects(GetCombatEffectPool(currentlyInspectedEntityPos));
 	}
+	#endregion
 	#endregion
 
 	#region Character Action Handling
@@ -508,6 +520,8 @@ public class CombatManager : MonoBehaviour
 				AddCombatEffectToEntity(target, effect);
 			else Debug.Log("Effect already on target");
 		}
+		
+		UpdateEntityInspectionWindow();
 	}
 
 	private void AddCombatEffectToEntity(Vector2Int target, CombatEffect effect)

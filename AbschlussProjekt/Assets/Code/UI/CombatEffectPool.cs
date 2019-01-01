@@ -25,17 +25,25 @@ namespace CombatEffectElements
 		#endregion
 
 		#region Pooling
+		private CombatEffectUI CreateNewElement()
+		{
+			CombatEffectUI item = Instantiate(combatEffectPrefab, transform).GetComponent<CombatEffectUI>();
+
+			item.transform.GetChild(0).gameObject.SetActive(showDuration);
+			item.SetSize(effectSize.x, effectSize.y);
+
+			return item;
+		}
+
 		private CombatEffectUI GetItemFromPool()
 		{
 			CombatEffectUI item = null;
 			if (inactiveCombatEffectElements.Count > 0) item = inactiveCombatEffectElements.Pop();
-			else item = Instantiate(combatEffectPrefab, transform).GetComponent<CombatEffectUI>();
+			else item = CreateNewElement();
 
-			item.gameObject.SetActive(true);
-			item.transform.GetChild(0).gameObject.SetActive(showDuration);
-			item.SetSize(effectSize.x, effectSize.y);
 			item.SetPosition(GetNextFreePosition());
 			activeCombatEffectElements.Add(item);
+			item.gameObject.SetActive(true);
 
 			return item;
 		}
@@ -87,7 +95,17 @@ namespace CombatEffectElements
 
 		public void CopyCombatEffects(CombatEffectPool pool)
 		{
+			// use current reserves of active combatEffect elements for copy process
+			for (int i = 0; i < pool.activeCombatEffectElements.Count && i < activeCombatEffectElements.Count; i++)
+				activeCombatEffectElements[i].CombatEffect = pool.activeCombatEffectElements[i].CombatEffect;
 
+			// pool leftover effect objects that are not being used
+			while (pool.activeCombatEffectElements.Count < activeCombatEffectElements.Count)
+				StoreItemInPool(activeCombatEffectElements[pool.activeCombatEffectElements.Count]);
+
+			// get new items from the pool if there are more effects left to be copied
+			for (int i = activeCombatEffectElements.Count; i < pool.activeCombatEffectElements.Count; i++)
+				GetItemFromPool().CombatEffect = pool.activeCombatEffectElements[i].CombatEffect;
 		}
 		#endregion
 	}
