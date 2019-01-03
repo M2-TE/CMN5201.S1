@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EquipmentSlots { WEAPON, WAIST, HEAD, HANDS, FEET, FINGER, NECK}
+
 public class Inventory : StorageSystem
 {
-    private List<EquipmentContainer> equippedStuff;
+    private Dictionary<EquipmentSlots, EquipmentContainer> equippedStuff;
+
     private int currency;
 
     public Inventory(int storageSize) : base(storageSize)
     {
-        equippedStuff = new List<EquipmentContainer>();
+        equippedStuff = new Dictionary<EquipmentSlots, EquipmentContainer>();
         currency = 0;
     }
 
