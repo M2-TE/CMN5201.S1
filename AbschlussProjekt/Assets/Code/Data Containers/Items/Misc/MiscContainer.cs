@@ -2,16 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "New Consumable", menuName = "Data Container/Items/Consumable")]
-public class Consumable : ItemContainer
+
+public enum Usability
 {
-    public enum Usability
-    {
-        UNUSABLE = 1,
-        ALWAYS_USABLE = 2,
-        IN_COMBAT_ONLY = 3,
-        OUT_OF_COMBAT_ONLY = 4,
-    }
+    UNUSABLE = 1,
+    ALWAYS_USABLE = 2,
+    IN_COMBAT_ONLY = 3,
+    OUT_OF_COMBAT_ONLY = 4,
+}
+
+[CreateAssetMenu(fileName = "New Misc", menuName = "Data Container/Items/Misc")]
+public class MiscContainer : ItemContainer
+{
+    
     [Space(10)]
     public Usability IsUsable = 0;
 
@@ -29,5 +32,5 @@ public class Consumable : ItemContainer
     public Vector2Int SurroundingAffectedUnits;
 
     [Space(20)]
-    public ConsumeEffect[] consumeEffects;
+    public ConsumeEffect[] ConsumeEffects;
 }

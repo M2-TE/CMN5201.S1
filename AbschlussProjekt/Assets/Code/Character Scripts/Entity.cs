@@ -31,13 +31,13 @@ public class Entity
     }
 
 	private string equippedWeaponString;
-    [NonSerialized] private Weapon equippedWeapon;
-    public Weapon EquippedWeapon
+    [NonSerialized] private WeaponContainer equippedWeapon;
+    public WeaponContainer EquippedWeapon
     {
         get
         {
             if (equippedWeapon != null) return equippedWeapon;
-            else if (equippedWeaponString != "") return equippedWeapon = AssetManager.Instance.Items.LoadAsset<Weapon>(equippedWeaponString);
+            else if (equippedWeaponString != "") return equippedWeapon = AssetManager.Instance.Items.LoadAsset<WeaponContainer>(equippedWeaponString);
             else return null;
         }
         set
@@ -48,13 +48,13 @@ public class Entity
     }
 
     private string equippedArmorString;
-    [NonSerialized] private Armor equippedArmor;
-    public Armor EquippedArmor
+    [NonSerialized] private ArmorContainer equippedArmor;
+    public ArmorContainer EquippedArmor
     {
         get
         {
             if (equippedArmor != null) return equippedArmor;
-            else if (equippedArmorString != "") return equippedArmor = AssetManager.Instance.Items.LoadAsset<Armor>(equippedArmorString);
+            else if (equippedArmorString != "") return equippedArmor = AssetManager.Instance.Items.LoadAsset<ArmorContainer>(equippedArmorString);
             else return null;
         }
         set

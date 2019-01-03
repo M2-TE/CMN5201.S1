@@ -15,7 +15,7 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300000, guid: 13d31abd65e13f0438dd72d6ffab4acb, type: 3}
   ItemDescription: This is a nice Postion lol
   EncumbranceValue: 0
-  RequiredLevel: 1
+  LevelRequirement: 0
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
@@ -28,4 +28,4 @@ MonoBehaviour:
   MinRange: 0
   MaxRange: 2
   SurroundingAffectedUnits: {x: 0, y: 0}
-  consumeEffects: []
+  ConsumeEffects: []

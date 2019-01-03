@@ -8,17 +8,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 501e0fee3a82e924fb37df8e876076a2, type: 3}
-  m_Name: Base Weapon
+  m_Script: {fileID: 11500000, guid: e37f3bd81d586e6449285f51029dc5a5, type: 3}
+  m_Name: Base Armor
   m_EditorClassIdentifier: 
-  ItemName: default Weapon
+  ItemName: default Armor
   ItemIcon: {fileID: 0}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
-  RequiredLevel: 0
+  LevelRequirement: 0
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
-  StackingLimit: 0
-  matchingClasses: []
-  attackBonus: 0
+  StackingLimit: 1
+  MatchingClasses: []
+  defenseBonus: 0

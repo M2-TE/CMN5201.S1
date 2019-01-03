@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Armor", menuName = "Data Container/Items/Equipment/Armor")]
-public class Armor : Equipment
+public class ArmorContainer : EquipmentContainer
 {
     public int defenseBonus;
 }

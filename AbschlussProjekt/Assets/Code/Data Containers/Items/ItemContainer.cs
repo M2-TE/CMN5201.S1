@@ -12,7 +12,7 @@ public class ItemContainer : DataContainer
     [Tooltip("The amout of money you get by selling this item")]
     public int EncumbranceValue;
     [Tooltip("The required level for using this item")]
-    public int RequiredLevel;
+    public int LevelRequirement;
 
     [Space(10)]
     [Tooltip("Optional checkbox to prevent an item from being destroyed by the player")]
