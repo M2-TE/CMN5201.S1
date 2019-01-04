@@ -12,12 +12,17 @@ public class GameManager : MonoBehaviour
     private Entity[] playerTeam;
     private void Start ()
     {
+		StartCombatDebugging();
+	}
+
+	public void StartCombatDebugging()
+	{
 		Cursor.SetCursor(mouse, Vector2.zero, mode);
 
-        combatManager = GetComponent<CombatManager>();
+		combatManager = GetComponent<CombatManager>();
 
-        SaveDebugging(/* remove this later */);
-        LoadCurrentTeam();
+		SaveDebugging(/* remove this later */);
+		LoadCurrentTeam();
 
 		Character knight = AssetManager.Instance.Characters.LoadAsset<Character>("Knight");
 		Character mage = AssetManager.Instance.Characters.LoadAsset<Character>("Mage");
@@ -25,14 +30,13 @@ public class GameManager : MonoBehaviour
 
 		//return; // DEBUG
 		combatManager.StartCombat
-            (playerTeam,
-            new Entity[] {
-                new Entity(knight),
-                new Entity(mage),
-                new Entity(gunwoman)
-            });
-    }
-
+			(playerTeam,
+			new Entity[] {
+				new Entity(knight),
+				new Entity(mage),
+				new Entity(gunwoman)
+			});
+	}
 
     private void SaveDebugging()
     {
