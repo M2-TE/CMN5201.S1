@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EquipmentSlots { WEAPON, WAIST, HEAD, HANDS, FEET, FINGER, NECK}
+public enum EquipmentSlots { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET, FINGER, NECK}
 
 public class Inventory : StorageSystem
 {
