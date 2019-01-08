@@ -8,7 +8,8 @@ public class AssetManager
 {
     private readonly string savefilePath = "/savefile.sfl";
     private readonly string assetBundlePath = "Assets/Asset Bundles/StandaloneWindows/";
-    
+
+	private readonly string itemsPath = "items";
     private readonly string settingsPath = "settings";
     private readonly string playableCharactersPath = "characters/main characters";
     private readonly string equipmentPath = "equipment";
@@ -25,7 +26,21 @@ public class AssetManager
             //else return mainCam = Camera.main;
         }
     }
-    
+
+	private AssetBundle items;
+	public AssetBundle Items
+	{
+		get
+		{
+			return items ?? (items = AssetBundle.LoadFromFile(assetBundlePath + itemsPath));
+		}
+		set
+		{
+			if (value == null) items.Unload(true);
+		}
+
+	}
+
     private AssetBundle settings;
     public AssetBundle Settings
     {
