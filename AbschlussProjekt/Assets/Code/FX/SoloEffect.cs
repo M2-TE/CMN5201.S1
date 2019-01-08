@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class SoloEffect : BaseEffect
 {
-    [SerializeField] protected bool looping;
 	[SerializeField] protected float lingeringDuration = 0f;
 	[SerializeField] protected int framerateOverride = 12;
-    protected float timeBetweenFrames;
 
 	protected new IEnumerator Start ()
     {

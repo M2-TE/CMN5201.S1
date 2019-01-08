@@ -20,8 +20,9 @@ public class AssetManager
     {
         get
         {
-            if (mainCam != null) return mainCam;
-            else return mainCam = Camera.main;
+			return mainCam ?? (mainCam = Camera.main);
+            //if (mainCam != null) return mainCam;
+            //else return mainCam = Camera.main;
         }
     }
     
@@ -30,8 +31,9 @@ public class AssetManager
     {
         get
         {
-            if (settings != null) return settings;
-            else return settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath);
+			return settings ?? (settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath));
+			//if (settings != null) return settings;
+   //         else return settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath);
         }
         set
         {
@@ -44,8 +46,9 @@ public class AssetManager
     {
         get
         {
-            if (characters != null) return characters;
-            else return characters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath);
+			return characters ?? (characters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath));
+            //if (characters != null) return characters;
+            //else return characters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath);
         }
 
         set
@@ -59,8 +62,9 @@ public class AssetManager
     {
         get
         {
-            if (equipment != null) return equipment;
-            else return equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath);
+			return equipment ?? (equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath));
+            //if (equipment != null) return equipment;
+            //else return equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath);
         }
 
         set
@@ -74,8 +78,9 @@ public class AssetManager
     {
         get
         {
-            if (skills != null) return skills;
-            else return skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath);
+			return skills ?? (skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath));
+            //if (skills != null) return skills;
+            //else return skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath);
         }
 
         set

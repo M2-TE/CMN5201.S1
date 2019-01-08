@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CombatEffectElements;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -118,6 +119,8 @@ public class Entity
     public int currentInitiative;
 	
 	[NonSerialized] public Vector2Int currentCombatPosition;
+	[NonSerialized] public Dictionary<CombatSkill, int> currentSkillCooldowns;
+	[NonSerialized] public CombatEffectPool currentCombatEffects;
     #endregion
 
     public void Unload()
@@ -140,8 +143,6 @@ public class Entity
 
         entityType = charDataContainer.name;
         this.charDataContainer = charDataContainer;
-
-
 	  
         equippedCombatSkillStrings = new string[4];
 		ResetCombatSkills();
@@ -149,9 +150,6 @@ public class Entity
         equippedWeaponString = "";
 
         equippedArmorString = "";
-
-
-
 
         baseHealth = charDataContainer.BaseHealth;
 		currentMaxHealth = baseHealth;
