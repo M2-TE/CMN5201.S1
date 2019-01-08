@@ -67,7 +67,6 @@ namespace CombatEffectElements
 		{
 			return activeCombatEffectElements.Find(x => x.CombatEffect == combatEffect);
 		}
-
 		#region Public Methods
 		public CombatEffectUI AddCombatEffect(CombatEffect combatEffect)
 		{
@@ -79,11 +78,24 @@ namespace CombatEffectElements
 		
 		public void RemoveCombatEffect(CombatEffect combatEffect)
 		{
-			StoreItemInPool(FindCombatEffectElement(combatEffect));
+			RemoveCombatEffect(FindCombatEffectElement(combatEffect));
 		}
 		public void RemoveCombatEffect(CombatEffectUI combatEffect)
 		{
-			StoreItemInPool(combatEffect);
+			if(activeCombatEffectElements.IndexOf(combatEffect) < activeCombatEffectElements.Count - 2)
+			{
+				for(int i = activeCombatEffectElements.IndexOf(combatEffect); i < activeCombatEffectElements.Count - 1; i++)
+				{
+					activeCombatEffectElements[i].CombatEffect = activeCombatEffectElements[i + 1].CombatEffect;
+					activeCombatEffectElements[i].Duration = activeCombatEffectElements[i + 1].Duration;
+				}
+				StoreItemInPool(activeCombatEffectElements[activeCombatEffectElements.Count - 1]);
+			}
+			else
+			{
+				Debug.Log("changes not needed");
+				StoreItemInPool(combatEffect);
+			}
 		}
 
 		public bool Contains(CombatEffect combatEffect)

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CombatPanel : MonoBehaviour
 {
 	public Image[] TeamSkillButtons;
+	public TextMeshProUGUI[] Cooldowns;
 
 	[Header("Entity Inspection Window")]
 	public TextMeshProUGUI skillDescriptionText;

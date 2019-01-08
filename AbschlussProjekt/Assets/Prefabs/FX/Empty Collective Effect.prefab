@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212344677240700456}
   - component: {fileID: 114955846769736978}
   - component: {fileID: 108549999783059590}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Empty Collective Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flickeringEnabled: 0
   changingLightColors: 0
-  preCalcFlickering: 0
   lightRangeCurve:
     serializedVersion: 2
     m_Curve: []
@@ -103,7 +102,6 @@ MonoBehaviour:
   flickeringIntensity: 0.8
   maxFlickerStep: 0.4
   maxFlickerMod: 0.5
-  preCalcColors: 0
   rCurve:
     serializedVersion: 2
     m_Curve: []
@@ -126,6 +124,7 @@ MonoBehaviour:
   colorIntensity: 0.25
   sprites: []
   initialFrameOffset: 0
+  looping: 0
 --- !u!212 &212344677240700456
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -159,7 +158,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -194721291
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

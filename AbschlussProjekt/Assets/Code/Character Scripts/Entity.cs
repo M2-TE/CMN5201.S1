@@ -123,6 +123,15 @@ public class Entity
 	[NonSerialized] public CombatEffectPool currentCombatEffects;
     #endregion
 
+	public void InitializeSkills()
+	{
+		currentSkillCooldowns = new Dictionary<CombatSkill, int>();
+		for(int i = 0; i < EquippedCombatSkills.Length; i++)
+		{
+			if(EquippedCombatSkills[i] != null) currentSkillCooldowns.Add(EquippedCombatSkills[i], 0);
+		}
+	}
+
     public void Unload()
     {
         charDataContainer = null;

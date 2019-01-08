@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212957884576357166}
   - component: {fileID: 114647007557339312}
   - component: {fileID: 108216198946698890}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Empty Solo Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,6 +90,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f877282943cb8e848818f3e994e64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickeringEnabled: 0
+  changingLightColors: 0
+  lightRangeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  overrideLight: {fileID: 0}
+  flickeringIntensity: 0.8
+  maxFlickerStep: 0.4
+  maxFlickerMod: 0.5
+  rCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  overrideAlpha: 1
+  colorIntensity: 0.25
   sprites: []
   initialFrameOffset: 0
   looping: 0
@@ -128,7 +160,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -194721291
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -1,8 +1,10 @@
 ﻿using CombatEffectElements;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
@@ -45,6 +47,7 @@ public class CombatManager : MonoBehaviour
 		{
 			if(m_currentlyInspectedEntityPos != value)
 			{
+				//GetProxy(value).Wobble();
 				m_currentlyInspectedEntityPos = value;
 				UpdateEntityInspectionWindow();
 			}
@@ -56,9 +59,10 @@ public class CombatManager : MonoBehaviour
 	private float healthbarAdjustmentSpeed = 10f;
 	#endregion
 
-	#region Combat Startup
+	#region Setup
 	private void Start()
 	{
+		Time.timeScale = 5f;
 		clickableLayers = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").clickableLayers;
 	}
 	
@@ -79,35 +83,6 @@ public class CombatManager : MonoBehaviour
 		// initiate combat loop
 		LaunchNextTurn();
 	}
-	#endregion
-
-	#region User Input
-	private void Update()
-	{
-		CheckForUserInput();
-	}
-
-	private void CheckForUserInput()
-	{
-		RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
-		if (hit.collider != null)
-		{
-			if (Input.GetMouseButtonDown(0)) OnCharacterSelect(hit.transform.GetComponent<Proxy>().CombatPosition);
-			else currentlyInspectedEntityPos = hit.transform.GetComponent<Proxy>().CombatPosition;
-		}
-		else currentlyInspectedEntityPos = upcomingTurns[0];
-	}
-
-	private void OnCharacterSelect(Vector2Int characterPos)
-	{
-		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0 || !selectableTargets[characterPos.x, characterPos.y]) return;
-
-		SetButtonsEnabled(false);
-		UseCombatSkill(characterPos);
-	}
-	#endregion
-
-	#region Single Calls (Combat Setup)
 
     private void InitializeEntities()
     {
@@ -121,6 +96,7 @@ public class CombatManager : MonoBehaviour
 				{
 					tempEntity.currentInitiative = 0;
 					tempEntity.currentCombatPosition = new Vector2Int(x, y);
+					tempEntity.InitializeSkills();
 				}
 			}
 		}
@@ -138,7 +114,7 @@ public class CombatManager : MonoBehaviour
 				// spawn proxy (proxy => represents an entity in the world)
                 GameObject tempProxyGO = Instantiate(combatants[x, y].CharDataContainer.Prefab);
 				Proxy tempProxy = tempProxyGO.GetComponent<Proxy>();
-				tempProxy.CombatPosition = new Vector2Int(x, y);
+				tempProxy.Entity.currentCombatPosition = new Vector2Int(x, y);
 
 				Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
 				if (x == 1)
@@ -159,7 +135,34 @@ public class CombatManager : MonoBehaviour
     }
 	#endregion
 
-	#region Repeated Calls (Combat Loop)
+	#region Combat Loop
+	#region User Input
+	private void Update()
+	{
+		CheckForUserInput();
+	}
+
+	private void CheckForUserInput()
+	{
+		RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
+		if (hit.collider != null)
+		{
+			Proxy hitProxy = hit.transform.GetComponent<Proxy>();
+			if (Input.GetMouseButtonDown(0)) OnCharacterSelect(hitProxy.Entity.currentCombatPosition);
+			else currentlyInspectedEntityPos = hitProxy.Entity.currentCombatPosition;
+		}
+		else currentlyInspectedEntityPos = upcomingTurns[0];
+	}
+
+	private void OnCharacterSelect(Vector2Int characterPos)
+	{
+		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0 || !selectableTargets[characterPos.x, characterPos.y]) return;
+
+		SetButtonsEnabled(false);
+		UseCombatSkill(characterPos);
+	}
+	#endregion
+
 	#region Turn Management
 	private void LaunchNextTurn()
 	{
@@ -171,7 +174,9 @@ public class CombatManager : MonoBehaviour
 	{
 		HandleCombatEffects(true);
 		currentlySelectedSkill = 0; // change this to irst skill of that character
+		ProgressCooldowns();
 		UpdateSkillIcons();
+		UpdateEntityInspectionWindow();
 
 		if (upcomingTurns[0].x == 1)
 		{
@@ -189,6 +194,16 @@ public class CombatManager : MonoBehaviour
 		}
 
 		UpdateSelectableTargets();
+	}
+
+	private void ProgressCooldowns()
+	{
+		Entity entity = GetEntity(upcomingTurns[0]);
+		List<CombatSkill> skills = new List<CombatSkill>(entity.currentSkillCooldowns.Keys);
+		for(int i = 0; i < skills.Count; i++)
+		{
+			if (entity.currentSkillCooldowns[skills[i]] > 0) entity.currentSkillCooldowns[skills[i]]--;
+		}
 	}
 	
 	private void EndTurn()
@@ -251,12 +266,31 @@ public class CombatManager : MonoBehaviour
         {
             combatPanel.TeamSkillButtons[i].gameObject.SetActive(upcomingTurns[0].x == 0);
 
+			// update icons
 			Entity currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
-			combatPanel.TeamSkillButtons[i].sprite = (currentlyActiveEntity.EquippedCombatSkills[i] == null) 
+			CombatSkill skill = currentlyActiveEntity.EquippedCombatSkills[i];
+			combatPanel.TeamSkillButtons[i].sprite = (skill == null) 
 				? null 
-				: currentlyActiveEntity.EquippedCombatSkills[i].SkillIcon;
-        }
-    }
+				: skill.SkillIcon;
+
+			// update cooldowns
+			TextMeshProUGUI cooldownText = combatPanel.Cooldowns[i];
+			if (skill != null)
+			{
+				int cooldown = currentlyActiveEntity.currentSkillCooldowns[skill];
+				cooldownText.SetText(cooldown.ToString());
+
+				bool coolingDown = cooldown != 0;
+				cooldownText.enabled = coolingDown;
+				combatPanel.TeamSkillButtons[i].GetComponent<Button>().enabled = !coolingDown;
+
+				Color color = combatPanel.TeamSkillButtons[i].color;
+				combatPanel.TeamSkillButtons[i].color = new Color(color.r, color.g, color.b, (cooldown != 0) ? .25f : 1f);
+			}
+			else cooldownText.SetText("");
+		}
+
+	}
 
 	private void UpdatePortraits()
 	{
@@ -351,7 +385,7 @@ public class CombatManager : MonoBehaviour
 							&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
 							&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
 				}
-				proxies[x, y].TargetIndicator.enabled = selectableTargets[x, y];
+				proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
 			}
 		}
 	}
@@ -411,6 +445,9 @@ public class CombatManager : MonoBehaviour
 		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
 
 		CombatSkill skill = GetCurrentlySelectedSkill();
+		Entity attacker = GetEntity(upcomingTurns[0]);
+		attacker.currentSkillCooldowns[skill] = skill.Cooldown;
+
 		List<Vector2Int> targetList = new List<Vector2Int>();
 		targetList.Add(mainTarget);
 
@@ -455,7 +492,7 @@ public class CombatManager : MonoBehaviour
 
 		Vector2Int[] targets = targetList.ToArray();
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		StartCoroutine(LaunchAttack(GetEntity(upcomingTurns[0]).CharDataContainer.attackAnimDelay, targets, skill));
+		StartCoroutine(LaunchAttack(attacker.CharDataContainer.attackAnimDelay, targets, skill));
 	}
 
 	private IEnumerator LaunchAttack(float attackDelay, Vector2Int[] targets, CombatSkill skill)
@@ -508,7 +545,8 @@ public class CombatManager : MonoBehaviour
 			CombatEffect effect = skill.AppliedCombatEffects[i];
 			if (!GetCombatEffectPool(target).Contains(effect))
 				AddCombatEffectToEntity(target, effect);
-			else Debug.Log("Effect already on target");
+			else GetCombatEffectPool(target).activeCombatEffectElements.Find(x => x.CombatEffect == effect)
+					.Duration = (target == upcomingTurns[0]) ? effect.Duration + 1 : effect.Duration;
 		}
 
 		// self inflicted combat effects
@@ -517,7 +555,8 @@ public class CombatManager : MonoBehaviour
 			CombatEffect effect = skill.SelfInflictedCombatEffects[i];
 			if (!GetCombatEffectPool(target).Contains(effect))
 				AddCombatEffectToEntity(target, effect);
-			else Debug.Log("Effect already on target");
+			else GetCombatEffectPool(target).activeCombatEffectElements.Find(x => x.CombatEffect == effect)
+					.Duration = (target == upcomingTurns[0]) ? effect.Duration + 1 : effect.Duration;
 		}
 		
 		UpdateEntityInspectionWindow();
@@ -525,11 +564,9 @@ public class CombatManager : MonoBehaviour
 
 	private void AddCombatEffectToEntity(Vector2Int target, CombatEffect effect)
 	{
-		Entity targetEntity = GetEntity(target);
-		CombatEffectPool combatEffectPool = GetCombatEffectPool(target);
-		
-		combatEffectPool.AddCombatEffect(effect).Duration++;
-		effect.ApplyCombatEffectModifiers(targetEntity);
+		CombatEffectUI combatEffectUI = GetCombatEffectPool(target).AddCombatEffect(effect);
+		if (target == upcomingTurns[0]) combatEffectUI.Duration++;
+		effect.ApplyCombatEffectModifiers(GetEntity(target));
 	}
 
 	private void HandleCombatEffects(bool turnStart)
@@ -563,7 +600,7 @@ public class CombatManager : MonoBehaviour
 	{
 		upcomingTurns.Remove(dyingCharPos); // TODO: check if this ever throws an exception
 		GetEntity(dyingCharPos).currentInitiative = 0;
-
+		GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
 		//GameObject proxy = GetProxy(dyingCharPos); 
 		//proxy.GetComponent<Animator>().enabled = false; // pause anim
 		//proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
