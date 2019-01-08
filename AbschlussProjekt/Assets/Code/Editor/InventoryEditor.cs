@@ -6,6 +6,6 @@ using UnityEditor;
 [CustomEditor(typeof(Inventory))]
 public class InventoryEditor : Editor
 {
-
+    
 
 }
