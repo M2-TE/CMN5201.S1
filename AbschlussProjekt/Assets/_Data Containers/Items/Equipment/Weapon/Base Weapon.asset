@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501e0fee3a82e924fb37df8e876076a2, type: 3}
+  m_Name: Base Weapon
+  m_EditorClassIdentifier: 
+  ItemName: Weapon
+  ItemIcon: {fileID: 21300000, guid: 71c5e695996dd1d45b6479e5de87fad5, type: 3}
+  ItemDescription: Sword hehe xD
+  EncumbranceValue: 200
+  LevelRequirement: 1
+  IsIndestructible: 0
+  IsQuestItem: 0
+  IsUnique: 0
+  StackingLimit: 0
+  MatchingClasses: []
+  attackBonus: 9000
