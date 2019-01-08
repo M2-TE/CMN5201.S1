@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - MainCanvas
+  - Climbable
   layers:
   - Default
   - TransparentFX
@@ -14,11 +15,11 @@ TagManager:
   - UI
   - 
   - 
-  - Character
-  - Walkable
-  - Effect
   - Background
-  - Post Processing
+  - Environment
+  - Character
+  - Effect
+  - Ignore
   - 
   - 
   - 
@@ -45,11 +46,11 @@ TagManager:
   - name: Background
     uniqueID: 1105486003
     locked: 0
-  - name: Characters
-    uniqueID: 948093905
-    locked: 0
   - name: Effects
     uniqueID: 4100246005
+    locked: 0
+  - name: Characters
+    uniqueID: 948093905
     locked: 0
   - name: Foreground
     uniqueID: 1819996661
