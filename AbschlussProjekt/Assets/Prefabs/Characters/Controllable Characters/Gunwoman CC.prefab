@@ -21,14 +21,28 @@ GameObject:
   - component: {fileID: 4012171683351586}
   - component: {fileID: 212386396803745764}
   - component: {fileID: 95377985881884688}
-  - component: {fileID: 61091615960943140}
-  - component: {fileID: 58865586714815046}
-  - component: {fileID: 61845585786084546}
-  - component: {fileID: 50046015836866964}
+  - component: {fileID: 50776472733198654}
+  - component: {fileID: 70211005454604712}
   - component: {fileID: 114560822293384934}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Gunwoman CC
   m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1609129589375404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4603002440783790}
+  - component: {fileID: 70608812510963126}
+  m_Layer: 10
+  m_Name: Climb Trigger
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,13 +54,27 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1258901681556162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 1.55, z: 0}
+  m_LocalPosition: {x: -2.76, y: 0.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4603002440783790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50046015836866964
+--- !u!4 &4603002440783790
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1609129589375404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4012171683351586}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50776472733198654
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -59,15 +87,15 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &58865586714815046
-CircleCollider2D:
+--- !u!70 &70211005454604712
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -78,59 +106,24 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.225}
-  serializedVersion: 2
-  m_Radius: 0.16079865
---- !u!61 &61091615960943140
-BoxCollider2D:
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.73, y: 1.31}
+  m_Direction: 0
+--- !u!70 &70608812510963126
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1258901681556162}
+  m_GameObject: {fileID: 1609129589375404}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.08}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.32, y: 0.42}
-    oldSize: {x: 1.92, y: 1.92}
-    newSize: {x: 1.92, y: 1.92}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.27, y: 0.95}
-  m_EdgeRadius: 0
---- !u!61 &61845585786084546
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1258901681556162}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.2463691}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.32, y: 0.42}
-    oldSize: {x: 1.92, y: 1.92}
-    newSize: {x: 1.92, y: 1.92}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.27, y: 0.6172618}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.33}
+  m_Size: {x: 1, y: 0.39}
+  m_Direction: 1
 --- !u!95 &95377985881884688
 Animator:
   serializedVersion: 3
@@ -194,7 +187,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 948093905
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 72f04520f8959724c9ed02dbfe3f5b65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
