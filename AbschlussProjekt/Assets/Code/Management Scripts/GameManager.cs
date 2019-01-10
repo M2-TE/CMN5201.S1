@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	[SerializeField] private Texture2D mouse;
-	[SerializeField] private CursorMode mode;
-
 	private Savestate savefile;
     private CombatManager combatManager;
     private Entity[] playerTeam;
@@ -17,8 +14,6 @@ public class GameManager : MonoBehaviour
 
 	public void StartCombatDebugging()
 	{
-		Cursor.SetCursor(mouse, Vector2.zero, mode);
-
 		combatManager = GetComponent<CombatManager>();
 
 		SaveDebugging(/* remove this later */);

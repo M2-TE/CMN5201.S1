@@ -173,7 +173,7 @@ public class CombatManager : MonoBehaviour
 	private void HandleCurrentTurn()
 	{
 		HandleCombatEffects(true);
-		currentlySelectedSkill = 0; // change this to irst skill of that character
+		currentlySelectedSkill = 0; // change this to first skill of that character
 		ProgressCooldowns();
 		UpdateSkillIcons();
 		UpdateEntityInspectionWindow();
@@ -188,9 +188,8 @@ public class CombatManager : MonoBehaviour
 		{
 			// -> Players Turn
 			SetButtonsEnabled(true);
-			OnSkillSelect(currentlySelectedSkill);
 			combatPanel.EventSystem.SetSelectedGameObject(null);
-			combatPanel.EventSystem.SetSelectedGameObject(combatPanel.TeamSkillButtons[0].gameObject);
+			combatPanel.EventSystem.SetSelectedGameObject(combatPanel.TeamSkillImage[0].gameObject);
 		}
 
 		UpdateSelectableTargets();
@@ -262,14 +261,30 @@ public class CombatManager : MonoBehaviour
 	#region UI Updates
 	private void UpdateSkillIcons()
     {
-        for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
+		bool playerTurn = upcomingTurns[0].x == 0;
+
+		for (int i = -2; i < combatPanel.TeamSkillImage.Length; i++)
         {
-            combatPanel.TeamSkillButtons[i].gameObject.SetActive(upcomingTurns[0].x == 0);
+			switch (i)
+			{
+				case -2:
+					combatPanel.PassImage.gameObject.SetActive(playerTurn);
+					continue;
+
+				case -1:
+					combatPanel.RepositioningImage.gameObject.SetActive(playerTurn);
+					continue;
+
+				default:
+					combatPanel.TeamSkillImage[i].gameObject.SetActive(playerTurn);
+					break;
+			}
+
 
 			// update icons
 			Entity currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
 			CombatSkill skill = currentlyActiveEntity.EquippedCombatSkills[i];
-			combatPanel.TeamSkillButtons[i].sprite = (skill == null) 
+			combatPanel.TeamSkillImage[i].sprite = (skill == null) 
 				? null 
 				: skill.SkillIcon;
 
@@ -282,14 +297,15 @@ public class CombatManager : MonoBehaviour
 
 				bool coolingDown = cooldown != 0;
 				cooldownText.enabled = coolingDown;
-				combatPanel.TeamSkillButtons[i].GetComponent<Button>().enabled = !coolingDown;
+				combatPanel.TeamSkillImage[i].GetComponent<Button>().enabled = !coolingDown;
 
-				Color color = combatPanel.TeamSkillButtons[i].color;
-				combatPanel.TeamSkillButtons[i].color = new Color(color.r, color.g, color.b, (cooldown != 0) ? .25f : 1f);
+				combatPanel.CooldownCoverImages[i].fillAmount = (float)currentlyActiveEntity.currentSkillCooldowns[skill] / (float)skill.Cooldown;
+
+				//Color color = combatPanel.TeamSkillImage[i].color;
+				//combatPanel.TeamSkillImage[i].color = new Color(color.r, color.g, color.b, (cooldown != 0) ? .25f : 1f);
 			}
 			else cooldownText.SetText("");
 		}
-
 	}
 
 	private void UpdatePortraits()
@@ -358,6 +374,31 @@ public class CombatManager : MonoBehaviour
 
 	private void UpdateSelectableTargets()
 	{
+		if (currentlySelectedSkill == -1) // move
+		{
+			for (int x = 0; x < proxies.GetLength(0); x++)
+			{
+				for (int y = 0; y < proxies.GetLength(1); y++)
+				{
+					selectableTargets[x, y] = x == upcomingTurns[0].x && (y == upcomingTurns[0].y - 1 || y == upcomingTurns[0].y + 1);
+					proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+				}
+			}
+			return;
+		}
+		else if (currentlySelectedSkill == -2) // pass
+		{
+			for (int x = 0; x < proxies.GetLength(0); x++)
+			{
+				for (int y = 0; y < proxies.GetLength(1); y++)
+				{
+					selectableTargets[x, y] = upcomingTurns[0].x == x && upcomingTurns[0].y == y;
+					proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+				}
+			}
+			return;
+		}
+
 		CombatSkill skill = GetCurrentlySelectedSkill();
 		for (int x = 0; x < proxies.GetLength(0); x++)
 		{
@@ -389,12 +430,11 @@ public class CombatManager : MonoBehaviour
 			}
 		}
 	}
-
-	// TODO: finish this \/
+	
 	private void UpdateSkillDescriptionText()
 	{
 		string skillDescriptionText = "";
-		if (upcomingTurns[0].x == 0)
+		if (upcomingTurns[0].x == 0 && currentlySelectedSkill >= 0)
 		{
 			// player's turn
 			CombatSkill skill = GetCurrentlySelectedSkill();
@@ -448,8 +488,10 @@ public class CombatManager : MonoBehaviour
 		Entity attacker = GetEntity(upcomingTurns[0]);
 		attacker.currentSkillCooldowns[skill] = skill.Cooldown;
 
-		List<Vector2Int> targetList = new List<Vector2Int>();
-		targetList.Add(mainTarget);
+		List<Vector2Int> targetList = new List<Vector2Int>
+		{
+			mainTarget
+		};
 
 		#region Get characters affected by AoE of attack
 		// (surroundingAffectedUnits: x => left units; y => right units)
@@ -700,8 +742,11 @@ public class CombatManager : MonoBehaviour
 	
 	private void SetButtonsEnabled(bool enableState)
 	{
-		for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
-			combatPanel.TeamSkillButtons[i].gameObject.SetActive(
+		combatPanel.RepositioningImage.gameObject.SetActive(enableState);
+		combatPanel.PassImage.gameObject.SetActive(enableState);
+
+		for (int i = 0; i < combatPanel.TeamSkillImage.Length; i++)
+			combatPanel.TeamSkillImage[i].gameObject.SetActive(
 				(GetEntity(upcomingTurns[0]).EquippedCombatSkills[i] == null) 
 				? false 
 				: enableState);
@@ -710,8 +755,8 @@ public class CombatManager : MonoBehaviour
 	{
 		bool active = false;
 
-		for (int i = 0; i < combatPanel.TeamSkillButtons.Length; i++)
-			if (combatPanel.TeamSkillButtons[i].gameObject.activeSelf) active = true;
+		for (int i = 0; i < combatPanel.TeamSkillImage.Length; i++)
+			if (combatPanel.TeamSkillImage[i].gameObject.activeSelf) active = true;
 
 		return active;
 	}

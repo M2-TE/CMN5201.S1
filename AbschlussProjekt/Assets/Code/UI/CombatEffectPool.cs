@@ -12,17 +12,15 @@ namespace CombatEffectElements
 		[SerializeField] private int displacementRollover;
 		[SerializeField] private bool showDuration = false;
 
-		private Stack<CombatEffectUI> inactiveCombatEffectElements;
+		private Queue<CombatEffectUI> inactiveCombatEffectElements;
 		public List<CombatEffectUI> activeCombatEffectElements;
 		#endregion
-
-		#region Unity Calls
+		
 		private void Start()
 		{
-			inactiveCombatEffectElements = new Stack<CombatEffectUI>();
+			inactiveCombatEffectElements = new Queue<CombatEffectUI>();
 			activeCombatEffectElements = new List<CombatEffectUI>();
 		}
-		#endregion
 
 		#region Pooling
 		private CombatEffectUI CreateNewElement()
@@ -38,7 +36,7 @@ namespace CombatEffectElements
 		private CombatEffectUI GetItemFromPool()
 		{
 			CombatEffectUI item = null;
-			if (inactiveCombatEffectElements.Count > 0) item = inactiveCombatEffectElements.Pop();
+			if (inactiveCombatEffectElements.Count > 0) item = inactiveCombatEffectElements.Dequeue();
 			else item = CreateNewElement();
 
 			item.SetPosition(GetNextFreePosition());
@@ -52,7 +50,7 @@ namespace CombatEffectElements
 		{
 			item.gameObject.SetActive(false);
 			activeCombatEffectElements.Remove(item);
-			inactiveCombatEffectElements.Push(item);
+			inactiveCombatEffectElements.Enqueue(item);
 		}
 		#endregion
 		
@@ -67,6 +65,7 @@ namespace CombatEffectElements
 		{
 			return activeCombatEffectElements.Find(x => x.CombatEffect == combatEffect);
 		}
+
 		#region Public Methods
 		public CombatEffectUI AddCombatEffect(CombatEffect combatEffect)
 		{
@@ -93,7 +92,6 @@ namespace CombatEffectElements
 			}
 			else
 			{
-				Debug.Log("changes not needed");
 				StoreItemInPool(combatEffect);
 			}
 		}
@@ -128,7 +126,7 @@ namespace CombatEffectElements
 				// pool leftover effect objects that are not being used
 				else
 				{
-					StoreItemInPool(activeCombatEffectElements[pool.activeCombatEffectElements.Count]);
+					RemoveCombatEffect(activeCombatEffectElements[pool.activeCombatEffectElements.Count]);
 					i--;
 				}
 			}

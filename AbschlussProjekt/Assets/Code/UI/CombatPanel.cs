@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public class CombatPanel : MonoBehaviour
 {
-	public Image[] TeamSkillButtons;
+	[Header("Skills")]
+	public Image PassImage;
+	public Image RepositioningImage;
+	public Image[] TeamSkillImage;
+	public Image[] CooldownCoverImages;
 	public TextMeshProUGUI[] Cooldowns;
 
 	[Header("Entity Inspection Window")]

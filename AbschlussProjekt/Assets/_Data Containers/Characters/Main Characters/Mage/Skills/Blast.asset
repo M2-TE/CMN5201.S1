@@ -17,7 +17,7 @@ MonoBehaviour:
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0
-  AttackMultiplier: 0.75
+  AttackMultiplier: 0.5
   Cooldown: 1
   MinRange: 1
   MaxRange: 5
