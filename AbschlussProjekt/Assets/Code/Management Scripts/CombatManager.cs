@@ -114,6 +114,7 @@ public class CombatManager : MonoBehaviour
 				// spawn proxy (proxy => represents an entity in the world)
                 GameObject tempProxyGO = Instantiate(combatants[x, y].CharDataContainer.Prefab);
 				Proxy tempProxy = tempProxyGO.GetComponent<Proxy>();
+				tempProxy.Entity = GetEntity(new Vector2Int(x, y));
 				tempProxy.Entity.currentCombatPosition = new Vector2Int(x, y);
 
 				Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
@@ -152,6 +153,7 @@ public class CombatManager : MonoBehaviour
 			else currentlyInspectedEntityPos = hitProxy.Entity.currentCombatPosition;
 		}
 		else currentlyInspectedEntityPos = upcomingTurns[0];
+
 	}
 
 	private void OnCharacterSelect(Vector2Int characterPos)
@@ -159,21 +161,7 @@ public class CombatManager : MonoBehaviour
 		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0 || !selectableTargets[characterPos.x, characterPos.y]) return;
 
 		SetButtonsEnabled(false);
-
-		switch (currentlySelectedSkill)
-		{
-			case -2:
-				EndTurn(); // Pass
-				break;
-
-			case -1:
-				EndTurn(); // <this needs to be changed to execute a move command>
-				break;
-
-			default:
-				UseCombatSkill(characterPos);
-				break;
-		}
+		UseCombatSkill(characterPos);
 	}
 	#endregion
 
@@ -274,7 +262,8 @@ public class CombatManager : MonoBehaviour
 
 	#region UI Updates
 	private void UpdateSkillIcons()
-    {
+	{
+		Entity currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
 		bool playerTurn = upcomingTurns[0].x == 0;
 
 		for (int i = -2; i < combatPanel.TeamSkillImage.Length; i++)
@@ -283,10 +272,12 @@ public class CombatManager : MonoBehaviour
 			{
 				case -2:
 					combatPanel.PassImage.gameObject.SetActive(playerTurn);
+					//if (playerTurn) combatPanel.RepositioningImage.sprite = currentlyActiveEntity.PassSkill.SkillIcon;
 					continue;
 
 				case -1:
 					combatPanel.RepositioningImage.gameObject.SetActive(playerTurn);
+					if (playerTurn) combatPanel.RepositioningImage.sprite = currentlyActiveEntity.EquippedRepositioningSkill.SkillIcon;
 					continue;
 
 				default:
@@ -296,7 +287,6 @@ public class CombatManager : MonoBehaviour
 
 
 			// update icons
-			Entity currentlyActiveEntity = combatants[upcomingTurns[0].x, upcomingTurns[0].y];
 			CombatSkill skill = currentlyActiveEntity.EquippedCombatSkills[i];
 			combatPanel.TeamSkillImage[i].sprite = (skill == null) 
 				? null 
@@ -500,7 +490,8 @@ public class CombatManager : MonoBehaviour
 
 		CombatSkill skill = GetCurrentlySelectedSkill();
 		Entity attacker = GetEntity(upcomingTurns[0]);
-		attacker.currentSkillCooldowns[skill] = skill.Cooldown;
+		if (attacker.currentSkillCooldowns.ContainsKey(skill)) attacker.currentSkillCooldowns[skill] = skill.Cooldown;
+		else attacker.currentSkillCooldowns.Add(skill, skill.Cooldown);
 
 		List<Vector2Int> targetList = new List<Vector2Int>
 		{
@@ -576,6 +567,9 @@ public class CombatManager : MonoBehaviour
 
 	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)
 	{
+		if (currentlySelectedSkill == -2) PassTurn();
+		else if (currentlySelectedSkill == -1) SwapPositions(caster, target);
+
 		int actualDamage = 
 			(skill.AttackMultiplier > 0) // if the attack multiplier is at zero, then its a buff, not an attack (min dmg circumvented) 
 			? Mathf.Max(1, (int) (GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense))
@@ -590,6 +584,33 @@ public class CombatManager : MonoBehaviour
 		// clamp new health between 0 and currentMaxHealth
 		GetEntity(target).currentHealth = Mathf.Clamp(GetEntity(target).currentHealth - trueDamage, 0, GetEntity(target).currentMaxHealth);
 		StartCoroutine(UpdateHealthBar(target));
+	}
+
+	private void SwapPositions(Vector2Int posOne, Vector2Int posTwo)
+	{
+		Proxy proxyOne = GetProxy(posOne);
+		Proxy proxyTwo = GetProxy(posTwo);
+
+		// switch positions in access arrays
+		proxies[posOne.x, posOne.y] = proxyTwo;
+		proxies[posTwo.x, posTwo.y] = proxyOne;
+		combatants[posOne.x, posOne.y] = proxyTwo.Entity;
+		combatants[posTwo.x, posTwo.y] = proxyOne.Entity;
+
+		//switch positions in scene
+		Vector2 posBuffer = proxyOne.transform.localPosition;
+		proxyOne.transform.localPosition = proxyTwo.transform.localPosition;
+		proxyTwo.transform.localPosition = posBuffer;
+
+		// switch positions in entity class
+		Vector2Int combatPosBuffer = proxyOne.Entity.currentCombatPosition;
+		proxyOne.Entity.currentCombatPosition = proxyTwo.Entity.currentCombatPosition;
+		proxyTwo.Entity.currentCombatPosition = combatPosBuffer;
+	}
+
+	private void PassTurn()
+	{
+
 	}
 
 	#region Combat Effects
@@ -712,7 +733,12 @@ public class CombatManager : MonoBehaviour
 	#region Utility Methods
 	private CombatSkill GetCurrentlySelectedSkill()
 	{
-		return GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+		switch (currentlySelectedSkill)
+		{
+			case -2: return GetEntity(upcomingTurns[0]).EquippedPassSkill;
+			case -1: return GetEntity(upcomingTurns[0]).EquippedRepositioningSkill;
+			default: return GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+		}
 	}
 
 	private CombatEffectPool GetCombatEffectPool(Vector2Int proxyPos)

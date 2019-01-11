@@ -24,15 +24,10 @@ MonoBehaviour:
   FallbackSkills:
   - {fileID: 11400000, guid: 22f4a96d88feda3449368a2d681ba626, type: 2}
   - {fileID: 11400000, guid: a7da474a669a8ec4483812691f9ce651, type: 2}
-  CharacterControllerPrefab: {fileID: 0}
-  MovespeedMod: 20
-  GroundDrag: 10
-  AirDrag: 0.5
-  AttackDelay: 1.1
-  JumpMod: 0.6
-  MaxJumps: 2
-  GaugePerSecond: 3
-  DashDuration: 0.1
-  DashMod: 6
-  AirJumpDirMod: 3
-  AirJumpMod: 0.5
+  RepositioningSkill: {fileID: 11400000, guid: ec54661d41b23a743bccaed5794fa4be, type: 2}
+  PassSkill: {fileID: 11400000, guid: 07ef657865b6e9c42bc59d989ba3b415, type: 2}
+  moveSpeed: 150
+  wallSlideVelocity: 0.1
+  maxClimbHeight: 0.9
+  maxJumps: 2
+  jumpForce: 7

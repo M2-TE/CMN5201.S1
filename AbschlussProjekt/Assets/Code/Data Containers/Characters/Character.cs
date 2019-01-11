@@ -17,4 +17,6 @@ public abstract class Character : DataContainer
     [Header("Combat Skills")]
     public CombatSkill[] FullSkillPool;
 	public CombatSkill[] FallbackSkills;
+	public CombatSkill RepositioningSkill;
+	public CombatSkill PassSkill;
 }

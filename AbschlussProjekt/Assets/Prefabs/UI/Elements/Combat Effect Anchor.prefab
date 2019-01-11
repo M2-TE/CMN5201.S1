@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1839981530641750}
+  m_RootGameObject: {fileID: 1923200670609538}
   m_IsPrefabAsset: 1
---- !u!1 &1839981530641750
+--- !u!1 &1923200670609538
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 224615758663575722}
-  - component: {fileID: 114848683362220850}
+  - component: {fileID: 224190085786845404}
+  - component: {fileID: 114362590074166168}
   m_Layer: 5
   m_Name: Combat Effect Anchor
   m_TagString: Untagged
@@ -27,12 +27,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114848683362220850
+--- !u!114 &114362590074166168
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1839981530641750}
+  m_GameObject: {fileID: 1923200670609538}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2cb851f454c8944a9a8d44a62b4eed3, type: 3}
@@ -41,16 +41,16 @@ MonoBehaviour:
   combatEffectPrefab: {fileID: 1338477671028194, guid: ddbac569c4b88e141bf9176a14029fef,
     type: 2}
   effectSize: {x: 8, y: 8}
-  displacement: {x: 20, y: -15}
+  displacement: {x: 20, y: -11}
   displacementRollover: 3
   showDuration: 1
   activeCombatEffectElements: []
---- !u!224 &224615758663575722
+--- !u!224 &224190085786845404
 RectTransform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1839981530641750}
+  m_GameObject: {fileID: 1923200670609538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}

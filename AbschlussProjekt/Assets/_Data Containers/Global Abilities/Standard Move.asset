@@ -9,18 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
-  m_Name: Blast
+  m_Name: Standard Move
   m_EditorClassIdentifier: 
-  SkillIcon: {fileID: 21300000, guid: cec09682ed7afde4588a47e9afd0a9a8, type: 3}
-  FxPrefab: {fileID: 1672595628262300, guid: 153b041e7c00d194282f0821d453246c, type: 2}
-  SkillDescription: Magic AoE Buttblast.
-  CanHitEnemies: 1
-  CanHitAllies: 0
+  SkillIcon: {fileID: 21300000, guid: c9a7e9c3ff2263944898c680023f9f01, type: 3}
+  FxPrefab: {fileID: 1215541468341954, guid: 0aa3594d2e1728742b3b8fe1808104fd, type: 2}
+  SkillDescription: Switch places with an adjecent teammate.
+  CanHitEnemies: 0
+  CanHitAllies: 1
   CanHitSelf: 0
-  AttackMultiplier: 0.5
+  AttackMultiplier: 0
   Cooldown: 1
-  MinRange: 2
-  MaxRange: 5
-  SurroundingAffectedUnits: {x: 1, y: 1}
+  MinRange: 0
+  MaxRange: 1
+  SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects: []
   SelfInflictedCombatEffects: []

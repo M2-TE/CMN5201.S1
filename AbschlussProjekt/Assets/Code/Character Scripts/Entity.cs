@@ -31,6 +31,40 @@ public class Entity
 		}
     }
 
+	private string equippedRepositioningSkillString;
+	[NonSerialized] private CombatSkill equippedRepositioningSkill;
+	public CombatSkill EquippedRepositioningSkill
+	{
+		get
+		{
+			if (equippedRepositioningSkill != null) return equippedRepositioningSkill;
+			else if (equippedRepositioningSkillString != null && equippedRepositioningSkillString != "")
+				return equippedRepositioningSkill = AssetManager.Instance.Characters.LoadAsset<CombatSkill>(equippedRepositioningSkillString);
+			else
+			{
+				equippedRepositioningSkillString = CharDataContainer.RepositioningSkill.name;
+				return equippedRepositioningSkill = CharDataContainer.RepositioningSkill;
+			}
+		}
+	}
+
+	private string equippedPassSkillString;
+	[NonSerialized] private CombatSkill equippedPassSkill;
+	public CombatSkill EquippedPassSkill
+	{
+		get
+		{
+			if (equippedPassSkill != null) return equippedPassSkill;
+			else if (equippedPassSkillString != null && equippedPassSkillString != "")
+				return equippedPassSkill = AssetManager.Instance.Characters.LoadAsset<CombatSkill>(equippedPassSkillString);
+			else
+			{
+				equippedPassSkillString = CharDataContainer.RepositioningSkill.name;
+				return equippedPassSkill = CharDataContainer.RepositioningSkill;
+			}
+		}
+	}
+
 	private string equippedWeaponString;
     [NonSerialized] private WeaponContainer equippedWeapon;
     public WeaponContainer EquippedWeapon

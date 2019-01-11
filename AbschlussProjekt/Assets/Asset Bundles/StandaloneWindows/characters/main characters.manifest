@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2283533441
+CRC: 3440624496
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 508fc2583dbaf45ff074fae115965132
+    Hash: 79a3e198069a0e962c3cced7955c952b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e6362062142746dd26be343cefd0c5fb
+    Hash: d9b2f0f7f27bac8a65a3d5045c410e65
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -75,8 +75,10 @@ Assets:
 - Assets/_Data Containers/Characters/Main Characters/Mage/Mage.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight/Knight.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Slash.asset
+- Assets/_Data Containers/Global Abilities/Standard Pass.asset
 - Assets/_Data Containers/Characters/Main Characters/Mage/Skills/Synthesis.asset
 - Assets/_Data Containers/Characters/Main Characters/Gunwoman/Skills/Shot.asset
+- Assets/_Data Containers/Global Abilities/Standard Move.asset
 - Assets/_Data Containers/Characters/Main Characters/Mage/Skills/Blast.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Shield Up.asset
 Dependencies: []
