@@ -159,7 +159,21 @@ public class CombatManager : MonoBehaviour
 		if (!GetButtonsEnabled() || GetEntity(characterPos).currentHealth == 0 || !selectableTargets[characterPos.x, characterPos.y]) return;
 
 		SetButtonsEnabled(false);
-		UseCombatSkill(characterPos);
+
+		switch (currentlySelectedSkill)
+		{
+			case -2:
+				EndTurn(); // Pass
+				break;
+
+			case -1:
+				EndTurn(); // <this needs to be changed to execute a move command>
+				break;
+
+			default:
+				UseCombatSkill(characterPos);
+				break;
+		}
 	}
 	#endregion
 
@@ -615,25 +629,26 @@ public class CombatManager : MonoBehaviour
 	{
 		Entity entity = GetEntity(upcomingTurns[0]);
 		CombatEffectPool pool = GetCombatEffectPool(upcomingTurns[0]);
-		CombatEffectUI[] combatEffectsUI = pool.activeCombatEffectElements.ToArray();
+		List<CombatEffectUI> activeEffects = pool.activeCombatEffectElements;
+		Queue<CombatEffectUI> effectsToRemove = new Queue<CombatEffectUI>();
 
 		CombatEffectUI tempCEUI;
-		for(int i = 0; i < combatEffectsUI.Length; i++)
+		for(int i = 0; i < activeEffects.Count; i++)
 		{
-			tempCEUI = combatEffectsUI[i];
-			if (turnStart)
-			{
-				tempCEUI.CombatEffect.ActivateActiveEffect(entity);
-			}
+			tempCEUI = activeEffects[i];
+			if (turnStart) tempCEUI.CombatEffect.ActivateActiveEffect(entity);
 			else
 			{
 				if (tempCEUI.Duration > 1) tempCEUI.Duration--;
-				else
-				{
-					tempCEUI.CombatEffect.RemoveCombatEffectModifiers(entity);
-					pool.RemoveCombatEffect(tempCEUI);
-				}
+				else effectsToRemove.Enqueue(activeEffects[i]);
 			}
+		}
+
+		while (effectsToRemove.Count > 0)
+		{
+			tempCEUI = effectsToRemove.Dequeue();
+			tempCEUI.CombatEffect.RemoveCombatEffectModifiers(entity);
+			pool.RemoveCombatEffect(tempCEUI);
 		}
 	}
 	#endregion

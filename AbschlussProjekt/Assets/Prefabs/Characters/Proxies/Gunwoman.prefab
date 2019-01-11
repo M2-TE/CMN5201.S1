@@ -261,6 +261,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bbfbf8a7b49d1429cefd3dc1f562bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entity:
+    Name: 
+    baseHealth: 0
+    currentMaxHealth: 0
+    currentHealth: 0
+    baseAttack: 0
+    currentAttack: 0
+    baseDefense: 0
+    currentDefense: 0
+    baseSpeed: 0
+    currentSpeed: 0
+    currentInitiative: 0
   HealthBar: {fileID: 114887770276797542}
   CombatEffectPool: {fileID: 114312747380217612}
   allyTargetIndicator: {fileID: 114456715836579940}
@@ -351,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cb851f454c8944a9a8d44a62b4eed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatEffectPrefab: {fileID: 1504918428222914, guid: ddbac569c4b88e141bf9176a14029fef,
+  combatEffectPrefab: {fileID: 1338477671028194, guid: ddbac569c4b88e141bf9176a14029fef,
     type: 2}
   effectSize: {x: 2, y: 2}
   displacement: {x: 3, y: -3}

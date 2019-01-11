@@ -54,10 +54,10 @@ namespace CombatEffectElements
 		}
 		#endregion
 		
-		private Vector2 GetNextFreePosition()
+		private Vector2 GetNextFreePosition(int startOffset = 0)
 		{
-			float xPos = activeCombatEffectElements.Count % displacementRollover * displacement.x;
-			float yPos = displacement.y * (activeCombatEffectElements.Count / displacementRollover);
+			float xPos = (activeCombatEffectElements.Count + startOffset) % displacementRollover * displacement.x;
+			float yPos = displacement.y * ((activeCombatEffectElements.Count + startOffset) / displacementRollover);
 			return new Vector2(xPos, yPos);
 		}
 
@@ -81,19 +81,10 @@ namespace CombatEffectElements
 		}
 		public void RemoveCombatEffect(CombatEffectUI combatEffect)
 		{
-			if(activeCombatEffectElements.IndexOf(combatEffect) < activeCombatEffectElements.Count - 2)
-			{
-				for(int i = activeCombatEffectElements.IndexOf(combatEffect); i < activeCombatEffectElements.Count - 1; i++)
-				{
-					activeCombatEffectElements[i].CombatEffect = activeCombatEffectElements[i + 1].CombatEffect;
-					activeCombatEffectElements[i].Duration = activeCombatEffectElements[i + 1].Duration;
-				}
-				StoreItemInPool(activeCombatEffectElements[activeCombatEffectElements.Count - 1]);
-			}
-			else
-			{
-				StoreItemInPool(combatEffect);
-			}
+			StoreItemInPool(combatEffect);
+			// rearrange existing combat effects
+			for(int i = 0; i < activeCombatEffectElements.Count; i++)
+				activeCombatEffectElements[i].transform.localPosition = GetNextFreePosition(-activeCombatEffectElements.Count + i);
 		}
 
 		public bool Contains(CombatEffect combatEffect)
