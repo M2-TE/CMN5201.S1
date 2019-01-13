@@ -13,11 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: e6e0ff50bfb01f742afa07da9c753611, type: 3}
   FxPrefab: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e, type: 2}
+  castSfx: {fileID: 0}
+  impactDelay: 0.38
+  SkillDescription: Skill Description Missing
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0
   AttackMultiplier: 1
-  Range: 2
+  Cooldown: 1
+  MinRange: 0
+  MaxRange: 2
   SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects: []
   SelfInflictedCombatEffects: []

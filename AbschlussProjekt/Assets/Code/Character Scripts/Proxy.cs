@@ -9,6 +9,12 @@ public class Proxy : MonoBehaviour
 	public Entity Entity;
 	public Slider HealthBar;
 	public CombatEffectPool CombatEffectPool;
+
+	private AudioSource audioSource;
+	public AudioSource AudioSource
+	{
+		get { return audioSource ?? (audioSource = GetComponent<AudioSource>()); }
+	}
 	
 	[SerializeField] private Image allyTargetIndicator;
 	[SerializeField] private Image enemyTargetIndicator;

@@ -62,7 +62,7 @@ public class CombatManager : MonoBehaviour
 	#region Setup
 	private void Start()
 	{
-		Time.timeScale = 5f;
+		//Time.timeScale = 5f;
 		clickableLayers = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").clickableLayers;
 	}
 	
@@ -438,15 +438,28 @@ public class CombatManager : MonoBehaviour
 	private void UpdateSkillDescriptionText()
 	{
 		string skillDescriptionText = "";
-		if (upcomingTurns[0].x == 0 && currentlySelectedSkill >= 0)
+
+		// player's turn
+		if (upcomingTurns[0].x == 0)
 		{
-			// player's turn
-			CombatSkill skill = GetCurrentlySelectedSkill();
-			skillDescriptionText = skill.SkillDescription;
+			switch (currentlySelectedSkill)
+			{
+				case -2:
+					skillDescriptionText = GetEntity(upcomingTurns[0]).EquippedPassSkill.SkillDescription;
+					break;
+
+				case -1:
+					skillDescriptionText = GetEntity(upcomingTurns[0]).EquippedRepositioningSkill.SkillDescription;
+					break;
+
+				default:
+					skillDescriptionText = GetCurrentlySelectedSkill().SkillDescription;
+					break;
+			}
 		}
+		// enemy's turn
 		else
 		{
-			// enemy's turn
 
 		}
 
@@ -486,8 +499,7 @@ public class CombatManager : MonoBehaviour
 	#region Character Action Handling
 	private void UseCombatSkill(Vector2Int mainTarget)
 	{
-		GetProxy(upcomingTurns[0]).GetComponent<Animator>().SetTrigger("Attack");
-
+		Proxy proxy = GetProxy(upcomingTurns[0]);
 		CombatSkill skill = GetCurrentlySelectedSkill();
 		Entity attacker = GetEntity(upcomingTurns[0]);
 		if (attacker.currentSkillCooldowns.ContainsKey(skill)) attacker.currentSkillCooldowns[skill] = skill.Cooldown;
@@ -538,8 +550,12 @@ public class CombatManager : MonoBehaviour
 		#endregion
 
 		Vector2Int[] targets = targetList.ToArray();
+
+		proxy.GetComponent<Animator>().SetTrigger("Attack");
+		proxy.AudioSource.PlayOneShot(skill.castSfx);
+
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		StartCoroutine(LaunchAttack(attacker.CharDataContainer.attackAnimDelay, targets, skill));
+		StartCoroutine(LaunchAttack(skill.impactDelay, targets, skill));
 	}
 
 	private IEnumerator LaunchAttack(float attackDelay, Vector2Int[] targets, CombatSkill skill)

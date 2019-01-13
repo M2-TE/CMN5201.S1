@@ -59,8 +59,8 @@ public class Entity
 				return equippedPassSkill = AssetManager.Instance.Characters.LoadAsset<CombatSkill>(equippedPassSkillString);
 			else
 			{
-				equippedPassSkillString = CharDataContainer.RepositioningSkill.name;
-				return equippedPassSkill = CharDataContainer.RepositioningSkill;
+				equippedPassSkillString = CharDataContainer.PassSkill.name;
+				return equippedPassSkill = CharDataContainer.PassSkill;
 			}
 		}
 	}

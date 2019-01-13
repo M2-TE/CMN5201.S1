@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 2cf45680350cda94f955ce31d7dba22f, type: 3}
   FxPrefab: {fileID: 1272641376283932, guid: 928a173350d362849a6addd6dfd941a5, type: 2}
+  castSfx: {fileID: 0}
+  impactDelay: 0.65
   SkillDescription: Skill Description Missing
   CanHitEnemies: 0
   CanHitAllies: 1

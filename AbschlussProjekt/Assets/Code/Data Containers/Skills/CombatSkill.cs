@@ -7,6 +7,8 @@ public class CombatSkill : DataContainer
 {
 	public Sprite SkillIcon;
 	public GameObject FxPrefab;
+	public AudioClip castSfx;
+	public float impactDelay;
 	[TextArea] public string SkillDescription = "Skill Description Missing";
 
 	[Space(20)]

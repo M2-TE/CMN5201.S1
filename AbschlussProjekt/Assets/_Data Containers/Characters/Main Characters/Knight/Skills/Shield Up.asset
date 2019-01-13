@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: Shield Up
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 1378b67a43e1aad4ab807a2c26f236d5, type: 3}
-  FxPrefab: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e, type: 2}
+  FxPrefab: {fileID: 1561797072090252, guid: d38ad48485b602c47836bee2cd3a3e6a, type: 2}
+  castSfx: {fileID: 8300000, guid: ce76723a5faf7454f8d48a00a7833af2, type: 3}
+  impactDelay: 0.38
   SkillDescription: Skill Description Missing
   CanHitEnemies: 0
   CanHitAllies: 0
