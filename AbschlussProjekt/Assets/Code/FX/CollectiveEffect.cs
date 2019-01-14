@@ -1,6 +1,14 @@
 ﻿public class CollectiveEffect : BaseEffect
 {
-    protected override void Start()
+	protected override float TimeBetweenFrames
+	{
+		get
+		{
+			throw new System.NotImplementedException();
+		}
+	}
+
+	protected override void Start()
     {
         base.Start();
         currentFrame = initialFrameOffset - 1;

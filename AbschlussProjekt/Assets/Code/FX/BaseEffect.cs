@@ -42,8 +42,9 @@ public abstract class BaseEffect : MonoBehaviour
     [SerializeField] protected int initialFrameOffset;
 	[SerializeField] protected bool looping;
 
-	protected int currentFrame;
 	protected float timeBetweenFrames;
+	protected abstract float TimeBetweenFrames { get; }
+	protected int currentFrame;
 	protected SpriteRenderer ownSpriteRenderer;
 	#endregion
 
@@ -149,7 +150,7 @@ public abstract class BaseEffect : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		float timeStamp = currentFrame + updateCounter / timeBetweenFrames;
+		float timeStamp = currentFrame + updateCounter / TimeBetweenFrames;
 
 		if (flickeringEnabled) ownLight.range = Mathf.Lerp(ownLight.range, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
 		

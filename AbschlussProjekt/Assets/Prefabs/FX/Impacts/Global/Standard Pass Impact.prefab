@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212239736166843540}
   - component: {fileID: 114911550866767226}
   m_Layer: 11
-  m_Name: Standard Move Impact
+  m_Name: Standard Pass Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,6 +165,7 @@ MonoBehaviour:
   looping: 0
   lingeringDuration: 0
   framerateOverride: 12
+  waitForAudio: 1
 --- !u!212 &212239736166843540
 SpriteRenderer:
   m_ObjectHideFlags: 1

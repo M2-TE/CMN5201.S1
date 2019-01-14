@@ -3,15 +3,35 @@ using UnityEngine;
 
 public class SoloEffect : BaseEffect
 {
+	private float combatDuration;
+	public float CombatDuration
+	{
+		get
+		{
+			return
+				combatDuration != 0f
+				? combatDuration
+				: combatDuration = TimeBetweenFrames * sprites.Length + lingeringDuration;
+		}
+	}
+	protected override float TimeBetweenFrames
+	{
+		get
+		{
+			return timeBetweenFrames != 0f
+				? timeBetweenFrames
+				: timeBetweenFrames = 1f / ((framerateOverride != 0) ? framerateOverride : sprites.Length);
+		}
+	}
 	[SerializeField] protected float lingeringDuration = 0f;
-	[SerializeField] protected int framerateOverride = 12;
+	[SerializeField] protected int framerateOverride = 0;
+	[SerializeField] protected bool waitForAudio = true;
 
 	protected new IEnumerator Start ()
     {
         base.Start();
-
-        timeBetweenFrames = 1f / ((framerateOverride != 0) ? framerateOverride : sprites.Length);
-        WaitForSeconds waitTime = new WaitForSeconds(timeBetweenFrames);
+		
+        WaitForSeconds waitTime = new WaitForSeconds(TimeBetweenFrames);
 
         while (true)
         {
@@ -25,6 +45,12 @@ public class SoloEffect : BaseEffect
 
 		ownSpriteRenderer.sprite = null;
 		yield return new WaitForSeconds(lingeringDuration);
+
+		if (waitForAudio)
+		{
+			AudioSource audioSource = GetComponent<AudioSource>();
+			while (audioSource.isPlaying) yield return null;
+		}
 
         Destroy(gameObject);
 	}

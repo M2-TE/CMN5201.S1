@@ -570,9 +570,10 @@ public class CombatManager : MonoBehaviour
 			effectTransform = Instantiate(skill.FxPrefab, proxyArr[i].transform).transform;
 			ApplyCombatSkill(upcomingTurns[0], targets[i], skill);
 		}
-		
+
 		// wait until the dmg fx has faded
-		while (effectTransform != null) yield return null;
+		//while (effectTransform != null) yield return null;
+		yield return new WaitForSeconds(effectTransform.GetComponent<SoloEffect>().CombatDuration);
 
 		// check for targets death
 		for (int i = 0; i < targets.Length; i++)

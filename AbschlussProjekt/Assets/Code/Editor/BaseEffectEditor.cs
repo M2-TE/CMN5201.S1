@@ -123,7 +123,7 @@ public class BaseEffectEditor : Editor
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Lighting Range", EditorStyles.boldLabel);
 			
-			if (GUILayout.Button("Generate Color Curves"))
+			if (GUILayout.Button("Generate Range Curve"))
 				((BaseEffect)target).PreCalcLightRangeCurve();
 
 			EditorGUILayout.PropertyField(lightRangeCurve);

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114304675012592564}
   - component: {fileID: 82782695674360588}
   m_Layer: 11
-  m_Name: Knight Shield Up Impact
+  m_Name: Knight Slash Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
