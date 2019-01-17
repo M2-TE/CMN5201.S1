@@ -13,6 +13,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: e4aa1b7e963e9fd44b35843c6a254893, type: 3}
   FxPrefab: {fileID: 1215541468341954, guid: bacd6c97ebc06b84ea47cc5ed93e3d28, type: 2}
+  castSfx:
+  - {fileID: 8300000, guid: eefd97041cf690049aa8846bd13afeaa, type: 3}
+  - {fileID: 8300000, guid: f088d18a389008d48a3ca75df60f9a1d, type: 3}
+  - {fileID: 8300000, guid: 8d3ec77ff66c35b4cb182dca296ae03f, type: 3}
+  - {fileID: 8300000, guid: eb28e806e87a431428c3f1a906190b1e, type: 3}
+  - {fileID: 8300000, guid: 8de96d7b90f67594194ef151dad92a44, type: 3}
+  - {fileID: 8300000, guid: a5c79d9858809cb4e82ca0a9ca987d9c, type: 3}
+  - {fileID: 8300000, guid: 5b6cf3a2cc4fab947ad8024e2724dbf0, type: 3}
+  - {fileID: 8300000, guid: 6e0b068c089f79646bfa0fe077333edd, type: 3}
+  - {fileID: 8300000, guid: 6bed5b9e52b3e61438183a3e3da80f57, type: 3}
+  - {fileID: 8300000, guid: 10377b87c85a65f4bb984f0ebc54c38b, type: 3}
+  impactSfx: []
+  impactDelay: 0
   SkillDescription: Pass the round without an action.
   CanHitEnemies: 0
   CanHitAllies: 0

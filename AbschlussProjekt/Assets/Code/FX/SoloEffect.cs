@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SoloEffect : BaseEffect
 {
@@ -14,6 +15,13 @@ public class SoloEffect : BaseEffect
 				: combatDuration = TimeBetweenFrames * sprites.Length + lingeringDuration;
 		}
 	}
+
+	protected AudioSource m_audioSource;
+	protected AudioSource audioSource
+	{
+		get { return m_audioSource ?? (m_audioSource = GetComponent<AudioSource>()); }
+	}
+
 	protected override float TimeBetweenFrames
 	{
 		get
@@ -23,9 +31,12 @@ public class SoloEffect : BaseEffect
 				: timeBetweenFrames = 1f / ((framerateOverride != 0) ? framerateOverride : sprites.Length);
 		}
 	}
+
 	[SerializeField] protected float lingeringDuration = 0f;
 	[SerializeField] protected int framerateOverride = 0;
 	[SerializeField] protected bool waitForAudio = true;
+
+	
 
 	protected new IEnumerator Start ()
     {
@@ -53,5 +64,10 @@ public class SoloEffect : BaseEffect
 		}
 
         Destroy(gameObject);
+	}
+
+	public void PlaySfx(AudioClip[] sfxArr)
+	{
+		if (sfxArr.Length > 0) audioSource.PlayOneShot(sfxArr[Random.Range(0, sfxArr.Length)]);
 	}
 }

@@ -13,7 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: e6e0ff50bfb01f742afa07da9c753611, type: 3}
   FxPrefab: {fileID: 1561797072090252, guid: 25dcc5a46399ffd49a7534a92af6834e, type: 2}
-  castSfx: {fileID: 0}
+  castSfx:
+  - {fileID: 8300000, guid: 8a3b5b4b3f608f042bfe8e1db59e58fd, type: 3}
+  - {fileID: 8300000, guid: 4aebbbfb8d45d8246baf653da4ee4359, type: 3}
+  - {fileID: 8300000, guid: f4e2b85349af3d3488824c01ecb9c8bd, type: 3}
+  - {fileID: 8300000, guid: fe90d59cbe622e2428b9f2096bb50cab, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: e69bd83c81682dd4f9648a8cc9b6bda6, type: 3}
+  - {fileID: 8300000, guid: 3aeaafd3991a7864bb79711494f71783, type: 3}
   impactDelay: 0.38
   SkillDescription: Skill Description Missing
   CanHitEnemies: 1

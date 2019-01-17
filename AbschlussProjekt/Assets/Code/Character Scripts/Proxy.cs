@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Proxy : MonoBehaviour
 {
@@ -10,10 +11,10 @@ public class Proxy : MonoBehaviour
 	public Slider HealthBar;
 	public CombatEffectPool CombatEffectPool;
 
-	private AudioSource audioSource;
-	public AudioSource AudioSource
+	private AudioSource m_audioSource;
+	private AudioSource audioSource
 	{
-		get { return audioSource ?? (audioSource = GetComponent<AudioSource>()); }
+		get { return m_audioSource ?? (m_audioSource = GetComponent<AudioSource>()); }
 	}
 	
 	[SerializeField] private Image allyTargetIndicator;
@@ -35,6 +36,11 @@ public class Proxy : MonoBehaviour
 				enemyTargetIndicator.enabled = activeState;
 				break;
 		}
+	}
+
+	public void PlaySfx(AudioClip[] sfxArr)
+	{
+		if(sfxArr.Length > 0) audioSource.PlayOneShot(sfxArr[Random.Range(0, sfxArr.Length)]);
 	}
 
 	public void Wobble()

@@ -378,30 +378,30 @@ public class CombatManager : MonoBehaviour
 
 	private void UpdateSelectableTargets()
 	{
-		if (currentlySelectedSkill == -1) // move
-		{
-			for (int x = 0; x < proxies.GetLength(0); x++)
-			{
-				for (int y = 0; y < proxies.GetLength(1); y++)
-				{
-					selectableTargets[x, y] = x == upcomingTurns[0].x && (y == upcomingTurns[0].y - 1 || y == upcomingTurns[0].y + 1);
-					proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
-				}
-			}
-			return;
-		}
-		else if (currentlySelectedSkill == -2) // pass
-		{
-			for (int x = 0; x < proxies.GetLength(0); x++)
-			{
-				for (int y = 0; y < proxies.GetLength(1); y++)
-				{
-					selectableTargets[x, y] = upcomingTurns[0].x == x && upcomingTurns[0].y == y;
-					proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
-				}
-			}
-			return;
-		}
+		//if (currentlySelectedSkill == -1) // move
+		//{
+		//	for (int x = 0; x < proxies.GetLength(0); x++)
+		//	{
+		//		for (int y = 0; y < proxies.GetLength(1); y++)
+		//		{
+		//			selectableTargets[x, y] = x == upcomingTurns[0].x && (y == upcomingTurns[0].y - 1 || y == upcomingTurns[0].y + 1);
+		//			proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+		//		}
+		//	}
+		//	return;
+		//}
+		//else if (currentlySelectedSkill == -2) // pass
+		//{
+		//	for (int x = 0; x < proxies.GetLength(0); x++)
+		//	{
+		//		for (int y = 0; y < proxies.GetLength(1); y++)
+		//		{
+		//			selectableTargets[x, y] = upcomingTurns[0].x == x && upcomingTurns[0].y == y;
+		//			proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+		//		}
+		//	}
+		//	return;
+		//}
 
 		CombatSkill skill = GetCurrentlySelectedSkill();
 		for (int x = 0; x < proxies.GetLength(0); x++)
@@ -552,7 +552,7 @@ public class CombatManager : MonoBehaviour
 		Vector2Int[] targets = targetList.ToArray();
 
 		proxy.GetComponent<Animator>().SetTrigger("Attack");
-		proxy.AudioSource.PlayOneShot(skill.castSfx);
+		proxy.PlaySfx(skill.castSfx);
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
 		StartCoroutine(LaunchAttack(skill.impactDelay, targets, skill));
@@ -563,17 +563,17 @@ public class CombatManager : MonoBehaviour
 		yield return new WaitForSeconds(attackDelay);
 
 		Proxy[] proxyArr = GetProxies(targets);
-		Transform effectTransform = null;
+		SoloEffect tempEffect = null;
 
 		for(int i = 0; i < targets.Length; i++)
 		{
-			effectTransform = Instantiate(skill.FxPrefab, proxyArr[i].transform).transform;
+			tempEffect = Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
+			tempEffect.PlaySfx(skill.impactSfx);
 			ApplyCombatSkill(upcomingTurns[0], targets[i], skill);
 		}
 
 		// wait until the dmg fx has faded
-		//while (effectTransform != null) yield return null;
-		yield return new WaitForSeconds(effectTransform.GetComponent<SoloEffect>().CombatDuration);
+		yield return new WaitForSeconds(tempEffect.CombatDuration);
 
 		// check for targets death
 		for (int i = 0; i < targets.Length; i++)
@@ -623,6 +623,10 @@ public class CombatManager : MonoBehaviour
 		Vector2Int combatPosBuffer = proxyOne.Entity.currentCombatPosition;
 		proxyOne.Entity.currentCombatPosition = proxyTwo.Entity.currentCombatPosition;
 		proxyTwo.Entity.currentCombatPosition = combatPosBuffer;
+
+		// recalculate upcoming turns
+		upcomingTurns.Clear();
+		ProgressInits();
 	}
 
 	private void PassTurn()
