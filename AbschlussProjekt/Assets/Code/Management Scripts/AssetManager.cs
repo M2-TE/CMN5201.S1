@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ public class AssetManager
 
 	private readonly string itemsPath = "items";
     private readonly string settingsPath = "settings";
-    private readonly string playableCharactersPath = "characters/main characters";
+    private readonly string playableCharactersPath = "characters/playable characters";
     private readonly string equipmentPath = "equipment";
     private readonly string skillsPath = "skills";
 

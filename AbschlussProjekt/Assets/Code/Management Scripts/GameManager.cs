@@ -1,4 +1,5 @@
-﻿ using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,8 +8,14 @@ public class GameManager : MonoBehaviour
 	private Savestate savefile;
     private CombatManager combatManager;
     private Entity[] playerTeam;
-    private void Start ()
-    {
+
+	private void Awake()
+	{
+		DontDestroyOnLoad(gameObject);
+	}
+
+	private void Start ()
+	{
 		StartCombatDebugging();
 	}
 
