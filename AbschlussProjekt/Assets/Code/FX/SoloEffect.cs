@@ -4,15 +4,15 @@ using Random = UnityEngine.Random;
 
 public class SoloEffect : BaseEffect
 {
-	private float combatDuration;
-	public float CombatDuration
+	private float rawCombatDuration;
+	public float RawCombatDuration
 	{
 		get
 		{
 			return
-				combatDuration != 0f
-				? combatDuration
-				: combatDuration = TimeBetweenFrames * sprites.Length + lingeringDuration;
+				rawCombatDuration != 0f
+				? rawCombatDuration
+				: rawCombatDuration = TimeBetweenFrames * sprites.Length + lingeringDuration;
 		}
 	}
 
@@ -32,19 +32,23 @@ public class SoloEffect : BaseEffect
 		}
 	}
 
-	[SerializeField] protected float lingeringDuration = 0f;
-	[SerializeField] protected int framerateOverride = 0;
+	public float initialAnimationDelay;
+	[SerializeField] protected float initialAudioDelay;
+	[SerializeField] protected float lingeringDuration;
+	[SerializeField] protected int framerateOverride;
 	[SerializeField] protected bool waitForAudio = true;
-
+	private bool effectVisible = false;
 	
-
 	protected new IEnumerator Start ()
-    {
-        base.Start();
-		
-        WaitForSeconds waitTime = new WaitForSeconds(TimeBetweenFrames);
+	{
+		base.Start();
 
-        while (true)
+
+		yield return new WaitForSeconds(initialAnimationDelay);
+		effectVisible = true;
+
+		WaitForSeconds waitTime = new WaitForSeconds(TimeBetweenFrames);
+		while (true)
         {
             if (currentFrame < sprites.Length - 1) currentFrame++;
             else if (looping) currentFrame = 0;
@@ -66,8 +70,15 @@ public class SoloEffect : BaseEffect
         Destroy(gameObject);
 	}
 
-	public void PlaySfx(AudioClip[] sfxArr)
+	protected override void Update()
 	{
+		if (!effectVisible) ownLight.range = 0f;
+		else base.Update();
+	}
+
+	public IEnumerator PlaySfx(AudioClip[] sfxArr)
+	{
+		yield return new WaitForSeconds(initialAudioDelay);
 		if (sfxArr.Length > 0) audioSource.PlayOneShot(sfxArr[Random.Range(0, sfxArr.Length)]);
 	}
 }

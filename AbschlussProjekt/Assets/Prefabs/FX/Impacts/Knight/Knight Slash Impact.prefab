@@ -499,6 +499,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 809e7675cfec9994b90e169cbc35036a, type: 3}
   initialFrameOffset: 0
   looping: 0
+  initialAnimationDelay: 0.38
+  initialAudioDelay: 0.38
   lingeringDuration: 0.3
   framerateOverride: 12
   waitForAudio: 1

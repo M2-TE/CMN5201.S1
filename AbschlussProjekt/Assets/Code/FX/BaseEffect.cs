@@ -9,7 +9,7 @@ public abstract class BaseEffect : MonoBehaviour
 	[SerializeField] private bool changingLightColors = false;
 
 	private Light m_ownLight;
-	private Light ownLight
+	protected Light ownLight
 	{
 		get
 		{

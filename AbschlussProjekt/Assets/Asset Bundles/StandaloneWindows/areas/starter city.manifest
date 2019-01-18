@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 207122082
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cb0ad8efa20eb93677a0633782263496
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 409399eda6ccaf204b9acc3a593ad937
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: b65d529b444ef79479bd898d52111a97, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Areas/Starter City.asset
+Dependencies: []

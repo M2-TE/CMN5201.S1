@@ -6,6 +6,8 @@ using UnityEngine;
 public class SoloEffectEditor : BaseEffectEditor
 {
 	#region Properties
+	private SerializedProperty initialAnimationDelay;
+	private SerializedProperty initialAudioDelay;
 	private SerializedProperty lingeringDuration;
 	private SerializedProperty framerateOverride;
 	private SerializedProperty waitForAudio;
@@ -14,6 +16,8 @@ public class SoloEffectEditor : BaseEffectEditor
 	void OnEnable()
 	{
 		base.SetupProperties();
+		initialAnimationDelay = serializedObject.FindProperty("initialAnimationDelay");
+		initialAudioDelay = serializedObject.FindProperty("initialAudioDelay");
 		lingeringDuration = serializedObject.FindProperty("lingeringDuration");
 		framerateOverride = serializedObject.FindProperty("framerateOverride");
 		waitForAudio = serializedObject.FindProperty("waitForAudio");
@@ -32,6 +36,9 @@ public class SoloEffectEditor : BaseEffectEditor
 	{
 		EditorGUILayout.Space();
 		EditorGUILayout.LabelField("Solo Effect Specific", EditorStyles.boldLabel);
+		EditorGUILayout.PropertyField(initialAnimationDelay);
+		EditorGUILayout.PropertyField(initialAudioDelay);
+		EditorGUILayout.Space();
 		EditorGUILayout.PropertyField(lingeringDuration);
 		EditorGUILayout.PropertyField(framerateOverride);
 		EditorGUILayout.PropertyField(waitForAudio);

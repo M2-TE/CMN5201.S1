@@ -56,7 +56,7 @@ public class CombatManager : MonoBehaviour
 	}
 	
 	private LayerMask clickableLayers;
-	private float healthbarAdjustmentSpeed = 10f;
+	private readonly float healthbarAdjustmentSpeed = 10f;
 	#endregion
 
 	#region Setup
@@ -120,13 +120,13 @@ public class CombatManager : MonoBehaviour
 				Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
 				if (x == 1)
 				{
-					tempProxyGO.GetComponent<SpriteRenderer>().flipX = true;
-					//tempProxyGO.transform.localScale = new Vector3(-1f, 1f, 1f); // flip if its an opponent proxy
-					//tempProxy.CombatEffectPool.transform.parent.localScale = 
-					//	new Vector3(
-					//		tempProxy.CombatEffectPool.transform.parent.localScale.x * -1f, 
-					//		tempProxy.CombatEffectPool.transform.parent.localScale.y, 
-					//		1f); // and counterflip status canvas
+					//tempProxyGO.GetComponent<SpriteRenderer>().flipX = true;
+					tempProxyGO.transform.localScale = new Vector3(-1f, 1f, 1f); // flip if its an opponent proxy
+					tempProxy.CombatEffectPool.transform.parent.localScale =
+						new Vector3(
+							tempProxy.CombatEffectPool.transform.parent.localScale.x * -1f,
+							tempProxy.CombatEffectPool.transform.parent.localScale.y,
+							1f); // and counterflip status canvas
 				}
 				proxyPos.z = 0f;
                 tempProxyGO.transform.position = proxyPos;
@@ -272,7 +272,7 @@ public class CombatManager : MonoBehaviour
 			{
 				case -2:
 					combatPanel.PassImage.gameObject.SetActive(playerTurn);
-					//if (playerTurn) combatPanel.RepositioningImage.sprite = currentlyActiveEntity.PassSkill.SkillIcon;
+					if (playerTurn) combatPanel.PassImage.sprite = currentlyActiveEntity.EquippedPassSkill.SkillIcon;
 					continue;
 
 				case -1:
@@ -551,35 +551,45 @@ public class CombatManager : MonoBehaviour
 
 		Vector2Int[] targets = targetList.ToArray();
 
-		proxy.GetComponent<Animator>().SetTrigger("Attack");
+		if(skill.AnimatorTrigger != "")
+			proxy.GetComponent<Animator>().SetTrigger(skill.AnimatorTrigger);
 		proxy.PlaySfx(skill.castSfx);
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		StartCoroutine(LaunchAttack(skill.impactDelay, targets, skill));
+		StartCoroutine(LaunchAttack(targets, skill));
 	}
 
-	private IEnumerator LaunchAttack(float attackDelay, Vector2Int[] targets, CombatSkill skill)
+	private IEnumerator LaunchAttack(Vector2Int[] targets, CombatSkill skill)
 	{
-		yield return new WaitForSeconds(attackDelay);
-
 		Proxy[] proxyArr = GetProxies(targets);
 		SoloEffect tempEffect = null;
 
 		for(int i = 0; i < targets.Length; i++)
 		{
 			tempEffect = Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
-			tempEffect.PlaySfx(skill.impactSfx);
-			ApplyCombatSkill(upcomingTurns[0], targets[i], skill);
+			StartCoroutine(tempEffect.PlaySfx(skill.impactSfx));
 		}
 
-		// wait until the dmg fx has faded
-		yield return new WaitForSeconds(tempEffect.CombatDuration);
+		// apply skill to targets with timing mod
+		float dmgDelay = tempEffect.initialAnimationDelay + skill.DmgTimingModifier;
+		StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, dmgDelay));
+
+		// wait until the fx has faded
+		yield return new WaitForSeconds(dmgDelay + tempEffect.RawCombatDuration);
 
 		// check for targets death
 		for (int i = 0; i < targets.Length; i++)
 			if (GetEntity(targets[i]).currentHealth == 0) TriggerDeath(GetEntity(targets[i]).currentCombatPosition);
 	
 		EndTurn();
+	}
+
+	private IEnumerator PrepareCombatSkillApplication(Vector2Int caster, Vector2Int[] targets, CombatSkill skill, float dmgDelay)
+	{
+		yield return new WaitForSeconds(dmgDelay);
+
+		for (int i = 0; i < targets.Length; i++)
+			ApplyCombatSkill(caster, targets[i], skill);
 	}
 
 	private void ApplyCombatSkill(Vector2Int caster, Vector2Int target, CombatSkill skill)

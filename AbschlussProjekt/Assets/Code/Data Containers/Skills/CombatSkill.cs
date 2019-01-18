@@ -9,7 +9,8 @@ public class CombatSkill : DataContainer
 	public GameObject FxPrefab;
 	public AudioClip[] castSfx;
 	public AudioClip[] impactSfx;
-	public float impactDelay;
+	public float DmgTimingModifier;
+	public string AnimatorTrigger = "Attack";
 	[TextArea] public string SkillDescription = "Skill Description Missing";
 
 	[Space(20)]
