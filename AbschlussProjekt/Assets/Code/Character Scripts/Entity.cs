@@ -16,7 +16,7 @@ public class Entity
         get
         {
             if (charDataContainer != null) return charDataContainer;
-            else return charDataContainer = AssetManager.Instance.Characters.LoadAsset<Character>(entityType);
+            else return charDataContainer = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>(entityType);
         }
     }
 
@@ -39,7 +39,7 @@ public class Entity
 		{
 			if (equippedRepositioningSkill != null) return equippedRepositioningSkill;
 			else if (equippedRepositioningSkillString != null && equippedRepositioningSkillString != "")
-				return equippedRepositioningSkill = AssetManager.Instance.Characters.LoadAsset<CombatSkill>(equippedRepositioningSkillString);
+				return equippedRepositioningSkill = AssetManager.Instance.PlayableCharacters.LoadAsset<CombatSkill>(equippedRepositioningSkillString);
 			else
 			{
 				equippedRepositioningSkillString = CharDataContainer.RepositioningSkill.name;
@@ -56,7 +56,7 @@ public class Entity
 		{
 			if (equippedPassSkill != null) return equippedPassSkill;
 			else if (equippedPassSkillString != null && equippedPassSkillString != "")
-				return equippedPassSkill = AssetManager.Instance.Characters.LoadAsset<CombatSkill>(equippedPassSkillString);
+				return equippedPassSkill = AssetManager.Instance.PlayableCharacters.LoadAsset<CombatSkill>(equippedPassSkillString);
 			else
 			{
 				equippedPassSkillString = CharDataContainer.PassSkill.name;

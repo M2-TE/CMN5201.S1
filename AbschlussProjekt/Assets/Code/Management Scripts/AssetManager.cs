@@ -13,94 +13,55 @@ public class AssetManager
     private readonly string equipmentPath = "equipment";
     private readonly string skillsPath = "skills";
 
-    #region Getters/Setters
-    private Camera mainCam;
-    public Camera MainCam
-    {
-        get
-        {
-			return mainCam ?? (mainCam = Camera.main);
-            //if (mainCam != null) return mainCam;
-            //else return mainCam = Camera.main;
-        }
-    }
+	#region Getters/Setters
+	private Camera mainCam;
+	public Camera MainCam
+	{
+		get { return mainCam ?? (mainCam = Camera.main); }
+	}
 
 	private AssetBundle items;
 	public AssetBundle Items
 	{
-		get
-		{
-			return items ?? (items = AssetBundle.LoadFromFile(assetBundlePath + itemsPath));
-		}
-		set
-		{
-			if (value == null) items.Unload(true);
-		}
+		get { return items ?? (items = AssetBundle.LoadFromFile(assetBundlePath + itemsPath)); }
+		set { if (value == null) items.Unload(true); }
 
 	}
 
     private AssetBundle settings;
     public AssetBundle Settings
     {
-        get
-        {
-			return settings ?? (settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath));
-			//if (settings != null) return settings;
-   //         else return settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath);
-        }
-        set
-        {
-            if (value == null) settings.Unload(true);
-        }
+        get { return settings ?? (settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath)); }
+        set { if (value == null) settings.Unload(true); }
     }
 
-    private AssetBundle characters;
-    public AssetBundle Characters
+    private AssetBundle playableCharacters;
+    public AssetBundle PlayableCharacters
     {
-        get
-        {
-			return characters ?? (characters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath));
-            //if (characters != null) return characters;
-            //else return characters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath);
-        }
-
-        set
-        {
-            if (value == null) characters.Unload(true);
-        }
+        get { return playableCharacters ?? (playableCharacters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath)); }
+        set { if (value == null) playableCharacters.Unload(true); }
     }
 
     private AssetBundle equipment;
     public AssetBundle Equipment
     {
-        get
-        {
-			return equipment ?? (equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath));
-            //if (equipment != null) return equipment;
-            //else return equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath);
-        }
+        get { return equipment ?? (equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath)); }
 
-        set
-        {
-            if (value == null) equipment.Unload(true);
-        }
+        set { if (value == null) equipment.Unload(true); }
     }
 
     private AssetBundle skills;
     public AssetBundle Skills
     {
-        get
-        {
-			return skills ?? (skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath));
-            //if (skills != null) return skills;
-            //else return skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath);
-        }
-
-        set
-        {
-            if (value == null) skills.Unload(true);
-        }
+        get { return skills ?? (skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath)); }
+        set { if (value == null) skills.Unload(true); }
     }
+
+	private AssetBundle area;
+	public AssetBundle Area
+	{
+		get { return null; }
+	}
     #endregion
 
     public void Save(Savestate savefile)

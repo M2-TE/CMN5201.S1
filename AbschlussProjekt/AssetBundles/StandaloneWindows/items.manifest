@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 3816536331
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: af6cec44177df32f7a26bb31395fe20d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 887185bde1753c1d8da7851d7f5f0571
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 505de362506c6c34d9b1a5e82ba5b3e4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e37f3bd81d586e6449285f51029dc5a5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 501e0fee3a82e924fb37df8e876076a2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Items/Misc/Consumable/Potion.asset
+- Assets/_Data Containers/Items/Equipment/Weapon/Base Weapon.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Base Armor.asset
+- Assets/_Data Containers/Items/Misc/NonConsumable/NotAPotion.asset
+Dependencies: []
