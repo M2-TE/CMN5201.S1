@@ -17,6 +17,8 @@ MonoBehaviour:
   clickableLayers:
     serializedVersion: 2
     m_Bits: 1024
+  lowerStatColor: {r: 0.32941177, g: 0.03137255, b: 0.03137255, a: 0}
+  higherStatColor: {r: 0.007843138, g: 0.30980393, b: 0.05490196, a: 0}
   charWobbleCurve:
     serializedVersion: 2
     m_Curve:

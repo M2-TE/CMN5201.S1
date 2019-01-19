@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CombatPanel : MonoBehaviour
+public class CombatPanel : MonoBehaviour, IUIPanel
 {
 	[Header("Skills")]
 	public Image PassImage;
@@ -71,4 +71,16 @@ public class CombatPanel : MonoBehaviour
 			return characterPositions;
 		}
 	}
+
+	private CombatManager combatManager;
+	public void Register<T>(T manager) where T : IManager
+	{
+		combatManager = manager as CombatManager;
+	}
+
+	public void OnSkillSelect(int skillID)
+	{
+		if (combatManager != null) combatManager.OnSkillSelect(skillID);
+	}
+
 }

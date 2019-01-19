@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Misc Settings", menuName = "Data Container/Misc Settings")]
+[CreateAssetMenu(fileName = "Misc Settings", menuName = "Data Container/Settings/Misc Settings")]
 public class MiscSettings : Settings
 {
     public LayerMask GroundLayers;
-	public LayerMask clickableLayers;
 	public AnimationCurve charWobbleCurve;
 }

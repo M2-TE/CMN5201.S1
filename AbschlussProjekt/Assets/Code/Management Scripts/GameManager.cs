@@ -1,34 +1,37 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IManager
 {
 	private Savestate savefile;
-    private CombatManager combatManager;
     private Entity[] playerTeam;
-
 	private AudioSource musicPlayer;
+
+	private CombatManager combatManager;
+	private MainMenuManager mainMenuManager;
+	private bool combatActive;
 
 	private void Awake()
 	{
 		DontDestroyOnLoad(gameObject);
-		musicPlayer = GetComponent<AudioSource>();
+		DontDestroyOnLoad(AssetManager.Instance.MainCanvas);
+		AssetManager.Instance.GameManager = this;
 	}
 
-	private void Start ()
+	private void Start()
 	{
-		StartCombatDebugging();
-		PlayNextMusicTrack();
+		mainMenuManager = new MainMenuManager();
+		// StartCombatDebugging();
+	}
+
+	private void Update()
+	{
+		if (combatActive) combatManager.CheckForUserInput();
 	}
 
 	#region Debug
 	public void StartCombatDebugging()
 	{
-		combatManager = GetComponent<CombatManager>();
-
 		SaveDebugging(/* remove this later */);
 		LoadCurrentTeam();
 
@@ -37,13 +40,15 @@ public class GameManager : MonoBehaviour
 		Character gunwoman = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
 
 		//return; // DEBUG
-		combatManager.StartCombat
+
+		combatManager = new CombatManager
 			(playerTeam,
 			new Entity[] {
 				new Entity(knight),
 				new Entity(mage),
 				new Entity(gunwoman)
 			});
+		combatActive = true;
 	}
 
     private void SaveDebugging()
@@ -72,10 +77,8 @@ public class GameManager : MonoBehaviour
         playerTeam = savefile.CurrentTeam;
     }
 
-	private void PlayNextMusicTrack()
+	public void ExitGame()
 	{
-		// load music assets based on current area
 
-		// musicPlayer.PlayOneShot(track);
 	}
 }

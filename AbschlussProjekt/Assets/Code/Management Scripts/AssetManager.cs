@@ -2,11 +2,13 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class AssetManager
+public class AssetManager : IManager
 {
-    private readonly string savefilePath = "/savefile.sfl";
+	// put these into a path data container \/
+	private readonly string savefilePath = "/savefile.sfl";
     private readonly string assetBundlePath = "AssetBundles/StandaloneWindows/";
 
+	private readonly string uiPrefabsPath = "ui prefabs";
 	private readonly string itemsPath = "items";
     private readonly string settingsPath = "settings";
     private readonly string playableCharactersPath = "characters/playable characters";
@@ -14,10 +16,40 @@ public class AssetManager
     private readonly string skillsPath = "skills";
 
 	#region Getters/Setters
+	#region Scene Objects
+	public GameManager GameManager;
+
+	// REWORK THIS \/ (fuck Camera.main, honestly)
 	private Camera mainCam;
 	public Camera MainCam
 	{
 		get { return mainCam ?? (mainCam = Camera.main); }
+	}
+
+	private GameObject mainCanvas;
+	public GameObject MainCanvas
+	{
+		get { return mainCanvas ?? (mainCanvas = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainUICanvasPrefab)); }
+	}
+
+	private GameObject mainMenuUI;
+	public GameObject MainMenuUI
+	{
+		get { return mainMenuUI ?? (mainMenuUI = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainMenuPrefab, MainCanvas.transform)); }
+	}
+
+	private GameObject combatUI;
+	public GameObject CombatUI
+	{
+		get { return combatUI ?? (combatUI = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").CombatUIPrefab, MainCanvas.transform)); }
+	}
+	#endregion
+	
+	private AssetBundle uiPrefabs;
+	public AssetBundle UIPrefabs
+	{
+		get { return uiPrefabs ?? (uiPrefabs = AssetBundle.LoadFromFile(assetBundlePath + uiPrefabsPath)); }
+		set { if (value == null) uiPrefabs.Unload(true); }
 	}
 
 	private AssetBundle items;
@@ -25,7 +57,6 @@ public class AssetManager
 	{
 		get { return items ?? (items = AssetBundle.LoadFromFile(assetBundlePath + itemsPath)); }
 		set { if (value == null) items.Unload(true); }
-
 	}
 
     private AssetBundle settings;

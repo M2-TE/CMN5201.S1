@@ -6,15 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CombatManager : MonoBehaviour
+public class CombatManager : IManager
 {
 	#region Variables
-	// change this \/ to DataContainer ref
-	[SerializeField] private CombatPanel combatPanel;
-	[SerializeField] private EventSystem eventSystem;
-	[SerializeField] private Color greenColor;
-	[SerializeField] private Color redColor;
-
 	// first dimension for team (0 player, 1 opponent), second dimension for specific character
 	private Entity[,] combatants;
     private Proxy[,] proxies;
@@ -24,10 +18,7 @@ public class CombatManager : MonoBehaviour
 	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
 	{
-		get
-		{
-			return m_currentlySelectedSkill;
-		}
+		get { return m_currentlySelectedSkill; }
 		set
 		{
 			m_currentlySelectedSkill = value;
@@ -39,10 +30,7 @@ public class CombatManager : MonoBehaviour
 	private Vector2Int m_currentlyInspectedEntityPos;
 	private Vector2Int currentlyInspectedEntityPos
 	{
-		get
-		{
-			return m_currentlyInspectedEntityPos;
-		}
+		get { return m_currentlyInspectedEntityPos; }
 		set
 		{
 			if(m_currentlyInspectedEntityPos != value)
@@ -54,20 +42,19 @@ public class CombatManager : MonoBehaviour
 			
 		}
 	}
-	
+
+	private GameManager gameManager;
+	private CombatPanel combatPanel;
+	private EventSystem eventSystem;
+	private CombatManagerSettings settings;
 	private LayerMask clickableLayers;
-	private readonly float healthbarAdjustmentSpeed = 10f;
 	#endregion
 
-	#region Setup
-	private void Start()
+	#region Startup
+	public CombatManager(Entity[] playerTeam, Entity[] opposingTeam)
 	{
-		//Time.timeScale = 5f;
-		clickableLayers = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").clickableLayers;
-	}
-	
-	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
-	{
+		SetupCombatManager();
+
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
 		proxies = new Proxy[2, combatants.GetLength(1)];
 		selectableTargets = new bool[2, combatants.GetLength(1)];
@@ -78,10 +65,40 @@ public class CombatManager : MonoBehaviour
 
 		InitializeEntities();
 		InstantiateProxyPrefabs();
-		StartCoroutine(UpdateHealthBars());
+		gameManager.StartCoroutine(UpdateHealthBars());
 
 		// initiate combat loop
 		LaunchNextTurn();
+	}
+	//public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
+	//{
+	//	SetupCombatManager();
+
+	//	combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
+	//	proxies = new Proxy[2, combatants.GetLength(1)];
+	//	selectableTargets = new bool[2, combatants.GetLength(1)];
+
+	//	for (int x = 0; x < combatants.GetLength(0); x++)
+	//		for (int y = 0; y < combatants.GetLength(1); y++)
+	//			combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
+
+	//	InitializeEntities();
+	//	InstantiateProxyPrefabs();
+	//	gameManager.StartCoroutine(UpdateHealthBars());
+
+	//	// initiate combat loop
+	//	LaunchNextTurn();
+	//}
+
+	private void SetupCombatManager()
+	{
+		gameManager = AssetManager.Instance.GameManager;
+		combatPanel = AssetManager.Instance.CombatUI.GetComponent<CombatPanel>();
+		combatPanel.Register(this);
+		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
+
+		settings = AssetManager.Instance.Settings.LoadAsset<CombatManagerSettings>("Combat Manager Settings");
+		clickableLayers = settings.clickableLayers;
 	}
 
     private void InitializeEntities()
@@ -112,7 +129,7 @@ public class CombatManager : MonoBehaviour
                 if(combatants[x, y] == null) continue;
 				
 				// spawn proxy (proxy => represents an entity in the world)
-                GameObject tempProxyGO = Instantiate(combatants[x, y].CharDataContainer.Prefab);
+                GameObject tempProxyGO = Object.Instantiate(combatants[x, y].CharDataContainer.Prefab);
 				Proxy tempProxy = tempProxyGO.GetComponent<Proxy>();
 				tempProxy.Entity = GetEntity(new Vector2Int(x, y));
 				tempProxy.Entity.currentCombatPosition = new Vector2Int(x, y);
@@ -138,12 +155,8 @@ public class CombatManager : MonoBehaviour
 
 	#region Combat Loop
 	#region User Input
-	private void Update()
-	{
-		CheckForUserInput();
-	}
 
-	private void CheckForUserInput()
+	public void CheckForUserInput()
 	{
 		RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
 		if (hit.collider != null)
@@ -340,7 +353,7 @@ public class CombatManager : MonoBehaviour
 					Mathf.MoveTowards
 					(targetProxy.HealthBar.value,
 					targetEntity.currentHealth,
-					healthbarAdjustmentSpeed * Time.deltaTime);
+					settings.healthbarAdjustmentSpeed * Time.deltaTime);
 				if (targetProxy.HealthBar.value == targetEntity.currentHealth) break;
 			}
 			else break;
@@ -366,7 +379,7 @@ public class CombatManager : MonoBehaviour
 							Mathf.MoveTowards
 							(proxies[x, y].HealthBar.value,
 							combatants[x, y].currentHealth,
-							healthbarAdjustmentSpeed * Time.deltaTime);
+							settings.healthbarAdjustmentSpeed * Time.deltaTime);
 						if (proxies[x, y].HealthBar.value != combatants[x, y].currentHealth) done = false;
 					}
 				}
@@ -556,7 +569,7 @@ public class CombatManager : MonoBehaviour
 		proxy.PlaySfx(skill.castSfx);
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		StartCoroutine(LaunchAttack(targets, skill));
+		gameManager.StartCoroutine(LaunchAttack(targets, skill));
 	}
 
 	private IEnumerator LaunchAttack(Vector2Int[] targets, CombatSkill skill)
@@ -568,13 +581,13 @@ public class CombatManager : MonoBehaviour
 
 		for(int i = 0; i < targets.Length; i++)
 		{
-			tempEffect = Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
-			StartCoroutine(tempEffect.PlaySfx(skill.impactSfx, skill.impactAudioDelay));
-			StartCoroutine(tempEffect.PlayAnimation(skill.impactAnimationDelay));
+			tempEffect = Object.Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
+			gameManager.StartCoroutine(tempEffect.PlaySfx(skill.impactSfx, skill.impactAudioDelay));
+			gameManager.StartCoroutine(tempEffect.PlayAnimation(skill.impactAnimationDelay));
 		}
 
 		// apply skill to targets with timing mod
-		StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, skill.impactDmgDelay));
+		gameManager.StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, skill.impactDmgDelay));
 
 		// wait until the fx has faded
 		yield return new WaitForSeconds(tempEffect.RawCombatDuration + skill.impactAnimationDelay);
@@ -612,7 +625,7 @@ public class CombatManager : MonoBehaviour
 	{
 		// clamp new health between 0 and currentMaxHealth
 		GetEntity(target).currentHealth = Mathf.Clamp(GetEntity(target).currentHealth - trueDamage, 0, GetEntity(target).currentMaxHealth);
-		StartCoroutine(UpdateHealthBar(target));
+		gameManager.StartCoroutine(UpdateHealthBar(target));
 	}
 
 	private void SwapPositions(Vector2Int posOne, Vector2Int posTwo)
@@ -785,8 +798,8 @@ public class CombatManager : MonoBehaviour
 			(currentStat != maxStat)
 			? ("<color=#" + ColorUtility.ToHtmlStringRGB(
 				(currentStat < maxStat)
-				? redColor 
-				: greenColor) + ">" + currentStat + "</color>")
+				? settings.lowerStatColor 
+				: settings.higherStatColor) + ">" + currentStat + "</color>")
 			: currentStat.ToString();
 	}
 
