@@ -21,7 +21,11 @@ MonoBehaviour:
   impactSfx:
   - {fileID: 8300000, guid: e69bd83c81682dd4f9648a8cc9b6bda6, type: 3}
   - {fileID: 8300000, guid: 3aeaafd3991a7864bb79711494f71783, type: 3}
-  impactDelay: 0.38
+  AnimatorTrigger: Attack
+  impactSpawnDelay: 0.38
+  impactAnimationDelay: 0.075
+  impactAudioDelay: 0
+  impactDmgDelay: 0
   SkillDescription: Skill Description Missing
   CanHitEnemies: 1
   CanHitAllies: 0

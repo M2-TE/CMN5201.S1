@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Synthesis
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: cc47a9981948ef14587b59e7b88a3714, type: 3}
-  FxPrefab: {fileID: 1672595628262300, guid: 153b041e7c00d194282f0821d453246c, type: 2}
+  FxPrefab: {fileID: 1672595628262300, guid: 7c66d626aab256048817bee2b939bd14, type: 2}
   castSfx:
   - {fileID: 8300000, guid: f7cb045cf7923984892686db873a1694, type: 3}
   - {fileID: 8300000, guid: bd1531ff76150ce47af3266656d0ca80, type: 3}
@@ -28,7 +28,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a04dd4d831ba66f42838972f061df1ff, type: 3}
   impactSfx:
   - {fileID: 8300000, guid: a2a3d0cf7c8083647ab81115619f96f2, type: 3}
-  impactDelay: 0.55
+  AnimatorTrigger: Attack
+  impactSpawnDelay: 0.45
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
   SkillDescription: Skill Description Missing
   CanHitEnemies: 0
   CanHitAllies: 0

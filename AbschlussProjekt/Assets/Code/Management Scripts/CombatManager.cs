@@ -564,18 +564,20 @@ public class CombatManager : MonoBehaviour
 		Proxy[] proxyArr = GetProxies(targets);
 		SoloEffect tempEffect = null;
 
+		yield return new WaitForSeconds(skill.impactSpawnDelay);
+
 		for(int i = 0; i < targets.Length; i++)
 		{
 			tempEffect = Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
-			StartCoroutine(tempEffect.PlaySfx(skill.impactSfx));
+			StartCoroutine(tempEffect.PlaySfx(skill.impactSfx, skill.impactAudioDelay));
+			StartCoroutine(tempEffect.PlayAnimation(skill.impactAnimationDelay));
 		}
 
 		// apply skill to targets with timing mod
-		float dmgDelay = tempEffect.initialAnimationDelay + skill.DmgTimingModifier;
-		StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, dmgDelay));
+		StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, skill.impactDmgDelay));
 
 		// wait until the fx has faded
-		yield return new WaitForSeconds(dmgDelay + tempEffect.RawCombatDuration);
+		yield return new WaitForSeconds(tempEffect.RawCombatDuration + skill.impactAnimationDelay);
 
 		// check for targets death
 		for (int i = 0; i < targets.Length; i++)

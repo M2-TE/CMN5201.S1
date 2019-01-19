@@ -32,7 +32,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 48d50c3d8ac708b459c8668865ee8ecf, type: 3}
   - {fileID: 8300000, guid: 1ab361672fe32d545b670f71bfe5fda3, type: 3}
   - {fileID: 8300000, guid: a29aa07c50aea8c42992cba3d4068e7b, type: 3}
-  impactDelay: 0.55
+  AnimatorTrigger: Attack
+  impactSpawnDelay: 0.55
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
   SkillDescription: Magic AoE Buttblast.
   CanHitEnemies: 1
   CanHitAllies: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class AssetManager
 {
     private readonly string savefilePath = "/savefile.sfl";
-    private readonly string assetBundlePath = "Assets/Asset Bundles/StandaloneWindows/";
+    private readonly string assetBundlePath = "AssetBundles/StandaloneWindows/";
 
 	private readonly string itemsPath = "items";
     private readonly string settingsPath = "settings";
