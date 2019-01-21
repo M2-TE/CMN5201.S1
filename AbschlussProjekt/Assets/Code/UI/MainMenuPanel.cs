@@ -3,7 +3,7 @@
 public class MainMenuPanel : MonoBehaviour, IUIPanel
 {
 	private MainMenuManager mainMenuManager;
-	public void Register<T>(T manager) where T : IManager
+	public void Register<T>(T manager) where T : UiManager
 	{
 		mainMenuManager = manager as MainMenuManager;
 	}

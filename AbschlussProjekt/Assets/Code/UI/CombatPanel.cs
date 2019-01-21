@@ -73,7 +73,7 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 	}
 
 	private CombatManager combatManager;
-	public void Register<T>(T manager) where T : IManager
+	public void Register<T>(T manager) where T : UiManager
 	{
 		combatManager = manager as CombatManager;
 	}

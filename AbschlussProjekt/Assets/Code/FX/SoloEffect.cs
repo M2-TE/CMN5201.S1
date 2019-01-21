@@ -74,10 +74,11 @@ public class SoloEffect : BaseEffect
 
 		if (waitForAudio)
 		{
-			AudioSource audioSource = GetComponent<AudioSource>();
-			while (audioSource.isPlaying) yield return null;
+			AudioSource audioSource = null;
+			if (this != null) audioSource = GetComponent<AudioSource>();
+			while (audioSource != null && audioSource.isPlaying) yield return null;
 		}
 
-		Destroy(gameObject);
+		if(this != null) Destroy(gameObject);
 	}
 }

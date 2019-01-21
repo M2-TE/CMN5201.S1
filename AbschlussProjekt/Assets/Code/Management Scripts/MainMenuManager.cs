@@ -1,29 +1,45 @@
 ﻿using UnityEngine;
 
-public class MainMenuManager : IManager
+public class MainMenuManager : UiManager, IManager
 {
 	private MainMenuPanel mainMenuPanel;
+	private GameManager gameManager;
 
 	public MainMenuManager()
 	{
-		mainMenuPanel = AssetManager.Instance.MainMenuUI.GetComponent<MainMenuPanel>();
+		AssetManager instance = AssetManager.Instance;
+		gameManager = instance.GameManager;
+
+		mainMenuPanel = Object.Instantiate
+			 (instance.UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainMenuUIPrefab, instance.MainCanvas.transform)
+			 .GetComponent<MainMenuPanel>();
 		mainMenuPanel.Register(this);
+	}
+
+	public override void Destroy()
+	{
+		Object.Destroy(mainMenuPanel.gameObject);
+	}
+
+	public override void SetActive(bool activeState)
+	{
+		mainMenuPanel.gameObject.SetActive(activeState);
 	}
 
 	#region Button Calls
 	public void OnContinuePress()
 	{
-		Debug.Log("Continue");
+		gameManager.LoadGame();
 	}
 
 	public void OnNewGamePress()
 	{
-		// savefile = new Savestate();
+		gameManager.CreateNewSavestate();
 	}
 
 	public void OnExitPress()
 	{
-		AssetManager.Instance.GameManager.ExitGame();
+		gameManager.ExitGame();
 	}
 	#endregion
 }

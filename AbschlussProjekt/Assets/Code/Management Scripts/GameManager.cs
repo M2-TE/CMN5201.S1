@@ -1,39 +1,39 @@
 ﻿using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, IManager
 {
-	private Savestate savefile;
-    private Entity[] playerTeam;
-	private AudioSource musicPlayer;
+	public delegate void ExtendedUpdate();
+	public List<ExtendedUpdate> extendedUpdates;
 
-	private CombatManager combatManager;
-	private MainMenuManager mainMenuManager;
-	private bool combatActive;
+	private Savestate savestate;
+	private AudioSource musicPlayer;
 
 	private void Awake()
 	{
 		DontDestroyOnLoad(gameObject);
 		DontDestroyOnLoad(AssetManager.Instance.MainCanvas);
 		AssetManager.Instance.GameManager = this;
-	}
-
-	private void Start()
-	{
-		mainMenuManager = new MainMenuManager();
-		// StartCombatDebugging();
+		extendedUpdates = new List<ExtendedUpdate>();
+		
+		AssetManager.Instance.MainMenuManager.SetActive(true);
+		//StartCombatDebugging();
 	}
 
 	private void Update()
 	{
-		if (combatActive) combatManager.CheckForUserInput();
+		for(int i = 0; i < extendedUpdates.Count; i++)
+			extendedUpdates[i]();
 	}
 
 	#region Debug
 	public void StartCombatDebugging()
 	{
-		SaveDebugging(/* remove this later */);
-		LoadCurrentTeam();
+		SaveDebugging();
+		LoadGame();
 
 		Character knight = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Knight");
 		Character mage = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Mage");
@@ -41,14 +41,14 @@ public class GameManager : MonoBehaviour, IManager
 
 		//return; // DEBUG
 
-		combatManager = new CombatManager
-			(playerTeam,
+		CombatManager combatManager = AssetManager.Instance.CombatManager;
+		combatManager.StartCombat
+			(savestate.CurrentTeam,
 			new Entity[] {
 				new Entity(knight),
 				new Entity(mage),
 				new Entity(gunwoman)
 			});
-		combatActive = true;
 	}
 
     private void SaveDebugging()
@@ -66,19 +66,32 @@ public class GameManager : MonoBehaviour, IManager
     }
 	#endregion
 
-	private void SaveCurrentTeam()
+	public void CreateNewSavestate()
 	{
-		AssetManager.Instance.Save(savefile);
+		savestate = new Savestate();
 	}
 
-	private void LoadCurrentTeam()
-    {
-        savefile = AssetManager.Instance.Load();
-        playerTeam = savefile.CurrentTeam;
-    }
+	public void SaveGame()
+	{
+		AssetManager.Instance.Save(savestate);
+	}
+
+	public void LoadGame()
+	{
+		savestate = AssetManager.Instance.Load();
+	}
 
 	public void ExitGame()
 	{
+#if UNITY_EDITOR
+		EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+	}
 
+	private void OnApplicationQuit()
+	{
+		// stuff
 	}
 }

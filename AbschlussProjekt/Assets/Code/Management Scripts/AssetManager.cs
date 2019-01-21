@@ -16,7 +16,7 @@ public class AssetManager : IManager
     private readonly string skillsPath = "skills";
 
 	#region Getters/Setters
-	#region Scene Objects
+	#region Instances
 	public GameManager GameManager;
 
 	// REWORK THIS \/ (fuck Camera.main, honestly)
@@ -26,22 +26,22 @@ public class AssetManager : IManager
 		get { return mainCam ?? (mainCam = Camera.main); }
 	}
 
+	private MainMenuManager mainMenuManager;
+	public MainMenuManager MainMenuManager
+	{
+		get { return mainMenuManager ?? (mainMenuManager = new MainMenuManager()); }
+	}
+
+	private CombatManager combatManager;
+	public CombatManager CombatManager
+	{
+		get { return combatManager ?? (combatManager = new CombatManager()); }
+	}
+
 	private GameObject mainCanvas;
 	public GameObject MainCanvas
 	{
 		get { return mainCanvas ?? (mainCanvas = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainUICanvasPrefab)); }
-	}
-
-	private GameObject mainMenuUI;
-	public GameObject MainMenuUI
-	{
-		get { return mainMenuUI ?? (mainMenuUI = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainMenuPrefab, MainCanvas.transform)); }
-	}
-
-	private GameObject combatUI;
-	public GameObject CombatUI
-	{
-		get { return combatUI ?? (combatUI = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").CombatUIPrefab, MainCanvas.transform)); }
 	}
 	#endregion
 	
@@ -94,6 +94,12 @@ public class AssetManager : IManager
 		get { return null; }
 	}
     #endregion
+
+	// PROTOTYPE
+	public AssetBundle LoadBundle(string path, string assetName)
+	{
+		return null;
+	}
 
     public void Save(Savestate savefile)
     {

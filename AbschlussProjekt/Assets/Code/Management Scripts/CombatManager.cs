@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CombatManager : IManager
+public class CombatManager : UiManager, IManager
 {
 	#region Variables
 	// first dimension for team (0 player, 1 opponent), second dimension for specific character
@@ -14,6 +14,18 @@ public class CombatManager : IManager
     private Proxy[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
+
+	private bool m_combatActive;
+	private bool combatActive
+	{
+		get { return m_combatActive; }
+		set
+		{
+			m_combatActive = value;
+			if (!gameManager.extendedUpdates.Contains(UpdateCombatManager) && value == true) gameManager.extendedUpdates.Add(UpdateCombatManager);
+			else if (gameManager.extendedUpdates.Contains(UpdateCombatManager) && value == false) gameManager.extendedUpdates.Remove(UpdateCombatManager);
+		}
+	}
 
 	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
@@ -51,9 +63,25 @@ public class CombatManager : IManager
 	#endregion
 
 	#region Startup
-	public CombatManager(Entity[] playerTeam, Entity[] opposingTeam)
+	public CombatManager()
 	{
-		SetupCombatManager();
+		AssetManager instance = AssetManager.Instance;
+
+		gameManager = instance.GameManager;
+
+		combatPanel = Object.Instantiate
+			(instance.UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").CombatUIPrefab, instance.MainCanvas.transform)
+			.GetComponent<CombatPanel>();
+		combatPanel.Register(this);
+		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
+
+		settings =  instance.Settings.LoadAsset<CombatManagerSettings>("Combat Manager Settings");
+		clickableLayers = settings.clickableLayers;
+	}
+
+	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
+	{
+		combatActive = true;
 
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
 		proxies = new Proxy[2, combatants.GetLength(1)];
@@ -70,38 +98,8 @@ public class CombatManager : IManager
 		// initiate combat loop
 		LaunchNextTurn();
 	}
-	//public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
-	//{
-	//	SetupCombatManager();
 
-	//	combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
-	//	proxies = new Proxy[2, combatants.GetLength(1)];
-	//	selectableTargets = new bool[2, combatants.GetLength(1)];
-
-	//	for (int x = 0; x < combatants.GetLength(0); x++)
-	//		for (int y = 0; y < combatants.GetLength(1); y++)
-	//			combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
-
-	//	InitializeEntities();
-	//	InstantiateProxyPrefabs();
-	//	gameManager.StartCoroutine(UpdateHealthBars());
-
-	//	// initiate combat loop
-	//	LaunchNextTurn();
-	//}
-
-	private void SetupCombatManager()
-	{
-		gameManager = AssetManager.Instance.GameManager;
-		combatPanel = AssetManager.Instance.CombatUI.GetComponent<CombatPanel>();
-		combatPanel.Register(this);
-		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
-
-		settings = AssetManager.Instance.Settings.LoadAsset<CombatManagerSettings>("Combat Manager Settings");
-		clickableLayers = settings.clickableLayers;
-	}
-
-    private void InitializeEntities()
+	private void InitializeEntities()
     {
 		Entity tempEntity;
         for (int x = 0; x < combatants.GetLength(0); x++)
@@ -156,7 +154,7 @@ public class CombatManager : IManager
 	#region Combat Loop
 	#region User Input
 
-	public void CheckForUserInput()
+	public void UpdateCombatManager()
 	{
 		RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
 		if (hit.collider != null)
@@ -765,13 +763,14 @@ public class CombatManager : IManager
 
 	private void EndCombatPhase(bool? playerWon)
 	{
-		HideUIElements();
+		SetActive(false);
+		combatActive = false;
+
+		for (int x = 0; x < proxies.GetLength(0); x++)
+			for (int y = 0; y < proxies.GetLength(1); y++)
+				if (proxies[x, y] != null) Object.Destroy(proxies[x, y].gameObject);
+
 		Debug.Log("Player Victory: " + playerWon);
-	}
-
-	private void HideUIElements()
-	{
-
 	}
 	#endregion
 	#endregion
@@ -849,10 +848,20 @@ public class CombatManager : IManager
 	}
 	#endregion
 
-	#region Event System Calls
+	#region Misc
 	public void OnSkillSelect(int skillID)
     {
 		currentlySelectedSkill = skillID;
     }
+
+	public override void Destroy()
+	{
+		Object.Destroy(combatPanel.gameObject);
+	}
+
+	public override void SetActive(bool activeState)
+	{
+		combatPanel.gameObject.SetActive(activeState);
+	}
 	#endregion
 }

@@ -1,4 +1,6 @@
-﻿public interface IManager 
+﻿using UnityEngine;
+
+public interface IManager
 {
 
 }

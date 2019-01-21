@@ -5,6 +5,6 @@ public class UIPrefabs : DataContainer
 {
 	public GameObject MainUICanvasPrefab;
 	[Space()]
-	public GameObject MainMenuPrefab;
+	public GameObject MainMenuUIPrefab;
 	public GameObject CombatUIPrefab;
 }

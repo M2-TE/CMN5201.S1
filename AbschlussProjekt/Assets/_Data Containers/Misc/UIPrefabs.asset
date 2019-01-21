@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainUICanvasPrefab: {fileID: 1103649677843372, guid: b9bd3cd8629e7e1469b7fc86e0acd455,
     type: 2}
-  MainMenuPrefab: {fileID: 1728408155638572, guid: 032546e874cc62049ae428a9ed19150d,
+  MainMenuUIPrefab: {fileID: 1728408155638572, guid: 032546e874cc62049ae428a9ed19150d,
     type: 2}
   CombatUIPrefab: {fileID: 1973190742241762, guid: 4c736a412b7192b41be057273c8b7c18,
     type: 2}
