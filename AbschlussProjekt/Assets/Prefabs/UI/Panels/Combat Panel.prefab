@@ -2583,6 +2583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fe07c434e651ae4eb68fb3dbe0504d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
   PassImage: {fileID: 114841448233621844}
   RepositioningImage: {fileID: 114186911377087952}
   TeamSkillImage:

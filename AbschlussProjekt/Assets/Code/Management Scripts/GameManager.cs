@@ -1,77 +1,55 @@
-﻿using System.Collections.Generic;
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 #endif
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, IManager
+public class GameManager : Manager
 {
-	[SerializeField] private Camera mainCamera;
-	[SerializeField] private GameObject mainCanvas;
-	
-	private AssetManager assetManagerInstance;
-
-	private void Awake()
+	#region Debug
+	public void StartCombatDebugging()
 	{
-		assetManagerInstance = AssetManager.Instance;
+		SaveDebugging();
+
+		AssetManager instance = AssetManager.Instance;
+
+		//Character knight = instance.PlayableCharacters.LoadAsset<Character>("Knight");
+		//Character mage = instance.PlayableCharacters.LoadAsset<Character>("Mage");
+		//Character gunwoman = instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
+		Character gunwoman = instance.LoadBundle<Character>("characters/playable characters", "Gunwoman");
+		Character mage = instance.LoadBundle<Character>("characters/playable characters", "Mage");
+		Character knight = instance.LoadBundle<Character>("characters/playable characters", "Knight");
+
+		//return; // DEBUG
+
+		CombatManager combatManager = instance.GetManager<CombatManager>();
+		combatManager.StartCombat
+			(instance.Savestate.CurrentTeam,
+			new Entity[] {
+				new Entity(knight),
+				new Entity(mage),
+				new Entity(gunwoman)
+			});
 	}
 
-	private void Update()
+	private void SaveDebugging()
 	{
-		if (Input.GetKeyDown(KeyCode.Space)) mainCanvas.GetComponentInChildren<CombatPanel>();
+		AssetManager instance = AssetManager.Instance;
+		instance.Load();
+
+		//Character gunwoman = instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
+		//Character mage = instance.PlayableCharacters.LoadAsset<Character>("Mage");
+		//Character knight = instance.PlayableCharacters.LoadAsset<Character>("Knight");
+		Character gunwoman = instance.LoadBundle<Character>("characters/playable characters", "Gunwoman");
+		Character mage = instance.LoadBundle<Character>("characters/playable characters", "Mage");
+		Character knight = instance.LoadBundle<Character>("characters/playable characters", "Knight");
+
+		instance.Savestate.CurrentTeam = new Entity[] { new Entity(knight), new Entity(mage), new Entity(gunwoman) };
+		instance.Savestate.Gold = 0;
+		instance.Savestate.Souls = 0;
+		instance.Savestate.OwnedCharacters = new List<Entity>(instance.Savestate.CurrentTeam);
 	}
-
-	//#region Debug
-	//public void StartCombatDebugging()
-	//{
-	//	SaveDebugging();
-	//	LoadGame();
-
-	//	Character knight = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Knight");
-	//	Character mage = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Mage");
-	//	Character gunwoman = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
-
-	//	//return; // DEBUG
-
-	//	CombatManager combatManager = AssetManager.Instance.CombatManager;
-	//	combatManager.StartCombat
-	//		(savestate.CurrentTeam,
-	//		new Entity[] {
-	//			new Entity(knight),
-	//			new Entity(mage),
-	//			new Entity(gunwoman)
-	//		});
-	//}
-
-	//   private void SaveDebugging()
-	//   {
-	//       Savestate savefile = new Savestate();
-	//       Character gunwoman = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
-	//       Character mage = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Mage");
-	//       Character knight = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>("Knight");
-	//       savefile.CurrentTeam = new Entity[] { new Entity(knight), new Entity(mage), new Entity(gunwoman) };
-	//       savefile.Gold = 0;
-	//       savefile.Souls = 0;
-	//       savefile.OwnedCharacters = new List<Entity>(savefile.CurrentTeam);
-
-	//	AssetManager.Instance.Save(savefile);
-	//   }
-	//#endregion
-
-	//public void CreateNewSavestate()
-	//{
-	//	savestate = new Savestate();
-	//}
-
-	//public void SaveGame()
-	//{
-	//	AssetManager.Instance.Save(savestate);
-	//}
-
-	//public void LoadGame()
-	//{
-	//	savestate = AssetManager.Instance.Load();
-	//}
+	#endregion
 
 	public void ExitGame()
 	{
@@ -82,7 +60,7 @@ public class GameManager : MonoBehaviour, IManager
 #endif
 	}
 
-	private void OnApplicationQuit()
+	public void OnApplicationQuit()
 	{
 		// stuff
 	}

@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class AssetManager : IManager
+public class AssetManager
 {
 	// put these into a path data container \/
 	private readonly string savefilePath = "/savefile.sfl";
@@ -17,6 +19,8 @@ public class AssetManager : IManager
 
 	#region Getters/Setters
 	public Savestate Savestate;
+	public List<Manager> ActiveManagers;
+	private Dictionary<string, AssetBundle> loadedAssetBundles;
 
 	#region Instances
 	//// REWORK THIS \/ (fuck Camera.main, honestly)
@@ -44,7 +48,7 @@ public class AssetManager : IManager
 	//	get { return mainCanvas ?? (mainCanvas = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainUICanvasPrefab)); }
 	//}
 	#endregion
-
+	
 	private AssetBundle uiPrefabs;
 	public AssetBundle UIPrefabs
 	{
@@ -94,11 +98,24 @@ public class AssetManager : IManager
 		get { return null; }
 	}
     #endregion
-
-	// PROTOTYPE
-	public AssetType LoadBundle<AssetType>(string path, string assetName) where AssetType : DataContainer
+	
+	public AssetType LoadBundle<AssetType>(string bundlePath, string assetName) where AssetType : DataContainer
 	{
-		return AssetBundle.LoadFromFile(assetBundlePath + path).LoadAsset<AssetType>(assetName);
+		AssetBundle bundle = null;
+		if (loadedAssetBundles.ContainsKey(bundlePath)) bundle = loadedAssetBundles[bundlePath];
+		else
+		{
+			bundle = AssetBundle.LoadFromFile(assetBundlePath + bundlePath);
+			loadedAssetBundles.Add(bundlePath, bundle);
+		}
+
+		return bundle.LoadAsset<AssetType>(assetName);
+	}
+
+	public T GetManager<T>() where T : Manager
+	{
+		// return first match
+		return ActiveManagers.OfType<T>().ToArray()[0];
 	}
 
 	public void CreateNewSavestate()
@@ -132,10 +149,11 @@ public class AssetManager : IManager
     #region Singleton Implementation
     private static AssetManager instance;
     public static AssetManager Instance
-    { get { return (instance != null) ? instance : instance = new AssetManager(); } }
+    { get { return instance ?? (instance = new AssetManager()); } }
     private AssetManager()
     {
-        settings = Settings;
-    }
+		ActiveManagers = new List<Manager>();
+		loadedAssetBundles = new Dictionary<string, AssetBundle>();
+	}
     #endregion
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CombatManager : IManager
+public class CombatManager : Manager
 {
 	#region Variables
 	// first dimension for team (0 player, 1 opponent), second dimension for specific character
@@ -44,7 +44,6 @@ public class CombatManager : IManager
 	}
 
 	private readonly EventSystem eventSystem;
-	private GameManager gameManager;
 	private CombatPanel combatPanel;
 	private CombatManagerSettings settings;
 	private LayerMask clickableLayers;
@@ -70,9 +69,10 @@ public class CombatManager : IManager
 			for (int y = 0; y < combatants.GetLength(1); y++)
 				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
 
+		combatPanel.combatActive = true;
 		InitializeEntities();
 		InstantiateProxyPrefabs();
-		gameManager.StartCoroutine(UpdateHealthBars());
+		combatPanel.StartCoroutine(UpdateHealthBars());
 
 		// initiate combat loop
 		LaunchNextTurn();
@@ -546,7 +546,7 @@ public class CombatManager : IManager
 		proxy.PlaySfx(skill.castSfx);
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
-		gameManager.StartCoroutine(LaunchAttack(targets, skill));
+		combatPanel.StartCoroutine(LaunchAttack(targets, skill));
 	}
 
 	private IEnumerator LaunchAttack(Vector2Int[] targets, CombatSkill skill)
@@ -559,12 +559,12 @@ public class CombatManager : IManager
 		for (int i = 0; i < targets.Length; i++)
 		{
 			tempEffect = Object.Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
-			gameManager.StartCoroutine(tempEffect.PlaySfx(skill.impactSfx, skill.impactAudioDelay));
-			gameManager.StartCoroutine(tempEffect.PlayAnimation(skill.impactAnimationDelay));
+			combatPanel.StartCoroutine(tempEffect.PlaySfx(skill.impactSfx, skill.impactAudioDelay));
+			combatPanel.StartCoroutine(tempEffect.PlayAnimation(skill.impactAnimationDelay));
 		}
 
 		// apply skill to targets with timing mod
-		gameManager.StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, skill.impactDmgDelay));
+		combatPanel.StartCoroutine(PrepareCombatSkillApplication(upcomingTurns[0], targets, skill, skill.impactDmgDelay));
 
 		// wait until the fx has faded
 		yield return new WaitForSeconds(tempEffect.RawCombatDuration + skill.impactAnimationDelay);
@@ -602,7 +602,7 @@ public class CombatManager : IManager
 	{
 		// clamp new health between 0 and currentMaxHealth
 		GetEntity(target).currentHealth = Mathf.Clamp(GetEntity(target).currentHealth - trueDamage, 0, GetEntity(target).currentMaxHealth);
-		gameManager.StartCoroutine(UpdateHealthBar(target));
+		combatPanel.StartCoroutine(UpdateHealthBar(target));
 	}
 
 	private void SwapPositions(Vector2Int posOne, Vector2Int posTwo)

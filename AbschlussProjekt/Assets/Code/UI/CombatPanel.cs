@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class CombatPanel : MonoBehaviour, IUIPanel
 {
+	public Camera mainCam;
+	private CombatManager combatManager;
+
 	[Header("Skills")]
 	public Image PassImage;
 	public Image RepositioningImage;
@@ -76,13 +79,13 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 	public bool combatActive
 	{
 		get { return m_combatActive; }
-		set { m_combatActive = value; gameObject.SetActive(value); }
+		set
+		{
+			m_combatActive = value;
+			gameObject.SetActive(value);
+		}
 	}
-
-	public Camera mainCam;
-
-	private CombatManager combatManager;
-
+	
 	private void Awake()
 	{
 		combatManager = new CombatManager(this);
@@ -93,14 +96,9 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 		if(combatActive) combatManager.UpdateCombatManager();
 	}
 
-	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
-	{
-		combatActive = true;
-		combatManager.StartCombat(playerTeam, opposingTeam);
-	}
-
 	public void OnSkillSelect(int skillID)
 	{
+		//Debug.Log(skillID);
 		if (combatActive) combatManager.OnSkillSelect(skillID);
 	}
 }
