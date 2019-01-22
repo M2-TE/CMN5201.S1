@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EquipmentSlots { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET, FINGER, NECK}
+public enum EquipmentSlot { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET, FINGERONE, FINGERTWO, NECK}
 
-public class Inventory : StorageSystem
+public class Inventory : MonoBehaviour
 {
-    private Dictionary<EquipmentSlots, EquipmentContainer> equippedStuff;
+    [SerializeField] private Dictionary<EquipmentSlot, string> equippedStuff = new Dictionary<EquipmentSlot, string>();
 
-    private int currency;
+    [SerializeField] private int currency = 0;
 
-    public Inventory(int storageSize) : base(storageSize)
-    {
-        equippedStuff = new Dictionary<EquipmentSlots, EquipmentContainer>();
-        currency = 0;
-    }
-
+    [SerializeField] public StorageSystem InventoryContainer;
 }

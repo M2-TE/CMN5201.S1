@@ -58,7 +58,7 @@ public class ItemEditor : Editor
     private void VariableLinksMonoBehaviour()
     {
 
-        itemContainer = serializedObject.FindProperty("container");
+        itemContainer = serializedObject.FindProperty("Container");
         itemSize = serializedObject.FindProperty("itemSize");
         currentlyStacked = serializedObject.FindProperty("currentlyStacked");
 
