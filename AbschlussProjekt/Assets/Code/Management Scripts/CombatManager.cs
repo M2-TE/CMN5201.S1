@@ -6,26 +6,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CombatManager : UiManager, IManager
+public class CombatManager : IManager
 {
 	#region Variables
 	// first dimension for team (0 player, 1 opponent), second dimension for specific character
 	private Entity[,] combatants;
-    private Proxy[,] proxies;
+	private Proxy[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
-
-	private bool m_combatActive;
-	private bool combatActive
-	{
-		get { return m_combatActive; }
-		set
-		{
-			m_combatActive = value;
-			if (!gameManager.extendedUpdates.Contains(UpdateCombatManager) && value == true) gameManager.extendedUpdates.Add(UpdateCombatManager);
-			else if (gameManager.extendedUpdates.Contains(UpdateCombatManager) && value == false) gameManager.extendedUpdates.Remove(UpdateCombatManager);
-		}
-	}
 
 	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
@@ -45,44 +33,35 @@ public class CombatManager : UiManager, IManager
 		get { return m_currentlyInspectedEntityPos; }
 		set
 		{
-			if(m_currentlyInspectedEntityPos != value)
+			if (m_currentlyInspectedEntityPos != value)
 			{
 				//GetProxy(value).Wobble();
 				m_currentlyInspectedEntityPos = value;
 				UpdateEntityInspectionWindow();
 			}
-			
+
 		}
 	}
 
+	private readonly EventSystem eventSystem;
 	private GameManager gameManager;
 	private CombatPanel combatPanel;
-	private EventSystem eventSystem;
 	private CombatManagerSettings settings;
 	private LayerMask clickableLayers;
 	#endregion
 
 	#region Startup
-	public CombatManager()
+	public CombatManager(CombatPanel combatPanel)
 	{
-		AssetManager instance = AssetManager.Instance;
-
-		gameManager = instance.GameManager;
-
-		combatPanel = Object.Instantiate
-			(instance.UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").CombatUIPrefab, instance.MainCanvas.transform)
-			.GetComponent<CombatPanel>();
-		combatPanel.Register(this);
+		this.combatPanel = combatPanel;
 		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
 
-		settings =  instance.Settings.LoadAsset<CombatManagerSettings>("Combat Manager Settings");
+		settings = AssetManager.Instance.Settings.LoadAsset<CombatManagerSettings>("Combat Manager Settings");
 		clickableLayers = settings.clickableLayers;
 	}
 
 	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
 	{
-		combatActive = true;
-
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
 		proxies = new Proxy[2, combatants.GetLength(1)];
 		selectableTargets = new bool[2, combatants.GetLength(1)];
@@ -100,9 +79,9 @@ public class CombatManager : UiManager, IManager
 	}
 
 	private void InitializeEntities()
-    {
+	{
 		Entity tempEntity;
-        for (int x = 0; x < combatants.GetLength(0); x++)
+		for (int x = 0; x < combatants.GetLength(0); x++)
 		{
 			for (int y = 0; y < combatants.GetLength(1); y++)
 			{
@@ -115,24 +94,24 @@ public class CombatManager : UiManager, IManager
 				}
 			}
 		}
-    }
+	}
 
-    private void InstantiateProxyPrefabs()
-    {
-        for (int x = 0; x < proxies.GetLength(0); x++)
-        {
-            for (int y = 0; y < proxies.GetLength(1); y++)
-            {
+	private void InstantiateProxyPrefabs()
+	{
+		for (int x = 0; x < proxies.GetLength(0); x++)
+		{
+			for (int y = 0; y < proxies.GetLength(1); y++)
+			{
 				GameObject combatPrefab = combatPanel.CharacterPositions[x, y];
-                if(combatants[x, y] == null) continue;
-				
+				if (combatants[x, y] == null) continue;
+
 				// spawn proxy (proxy => represents an entity in the world)
-                GameObject tempProxyGO = Object.Instantiate(combatants[x, y].CharDataContainer.Prefab);
+				GameObject tempProxyGO = Object.Instantiate(combatants[x, y].CharDataContainer.Prefab);
 				Proxy tempProxy = tempProxyGO.GetComponent<Proxy>();
 				tempProxy.Entity = GetEntity(new Vector2Int(x, y));
 				tempProxy.Entity.currentCombatPosition = new Vector2Int(x, y);
 
-				Vector3 proxyPos = AssetManager.Instance.MainCam.ScreenToWorldPoint(combatPrefab.transform.position);
+				Vector3 proxyPos = combatPanel.mainCam.ScreenToWorldPoint(combatPrefab.transform.position);
 				if (x == 1)
 				{
 					//tempProxyGO.GetComponent<SpriteRenderer>().flipX = true;
@@ -144,11 +123,11 @@ public class CombatManager : UiManager, IManager
 							1f); // and counterflip status canvas
 				}
 				proxyPos.z = 0f;
-                tempProxyGO.transform.position = proxyPos;
-                proxies[x, y] = tempProxy;
-            }
-        }
-    }
+				tempProxyGO.transform.position = proxyPos;
+				proxies[x, y] = tempProxy;
+			}
+		}
+	}
 	#endregion
 
 	#region Combat Loop
@@ -156,7 +135,7 @@ public class CombatManager : UiManager, IManager
 
 	public void UpdateCombatManager()
 	{
-		RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
+		RaycastHit2D hit = Physics2D.Raycast(combatPanel.mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
 		if (hit.collider != null)
 		{
 			Proxy hitProxy = hit.transform.GetComponent<Proxy>();
@@ -212,12 +191,12 @@ public class CombatManager : UiManager, IManager
 	{
 		Entity entity = GetEntity(upcomingTurns[0]);
 		List<CombatSkill> skills = new List<CombatSkill>(entity.currentSkillCooldowns.Keys);
-		for(int i = 0; i < skills.Count; i++)
+		for (int i = 0; i < skills.Count; i++)
 		{
 			if (entity.currentSkillCooldowns[skills[i]] > 0) entity.currentSkillCooldowns[skills[i]]--;
 		}
 	}
-	
+
 	private void EndTurn()
 	{
 		HandleCombatEffects(false);
@@ -235,10 +214,10 @@ public class CombatManager : UiManager, IManager
 
 		List<Vector2Int> validTargets = new List<Vector2Int>();
 		for (int i = 0; i < combatants.GetLength(1); i++)
-			if(combatants[0, i] != null && combatants[0, i].currentHealth != 0)
+			if (combatants[0, i] != null && combatants[0, i].currentHealth != 0)
 				validTargets.Add(combatants[0, i].currentCombatPosition);
 
-		if(validTargets.Count > 0)
+		if (validTargets.Count > 0)
 		{
 			Vector2Int targetPos;
 			targetPos = validTargets[Random.Range(0, validTargets.Count)];
@@ -278,7 +257,7 @@ public class CombatManager : UiManager, IManager
 		bool playerTurn = upcomingTurns[0].x == 0;
 
 		for (int i = -2; i < combatPanel.TeamSkillImage.Length; i++)
-        {
+		{
 			switch (i)
 			{
 				case -2:
@@ -299,8 +278,8 @@ public class CombatManager : UiManager, IManager
 
 			// update icons
 			CombatSkill skill = currentlyActiveEntity.EquippedCombatSkills[i];
-			combatPanel.TeamSkillImage[i].sprite = (skill == null) 
-				? null 
+			combatPanel.TeamSkillImage[i].sprite = (skill == null)
+				? null
 				: skill.SkillIcon;
 
 			// update cooldowns
@@ -421,8 +400,8 @@ public class CombatManager : UiManager, IManager
 			{
 				// dont show indicator if: 1: Its an enemy's turn. 2: The spot is empty. 3: The character is dead (and no revive skill is in use)
 				Vector2Int indicPos = new Vector2Int(x, y);
-				if (upcomingTurns[0].x == 1 
-					|| GetEntity(indicPos) == null 
+				if (upcomingTurns[0].x == 1
+					|| GetEntity(indicPos) == null
 					|| GetEntity(indicPos).currentHealth == 0) selectableTargets[x, y] = false;
 				else
 				{
@@ -445,7 +424,7 @@ public class CombatManager : UiManager, IManager
 			}
 		}
 	}
-	
+
 	private void UpdateSkillDescriptionText()
 	{
 		string skillDescriptionText = "";
@@ -525,12 +504,12 @@ public class CombatManager : UiManager, IManager
 		// (surroundingAffectedUnits: x => left units; y => right units)
 		Vector2Int target;
 		// get left targets
-		for (int i = 1; i <= skill.SurroundingAffectedUnits.x; i++)  
+		for (int i = 1; i <= skill.SurroundingAffectedUnits.x; i++)
 		{
 			target = new Vector2Int(mainTarget.x, mainTarget.y);
 
 			if (target.y > combatants.GetLength(1)) continue;
-			
+
 			if (target.x == 0) target.y += i;
 			else if (target.x == 1)
 			{
@@ -542,12 +521,12 @@ public class CombatManager : UiManager, IManager
 			if (GetEntity(target).currentHealth != 0) targetList.Add(target);
 		}
 		// get right targets 
-		for (int i = 1; i <= skill.SurroundingAffectedUnits.y; i++) 
+		for (int i = 1; i <= skill.SurroundingAffectedUnits.y; i++)
 		{
 			target = new Vector2Int(mainTarget.x, mainTarget.y);
 
 			if (target.y > combatants.GetLength(1)) continue;
-			
+
 			if (target.x == 0)
 			{
 				if (target.y - i < 0) Debug.Log("overlap from player to opponent team"); // when the target overlaps teams
@@ -556,13 +535,13 @@ public class CombatManager : UiManager, IManager
 			else if (target.x == 1) target.y += i;
 
 			if (target.y >= combatants.GetLength(1) || GetEntity(target) == null) continue;
-			if(GetEntity(target).currentHealth != 0) targetList.Add(target);
+			if (GetEntity(target).currentHealth != 0) targetList.Add(target);
 		}
 		#endregion
 
 		Vector2Int[] targets = targetList.ToArray();
 
-		if(skill.AnimatorTrigger != "")
+		if (skill.AnimatorTrigger != "")
 			proxy.GetComponent<Animator>().SetTrigger(skill.AnimatorTrigger);
 		proxy.PlaySfx(skill.castSfx);
 
@@ -577,7 +556,7 @@ public class CombatManager : UiManager, IManager
 
 		yield return new WaitForSeconds(skill.impactSpawnDelay);
 
-		for(int i = 0; i < targets.Length; i++)
+		for (int i = 0; i < targets.Length; i++)
 		{
 			tempEffect = Object.Instantiate(skill.FxPrefab, proxyArr[i].transform).GetComponent<SoloEffect>();
 			gameManager.StartCoroutine(tempEffect.PlaySfx(skill.impactSfx, skill.impactAudioDelay));
@@ -593,7 +572,7 @@ public class CombatManager : UiManager, IManager
 		// check for targets death
 		for (int i = 0; i < targets.Length; i++)
 			if (GetEntity(targets[i]).currentHealth == 0) TriggerDeath(GetEntity(targets[i]).currentCombatPosition);
-	
+
 		EndTurn();
 	}
 
@@ -610,15 +589,15 @@ public class CombatManager : UiManager, IManager
 		if (currentlySelectedSkill == -2) PassTurn();
 		else if (currentlySelectedSkill == -1) SwapPositions(caster, target);
 
-		int actualDamage = 
+		int actualDamage =
 			(skill.AttackMultiplier > 0) // if the attack multiplier is at zero, then its a buff, not an attack (min dmg circumvented) 
-			? Mathf.Max(1, (int) (GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense))
+			? Mathf.Max(1, (int)(GetEntity(caster).currentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense))
 			: (int)(GetEntity(caster).currentAttack * skill.AttackMultiplier);
 
 		ApplyCombatEffects(caster, target, skill);
 		ApplyDamage(target, actualDamage);
 	}
-	
+
 	private void ApplyDamage(Vector2Int target, int trueDamage)
 	{
 		// clamp new health between 0 and currentMaxHealth
@@ -679,7 +658,7 @@ public class CombatManager : UiManager, IManager
 			else GetCombatEffectPool(target).activeCombatEffectElements.Find(x => x.CombatEffect == effect)
 					.Duration = (target == upcomingTurns[0]) ? effect.Duration + 1 : effect.Duration;
 		}
-		
+
 		UpdateEntityInspectionWindow();
 	}
 
@@ -698,7 +677,7 @@ public class CombatManager : UiManager, IManager
 		Queue<CombatEffectUI> effectsToRemove = new Queue<CombatEffectUI>();
 
 		CombatEffectUI tempCEUI;
-		for(int i = 0; i < activeEffects.Count; i++)
+		for (int i = 0; i < activeEffects.Count; i++)
 		{
 			tempCEUI = activeEffects[i];
 			if (turnStart) tempCEUI.CombatEffect.ActivateActiveEffect(entity);
@@ -737,9 +716,9 @@ public class CombatManager : UiManager, IManager
 		bool playerAlive = false;
 		bool opponentAlive = false;
 
-		for(int x = 0; x < combatants.GetLength(0); x++)
+		for (int x = 0; x < combatants.GetLength(0); x++)
 		{
-			for(int y = 0; y < combatants.GetLength(1); y++)
+			for (int y = 0; y < combatants.GetLength(1); y++)
 			{
 				if (combatants[x, y] != null && combatants[x, y].currentHealth != 0)
 				{
@@ -763,8 +742,7 @@ public class CombatManager : UiManager, IManager
 
 	private void EndCombatPhase(bool? playerWon)
 	{
-		SetActive(false);
-		combatActive = false;
+		combatPanel.combatActive = false;
 
 		for (int x = 0; x < proxies.GetLength(0); x++)
 			for (int y = 0; y < proxies.GetLength(1); y++)
@@ -793,11 +771,11 @@ public class CombatManager : UiManager, IManager
 
 	private string GetFormattedStatString(int currentStat, int maxStat)
 	{
-		return 
+		return
 			(currentStat != maxStat)
 			? ("<color=#" + ColorUtility.ToHtmlStringRGB(
 				(currentStat < maxStat)
-				? settings.lowerStatColor 
+				? settings.lowerStatColor
 				: settings.higherStatColor) + ">" + currentStat + "</color>")
 			: currentStat.ToString();
 	}
@@ -825,7 +803,7 @@ public class CombatManager : UiManager, IManager
 			proxieArr[i] = proxies[proxPosArr[i].x, proxPosArr[i].y];
 		return proxieArr;
 	}
-	
+
 	private void SetButtonsEnabled(bool enableState)
 	{
 		combatPanel.RepositioningImage.gameObject.SetActive(enableState);
@@ -833,8 +811,8 @@ public class CombatManager : UiManager, IManager
 
 		for (int i = 0; i < combatPanel.TeamSkillImage.Length; i++)
 			combatPanel.TeamSkillImage[i].gameObject.SetActive(
-				(GetEntity(upcomingTurns[0]).EquippedCombatSkills[i] == null) 
-				? false 
+				(GetEntity(upcomingTurns[0]).EquippedCombatSkills[i] == null)
+				? false
 				: enableState);
 	}
 	private bool GetButtonsEnabled()
@@ -850,18 +828,8 @@ public class CombatManager : UiManager, IManager
 
 	#region Misc
 	public void OnSkillSelect(int skillID)
-    {
+	{
 		currentlySelectedSkill = skillID;
-    }
-
-	public override void Destroy()
-	{
-		Object.Destroy(combatPanel.gameObject);
-	}
-
-	public override void SetActive(bool activeState)
-	{
-		combatPanel.gameObject.SetActive(activeState);
 	}
 	#endregion
 }

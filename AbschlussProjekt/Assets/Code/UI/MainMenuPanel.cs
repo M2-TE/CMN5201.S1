@@ -2,29 +2,28 @@
 
 public class MainMenuPanel : MonoBehaviour, IUIPanel
 {
-	private MainMenuManager mainMenuManager;
-	public void Register<T>(T manager) where T : UiManager
+	public void OnContinuePress()
 	{
-		mainMenuManager = manager as MainMenuManager;
+		AssetManager.Instance.Load();
 	}
 
-	public void OnButtonPress(string buttonType)
+	public void OnNewGamePress()
 	{
-		switch (buttonType)
-		{
-			case "Continue":
-				mainMenuManager.OnContinuePress();
-				break;
+		AssetManager.Instance.CreateNewSavestate();
+	}
 
-			case "New Game":
-				mainMenuManager.OnNewGamePress();
-				break;
+	public void OnExitPress()
+	{
+		AssetManager.Instance.Load();
+	}
 
-			case "Exit":
-				mainMenuManager.OnExitPress();
-				break;
+	public void Destroy()
+	{
+		Destroy(this);
+	}
 
-			default: throw new System.Exception("Illegal Button Command");
-		}
+	public void SetActive(bool activeState)
+	{
+		gameObject.SetActive(activeState);
 	}
 }

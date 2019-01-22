@@ -16,35 +16,35 @@ public class AssetManager : IManager
     private readonly string skillsPath = "skills";
 
 	#region Getters/Setters
+	public Savestate Savestate;
+
 	#region Instances
-	public GameManager GameManager;
+	//// REWORK THIS \/ (fuck Camera.main, honestly)
+	//private Camera mainCam;
+	//public Camera MainCam
+	//{
+	//	get { return mainCam ?? (mainCam = Camera.main); }
+	//}
 
-	// REWORK THIS \/ (fuck Camera.main, honestly)
-	private Camera mainCam;
-	public Camera MainCam
-	{
-		get { return mainCam ?? (mainCam = Camera.main); }
-	}
+	//private MainMenuManager mainMenuManager;
+	//public MainMenuManager MainMenuManager
+	//{
+	//	get { return mainMenuManager ?? (mainMenuManager = new MainMenuManager()); }
+	//}
 
-	private MainMenuManager mainMenuManager;
-	public MainMenuManager MainMenuManager
-	{
-		get { return mainMenuManager ?? (mainMenuManager = new MainMenuManager()); }
-	}
+	//private CombatManager combatManager;
+	//public CombatManager CombatManager
+	//{
+	//	get { return combatManager ?? (combatManager = new CombatManager()); }
+	//}
 
-	private CombatManager combatManager;
-	public CombatManager CombatManager
-	{
-		get { return combatManager ?? (combatManager = new CombatManager()); }
-	}
-
-	private GameObject mainCanvas;
-	public GameObject MainCanvas
-	{
-		get { return mainCanvas ?? (mainCanvas = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainUICanvasPrefab)); }
-	}
+	//private GameObject mainCanvas;
+	//public GameObject MainCanvas
+	//{
+	//	get { return mainCanvas ?? (mainCanvas = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainUICanvasPrefab)); }
+	//}
 	#endregion
-	
+
 	private AssetBundle uiPrefabs;
 	public AssetBundle UIPrefabs
 	{
@@ -96,38 +96,38 @@ public class AssetManager : IManager
     #endregion
 
 	// PROTOTYPE
-	public AssetBundle LoadBundle(string path, string assetName)
+	public AssetType LoadBundle<AssetType>(string path, string assetName) where AssetType : DataContainer
 	{
-		return null;
+		return AssetBundle.LoadFromFile(assetBundlePath + path).LoadAsset<AssetType>(assetName);
 	}
 
-    public void Save(Savestate savefile)
+	public void CreateNewSavestate()
+	{
+		Savestate = new Savestate();
+	}
+
+    public void Save()
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + savefilePath;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        formatter.Serialize(stream, savefile);
+        formatter.Serialize(stream, Savestate);
         stream.Close();
     }
 
-    public Savestate Load()
+    public void Load()
     {
         string path = Application.persistentDataPath + savefilePath;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-            Savestate savefile = formatter.Deserialize(stream) as Savestate;
+            Savestate = formatter.Deserialize(stream) as Savestate;
             stream.Close();
-            return savefile;
         }
-        else
-        {
-            Debug.LogError("Savefile not found.");
-            return null;
-        }
-    }
+        else Debug.LogError("Savefile not found.");
+	}
 
     #region Singleton Implementation
     private static AssetManager instance;

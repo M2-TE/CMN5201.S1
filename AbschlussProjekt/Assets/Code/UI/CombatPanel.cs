@@ -19,7 +19,7 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 
 	public Image EntityInspectionPortrait;
 	public CombatEffectPool EntityInspectionEffectPool;
-	
+
 	private EventSystem eventSystem;
 	public EventSystem EventSystem
 	{
@@ -72,15 +72,35 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 		}
 	}
 
-	private CombatManager combatManager;
-	public void Register<T>(T manager) where T : UiManager
+	private bool m_combatActive;
+	public bool combatActive
 	{
-		combatManager = manager as CombatManager;
+		get { return m_combatActive; }
+		set { m_combatActive = value; gameObject.SetActive(value); }
+	}
+
+	public Camera mainCam;
+
+	private CombatManager combatManager;
+
+	private void Awake()
+	{
+		combatManager = new CombatManager(this);
+	}
+
+	private void Update()
+	{
+		if(combatActive) combatManager.UpdateCombatManager();
+	}
+
+	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
+	{
+		combatActive = true;
+		combatManager.StartCombat(playerTeam, opposingTeam);
 	}
 
 	public void OnSkillSelect(int skillID)
 	{
-		if (combatManager != null) combatManager.OnSkillSelect(skillID);
+		if (combatActive) combatManager.OnSkillSelect(skillID);
 	}
-
 }
