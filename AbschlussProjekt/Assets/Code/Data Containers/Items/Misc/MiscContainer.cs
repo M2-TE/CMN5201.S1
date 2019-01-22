@@ -16,21 +16,21 @@ public class MiscContainer : ItemContainer
 {
     
     [Space(10)]
-    public Usability IsUsable = 0;
+    [SerializeField] public Usability IsUsable = 0;
 
     [Tooltip("Optional checkbox to indicate that this item will be destroyed on use")]
-    public bool DestroyOnUse;
+    [SerializeField] public bool DestroyOnUse;
 
     [Space(20)]
-    public bool CanHitEnemies = false;
-    public bool CanHitAllies = true;
+    [SerializeField] public bool CanHitEnemies = false;
+    [SerializeField] public bool CanHitAllies = true;
 
     [Space(20)]
-    public int Cooldown = 1;
-    public int MinRange = 0;
-    public int MaxRange = 2;
-    public Vector2Int SurroundingAffectedUnits;
+    [SerializeField] public int Cooldown = 1;
+    [SerializeField] public int MinRange = 0;
+    [SerializeField] public int MaxRange = 2;
+    [SerializeField] public Vector2Int SurroundingAffectedUnits;
 
     [Space(20)]
-    public ConsumeEffect[] ConsumeEffects;
+    [SerializeField] public ConsumeEffect[] ConsumeEffects;
 }

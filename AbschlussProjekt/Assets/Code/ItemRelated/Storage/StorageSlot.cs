@@ -11,7 +11,7 @@ public class StorageSlot
     public bool IsEmpty { get { return content == null; } }
     public Item Content { get { return content; } set { content = value; } }
     public int Position { get { return position; } }
-    public int Amount { get { return content ? content.currentlyStacked : 0 ; } }
+    public int Amount { get { return content ? content.CurrentlyStacked : 0 ; } }
     #endregion
 
     #region Constructor

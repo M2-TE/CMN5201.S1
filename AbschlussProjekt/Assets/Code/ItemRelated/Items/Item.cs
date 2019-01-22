@@ -3,49 +3,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Item : MonoBehaviour
 {
 
     #region Fields
-    public int ID;
 
-    public string Name;
+    [SerializeField] private ItemContainer container;
 
-    public Sprite ItemIcon;
-    public string ItemDescription;
+    [Range(2, 4)][SerializeField]private float itemSize = 3;
 
-    public int EncumbranceValue;
-    public int LevelRequirement;
+    private int itemID;
 
-    public bool IsIndestructible;
-    public bool IsQuestItem;
-    public bool IsUnique;
+    [SerializeField] private int currentlyStacked;
 
-    public int StackingLimit;
+    public int CurrentlyStacked {  get { return currentlyStacked; } set { currentlyStacked = (value > container.StackingLimit) || (value < 1) ? currentlyStacked : value; } }
 
-    public int currentlyStacked;
-
-    public int CurrentlyStacked {  get { return currentlyStacked; } set { currentlyStacked = (value > StackingLimit) || (value < 1) ? currentlyStacked : value; } }
     #endregion
 
-    public Item(ItemContainer itemDataContainer)
+    #region DataContainerFieldsForCustomEditorOnly
+
+    #region ItemContainer
+    [SerializeField] private string ItemName { get { return container == null ? null : container.ItemName; } set { if (container != null) container.ItemName = value; } }
+    [SerializeField] private Sprite ItemIcon { get { return container == null ? null : container.ItemIcon; } set { if (container != null) container.ItemIcon = value; } }
+    [SerializeField] private string ItemDescription { get { return container == null ? null : container.ItemDescription; } set { if (container != null) container.ItemDescription = value; } }
+
+    [SerializeField] private int EncumbranceValue { get { return container == null ? -1 : container.EncumbranceValue; } set { if (container != null) container.EncumbranceValue = value; } }
+    [SerializeField] private int LevelRequirement { get { return container == null ? -1 : container.LevelRequirement; } set { if (container != null) container.LevelRequirement = value; } }
+
+    [SerializeField] private bool IsIndestructible { get { return container == null ? false : container.IsIndestructible; } set { if (container != null) container.IsIndestructible = value; } }
+    [SerializeField] private bool IsQuestItem { get { return container == null ? false : container.IsQuestItem; } set { if (container != null) container.IsQuestItem = value; } }
+    [SerializeField] private bool IsUnique{ get { return container == null ? false : container.IsUnique; } set { if (container != null) container.IsUnique = value; } }
+
+    [SerializeField] private int StackingLimit { get { return container == null ? -1 : container.StackingLimit; } set { if (container != null) container.StackingLimit = value; } }
+    #endregion
+
+    #region EquipmentContainer
+//------------
+    #endregion
+
+    #endregion
+
+    private void Start()
     {
-        ID = itemDataContainer.GetInstanceID();
+        SetSprite();
+        SetID();
+        SetCorrectSize();
+        SetEditorName();
+    }
 
-        Name = itemDataContainer.ItemName;
+    private void SetSprite()
+    {
+        if(container !=null)
+            GetComponent<SpriteRenderer>().sprite = container.ItemIcon;
+    }
 
-        Debug.Log("Item name: " + Name + "\nItem ID: "+ID);
+    private void SetID()
+    {
+        itemID = GetInstanceID();
+    }
 
-        ItemIcon = itemDataContainer.ItemIcon;
-        ItemDescription = itemDataContainer.ItemDescription;
+    private void SetCorrectSize()
+    {
+        transform.localScale = Vector3.one * itemSize;
+    }
 
-        EncumbranceValue = itemDataContainer.EncumbranceValue;
-        LevelRequirement = itemDataContainer.LevelRequirement;
-
-        IsIndestructible = itemDataContainer.IsIndestructible;
-        IsQuestItem = itemDataContainer.IsQuestItem;
-        IsUnique = itemDataContainer.IsUnique;
-
-        StackingLimit = itemDataContainer.StackingLimit;
+    private void SetEditorName()
+    {
+        name = container.name + " ID[" + itemID + "]";
     }
 }
