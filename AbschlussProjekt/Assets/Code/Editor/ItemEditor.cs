@@ -8,10 +8,12 @@ public class ItemEditor : Editor
 {
     #region Variables
     // Monobehaviour
+    SerializedProperty inventory;
     SerializedProperty itemContainer;
     SerializedProperty itemSize;
     SerializedProperty currentlyStacked;
 
+    #region Currently Not Used
     // DataContainer
     SerializedProperty itemName;
     SerializedProperty itemIcon;
@@ -45,6 +47,9 @@ public class ItemEditor : Editor
     SerializedProperty maxRange;
     SerializedProperty surroundingAffectedUnits;
     SerializedProperty consumeEffects;
+
+    #endregion
+
     #endregion
 
     #region VariableLinks
@@ -52,17 +57,20 @@ public class ItemEditor : Editor
     private void OnEnable()
     {
         VariableLinksMonoBehaviour();
-        VariableLinksDataContainer();
+        //VariableLinksDataContainer();
     }
 
     private void VariableLinksMonoBehaviour()
     {
 
-        itemContainer = serializedObject.FindProperty("Container");
+        inventory = serializedObject.FindProperty("inventory");
+        itemContainer = serializedObject.FindProperty("container");
         itemSize = serializedObject.FindProperty("itemSize");
         currentlyStacked = serializedObject.FindProperty("currentlyStacked");
 
     }
+
+    #region Currently Not Used
 
     private void VariableLinksDataContainer()
     {
@@ -111,6 +119,8 @@ public class ItemEditor : Editor
     }
     #endregion
 
+    #endregion
+
     #region InspectorGUI
     public override void OnInspectorGUI()
     {
@@ -120,7 +130,6 @@ public class ItemEditor : Editor
 
         PropertyHandling();
 
-        // DUNNO -------------------------
         if (EditorGUI.EndChangeCheck())
             Undo.RecordObject(target, "");
         serializedObject.ApplyModifiedProperties();
@@ -134,6 +143,7 @@ public class ItemEditor : Editor
 
     private void MonoBehaviourHandling()
     {
+        EditorGUILayout.PropertyField(inventory);
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("MonoBehaviour", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(itemContainer);
@@ -141,6 +151,7 @@ public class ItemEditor : Editor
         EditorGUILayout.PropertyField(currentlyStacked);
     }
 
+    #region Currently Not Used
     private void DataContainerHandling()
     {
         if (itemContainer != null)
@@ -162,6 +173,7 @@ public class ItemEditor : Editor
             EditorGUILayout.PropertyField(stackingLimit);
         }
     }
+    #endregion
 
     #endregion
 }

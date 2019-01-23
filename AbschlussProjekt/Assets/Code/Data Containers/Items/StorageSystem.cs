@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New ItemStorage", menuName = "Data Container/ItemStorage")]
 public class StorageSystem : DataContainer
 {
     #region Fields & Properties
-    public List<StorageSlot> storageSlots = new List<StorageSlot>();
+    [SerializeField] public int Size = 0;
+    [SerializeField] public List<StorageSlot> StorageSlots = new List<StorageSlot>();
     #endregion
 
 }

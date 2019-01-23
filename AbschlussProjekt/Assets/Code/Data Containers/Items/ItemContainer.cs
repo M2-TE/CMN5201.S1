@@ -25,4 +25,9 @@ public class ItemContainer : DataContainer
     [Tooltip("Optional value to limit the maximum number of items per itemslot; equals 1 if unstackable")]
     [SerializeField] public int StackingLimit;
 
+    public void OnEnable()
+    {
+        ItemName = name;
+    }
+
 }
