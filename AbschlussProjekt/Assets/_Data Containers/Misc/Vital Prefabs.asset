@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a3e4bc2cce9abe459669be17cd90190, type: 3}
-  m_Name: Main Menu
+  m_Script: {fileID: 11500000, guid: 0e8684cf2ed6e864a826171a16747fc3, type: 3}
+  m_Name: Vital Prefabs
   m_EditorClassIdentifier: 
-  sceneName: Main Menu
-  MusicPool: []
+  MusicManagerAnchor: {fileID: 1737164410263536, guid: 11145ee3eabf60b48bac494e80ee0e20,
+    type: 2}

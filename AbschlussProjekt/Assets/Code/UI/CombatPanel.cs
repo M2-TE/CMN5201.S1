@@ -89,6 +89,7 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 	private void Awake()
 	{
 		combatManager = new CombatManager(this);
+		combatActive = false;
 	}
 
 	private void Update()

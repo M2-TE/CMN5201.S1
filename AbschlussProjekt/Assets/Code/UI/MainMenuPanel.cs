@@ -4,7 +4,9 @@ public class MainMenuPanel : MonoBehaviour, IUIPanel
 {
 	public void OnContinuePress()
 	{
-		AssetManager.Instance.Load();
+		AssetManager instance = AssetManager.Instance;
+		instance.Load();
+		instance.GetManager<GameManager>().LoadAreaAsync(instance.Savestate.CurrentLocation);
 	}
 
 	public void OnNewGamePress()
@@ -14,16 +16,6 @@ public class MainMenuPanel : MonoBehaviour, IUIPanel
 
 	public void OnExitPress()
 	{
-		AssetManager.Instance.Load();
-	}
-
-	public void Destroy()
-	{
-		Destroy(this);
-	}
-
-	public void SetActive(bool activeState)
-	{
-		gameObject.SetActive(activeState);
+		AssetManager.Instance.GetManager<GameManager>().ExitGame();
 	}
 }

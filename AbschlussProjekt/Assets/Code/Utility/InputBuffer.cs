@@ -2,37 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputBuffer
+namespace Utilities
 {
-	private List<KeyCode> bufferedKeypresses; // float is remaining buffer duration
-	private MonoBehaviour monoBehaviour;
-	private float maxBufferDuration;
-
-	public InputBuffer(MonoBehaviour monoBehaviour, float maxBufferDuration)
+	public class InputBuffer
 	{
-		this.monoBehaviour = monoBehaviour;
-		this.maxBufferDuration = maxBufferDuration;
+		private List<KeyCode> bufferedKeypresses; // float is remaining buffer duration
+		private MonoBehaviour monoBehaviour;
+		private float maxBufferDuration;
 
-		bufferedKeypresses = new List<KeyCode>();
-	}
-
-	public void BufferInput(KeyCode bufferedKey)
-	{
-		if (!bufferedKeypresses.Contains(bufferedKey))
+		public InputBuffer(MonoBehaviour monoBehaviour, float maxBufferDuration)
 		{
-			bufferedKeypresses.Add(bufferedKey);
-			monoBehaviour.StartCoroutine(InitBufferRemoval(bufferedKey));
+			this.monoBehaviour = monoBehaviour;
+			this.maxBufferDuration = maxBufferDuration;
+
+			bufferedKeypresses = new List<KeyCode>();
 		}
-	}
 
-	public bool GetKey(KeyCode key)
-	{
-		return bufferedKeypresses.Remove(key);
-	}
+		public void BufferInput(KeyCode bufferedKey)
+		{
+			if (!bufferedKeypresses.Contains(bufferedKey))
+			{
+				bufferedKeypresses.Add(bufferedKey);
+				monoBehaviour.StartCoroutine(InitBufferRemoval(bufferedKey));
+			}
+		}
 
-	private IEnumerator InitBufferRemoval(KeyCode keyToRemove)
-	{
-		yield return new WaitForSecondsRealtime(maxBufferDuration);
-		bufferedKeypresses.Remove(keyToRemove);
+		public bool GetKey(KeyCode key)
+		{
+			return bufferedKeypresses.Remove(key);
+		}
+
+		private IEnumerator InitBufferRemoval(KeyCode keyToRemove)
+		{
+			yield return new WaitForSecondsRealtime(maxBufferDuration);
+			bufferedKeypresses.Remove(keyToRemove);
+		}
 	}
 }

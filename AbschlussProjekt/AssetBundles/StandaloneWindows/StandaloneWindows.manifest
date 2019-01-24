@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1997684416
+CRC: 3801641897
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -21,5 +21,8 @@ AssetBundleManifest:
       Name: areas/starter city
       Dependencies: {}
     Info_6:
-      Name: ui prefabs
+      Name: paths
+      Dependencies: {}
+    Info_7:
+      Name: vital prefabs
       Dependencies: {}

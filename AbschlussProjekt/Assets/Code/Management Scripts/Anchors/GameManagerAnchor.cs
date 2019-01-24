@@ -6,7 +6,8 @@ public class GameManagerAnchor : MonoBehaviour
 
 	private void Awake()
 	{
-		gameManager = new GameManager();
+		try { gameManager = AssetManager.Instance.GetManager<GameManager>(); }
+		catch { gameManager = new GameManager(); }
 	}
 
 	private void OnApplicationQuit()

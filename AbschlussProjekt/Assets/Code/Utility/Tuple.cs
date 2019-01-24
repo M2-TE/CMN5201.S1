@@ -1,10 +1,13 @@
-﻿public struct Tuple<TypeOne, TypeTwo>
+﻿namespace Utilities
 {
-	public TypeOne ValOne;
-	public TypeTwo ValTwo;
-	public Tuple(TypeOne valOne, TypeTwo valTwo)
+	public struct Tuple<TypeOne, TypeTwo>
 	{
-		ValOne = valOne;
-		ValTwo = valTwo;
+		public TypeOne ValOne;
+		public TypeTwo ValTwo;
+		public Tuple(TypeOne valOne, TypeTwo valTwo)
+		{
+			ValOne = valOne;
+			ValTwo = valTwo;
+		}
 	}
 }

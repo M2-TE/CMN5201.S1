@@ -1,5 +1,4 @@
-﻿// source: https://answers.unity.com/questions/242794/inspector-field-for-scene-asset.html
-using System;
+﻿using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR

@@ -3,109 +3,35 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using Utilities;
 
 public class AssetManager
 {
-	// put these into a path data container \/
-	private readonly string savefilePath = "/savefile.sfl";
-    private readonly string assetBundlePath = "AssetBundles/StandaloneWindows/";
-
-	private readonly string uiPrefabsPath = "ui prefabs";
-	private readonly string itemsPath = "items";
-    private readonly string settingsPath = "settings";
-    private readonly string playableCharactersPath = "characters/playable characters";
-    private readonly string equipmentPath = "equipment";
-    private readonly string skillsPath = "skills";
-
-	#region Getters/Setters
 	public Savestate Savestate;
 	public List<Manager> ActiveManagers;
 	private Dictionary<string, AssetBundle> loadedAssetBundles;
 
-	#region Instances
-	//// REWORK THIS \/ (fuck Camera.main, honestly)
-	//private Camera mainCam;
-	//public Camera MainCam
-	//{
-	//	get { return mainCam ?? (mainCam = Camera.main); }
-	//}
-
-	//private MainMenuManager mainMenuManager;
-	//public MainMenuManager MainMenuManager
-	//{
-	//	get { return mainMenuManager ?? (mainMenuManager = new MainMenuManager()); }
-	//}
-
-	//private CombatManager combatManager;
-	//public CombatManager CombatManager
-	//{
-	//	get { return combatManager ?? (combatManager = new CombatManager()); }
-	//}
-
-	//private GameObject mainCanvas;
-	//public GameObject MainCanvas
-	//{
-	//	get { return mainCanvas ?? (mainCanvas = Object.Instantiate(UIPrefabs.LoadAsset<UIPrefabs>("UIPrefabs").MainUICanvasPrefab)); }
-	//}
-	#endregion
+	private Paths paths;
+	public Paths Paths
+	{
+		get
+		{
+			return paths ?? (paths = AssetBundle.LoadFromFile("AssetBundles/StandaloneWindows/paths").LoadAsset<Paths>("Paths"));
+		}
+	}
 	
-	private AssetBundle uiPrefabs;
-	public AssetBundle UIPrefabs
+	public AreaData LoadArea(string sceneName)
 	{
-		get { return uiPrefabs ?? (uiPrefabs = AssetBundle.LoadFromFile(assetBundlePath + uiPrefabsPath)); }
-		set { if (value == null) uiPrefabs.Unload(true); }
+		return LoadBundle<AreaData>(Paths.AreasPartialPath + sceneName, sceneName);
 	}
 
-	private AssetBundle items;
-	public AssetBundle Items
-	{
-		get { return items ?? (items = AssetBundle.LoadFromFile(assetBundlePath + itemsPath)); }
-		set { if (value == null) items.Unload(true); }
-	}
-
-    private AssetBundle settings;
-    public AssetBundle Settings
-    {
-        get { return settings ?? (settings = AssetBundle.LoadFromFile(assetBundlePath + settingsPath)); }
-        set { if (value == null) settings.Unload(true); }
-    }
-
-    private AssetBundle playableCharacters;
-    public AssetBundle PlayableCharacters
-    {
-        get { return playableCharacters ?? (playableCharacters = AssetBundle.LoadFromFile(assetBundlePath + playableCharactersPath)); }
-        set { if (value == null) playableCharacters.Unload(true); }
-    }
-
-    private AssetBundle equipment;
-    public AssetBundle Equipment
-    {
-        get { return equipment ?? (equipment = AssetBundle.LoadFromFile(assetBundlePath + equipmentPath)); }
-
-        set { if (value == null) equipment.Unload(true); }
-    }
-
-    private AssetBundle skills;
-    public AssetBundle Skills
-    {
-        get { return skills ?? (skills = AssetBundle.LoadFromFile(assetBundlePath + skillsPath)); }
-        set { if (value == null) skills.Unload(true); }
-    }
-
-	private AssetBundle area;
-	public AssetBundle Area
-	{
-		get { return null; }
-	}
-    #endregion
-	
 	public AssetType LoadBundle<AssetType>(string bundlePath, string assetName) where AssetType : DataContainer
 	{
 		AssetBundle bundle = null;
 		if (loadedAssetBundles.ContainsKey(bundlePath)) bundle = loadedAssetBundles[bundlePath];
 		else
 		{
-			bundle = AssetBundle.LoadFromFile(assetBundlePath + bundlePath);
+			bundle = AssetBundle.LoadFromFile(Paths.AssetBundlePath + bundlePath);
 			loadedAssetBundles.Add(bundlePath, bundle);
 		}
 
@@ -121,12 +47,16 @@ public class AssetManager
 	public void CreateNewSavestate()
 	{
 		Savestate = new Savestate();
+		Character gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
+		Savestate.CurrentTeam[0] = new Entity(gunwoman);
+
+		Save();
 	}
 
     public void Save()
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + savefilePath;
+        string path = Application.persistentDataPath + Paths.SavefilePath;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         formatter.Serialize(stream, Savestate);
@@ -135,7 +65,7 @@ public class AssetManager
 
     public void Load()
     {
-        string path = Application.persistentDataPath + savefilePath;
+        string path = Application.persistentDataPath + Paths.SavefilePath;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

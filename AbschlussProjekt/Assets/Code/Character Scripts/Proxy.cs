@@ -16,7 +16,13 @@ public class Proxy : MonoBehaviour
 	{
 		get { return m_audioSource ?? (m_audioSource = GetComponent<AudioSource>()); }
 	}
-	
+
+	private AssetManager _amInstance;
+	private AssetManager amInstance
+	{
+		get { return _amInstance ?? (_amInstance = AssetManager.Instance); }
+	}
+
 	[SerializeField] private Image allyTargetIndicator;
 	[SerializeField] private Image enemyTargetIndicator;
 	private Vector3 baseScale;
@@ -53,7 +59,7 @@ public class Proxy : MonoBehaviour
 		wobbling = true;
 		baseScale = transform.localScale;
 
-		AnimationCurve wobbleCurve = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").charWobbleCurve;
+		AnimationCurve wobbleCurve = amInstance.LoadBundle<MiscSettings>(amInstance.Paths.SettingsPath, "Misc Settings").charWobbleCurve;
 		float timer = 0f;
 		float curveLength = wobbleCurve[wobbleCurve.length - 1].time;
 		while(timer < 1f)

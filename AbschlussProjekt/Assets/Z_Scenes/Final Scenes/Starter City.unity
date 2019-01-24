@@ -267,6 +267,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1097891008082428, guid: fca5a47376b14224ea4002bc16cb00cc, type: 2}
+      propertyPath: m_Name
+      value: Game Manager Anchor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fca5a47376b14224ea4002bc16cb00cc, type: 2}
   m_IsPrefabAsset: 0
@@ -315,7 +319,7 @@ Prefab:
     - target: {fileID: 224384630245785318, guid: 4c736a412b7192b41be057273c8b7c18,
         type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224384630245785318, guid: 4c736a412b7192b41be057273c8b7c18,
         type: 2}
@@ -444,7 +448,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1973190742241762, guid: 4c736a412b7192b41be057273c8b7c18, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c736a412b7192b41be057273c8b7c18, type: 2}

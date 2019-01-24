@@ -7,16 +7,22 @@ using UnityEngine;
 public class Entity
 {
     public string Name;
+	
+	#region Getters and Setters
+	[NonSerialized] private AssetManager _amInstance;
+	private AssetManager amInstance
+	{
+		get { return _amInstance ?? (_amInstance = AssetManager.Instance); }
+	}
 
-    #region Getters and Setters
-    private readonly string entityType;
+	private readonly string entityType;
     [NonSerialized] private Character charDataContainer;
     public Character CharDataContainer
     {
         get
         {
-            if (charDataContainer != null) return charDataContainer;
-            else return charDataContainer = AssetManager.Instance.PlayableCharacters.LoadAsset<Character>(entityType);
+			if (charDataContainer != null) return charDataContainer;
+			else return charDataContainer = amInstance.LoadBundle<Character>(amInstance.Paths.PlayableCharactersPath, entityType);
         }
     }
 
@@ -39,7 +45,7 @@ public class Entity
 		{
 			if (equippedRepositioningSkill != null) return equippedRepositioningSkill;
 			else if (equippedRepositioningSkillString != null && equippedRepositioningSkillString != "")
-				return equippedRepositioningSkill = AssetManager.Instance.PlayableCharacters.LoadAsset<CombatSkill>(equippedRepositioningSkillString);
+				return equippedRepositioningSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.SkillsPath, equippedRepositioningSkillString);
 			else
 			{
 				equippedRepositioningSkillString = CharDataContainer.RepositioningSkill.name;
@@ -56,7 +62,7 @@ public class Entity
 		{
 			if (equippedPassSkill != null) return equippedPassSkill;
 			else if (equippedPassSkillString != null && equippedPassSkillString != "")
-				return equippedPassSkill = AssetManager.Instance.PlayableCharacters.LoadAsset<CombatSkill>(equippedPassSkillString);
+				return equippedPassSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.SkillsPath, equippedPassSkillString);
 			else
 			{
 				equippedPassSkillString = CharDataContainer.PassSkill.name;
@@ -71,9 +77,10 @@ public class Entity
     {
         get
         {
-            if (equippedWeapon != null) return equippedWeapon;
-            else if (equippedWeaponString != "") return equippedWeapon = AssetManager.Instance.Items.LoadAsset<WeaponContainer>(equippedWeaponString);
-            else return null;
+			if (equippedWeapon != null) return equippedWeapon;
+			else if (equippedWeaponString != "") return equippedWeapon = amInstance.LoadBundle<WeaponContainer>(amInstance.Paths.EquipmentPath, equippedWeaponString);
+			//else if (equippedWeaponString != "") return equippedWeapon = AssetManager.Instance.Items.LoadAsset<WeaponContainer>(equippedWeaponString);
+			else return null;
         }
         set
         {
@@ -89,7 +96,7 @@ public class Entity
         get
         {
             if (equippedArmor != null) return equippedArmor;
-            else if (equippedArmorString != "") return equippedArmor = AssetManager.Instance.Items.LoadAsset<ArmorContainer>(equippedArmorString);
+			else if (equippedArmorString != "") return equippedArmor = amInstance.LoadBundle<ArmorContainer>(amInstance.Paths.EquipmentPath, equippedArmorString);
             else return null;
         }
         set

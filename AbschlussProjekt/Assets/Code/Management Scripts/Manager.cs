@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public abstract class Manager
+﻿public abstract class Manager
 {
 	public Manager()
 	{

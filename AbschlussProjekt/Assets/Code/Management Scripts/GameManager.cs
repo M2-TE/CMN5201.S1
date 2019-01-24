@@ -1,8 +1,11 @@
-﻿#if UNITY_EDITOR
+﻿using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Utilities;
 
 public class GameManager : Manager
 {
@@ -13,12 +16,9 @@ public class GameManager : Manager
 
 		AssetManager instance = AssetManager.Instance;
 
-		//Character knight = instance.PlayableCharacters.LoadAsset<Character>("Knight");
-		//Character mage = instance.PlayableCharacters.LoadAsset<Character>("Mage");
-		//Character gunwoman = instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
-		Character gunwoman = instance.LoadBundle<Character>("characters/playable characters", "Gunwoman");
-		Character mage = instance.LoadBundle<Character>("characters/playable characters", "Mage");
-		Character knight = instance.LoadBundle<Character>("characters/playable characters", "Knight");
+		Character gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
+		Character mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");
+		Character knight = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Knight");
 
 		//return; // DEBUG
 
@@ -37,12 +37,9 @@ public class GameManager : Manager
 		AssetManager instance = AssetManager.Instance;
 		instance.Load();
 
-		//Character gunwoman = instance.PlayableCharacters.LoadAsset<Character>("Gunwoman");
-		//Character mage = instance.PlayableCharacters.LoadAsset<Character>("Mage");
-		//Character knight = instance.PlayableCharacters.LoadAsset<Character>("Knight");
-		Character gunwoman = instance.LoadBundle<Character>("characters/playable characters", "Gunwoman");
-		Character mage = instance.LoadBundle<Character>("characters/playable characters", "Mage");
-		Character knight = instance.LoadBundle<Character>("characters/playable characters", "Knight");
+		Character gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
+		Character mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");
+		Character knight = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Knight");
 
 		instance.Savestate.CurrentTeam = new Entity[] { new Entity(knight), new Entity(mage), new Entity(gunwoman) };
 		instance.Savestate.Gold = 0;
@@ -50,6 +47,26 @@ public class GameManager : Manager
 		instance.Savestate.OwnedCharacters = new List<Entity>(instance.Savestate.CurrentTeam);
 	}
 	#endregion
+
+	private MusicManager musicManager;
+
+	public GameManager()
+	{
+		try { musicManager = AssetManager.Instance.GetManager<MusicManager>(); }
+		catch
+		{
+			var go = Object.Instantiate
+				(AssetManager.Instance.LoadBundle<VitalPrefabs>
+					(AssetManager.Instance.Paths.VitalPrefabsPath, "Vital Prefabs").MusicManagerAnchor);
+
+			musicManager = AssetManager.Instance.GetManager<MusicManager>();
+		}
+	}
+
+	public void LoadAreaAsync(AreaData areaToLoad)
+	{
+		SceneManager.LoadSceneAsync(areaToLoad.Scene, LoadSceneMode.Single);
+	}
 
 	public void ExitGame()
 	{

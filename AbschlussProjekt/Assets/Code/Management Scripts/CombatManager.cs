@@ -54,8 +54,8 @@ public class CombatManager : Manager
 	{
 		this.combatPanel = combatPanel;
 		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
-
-		settings = AssetManager.Instance.Settings.LoadAsset<CombatManagerSettings>("Combat Manager Settings");
+		
+		settings = AssetManager.Instance.LoadBundle<CombatManagerSettings>(AssetManager.Instance.Paths.SettingsPath, "Combat Manager Settings");
 		clickableLayers = settings.clickableLayers;
 	}
 
