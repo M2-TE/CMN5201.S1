@@ -624,9 +624,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToMove: {fileID: 332062336}
-  distanceToTravel: 5
-  timeToTravel: 5
-  direction: 3
+  distanceToTravel: 2.5
+  timeToTravel: 2
+  direction: 1
 --- !u!61 &332062340
 BoxCollider2D:
   m_ObjectHideFlags: 0

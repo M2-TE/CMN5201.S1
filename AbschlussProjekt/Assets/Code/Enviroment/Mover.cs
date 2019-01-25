@@ -21,14 +21,34 @@ public class Mover : MonoBehaviour {
     private float currentTravelTime;
 	// Use this for initialization
 	void Start () {
-        if(direction == directions.Left)
-            MoveDirection = Vector3.left;
-        if (direction == directions.Right)
-            MoveDirection = Vector3.right;
-        if (direction == directions.Up)
-            MoveDirection = Vector3.up;
-        if (direction == directions.Down)
-            MoveDirection = Vector3.down;
+
+
+        switch (direction)
+        {
+
+            case directions.Left:
+                 MoveDirection = Vector3.left;
+                 break;
+            case directions.Right:
+                MoveDirection = Vector3.right;
+                break;
+            case directions.Up:
+                MoveDirection = Vector3.up;
+                break;
+            case directions.Down:
+                MoveDirection = Vector3.down;
+                break;
+
+
+
+        }
+           
+
+
+
+
+
+       
 
        
         startPosition = ObjectToMove.transform.position;
@@ -40,21 +60,29 @@ public class Mover : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
-        if ( forward)
+
+        MoveObject();
+
+
+    }
+
+    private void MoveObject()
+    {
+
+        if (forward)
         {
-            
+
             currentTravelTime += Time.deltaTime;
-           
+
             Progress = currentTravelTime / timeToTravel;
             ObjectToMove.transform.position = Vector3.Lerp(startPosition, endPosition, Progress);
-            if(ObjectToMove.transform.position == endPosition)
+            if (ObjectToMove.transform.position == endPosition)
             {
                 currentTravelTime = 0;
                 Progress = 0;
                 forward = false;
             }
-            
+
         }
         if (forward == false)
         {
@@ -72,7 +100,6 @@ public class Mover : MonoBehaviour {
 
 
         }
-
 
     }
 
