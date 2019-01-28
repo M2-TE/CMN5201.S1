@@ -14,6 +14,7 @@ public class ItemEditor : Editor
     SerializedProperty currentlyStacked;
 
     #region Currently Not Used
+    /*
     // DataContainer
     SerializedProperty itemName;
     SerializedProperty itemIcon;
@@ -47,7 +48,7 @@ public class ItemEditor : Editor
     SerializedProperty maxRange;
     SerializedProperty surroundingAffectedUnits;
     SerializedProperty consumeEffects;
-
+    */
     #endregion
 
     #endregion
@@ -71,7 +72,7 @@ public class ItemEditor : Editor
     }
 
     #region Currently Not Used
-
+    /*
     private void VariableLinksDataContainer()
     {
         itemName = serializedObject.FindProperty("ItemName");
@@ -117,6 +118,7 @@ public class ItemEditor : Editor
         surroundingAffectedUnits = serializedObject.FindProperty("SurroundingAffectedUnits");
         consumeEffects = serializedObject.FindProperty("ConsumeEffects");
     }
+    */
     #endregion
 
     #endregion
@@ -152,6 +154,7 @@ public class ItemEditor : Editor
     }
 
     #region Currently Not Used
+    /*
     private void DataContainerHandling()
     {
         if (itemContainer != null)
@@ -173,6 +176,7 @@ public class ItemEditor : Editor
             EditorGUILayout.PropertyField(stackingLimit);
         }
     }
+    */
     #endregion
 
     #endregion

@@ -48,6 +48,6 @@ public class StorageSlot
 
     private Sprite LoadContentSprite()
     {
-        return ((ItemContainer)AssetManager.Instance.Items.LoadAsset(content)).ItemIcon;
+        return AssetManager.Instance.Items.LoadAsset<ItemContainer>(content).ItemIcon;
     }
 }
