@@ -41,7 +41,9 @@ public class AssetManager
 	public T GetManager<T>() where T : Manager
 	{
 		// return first match
-		return ActiveManagers.OfType<T>().ToArray()[0];
+		try { return ActiveManagers.OfType<T>().ToArray()[0]; }
+		catch { return null; }
+		
 	}
 
 	public void CreateNewSavestate()

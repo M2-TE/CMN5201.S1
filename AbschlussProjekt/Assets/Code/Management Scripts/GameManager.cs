@@ -48,21 +48,6 @@ public class GameManager : Manager
 	}
 	#endregion
 
-	private MusicManager musicManager;
-
-	public GameManager()
-	{
-		try { musicManager = AssetManager.Instance.GetManager<MusicManager>(); }
-		catch
-		{
-			var go = Object.Instantiate
-				(AssetManager.Instance.LoadBundle<VitalPrefabs>
-					(AssetManager.Instance.Paths.VitalPrefabsPath, "Vital Prefabs").MusicManagerAnchor);
-
-			musicManager = AssetManager.Instance.GetManager<MusicManager>();
-		}
-	}
-
 	public void LoadAreaAsync(AreaData areaToLoad)
 	{
 		SceneManager.LoadSceneAsync(areaToLoad.Scene, LoadSceneMode.Single);

@@ -88,7 +88,8 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 	
 	private void Awake()
 	{
-		combatManager = new CombatManager(this);
+		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
+		combatManager.RegisterCombatPanel(this);
 		combatActive = false;
 	}
 

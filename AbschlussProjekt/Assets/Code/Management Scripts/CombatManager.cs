@@ -43,20 +43,24 @@ public class CombatManager : Manager
 		}
 	}
 
-	private readonly EventSystem eventSystem;
+	private EventSystem eventSystem;
 	private CombatPanel combatPanel;
 	private CombatManagerSettings settings;
 	private LayerMask clickableLayers;
 	#endregion
 
 	#region Startup
-	public CombatManager(CombatPanel combatPanel)
+	public CombatManager()
+	{
+		settings = AssetManager.Instance.LoadBundle<CombatManagerSettings>(AssetManager.Instance.Paths.SettingsPath, "Combat Manager Settings");
+		clickableLayers = settings.clickableLayers;
+	}
+
+	public void RegisterCombatPanel(CombatPanel combatPanel)
 	{
 		this.combatPanel = combatPanel;
 		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
-		
-		settings = AssetManager.Instance.LoadBundle<CombatManagerSettings>(AssetManager.Instance.Paths.SettingsPath, "Combat Manager Settings");
-		clickableLayers = settings.clickableLayers;
+
 	}
 
 	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)

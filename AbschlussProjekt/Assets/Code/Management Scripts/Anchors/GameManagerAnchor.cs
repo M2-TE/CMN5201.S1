@@ -3,11 +3,10 @@
 public class GameManagerAnchor : MonoBehaviour 
 {
 	private GameManager gameManager;
-
-	private void Awake()
+	
+	private void Start()
 	{
-		try { gameManager = AssetManager.Instance.GetManager<GameManager>(); }
-		catch { gameManager = new GameManager(); }
+		gameManager = AssetManager.Instance.GetManager<GameManager>() ?? new GameManager();
 	}
 
 	private void OnApplicationQuit()
