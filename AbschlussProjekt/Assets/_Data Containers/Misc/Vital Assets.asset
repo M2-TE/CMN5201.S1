@@ -4,12 +4,14 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e8684cf2ed6e864a826171a16747fc3, type: 3}
-  m_Name: Vital Prefabs
+  m_Name: Vital Assets
   m_EditorClassIdentifier: 
-  MusicManagerAnchor: {fileID: 1737164410263536, guid: 11145ee3eabf60b48bac494e80ee0e20,
-    type: 2}
+  MusicManagerAnchor: {fileID: 0}
+  InputMaster:
+    m_Asset: {fileID: 11400000, guid: 29e319258b4ca4548bb788e67abb9263, type: 3}

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4147289346
+CRC: 3928107122
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b4c419f8c95f4ca5012e31ca40cfb9e4
+    Hash: bad7197ec893b684320037db06e41175
   TypeTreeHash:
     serializedVersion: 2
     Hash: a146d9e84d85ac365db989f4b407d2da
@@ -14,5 +14,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/_Data Containers/Areas/Starter City.asset
+- Assets/_Data Containers/Areas/Main Menu.asset
 Dependencies: []

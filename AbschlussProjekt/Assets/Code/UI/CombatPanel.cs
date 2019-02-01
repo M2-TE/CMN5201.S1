@@ -75,13 +75,13 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 		}
 	}
 
-	private bool m_combatActive;
-	public bool combatActive
+	private bool combatActive;
+	public bool CombatActive
 	{
-		get { return m_combatActive; }
+		get { return combatActive; }
 		set
 		{
-			m_combatActive = value;
+			combatActive = value;
 			gameObject.SetActive(value);
 		}
 	}
@@ -90,17 +90,17 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 	{
 		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
 		combatManager.RegisterCombatPanel(this);
-		combatActive = false;
+		CombatActive = false;
 	}
 
 	private void Update()
 	{
-		if(combatActive) combatManager.UpdateCombatManager();
+		if(CombatActive) combatManager.UpdateCombatManager();
 	}
 
 	public void OnSkillSelect(int skillID)
 	{
 		//Debug.Log(skillID);
-		if (combatActive) combatManager.OnSkillSelect(skillID);
+		if (CombatActive) combatManager.OnSkillSelect(skillID);
 	}
 }

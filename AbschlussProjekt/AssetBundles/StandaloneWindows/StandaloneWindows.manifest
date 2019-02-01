@@ -1,18 +1,18 @@
 ManifestFileVersion: 0
-CRC: 3801641897
+CRC: 1699852625
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: settings
+      Name: items
       Dependencies: {}
     Info_1:
-      Name: characters/[dungeonname] entities/playable
+      Name: settings
       Dependencies: {}
     Info_2:
-      Name: characters/[dungeonname] entities/unplayable
+      Name: characters/[dungeonname] entities/playable
       Dependencies: {}
     Info_3:
-      Name: items
+      Name: characters/[dungeonname] entities/unplayable
       Dependencies: {}
     Info_4:
       Name: characters/playable characters
@@ -24,5 +24,8 @@ AssetBundleManifest:
       Name: paths
       Dependencies: {}
     Info_7:
-      Name: vital prefabs
+      Name: vital assets
+      Dependencies: {}
+    Info_8:
+      Name: areas/main menu
       Dependencies: {}

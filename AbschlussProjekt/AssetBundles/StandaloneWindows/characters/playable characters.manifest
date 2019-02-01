@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1360905691
+CRC: 2821453393
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4597ebd14b5ea2d95820d7e3bfb505d6
+    Hash: f024da0ebb5d12c82b08405f20d9151d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 716511119b7b6dc816c863545483de7b
+    Hash: dab64c0ded77babde00558238acd6066
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -72,6 +72,12 @@ ClassTypes:
 - Class: 223
   Script: {instanceID: 0}
 - Class: 224
+  Script: {instanceID: 0}
+- Class: 241
+  Script: {instanceID: 0}
+- Class: 243
+  Script: {instanceID: 0}
+- Class: 245
   Script: {instanceID: 0}
 Assets:
 - Assets/_Data Containers/Characters/Main Characters/Gunwoman/Gunwoman.asset

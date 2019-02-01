@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Z_Scenes/Final Scenes/Starter City.unity
     guid: 97328d16c5f95054d966d617cba9eea6
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: f18e0cd2178ed83468f57fc5ef2e2f00,
+      type: 2}

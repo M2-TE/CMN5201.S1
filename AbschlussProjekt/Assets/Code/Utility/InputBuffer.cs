@@ -8,7 +8,7 @@ namespace Utilities
 	{
 		private List<KeyCode> bufferedKeypresses; // float is remaining buffer duration
 		private MonoBehaviour monoBehaviour;
-		private float maxBufferDuration;
+		private readonly float maxBufferDuration;
 
 		public InputBuffer(MonoBehaviour monoBehaviour, float maxBufferDuration)
 		{

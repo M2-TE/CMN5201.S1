@@ -73,7 +73,7 @@ public class CombatManager : Manager
 			for (int y = 0; y < combatants.GetLength(1); y++)
 				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
 
-		combatPanel.combatActive = true;
+		combatPanel.CombatActive = true;
 		InitializeEntities();
 		InstantiateProxyPrefabs();
 		combatPanel.StartCoroutine(UpdateHealthBars());
@@ -746,7 +746,7 @@ public class CombatManager : Manager
 
 	private void EndCombatPhase(bool? playerWon)
 	{
-		combatPanel.combatActive = false;
+		combatPanel.CombatActive = false;
 
 		for (int x = 0; x < proxies.GetLength(0); x++)
 			for (int y = 0; y < proxies.GetLength(1); y++)

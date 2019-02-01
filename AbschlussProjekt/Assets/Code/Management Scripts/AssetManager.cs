@@ -38,12 +38,27 @@ public class AssetManager
 		return bundle.LoadAsset<AssetType>(assetName);
 	}
 
+	public void UnloadBundles(bool forceUnload = true)
+	{
+		foreach(AssetBundle bundle in loadedAssetBundles.Values)
+		{
+			bundle.Unload(forceUnload);
+		}
+		loadedAssetBundles.Clear();
+	}
+
 	public T GetManager<T>() where T : Manager
 	{
 		// return first match
 		try { return ActiveManagers.OfType<T>().ToArray()[0]; }
 		catch { return null; }
 		
+	}
+
+	public void PrintAllManagers()
+	{
+		for (int i = 0; i < ActiveManagers.Count; i++)
+			Debug.Log(ActiveManagers[i]);
 	}
 
 	public void CreateNewSavestate()

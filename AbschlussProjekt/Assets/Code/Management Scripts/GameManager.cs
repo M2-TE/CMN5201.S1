@@ -9,6 +9,32 @@ using Utilities;
 
 public class GameManager : Manager
 {
+	public AreaData CurrentArea { get; private set; }
+
+	public void LoadAreaAsync(AreaData areaToLoad)
+	{
+		//AssetManager.Instance.GetManager<InputManager>().RemoveAllListeners();
+		AssetManager.Instance.UnloadBundles();
+
+		CurrentArea = areaToLoad;
+		SceneManager.LoadSceneAsync(areaToLoad.Scene, areaToLoad.LoadSceneMode);
+	}
+
+	public void ExitGame()
+	{
+#if UNITY_EDITOR
+		EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+	}
+
+	public void OnApplicationQuit()
+	{
+		// stuff
+	}
+
+
 	#region Debug
 	public void StartCombatDebugging()
 	{
@@ -47,23 +73,4 @@ public class GameManager : Manager
 		instance.Savestate.OwnedCharacters = new List<Entity>(instance.Savestate.CurrentTeam);
 	}
 	#endregion
-
-	public void LoadAreaAsync(AreaData areaToLoad)
-	{
-		SceneManager.LoadSceneAsync(areaToLoad.Scene, LoadSceneMode.Single);
-	}
-
-	public void ExitGame()
-	{
-#if UNITY_EDITOR
-		EditorApplication.isPlaying = false;
-#else
-		Application.Quit();
-#endif
-	}
-
-	public void OnApplicationQuit()
-	{
-		// stuff
-	}
 }
