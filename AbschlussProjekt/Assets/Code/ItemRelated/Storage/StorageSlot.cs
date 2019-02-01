@@ -1,45 +1,60 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StorageSlot
 {
-    #region Fields & Properties
-    private int position;
-    private Item content;
 
-    public bool IsEmpty { get { return content == null; } }
-    public Item Content { get { return content; } set { content = value; } }
-    public int Position { get { return position; } }
-    public int Amount { get { return content ? content.currentlyStacked : 0 ; } }
-    #endregion
+    [SerializeField] private int position;
+    [SerializeField] private int amount;
+    [SerializeField] private string content;
+    [SerializeField] private UIElementHandler slot;
 
-    #region Constructor
-    public StorageSlot(int position) : this(position, null) { }
-    public StorageSlot(int position, Item content)
+    public int Amount
     {
-        this.position = position;
-        this.content = content;
+        get
+        {
+            return amount;
+        }
+        set
+        {
+            if(slot != null)
+            {
+                slot.Amount.enabled = value == 0 ? false : true;
+                slot.Amount.SetText(value.ToString());
+            }
+            amount = value;
+        }
     }
-    #endregion
-
-    #region SlotManagement
-    public Item RemoveContent()
+    public int Position { get { return position; } set { position = value; } }
+    public string Content
     {
-        return SwitchItems(null);
+        get
+        {
+            return content;
+        }
+        set
+        {
+            content = value;
+            if (slot != null)
+            {
+                slot.Icon.enabled = value == null ? false : true;
+                if(value != null)
+                    slot.Icon.sprite = LoadContentSprite();
+            }
+        }
+    }
+    public UIElementHandler Slot { get { return slot; } set { slot = value; slot.SetPositionInInventory(Position); } }
+
+    private Sprite LoadContentSprite()
+    {
+        return AssetManager.Instance.Items.LoadAsset<ItemContainer>(content).ItemIcon;
     }
 
-    public Item SwitchItems(Item item)
+    public void EmptySlot()
     {
-        Item temp = content;
-        content = item;
-        return content;
+        amount = 0;
+        Content = null;
     }
-
-    public StorageSlot ChangePosition(int position)
-    {
-        this.position = position;
-        return this;
-    }
-    #endregion
 }

@@ -3,49 +3,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Item : MonoBehaviour
 {
+    [SerializeField] public InventoryManager manager;
 
-    #region Fields
-    public int ID;
+    [SerializeField] private ItemContainer container;
+    [Range(2, 4)][SerializeField] private float itemSize = 3;
+    private int itemID;
 
-    public string Name;
+    [SerializeField] private int currentlyStacked;
+    public int CurrentlyStacked {  get { return currentlyStacked; } set { currentlyStacked = (value > Container.StackingLimit) || (value < 1) ? currentlyStacked : value; } }
+    public ItemContainer Container { get { return container; } set { container = value; Setup(); } }
 
-    public Sprite ItemIcon;
-    public string ItemDescription;
-
-    public int EncumbranceValue;
-    public int LevelRequirement;
-
-    public bool IsIndestructible;
-    public bool IsQuestItem;
-    public bool IsUnique;
-
-    public int StackingLimit;
-
-    public int currentlyStacked;
-
-    public int CurrentlyStacked {  get { return currentlyStacked; } set { currentlyStacked = (value > StackingLimit) || (value < 1) ? currentlyStacked : value; } }
-    #endregion
-
-    public Item(ItemContainer itemDataContainer)
+    public void OnEnable()
     {
-        ID = itemDataContainer.GetInstanceID();
+        Setup();
+        SetComponentValues();
+    }
 
-        Name = itemDataContainer.ItemName;
+    public  void Setup()
+    {
+        SetSprite();
+        SetID();
+        SetCorrectSize();
+        SetEditorName();
+        
+    }
 
-        Debug.Log("Item name: " + Name + "\nItem ID: "+ID);
+    private void SetSprite()
+    {
+        if(Container !=null)
+            GetComponent<SpriteRenderer>().sprite = Container.ItemIcon;
+    }
 
-        ItemIcon = itemDataContainer.ItemIcon;
-        ItemDescription = itemDataContainer.ItemDescription;
+    // Has no "real" purpose right now. But maybe we'll need it later :)
+    private void SetID()
+    {
+        itemID = GetInstanceID();
+    }
 
-        EncumbranceValue = itemDataContainer.EncumbranceValue;
-        LevelRequirement = itemDataContainer.LevelRequirement;
+    private void SetCorrectSize()
+    {
+        transform.localScale = Vector3.one * itemSize;
+    }
 
-        IsIndestructible = itemDataContainer.IsIndestructible;
-        IsQuestItem = itemDataContainer.IsQuestItem;
-        IsUnique = itemDataContainer.IsUnique;
+    private void SetEditorName()
+    {
+        if (Container != null)
+            name = Container.name + " ID[" + itemID + "]";
+    }
 
-        StackingLimit = itemDataContainer.StackingLimit;
+    private void SetComponentValues()
+    {
+        GetComponent<CircleCollider2D>().isTrigger = true;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        manager.PickUpItem(CurrentlyStacked, Container);
+        //GameObject.Destroy(gameObject);
     }
 }

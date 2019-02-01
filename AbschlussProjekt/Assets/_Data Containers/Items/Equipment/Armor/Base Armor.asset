@@ -11,14 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37f3bd81d586e6449285f51029dc5a5, type: 3}
   m_Name: Base Armor
   m_EditorClassIdentifier: 
-  ItemName: default Armor
-  ItemIcon: {fileID: 0}
-  ItemDescription: Item Description Missing
-  EncumbranceValue: 0
-  LevelRequirement: 0
+  ItemName: Base Armor
+  ItemIcon: {fileID: 21300000, guid: 45d062f8293c0254dbe4132fafb4a048, type: 3}
+  ItemDescription: A Coat. Yea, cool i know.
+  EncumbranceValue: 200
+  LevelRequirement: 1
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
-  StackingLimit: 1
+  StackingLimit: 0
   MatchingClasses: []
-  defenseBonus: 0
+  EquipmentType: 3
+  DefenseBonus: 0

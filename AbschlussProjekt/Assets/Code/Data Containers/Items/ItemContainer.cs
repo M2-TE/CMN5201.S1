@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class ItemContainer : DataContainer
 {
-    public string ItemName;
-    public Sprite ItemIcon;
-    [TextArea] public string ItemDescription = "Item Description Missing";
+    [SerializeField] public string ItemName;
+    [SerializeField] public Sprite ItemIcon;
+    [TextArea][SerializeField] public string ItemDescription = "Item Description Missing";
 
     [Space(20)]
     [Tooltip("The amout of money you get by selling this item")]
-    public int EncumbranceValue;
+    [SerializeField] public int EncumbranceValue;
     [Tooltip("The required level for using this item")]
-    public int LevelRequirement;
+    [SerializeField] public int LevelRequirement;
 
     [Space(10)]
     [Tooltip("Optional checkbox to prevent an item from being destroyed by the player")]
-    public bool IsIndestructible;
+    [SerializeField] public bool IsIndestructible;
     [Tooltip("Optional checkbox to indicate that this item belongs to a quest")]
-    public bool IsQuestItem;
+    [SerializeField] public bool IsQuestItem;
     [Tooltip("Optional checkbox to indicate that there should only be one of these items per game")]
-    public bool IsUnique;
+    [SerializeField] public bool IsUnique;
     [Space(10)]
     [Tooltip("Optional value to limit the maximum number of items per itemslot; equals 1 if unstackable")]
-    public int StackingLimit;
+    [SerializeField] public int StackingLimit;
+
+    public void OnEnable()
+    {
+        ItemName = name;
+    }
 
 }

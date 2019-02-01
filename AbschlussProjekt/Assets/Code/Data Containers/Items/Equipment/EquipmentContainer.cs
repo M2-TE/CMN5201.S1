@@ -3,5 +3,7 @@
 public abstract class EquipmentContainer : ItemContainer
 {
     [Space(20)]
-    public Character[] MatchingClasses;
+    [SerializeField] public Character[] MatchingClasses;
+
+    [SerializeField] public EquipmentSlot EquipmentType = 0;
 }

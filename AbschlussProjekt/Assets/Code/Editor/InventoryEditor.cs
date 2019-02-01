@@ -7,5 +7,8 @@ using UnityEditor;
 public class InventoryEditor : Editor
 {
 
-
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+    }
 }
