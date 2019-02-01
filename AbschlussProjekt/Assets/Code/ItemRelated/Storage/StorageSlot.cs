@@ -9,7 +9,7 @@ public class StorageSlot
     [SerializeField] private int position;
     [SerializeField] private int amount;
     [SerializeField] private string content;
-    [SerializeField] private SlotHolder slot;
+    [SerializeField] private UIElementHandler slot;
 
     public int Amount
     {
@@ -36,18 +36,25 @@ public class StorageSlot
         }
         set
         {
+            content = value;
             if (slot != null)
             {
                 slot.Icon.enabled = value == null ? false : true;
-                slot.Icon.sprite = LoadContentSprite();
+                if(value != null)
+                    slot.Icon.sprite = LoadContentSprite();
             }
-            content = value;
         }
     }
-    public SlotHolder Slot { get { return slot; } set { slot = value; } }
+    public UIElementHandler Slot { get { return slot; } set { slot = value; slot.SetPositionInInventory(Position); } }
 
     private Sprite LoadContentSprite()
     {
         return AssetManager.Instance.Items.LoadAsset<ItemContainer>(content).ItemIcon;
+    }
+
+    public void EmptySlot()
+    {
+        amount = 0;
+        Content = null;
     }
 }

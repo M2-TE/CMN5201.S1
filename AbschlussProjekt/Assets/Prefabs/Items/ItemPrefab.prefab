@@ -89,9 +89,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8df8edf656d7114a8103987ba771cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: {fileID: 0}
+  manager: {fileID: 0}
+  container: {fileID: 11400000, guid: a6ebb4f305f954640b01d22d68db11fc, type: 2}
   itemSize: 3
-  currentlyStacked: 0
+  currentlyStacked: 1
 --- !u!212 &212061958586481668
 SpriteRenderer:
   m_ObjectHideFlags: 1

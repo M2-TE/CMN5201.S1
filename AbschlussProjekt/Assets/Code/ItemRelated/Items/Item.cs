@@ -8,10 +8,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Item : MonoBehaviour
 {
-    [SerializeField] public Inventory inventory;
+    [SerializeField] public InventoryManager manager;
 
     [SerializeField] private ItemContainer container;
-    [Range(2, 4)][SerializeField]private float itemSize = 3;
+    [Range(2, 4)][SerializeField] private float itemSize = 3;
     private int itemID;
 
     [SerializeField] private int currentlyStacked;
@@ -64,6 +64,7 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        inventory.AddItemToInventory(CurrentlyStacked, Container);
+        manager.PickUpItem(CurrentlyStacked, Container);
+        //GameObject.Destroy(gameObject);
     }
 }

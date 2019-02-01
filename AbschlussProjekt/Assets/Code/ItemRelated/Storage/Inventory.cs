@@ -26,19 +26,47 @@ public class Inventory : MonoBehaviour
             InventoryContainer.StorageSlots.Add(new StorageSlot
             {
                 Position = slot,
-                Slot = GameObject.Instantiate(SlotPrefab, transform).GetComponent<SlotHolder>()
+                Slot = GameObject.Instantiate(SlotPrefab, transform).GetComponent<UIElementHandler>()
             });
         }
     }
 
     public bool AddItemToInventory(int stackAmount, ItemContainer container)
     {
-        if(stackAmount > 0 && container != null)
+        if (stackAmount > 0 && container != null)
         {
-            InventoryContainer.StorageSlots[0].Amount = stackAmount;
-            InventoryContainer.StorageSlots[0].Content = container.ItemName;
-            return true;
+            for (int position = 0; position < InventoryContainer.StorageSlots.Count ; position++)
+            {
+                StorageSlot tempSlot = InventoryContainer.StorageSlots[position];
+                if (container.ItemName.Equals(tempSlot.Content) && container.StackingLimit >= (stackAmount + tempSlot.Amount))
+                {
+                    tempSlot.Amount += stackAmount;
+                    return true;
+                }
+                else if(InventoryContainer.StorageSlots[position].Amount == 0)
+                {
+                    tempSlot.Amount = stackAmount;
+                    tempSlot.Content = container.ItemName;
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    public bool EquipItem(int position)
+    {
+        StorageSlot tempSlot = InventoryContainer.StorageSlots[position];
+        if (tempSlot.Amount != 0)
+        {
+            LoadItemContainer(InventoryContainer.StorageSlots[position].Content);
+            // If Equippable Equip dat shit :)
+        }
+        return false;
+    }
+
+    private ItemContainer LoadItemContainer(string name)
+    {
+        return AssetManager.Instance.Items.LoadAsset<ItemContainer>(name);
     }
 }

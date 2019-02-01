@@ -5,53 +5,23 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField] private InventoryPanel inventoryPanel;
+    [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private Inventory inventory;
 
-    private LayerMask clickableLayers;
-    private bool InventoryOpen { get{ return inventoryPanel.gameObject.activeSelf; } }
+    private bool InventoryOpen { get{ return inventoryPanel.activeSelf; } }
 
-    private void Start()
+    // Make sure the Inventory is Closed at the start of a Scene
+    private void OnEnable()
     {
-        clickableLayers = AssetManager.Instance.Settings.LoadAsset<MiscSettings>("Misc Settings").clickableLayers;
+        {
+            inventoryPanel.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
     {
         CheckUserKeyInput();
-        if (InventoryOpen)
-        {
-            CheckUserHovering();
-        }
-
 	}
-
-    private void CheckUserHovering()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(AssetManager.Instance.MainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, clickableLayers);
-        if (hit.collider != null && hit.collider.GetComponent<HitBehaviour>() != null)
-        {
-            if (!CheckUserMouseInput(hit))
-            {
-                hit.collider.GetComponent<HitBehaviour>().UserInputHit(HitType.HOVER, this);
-            }
-        }
-    }
-
-    private bool CheckUserMouseInput(RaycastHit2D hit)
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            hit.collider.GetComponent<HitBehaviour>().UserInputHit(HitType.LEFTCLICK, this);
-            return true;
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            hit.collider.GetComponent<HitBehaviour>().UserInputHit(HitType.RIGHTCLICK, this);
-            return true;
-        }
-        return false;
-    }
 
     private void CheckUserKeyInput()
     {
@@ -61,28 +31,45 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void EquipItem(StorageSlot inventoryItem)
+    public void PickUpItem(int amount,ItemContainer container)
     {
+        Debug.Log("Pick Up Item");
+        inventory.AddItemToInventory(amount, container);
+    }
 
+    public void EquipItem(int position)
+    {
+        Debug.Log("Equip Item");
+        if (inventory.EquipItem(position))
+        {
+            Debug.Log("Equiping was a success");
+        }
+        else
+            Debug.Log("FAIL");
     }
 
     public void UnEquipItem(EquipmentSlot equipmentSlot)
     {
-
+        Debug.Log("UnEquip Item");
     }
 
-    public void ConsumeItem(StorageSlot inventoryItem)
+    public void ConsumeItem(int position)
     {
-
+        Debug.Log("Consume Item");
     }
 
-    public void DisplayOptions(HitActionType type)
+    public void DropItem(int position)
     {
-
+        Debug.Log("Drop Item");
     }
 
-    public void DisplayInformation()
+    public void DisplayInformation(bool display)
     {
+        Debug.Log("Display Information");
+    }
 
+    public ItemContainer LoadItemContainer(string name)
+    {
+        return AssetManager.Instance.Items.LoadAsset<ItemContainer>(name);
     }
 }

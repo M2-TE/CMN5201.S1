@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224203921659437134}
   - component: {fileID: 222705801120413598}
   - component: {fileID: 114146019120899908}
-  - component: {fileID: 114988226378596462}
+  - component: {fileID: 114375615770625206}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -206,6 +206,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114375615770625206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043009439146430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  primaryActionType: 0
+  storageType: 0
+  Icon: {fileID: 114946980666042980}
+  Amount: {fileID: 114010002569123140}
 --- !u!114 &114946980666042980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,19 +249,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114988226378596462
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1043009439146430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f7829285da81740b5bfecd8e8872a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Icon: {fileID: 114946980666042980}
-  Amount: {fileID: 114010002569123140}
 --- !u!222 &222088199733072126
 CanvasRenderer:
   m_ObjectHideFlags: 1

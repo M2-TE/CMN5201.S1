@@ -8,7 +8,7 @@ public class ItemEditor : Editor
 {
     #region Variables
     // Monobehaviour
-    SerializedProperty inventory;
+    SerializedProperty manager;
     SerializedProperty itemContainer;
     SerializedProperty itemSize;
     SerializedProperty currentlyStacked;
@@ -58,13 +58,12 @@ public class ItemEditor : Editor
     private void OnEnable()
     {
         VariableLinksMonoBehaviour();
-        //VariableLinksDataContainer();
     }
 
     private void VariableLinksMonoBehaviour()
     {
 
-        inventory = serializedObject.FindProperty("inventory");
+        manager = serializedObject.FindProperty("manager");
         itemContainer = serializedObject.FindProperty("container");
         itemSize = serializedObject.FindProperty("itemSize");
         currentlyStacked = serializedObject.FindProperty("currentlyStacked");
@@ -145,7 +144,7 @@ public class ItemEditor : Editor
 
     private void MonoBehaviourHandling()
     {
-        EditorGUILayout.PropertyField(inventory);
+        EditorGUILayout.PropertyField(manager);
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("MonoBehaviour", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(itemContainer);
