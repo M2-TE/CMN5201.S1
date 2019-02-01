@@ -10,6 +10,12 @@
                     "id": "20000a6b-58fc-42ab-a04e-61de20ae9435",
                     "expectedControlLayout": "Button",
                     "bindings": []
+                },
+                {
+                    "name": "InventoryOpen",
+                    "id": "9cdd348a-73b7-46cd-a0a2-1bdf5e0dfd67",
+                    "expectedControlLayout": "Button",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -20,6 +26,30 @@
                     "processors": "",
                     "groups": "",
                     "action": "Back",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/i",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryOpen",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InventoryOpen",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

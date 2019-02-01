@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1699852625
+CRC: 2448500025
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -19,7 +19,8 @@ AssetBundleManifest:
       Dependencies: {}
     Info_5:
       Name: areas/starter city
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: storage systems
     Info_6:
       Name: paths
       Dependencies: {}
@@ -28,4 +29,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_8:
       Name: areas/main menu
+      Dependencies: {}
+    Info_9:
+      Name: storage systems
       Dependencies: {}

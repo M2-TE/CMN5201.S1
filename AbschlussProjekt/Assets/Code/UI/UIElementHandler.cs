@@ -12,19 +12,22 @@ public enum EventActionType { NONE, DROP, CONSUME, EQUIP, UNEQUIP }
 
 public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler, IScrollHandler
 {
-    [SerializeField] private InventoryManager manager;
     [SerializeField] private EventActionType primaryEventType = 0;
     [SerializeField] private StoreType storeType = 0;
     [SerializeField] private EquipmentSlot equipmentSlot;
     [SerializeField] public Image Icon;
     [SerializeField] public TextMeshProUGUI Amount;
 
-    private int invPosition = -1;
+	private InventoryManager manager;
+	private int invPosition = -1;
 
-    public void OnSelect(BaseEventData eventData)
+	private void Start()
+	{
+		manager = AssetManager.Instance.GetManager<InventoryManager>();
+	}
+
+	public void OnSelect(BaseEventData eventData)
     {
-        if (manager == null)
-            GetInventoryManager();
         manager.DisplayInformation(true);
     }
 
@@ -67,7 +70,7 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
                 break;
             case EventActionType.NONE:
             default:
-                Debug.Log("Kapador used SPLASH. Nothing happens.");
+                Debug.Log("Karpador used SPLASH. Nothing happens.");
                 break;
         }
     }
@@ -90,13 +93,4 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
     {
         invPosition = position;
     }
-
-    private void GetInventoryManager()
-    {
-        //TODO change to Assetmanager method!!! VERY IMPORTANT
-
-        manager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
-    }
-
-    
 }

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1622949144
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8c5c1e0f5d4c98d22641e93991f1f482
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c78c8872074dbf84589677c7f456c5e1
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: b1580368292627b42946aa0132b715f9, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/StorageSystems/Inventory/Inventory.asset
+Dependencies: []

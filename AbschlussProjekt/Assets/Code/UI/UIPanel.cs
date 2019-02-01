@@ -8,12 +8,13 @@ public abstract class UIPanel : MonoBehaviour
 	[SerializeField] protected GameObject firstSelectedElement;
 	[SerializeField] protected GameObject visibilityToggleNode;
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		EventSystem = transform.parent.GetComponentInChildren<EventSystem>();
+		ToggleVisibility(false);
 	}
 	
-	protected void ToggleVisibility()
+	protected virtual void ToggleVisibility()
 	{
 		ToggleVisibility(!visibilityToggleNode.activeInHierarchy);
 	}

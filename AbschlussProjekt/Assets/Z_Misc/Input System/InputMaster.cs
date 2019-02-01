@@ -21,12 +21,14 @@ public class InputMaster : InputActionAssetReference
         // UI
         m_UI = asset.GetActionMap("UI");
         m_UI_Back = m_UI.GetAction("Back");
+        m_UI_InventoryOpen = m_UI.GetAction("InventoryOpen");
         m_Initialized = true;
     }
     private void Uninitialize()
     {
         m_UI = null;
         m_UI_Back = null;
+        m_UI_InventoryOpen = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
@@ -42,11 +44,13 @@ public class InputMaster : InputActionAssetReference
     // UI
     private InputActionMap m_UI;
     private InputAction m_UI_Back;
+    private InputAction m_UI_InventoryOpen;
     public struct UIActions
     {
         private InputMaster m_Wrapper;
         public UIActions(InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Back { get { return m_Wrapper.m_UI_Back; } }
+        public InputAction @InventoryOpen { get { return m_Wrapper.m_UI_InventoryOpen; } }
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }

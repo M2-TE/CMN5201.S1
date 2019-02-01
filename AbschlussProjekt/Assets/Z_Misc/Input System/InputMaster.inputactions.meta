@@ -4,6 +4,7 @@ ScriptedImporter:
   fileIDToRecycleName:
     11400000: <root>
     11400002: UI/Back
+    11400004: UI/InventoryOpen
   externalObjects: {}
   userData: 
   assetBundleName: 
