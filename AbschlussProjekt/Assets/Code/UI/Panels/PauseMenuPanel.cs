@@ -4,17 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Input;
 
-public class PauseMenuPanel : MonoBehaviour
+public class PauseMenuPanel : UIPanel
 {
-	[SerializeField] private GameObject visiblePanel;
-	[SerializeField] private GameObject continueButton;
-
-	private EventSystem eventSystem;
-
 	private void Start()
 	{
-		eventSystem = GetComponentInChildren<EventSystem>();
-		visiblePanel.SetActive(false);
+		ToggleVisibility(false);
 
 		InputManager inputManager = AssetManager.Instance.GetManager<InputManager>();
 		void callback(InputAction.CallbackContext ctx) => HandleEscPress();
@@ -28,16 +22,16 @@ public class PauseMenuPanel : MonoBehaviour
 
 	public void HandleEscPress()
 	{
-		visiblePanel.SetActive(!visiblePanel.activeInHierarchy);
-		Time.timeScale = (visiblePanel.activeInHierarchy) ? 0f : 1f;
-
-		if(visiblePanel.activeInHierarchy)
-		{
-			eventSystem.SetSelectedGameObject(null);
-			eventSystem.SetSelectedGameObject(continueButton);
-		}
+		ToggleVisibility();
 	}
 
+	protected override void ToggleVisibility(bool visibleState)
+	{
+		Time.timeScale = (visibleState) ? 0f : 1f;
+		base.ToggleVisibility(visibleState);
+	}
+
+	#region Buttons
 	public void OnContinuePress()
 	{
 		HandleEscPress();
@@ -58,4 +52,5 @@ public class PauseMenuPanel : MonoBehaviour
 	{
 		AssetManager.Instance.GetManager<GameManager>().ExitGame();
 	}
+	#endregion
 }

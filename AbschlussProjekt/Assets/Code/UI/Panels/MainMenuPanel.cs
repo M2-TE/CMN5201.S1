@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MainMenuPanel : MonoBehaviour, IUIPanel
+public class MainMenuPanel : UIPanel
 {
 	public void OnContinuePress()
 	{
@@ -12,6 +12,7 @@ public class MainMenuPanel : MonoBehaviour, IUIPanel
 	public void OnNewGamePress()
 	{
 		AssetManager.Instance.CreateNewSavestate();
+		OnContinuePress();
 	}
 
 	public void OnExitPress()

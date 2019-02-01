@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CombatPanel : MonoBehaviour, IUIPanel
+public class CombatPanel : UIPanel
 {
+	#region Variables
 	public Camera mainCam;
 	private CombatManager combatManager;
 
@@ -22,15 +23,6 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 
 	public Image EntityInspectionPortrait;
 	public CombatEffectPool EntityInspectionEffectPool;
-
-	private EventSystem eventSystem;
-	public EventSystem EventSystem
-	{
-		get
-		{
-			return eventSystem ?? (eventSystem = transform.parent.GetComponentInChildren<EventSystem>());
-		}
-	}
 
 	[Header("Team Portraits")]
 	[SerializeField] private Image[] playerTeamPortraits;
@@ -85,7 +77,8 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 			gameObject.SetActive(value);
 		}
 	}
-	
+	#endregion
+
 	private void Awake()
 	{
 		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
@@ -100,7 +93,6 @@ public class CombatPanel : MonoBehaviour, IUIPanel
 
 	public void OnSkillSelect(int skillID)
 	{
-		//Debug.Log(skillID);
 		if (CombatActive) combatManager.OnSkillSelect(skillID);
 	}
 }
