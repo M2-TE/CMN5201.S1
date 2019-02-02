@@ -19,12 +19,18 @@ public class StorageSlot
         }
         set
         {
+            amount = value;
             if(slot != null)
             {
-                slot.Amount.enabled = value == 0 ? false : true;
+                if (value == 0)
+                {
+                    slot.Amount.enabled = false;
+                    Content = null;
+                }
+                else
+                    slot.Amount.enabled = true;
                 slot.Amount.SetText(value.ToString());
             }
-            amount = value;
         }
     }
     public int Position { get { return position; } set { position = value; } }
@@ -39,6 +45,7 @@ public class StorageSlot
             content = value;
             if (slot != null)
             {
+                slot.itemName = value;
                 slot.Icon.enabled = value == null ? false : true;
                 if(value != null)
                     slot.Icon.sprite = LoadContentSprite();
@@ -54,7 +61,6 @@ public class StorageSlot
 
     public void EmptySlot()
     {
-        amount = 0;
-        Content = null;
+        Amount = 0;
     }
 }

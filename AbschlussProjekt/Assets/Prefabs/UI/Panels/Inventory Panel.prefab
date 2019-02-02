@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 222894993562268968}
   - component: {fileID: 114163784681606150}
   - component: {fileID: 114549791303046650}
-  - component: {fileID: 114557909295834690}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -100,21 +99,6 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &114557909295834690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001157189242220}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b462036a5233ff4a815009ae27dfdda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currency: 200
-  InventoryContainer: {fileID: 11400000, guid: 9adb2cf26a6c8994ca422551ff37afe0, type: 2}
-  SlotPrefab: {fileID: 1043009439146430, guid: 9fd8fa9bc17654d4bb134acbc5d2a029, type: 3}
 --- !u!1 &1020560068868556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,11 +1534,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 8
+  emptySprite: {fileID: 21300000, guid: 6b5c5d94fdc9c99409c62fed626fd673, type: 3}
   Icon: {fileID: 114679949019417972}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1226868655703586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,11 +1628,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 0
+  emptySprite: {fileID: 21300000, guid: e8f48136b002e674d81ae86b387a9075, type: 3}
   Icon: {fileID: 114839143897846248}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1227251251990680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,11 +2001,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 1
+  emptySprite: {fileID: 21300000, guid: bd4ab50a8cc1c564e8792ea673e33006, type: 3}
   Icon: {fileID: 114029562854872650}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1320509424039090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2340,11 +2330,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 6
+  emptySprite: {fileID: 21300000, guid: 9e475128d1e5320408a900fdf1d53db3, type: 3}
   Icon: {fileID: 114037774823944922}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1352064396513246
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,7 +3852,7 @@ GameObject:
   - component: {fileID: 114002737118342834}
   - component: {fileID: 599996194}
   m_Layer: 5
-  m_Name: CharacterInfo
+  m_Name: Inventory Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3937,6 +3929,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstSelectedElement: {fileID: 0}
   visibilityToggleNode: {fileID: 6094356972241838910}
+  currency: 0
+  inventoryContainer: {fileID: 11400000, guid: 9adb2cf26a6c8994ca422551ff37afe0, type: 2}
+  slotPrefab: {fileID: 1043009439146430, guid: 9fd8fa9bc17654d4bb134acbc5d2a029, type: 3}
+  inventorySlotParent: {fileID: 1001157189242220}
 --- !u!1 &1654651144569696
 GameObject:
   m_ObjectHideFlags: 0
@@ -4571,11 +4567,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 9
+  emptySprite: {fileID: 21300000, guid: 68d43a3b7fd45c144b378e75cd81ffb1, type: 3}
   Icon: {fileID: 114107032110379520}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1739242181195338
 GameObject:
   m_ObjectHideFlags: 0
@@ -5062,11 +5060,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 4
+  emptySprite: {fileID: 21300000, guid: 0324ea4b06836c14ab37ccc5b64daf1c, type: 3}
   Icon: {fileID: 114978210286455180}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1789498373852430
 GameObject:
   m_ObjectHideFlags: 0
@@ -5154,11 +5154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 7
+  emptySprite: {fileID: 21300000, guid: 6b5c5d94fdc9c99409c62fed626fd673, type: 3}
   Icon: {fileID: 114649450456559490}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1790993556201132
 GameObject:
   m_ObjectHideFlags: 0
@@ -5320,11 +5322,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 2
+  emptySprite: {fileID: 21300000, guid: e7e79aa0e0cee8f428c7c7d215666c0e, type: 3}
   Icon: {fileID: 114898894155819412}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1852381899562006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,11 +5651,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 5
+  emptySprite: {fileID: 21300000, guid: 6cd52e8ec1549744fa0045cd0a948298, type: 3}
   Icon: {fileID: 114770944589875086}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &1893781965403114
 GameObject:
   m_ObjectHideFlags: 0
@@ -6350,11 +6356,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a1a3efe7f7dc5458c36a4df0b785e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryEventType: 0
-  storeType: 0
+  primaryEventType: 4
+  storeType: 1
   equipmentSlot: 3
+  emptySprite: {fileID: 21300000, guid: 9f36444ef4ad1a64da37301c1540a8b3, type: 3}
   Icon: {fileID: 114028395115193528}
   Amount: {fileID: 0}
+  itemName: 
 --- !u!1 &6094356972241838910
 GameObject:
   m_ObjectHideFlags: 0

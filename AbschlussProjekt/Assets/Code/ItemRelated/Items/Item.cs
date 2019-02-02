@@ -8,7 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Item : MonoBehaviour
 {
-    [SerializeField] public InventoryManager manager;
+
+    [SerializeField] private InventoryManager inventoryManager;
 
     [SerializeField] private ItemContainer container;
     [Range(2, 4)][SerializeField] private float itemSize = 3;
@@ -18,8 +19,9 @@ public class Item : MonoBehaviour
     public int CurrentlyStacked {  get { return currentlyStacked; } set { currentlyStacked = (value > Container.StackingLimit) || (value < 1) ? currentlyStacked : value; } }
     public ItemContainer Container { get { return container; } set { container = value; Setup(); } }
 
-    public void OnEnable()
+    public void Start()
     {
+        inventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
         Setup();
         SetComponentValues();
     }
@@ -30,7 +32,6 @@ public class Item : MonoBehaviour
         SetID();
         SetCorrectSize();
         SetEditorName();
-        
     }
 
     private void SetSprite()
@@ -64,7 +65,7 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        manager.PickUpItem(CurrentlyStacked, Container);
+        inventoryManager.PickUpItem(CurrentlyStacked, Container);
         //GameObject.Destroy(gameObject);
     }
 }

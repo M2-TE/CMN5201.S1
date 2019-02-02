@@ -33,4 +33,9 @@ public class MiscContainer : ItemContainer
 
     [Space(20)]
     [SerializeField] public ConsumeEffect[] ConsumeEffects;
+
+    public override ItemType GetItemType()
+    {
+        return ItemType.MISC;
+    }
 }

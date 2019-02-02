@@ -10,30 +10,42 @@ public enum StoreType { SIMPLE, EQUIPED }
 //Always have Unequip as the last Action Type since it can only be called on already equiped items unlike the others.
 public enum EventActionType { NONE, DROP, CONSUME, EQUIP, UNEQUIP } 
 
-public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler, IScrollHandler
+public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler ,IScrollHandler
 {
     [SerializeField] private EventActionType primaryEventType = 0;
     [SerializeField] private StoreType storeType = 0;
     [SerializeField] private EquipmentSlot equipmentSlot;
+    [SerializeField] private Sprite emptySprite;
     [SerializeField] public Image Icon;
     [SerializeField] public TextMeshProUGUI Amount;
 
-	private InventoryManager manager;
+	private InventoryManager inventoryManager;
 	private int invPosition = -1;
 
-	private void Start()
+    public string itemName;
+
+    private void Start()
 	{
-		manager = AssetManager.Instance.GetManager<InventoryManager>();
+		inventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
+        if (Icon == null)
+            GetComponent<Image>();
+        if (storeType.Equals(StoreType.EQUIPED))
+            ConnectToInventoryPanel();
 	}
+    
+    public void ConnectToInventoryPanel()
+    {
+        AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.AddHandlerToInventory(equipmentSlot, this);
+    }
 
 	public void OnSelect(BaseEventData eventData)
     {
-        manager.DisplayInformation(true);
+        inventoryManager.DisplayInformation(true);
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        manager.DisplayInformation(false);
+        inventoryManager.DisplayInformation(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -56,21 +68,21 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
         switch (primaryEventType)
         {
             case EventActionType.DROP:
-                manager.DropItem(invPosition);
+                inventoryManager.DropItem(invPosition);
                 break;
             case EventActionType.CONSUME:
-                manager.ConsumeItem(invPosition);
+                inventoryManager.ConsumeItem(invPosition);
                 break;
             case EventActionType.UNEQUIP:
                 if (storeType.Equals(StoreType.EQUIPED))
-                    manager.UnEquipItem(equipmentSlot);
+                    inventoryManager.UnequipItem(equipmentSlot);
                 break;
             case EventActionType.EQUIP:
-                manager.EquipItem(invPosition);
+                inventoryManager.EquipItem(invPosition);
                 break;
             case EventActionType.NONE:
             default:
-                Debug.Log("Karpador used SPLASH. Nothing happens.");
+                Debug.Log("Magicarp used SPLASH. Nothing happens.");
                 break;
         }
     }
@@ -92,5 +104,11 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
     public void SetPositionInInventory(int position)
     {
         invPosition = position;
+    }
+
+    public void SetEmptySprite()
+    {
+        Icon.sprite = emptySprite;
+        itemName = null;
     }
 }

@@ -3,7 +3,7 @@ CRC: 4147289346
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 25a718f1680e170650753c10306442dd
+    Hash: 6044d0d3566c95f08fcfbf0d225e7a1a
   TypeTreeHash:
     serializedVersion: 2
     Hash: a146d9e84d85ac365db989f4b407d2da
@@ -16,5 +16,5 @@ ClassTypes:
 Assets:
 - Assets/_Data Containers/Areas/Starter City.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/storage
+- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/storage
   systems
