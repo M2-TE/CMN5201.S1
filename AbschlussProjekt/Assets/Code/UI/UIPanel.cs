@@ -13,12 +13,12 @@ public abstract class UIPanel : MonoBehaviour
 		EventSystem = transform.parent.GetComponentInChildren<EventSystem>();
 		ToggleVisibility(false);
 	}
-	
-	protected virtual void ToggleVisibility()
+
+	public virtual void ToggleVisibility()
 	{
 		ToggleVisibility(!visibilityToggleNode.activeInHierarchy);
 	}
-	protected virtual void ToggleVisibility(bool visibleState)
+	public virtual void ToggleVisibility(bool visibleState)
 	{
 		visibilityToggleNode.SetActive(visibleState);
 

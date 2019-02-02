@@ -64,8 +64,13 @@ public class AssetManager
 	public void CreateNewSavestate()
 	{
 		Savestate = new Savestate();
-		Character gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
+		var gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
 		Savestate.CurrentTeam[0] = new Entity(gunwoman);
+
+		var knight = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Knight");
+		var mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");
+		Savestate.OwnedCharacters.Add(new Entity(knight));
+		Savestate.OwnedCharacters.Add(new Entity(mage));
 
 		Save();
 	}

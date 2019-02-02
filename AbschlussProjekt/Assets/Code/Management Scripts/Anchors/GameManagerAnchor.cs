@@ -11,7 +11,6 @@ public class GameManagerAnchor : MonoBehaviour
 	{
 		AssetManager instance = AssetManager.Instance;
 		gameManager = instance.GetManager<GameManager>() ?? new GameManager();
-		musicManager = instance.GetManager<MusicManager>() ?? new MusicManager(GetComponent<AudioSource>());
 
 		InputMaster inputMaster = instance.LoadBundle<VitalAssets>(instance.Paths.VitalAssetsPath, "Vital Assets").InputMaster;
 		inputManager = instance.GetManager<InputManager>() ?? new InputManager(inputMaster);

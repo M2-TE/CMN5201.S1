@@ -25,7 +25,7 @@ public class PauseMenuPanel : UIPanel
 		ToggleVisibility();
 	}
 
-	protected override void ToggleVisibility(bool visibleState)
+	public override void ToggleVisibility(bool visibleState)
 	{
 		Time.timeScale = (visibleState) ? 0f : 1f;
 		base.ToggleVisibility(visibleState);

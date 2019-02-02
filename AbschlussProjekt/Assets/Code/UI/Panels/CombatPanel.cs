@@ -79,8 +79,9 @@ public class CombatPanel : UIPanel
 	}
 	#endregion
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
 		combatManager.RegisterCombatPanel(this);
 		CombatActive = false;

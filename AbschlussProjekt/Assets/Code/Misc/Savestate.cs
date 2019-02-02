@@ -18,7 +18,6 @@ public class Savestate
 		set { currentLocation = value; m_currentLocation = value.name; }
 	}
 
-
 	public Savestate()
 	{
 		OwnedCharacters = new List<Entity>();

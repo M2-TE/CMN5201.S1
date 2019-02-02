@@ -2,6 +2,12 @@
 
 public class MainMenuPanel : UIPanel
 {
+
+	protected override void Awake()
+	{
+		base.Awake();
+		ToggleVisibility(true);
+	}
 	public void OnContinuePress()
 	{
 		AssetManager instance = AssetManager.Instance;

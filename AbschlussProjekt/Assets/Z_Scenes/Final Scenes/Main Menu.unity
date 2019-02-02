@@ -312,6 +312,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 569553726}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &877841994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1853057899763192, guid: 032546e874cc62049ae428a9ed19150d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1697109541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1697109541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -444,6 +450,11 @@ PrefabInstance:
       propertyPath: firstSelectedElement
       value: 
       objectReference: {fileID: 1697109542}
+    - target: {fileID: 114871007421815006, guid: 032546e874cc62049ae428a9ed19150d,
+        type: 3}
+      propertyPath: visibilityToggleNode
+      value: 
+      objectReference: {fileID: 877841994}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 032546e874cc62049ae428a9ed19150d, type: 3}
 --- !u!1 &1697109542 stripped
