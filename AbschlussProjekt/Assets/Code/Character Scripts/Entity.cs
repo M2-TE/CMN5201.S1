@@ -78,7 +78,7 @@ public class Entity
         get
         {
 			if (equippedWeapon != null) return equippedWeapon;
-			else if (equippedWeaponString != "") return equippedWeapon = amInstance.LoadBundle<WeaponContainer>(amInstance.Paths.EquipmentPath, equippedWeaponString);
+			else if (equippedWeaponString != "") return equippedWeapon = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedWeaponString);
 			else return null;
         }
         set
