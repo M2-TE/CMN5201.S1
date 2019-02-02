@@ -15,16 +15,4 @@ public class Inventory : StorageSystem
             return AssetManager.Instance.Savestate.CurrentTeam[CurrentSelectedEntityInt];
         }
     }
-
-    //public bool TryUnequipItem(EquipmentSlot type, out EquipmentContainer previousItem)
-    //{
-    //    previousItem = null;
-    //    if (equippedItems.ContainsKey(type) && equippedItems[type].itemName != null && equippedItems[type].itemName != "")
-    //    {
-    //        previousItem = (EquipmentContainer)(AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, equippedItems[type].itemName));
-    //        equippedItems[type].SetEmptySprite();
-    //        return true;
-    //    }
-    //    return false;
-    //}
 }

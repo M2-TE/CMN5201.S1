@@ -41,19 +41,24 @@ using UnityEngine;
 		{
 			Debug.Log("Item Equiped");
             UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity,slot);
-		}
+            inventoryPanel.itemInfoPanel.CloseItemInfo();
+        }
 		else
 			Debug.Log("Unable to Equip Item");
 	}
 
-	public void UnequipItem(EquipmentSlot equipmentSlot)
+	public void UnequipItem(EquipmentSlot slot)
 	{
 		Debug.Log("Unequip Item...");
-        if (inventoryPanel.UnequipItem(equipmentSlot))
+        if (inventoryPanel.UnequipItem(slot))
         {
             Debug.Log("Item Unequiped");
+            UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity, slot);
+            inventoryPanel.itemInfoPanel.CloseItemInfo();
         }
-	}
+        else
+            Debug.Log("Unable to Unequip Item");
+    }
 
 	public void ConsumeItem(int position)
 	{
@@ -61,6 +66,7 @@ using UnityEngine;
         if (inventoryPanel.RemoveSingleItemFromInventory(position, out ItemContainer container))
         {
             Debug.Log("Item Removed (not consumed -> Warning: there is no reference to any character stats yet... unfortunetly)");
+            inventoryPanel.itemInfoPanel.CloseItemInfo();
         }
     }
 
@@ -70,13 +76,27 @@ using UnityEngine;
         if(inventoryPanel.RemoveItemsFromInventory(position, out ItemContainer container, out int amount))
         {
             Debug.Log(amount +" Item(s) Removed (not dropped -> Warning: There is no parent to drop the item gameObject yet)");
+            inventoryPanel.itemInfoPanel.CloseItemInfo();
         }
 	}
 
-	public void DisplayInformation(bool display)
+	public void DisplayItemInformation(int position, bool display)
 	{
-
+        ItemContainer item = inventoryPanel.GetItemContainerAtPosition(position);
+        if (display && item != null)
+            inventoryPanel.itemInfoPanel.OpenItemInfo(item, ItemInfoType.STORAGE);
+        else
+            inventoryPanel.itemInfoPanel.CloseItemInfo();
 	}
+
+    public void DisplayItemInformation(EquipmentSlot slot, bool display)
+    {
+        ItemContainer item = inventoryPanel.InventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot);
+         if (display && item != null)
+            inventoryPanel.itemInfoPanel.OpenItemInfo(item, ItemInfoType.EQUIPPED);
+        else
+            inventoryPanel.itemInfoPanel.CloseItemInfo();
+    }
 
     public void OpenCharacterInformationDisplay(Entity character)
     {
@@ -111,8 +131,23 @@ using UnityEngine;
 
     }
 
+    public bool CheckForEquippedItemAtSlot(EquipmentSlot slot, out EquipmentContainer container)
+    {
+        container = null;
+        if (equippedItems.ContainsKey(slot))
+        {
+            container = (EquipmentContainer)LoadItemContainer(equippedItems[slot].itemName);
+            if (container != null)
+                return true;
+        }
+        return false;
+    }
+
 	public ItemContainer LoadItemContainer(string name)
 	{
-		return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
+        if (name != "" && name != null)
+            return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
+        else
+            return null;
 	}
 }

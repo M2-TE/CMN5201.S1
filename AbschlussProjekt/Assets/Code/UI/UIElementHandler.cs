@@ -40,12 +40,16 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
 
 	public void OnSelect(BaseEventData eventData)
     {
-        inventoryManager.DisplayInformation(true);
+        inventoryManager.InventoryPanel.itemInfoPanel.CurrentAction = primaryEventType;
+        if (invPosition >= 0)
+            inventoryManager.DisplayItemInformation(invPosition, true);
+        else
+            inventoryManager.DisplayItemInformation(equipmentSlot, true);
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        inventoryManager.DisplayInformation(false);
+        inventoryManager.DisplayItemInformation(invPosition, false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -99,6 +103,7 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
         {
             primaryEventType = (EventActionType)(Mathf.Min(Enum.GetNames(typeof(EventActionType)).Length-2, ((int)primaryEventType + 1)));
         }
+        inventoryManager.InventoryPanel.itemInfoPanel.CurrentAction = primaryEventType;
     }
 
     public void SetPositionInInventory(int position)

@@ -11,6 +11,7 @@ public class InventoryPanel : UIPanel
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
     [SerializeField] private GameObject itemPrefab;
+    [SerializeField] public ItemInfo itemInfoPanel;
 
     private InventoryManager inventoryManager;
 
@@ -24,6 +25,7 @@ public class InventoryPanel : UIPanel
         base.Awake();
         inventoryManager = AssetManager.Instance.GetManager<InventoryManager>() ?? new InventoryManager();
         inventoryManager.InventoryPanel = this;
+        itemInfoPanel.SetInventoryManager(inventoryManager);
     }
 
     private void Start()
@@ -123,6 +125,15 @@ public class InventoryPanel : UIPanel
             inventoryContainer.CurrentSelectedEntity.SetEquippedItem(slot, null);
         }
         return false;
+    }
+
+    public ItemContainer GetItemContainerAtPosition(int position)
+    {
+        StorageSlot tempSlot = inventoryContainer.StorageSlots[position];
+        if (tempSlot.Amount != 0)
+            return LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
+        else
+            return null;
     }
 
     private ItemContainer LoadItemContainer(string name)
