@@ -1,49 +1,72 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class InventoryManager : Manager
+[Serializable] public class InventoryManager : Manager
 {
-	private InventoryPanel panel;
+    private InventoryPanel inventoryPanel;
 
-	public void RegisterPanel(InventoryPanel invPanel)
-	{
-		panel = invPanel;
-	}
+    public InventoryPanel InventoryPanel
+    {
+        get
+        {
+            return inventoryPanel;
+        }
+        set
+        {
+            inventoryPanel = value;
+        }
+    }
 
 	public void PickUpItem(int amount, ItemContainer container)
 	{
-		Debug.Log("Pick Up Item");
-		panel.AddItemToInventory(amount, container);
+		Debug.Log("Pick Up Item...");
+		if(inventoryPanel.AddItemToInventory(amount, container))
+        {
+            Debug.Log("Item was picked up");
+        }
 	}
 
 	public void EquipItem(int position)
 	{
-		Debug.Log("Equip Item");
-		if (panel.EquipItem(position))
+		Debug.Log("Equip Item...");
+		if (inventoryPanel.EquipItem(position))
 		{
-			Debug.Log("Equiping was a success");
+			Debug.Log("Item Equiped");
 		}
 		else
-			Debug.Log("FAIL");
+			Debug.Log("Unable to Equip Item");
 	}
 
-	public void UnEquipItem(EquipmentSlot equipmentSlot)
+	public void UnequipItem(EquipmentSlot equipmentSlot)
 	{
-		Debug.Log("UnEquip Item");
+		Debug.Log("Unequip Item...");
+        if (inventoryPanel.UnequipItem(equipmentSlot))
+        {
+            Debug.Log("Item Unequiped");
+        }
 	}
 
 	public void ConsumeItem(int position)
 	{
-		Debug.Log("Consume Item");
-	}
+		Debug.Log("Consume Item...");
+        if (inventoryPanel.RemoveSingleItemFromInventory(position, out ItemContainer container))
+        {
+            Debug.Log("Item Removed (not consumed -> Warning: there is no reference to any character stats yet... unfortunetly)");
+        }
+    }
 
 	public void DropItem(int position)
 	{
-		Debug.Log("Drop Item");
+		Debug.Log("Drop Item...");
+        if(inventoryPanel.RemoveItemsFromInventory(position, out ItemContainer container, out int amount))
+        {
+            Debug.Log(amount +" Item(s) Removed (not dropped -> Warning: There is no parent to drop the item gameObject yet)");
+        }
 	}
 
 	public void DisplayInformation(bool display)
 	{
-		Debug.Log("Display Information");
+
 	}
 
 	public ItemContainer LoadItemContainer(string name)

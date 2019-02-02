@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemContainer : DataContainer
+public enum ItemType { EQUIPMENT, MISC, NEITHER}
+
+public abstract class ItemContainer : DataContainer
 {
     [SerializeField] public string ItemName;
     [SerializeField] public Sprite ItemIcon;
@@ -30,4 +32,5 @@ public class ItemContainer : DataContainer
         ItemName = name;
     }
 
+    public abstract ItemType GetItemType();
 }

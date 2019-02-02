@@ -72,8 +72,8 @@ public class Entity
 	}
 
 	private string equippedWeaponString;
-    [NonSerialized] private WeaponContainer equippedWeapon;
-    public WeaponContainer EquippedWeapon
+    [NonSerialized] private EquipmentContainer equippedWeapon;
+    public EquipmentContainer EquippedWeapon
     {
         get
         {
@@ -89,13 +89,13 @@ public class Entity
     }
 
     private string equippedArmorString;
-    [NonSerialized] private ArmorContainer equippedArmor;
-    public ArmorContainer EquippedArmor
+    [NonSerialized] private EquipmentContainer equippedArmor;
+    public EquipmentContainer EquippedArmor
     {
         get
         {
             if (equippedArmor != null) return equippedArmor;
-			else if (equippedArmorString != "") return equippedArmor = amInstance.LoadBundle<ArmorContainer>(amInstance.Paths.EquipmentPath, equippedArmorString);
+			else if (equippedArmorString != "") return equippedArmor = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedArmorString);
             else return null;
         }
         set
