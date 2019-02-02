@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable] public class InventoryManager : Manager
 {
+    [SerializeField] private Dictionary<EquipmentSlot, UIElementHandler> equippedItems = new Dictionary<EquipmentSlot, UIElementHandler>();
+
     private InventoryPanel inventoryPanel;
 
     public InventoryPanel InventoryPanel
@@ -17,7 +20,12 @@ using UnityEngine;
         }
     }
 
-	public void PickUpItem(int amount, ItemContainer container)
+    public void AddHandlerToInventory(EquipmentSlot key, UIElementHandler handler)
+    {
+        equippedItems.Add(key, handler);
+    }
+
+    public void PickUpItem(int amount, ItemContainer container)
 	{
 		Debug.Log("Pick Up Item...");
 		if(inventoryPanel.AddItemToInventory(amount, container))
@@ -29,9 +37,10 @@ using UnityEngine;
 	public void EquipItem(int position)
 	{
 		Debug.Log("Equip Item...");
-		if (inventoryPanel.EquipItem(position))
+		if (inventoryPanel.EquipItem(position, out EquipmentSlot slot))
 		{
 			Debug.Log("Item Equiped");
+            UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity,slot);
 		}
 		else
 			Debug.Log("Unable to Equip Item");
@@ -68,6 +77,39 @@ using UnityEngine;
 	{
 
 	}
+
+    public void OpenCharacterInformationDisplay(Entity character)
+    {
+
+        UpdateCharacterEquipmentDisplay(character);
+    }
+
+    public void UpdateCharacterEquipmentDisplay(Entity character)
+    {
+        foreach (EquipmentSlot slot in equippedItems.Keys)
+        {
+            UpdateCharacterEquipmentDisplay(character, slot);
+        }
+    }
+
+    public void UpdateCharacterEquipmentDisplay(Entity character, EquipmentSlot slot)
+    {
+        if (equippedItems.ContainsKey(slot))
+        {
+            if(character.GetEquippedItem(slot) != null)
+            {
+                equippedItems[slot].itemName = character.GetEquippedItem(slot).ItemName;
+                equippedItems[slot].Icon.sprite = character.GetEquippedItem(slot).ItemIcon;
+            }
+            else
+            {
+                equippedItems[slot].SetEmpty();
+            }
+        }
+        else
+            Debug.Log("An error has been occurred.");
+
+    }
 
 	public ItemContainer LoadItemContainer(string name)
 	{

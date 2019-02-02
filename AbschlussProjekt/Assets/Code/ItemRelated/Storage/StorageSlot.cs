@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class StorageSlot
 {
-
     [SerializeField] private int position;
     [SerializeField] private int amount;
     [SerializeField] private string content;

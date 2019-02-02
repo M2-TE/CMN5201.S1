@@ -71,39 +71,65 @@ public class Entity
 		}
 	}
 
-	private string equippedWeaponString;
-    [NonSerialized] private EquipmentContainer equippedWeapon;
-    public EquipmentContainer EquippedWeapon
+    private Dictionary<EquipmentSlot, string> equippedItemStrings;
+    [NonSerialized] private Dictionary<EquipmentSlot, EquipmentContainer> equippedItems;
+    public EquipmentContainer GetEquippedItem(EquipmentSlot slot)
     {
-        get
-        {
-			if (equippedWeapon != null) return equippedWeapon;
-			else if (equippedWeaponString != "") return equippedWeapon = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedWeaponString);
-			else return null;
-        }
-        set
-        {
-            equippedWeapon = value;
-            equippedWeaponString = equippedWeapon.name;
-        }
+        if (equippedItems.ContainsKey(slot) && equippedItems[slot] != null)
+            return equippedItems[slot];
+        else if (equippedItemStrings.ContainsKey(slot) && equippedItemStrings[slot] != "")
+            return amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedItemStrings[slot]);
+        else
+            return null;
+    }
+    public EquipmentContainer SetEquippedItem(EquipmentSlot slot, EquipmentContainer item)
+    {
+        EquipmentContainer previousItem = GetEquippedItem(slot);
+        if (equippedItems.ContainsKey(slot))
+            equippedItems[slot] = item;
+        else
+            equippedItems.Add(slot, item);
+        if (equippedItemStrings.ContainsKey(slot))
+            equippedItemStrings[slot] = item.ItemName;
+        else
+            equippedItemStrings.Add(slot, item.ItemName);
+
+        return previousItem;
     }
 
-    private string equippedArmorString;
-    [NonSerialized] private EquipmentContainer equippedArmor;
-    public EquipmentContainer EquippedArmor
-    {
-        get
-        {
-            if (equippedArmor != null) return equippedArmor;
-			else if (equippedArmorString != "") return equippedArmor = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedArmorString);
-            else return null;
-        }
-        set
-        {
-            equippedArmor = value;
-            equippedArmorString = equippedArmor.name;
-        }
-    }
+	//private string equippedWeaponString;
+ //   [NonSerialized] private EquipmentContainer equippedWeapon;
+ //   public EquipmentContainer EquippedWeapon
+ //   {
+ //       get
+ //       {
+	//		if (equippedWeapon != null) return equippedWeapon;
+	//		else if (equippedWeaponString != "") return equippedWeapon = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedWeaponString);
+	//		else return null;
+ //       }
+ //       set
+ //       {
+ //           equippedWeapon = value;
+ //           equippedWeaponString = equippedWeapon.name;
+ //       }
+ //   }
+
+ //   private string equippedArmorString;
+ //   [NonSerialized] private EquipmentContainer equippedArmor;
+ //   public EquipmentContainer EquippedArmor
+ //   {
+ //       get
+ //       {
+ //           if (equippedArmor != null) return equippedArmor;
+	//		else if (equippedArmorString != "") return equippedArmor = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedArmorString);
+ //           else return null;
+ //       }
+ //       set
+ //       {
+ //           equippedArmor = value;
+ //           equippedArmorString = equippedArmor.name;
+ //       }
+ //   }
 	#endregion
 
 	#region Combat Skills
@@ -176,8 +202,8 @@ public class Entity
     {
         charDataContainer = null;
         equippedCombatSkills = null;
-        equippedWeapon = null;
-        equippedArmor = null;
+        equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
+        equippedItemStrings = new Dictionary<EquipmentSlot, string>();
     }
 
     public override string ToString()
@@ -196,9 +222,8 @@ public class Entity
         equippedCombatSkillStrings = new string[4];
 		ResetCombatSkills();
 
-        equippedWeaponString = "";
-
-        equippedArmorString = "";
+        equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
+        equippedItemStrings = new Dictionary<EquipmentSlot, string>();
 
         baseHealth = charDataContainer.BaseHealth;
 		currentMaxHealth = baseHealth;

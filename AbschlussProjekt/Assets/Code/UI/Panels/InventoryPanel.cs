@@ -7,14 +7,17 @@ public enum EquipmentSlot { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET,
 
 public class InventoryPanel : UIPanel
 {
-
-    [SerializeField] private int currency = 0;
-    [SerializeField] private StorageSystem inventoryContainer;
+    [SerializeField] private Inventory inventoryContainer;
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
     [SerializeField] private GameObject itemPrefab;
 
     private InventoryManager inventoryManager;
+
+    public Inventory InventoryContainer
+    {
+        get;
+    }
 
     protected override void Awake()
     {
@@ -30,11 +33,6 @@ public class InventoryPanel : UIPanel
         manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleVisibility());
 
         InstantiateInventory();
-    }
-
-    public void AddHandlerToInventory(EquipmentSlot key, UIElementHandler handler)
-    {
-        inventoryContainer.equipedItems.Add(key, handler);
     }
 
     private void InstantiateInventory()
@@ -99,17 +97,19 @@ public class InventoryPanel : UIPanel
         return false;
     }
 
-    public bool EquipItem(int position)
+    public bool EquipItem(int position, out EquipmentSlot slot)
     {
-        StorageSlot tempSlot = inventoryContainer.StorageSlots[position];
-        if (tempSlot.Amount != 0)
+        StorageSlot tempInventorySlot = inventoryContainer.StorageSlots[position];
+        slot = 0;
+        if (tempInventorySlot.Amount != 0)
         {
-            ItemContainer temp = LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
-            if (temp.GetItemType().Equals(ItemType.EQUIPMENT))
+            ItemContainer item = LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
+            if (item.GetItemType().Equals(ItemType.EQUIPMENT))
             {
-                tempSlot.EmptySlot();
-                inventoryContainer.TryEquipItem((EquipmentContainer)temp, out EquipmentContainer previousItem);
-                AddItemToInventory(1, previousItem);
+                slot = ((EquipmentContainer)item).EquipmentType;
+                tempInventorySlot.EmptySlot();
+                AddItemToInventory(1, inventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot));
+                inventoryContainer.CurrentSelectedEntity.SetEquippedItem(slot, (EquipmentContainer)item);
                 return true;
             }
         }
@@ -118,8 +118,10 @@ public class InventoryPanel : UIPanel
 
     public bool UnequipItem(EquipmentSlot slot)
     {
-        if (inventoryContainer.TryUnequipItem(slot, out EquipmentContainer item))
-            return AddItemToInventory(1, item);
+        if (AddItemToInventory(1, inventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot)))
+        {
+            inventoryContainer.CurrentSelectedEntity.SetEquippedItem(slot, null);
+        }
         return false;
     }
 

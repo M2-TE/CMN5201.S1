@@ -35,7 +35,7 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
     
     public void ConnectToInventoryPanel()
     {
-        AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.AddHandlerToInventory(equipmentSlot, this);
+        AssetManager.Instance.GetManager<InventoryManager>().AddHandlerToInventory(equipmentSlot, this);
     }
 
 	public void OnSelect(BaseEventData eventData)
@@ -106,9 +106,9 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
         invPosition = position;
     }
 
-    public void SetEmptySprite()
+    public void SetEmpty()
     {
         Icon.sprite = emptySprite;
-        itemName = null;
+        itemName = "";
     }
 }

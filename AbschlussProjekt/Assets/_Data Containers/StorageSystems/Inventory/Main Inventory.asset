@@ -4,11 +4,12 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1580368292627b42946aa0132b715f9, type: 3}
-  m_Name: Inventory
+  m_Script: {fileID: 11500000, guid: 4f94a6f5b6b548b4bbea4add33c658c3, type: 3}
+  m_Name: Main Inventory
   m_EditorClassIdentifier: 
   Size: 25

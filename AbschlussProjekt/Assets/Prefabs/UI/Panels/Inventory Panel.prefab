@@ -3930,9 +3930,10 @@ MonoBehaviour:
   firstSelectedElement: {fileID: 0}
   visibilityToggleNode: {fileID: 6094356972241838910}
   currency: 0
-  inventoryContainer: {fileID: 11400000, guid: 9adb2cf26a6c8994ca422551ff37afe0, type: 2}
+  inventoryContainer: {fileID: 11400000, guid: dcc2ab4a60729014c89a077f07c366be, type: 2}
   slotPrefab: {fileID: 1043009439146430, guid: 9fd8fa9bc17654d4bb134acbc5d2a029, type: 3}
   inventorySlotParent: {fileID: 1001157189242220}
+  itemPrefab: {fileID: 1697248087027412, guid: 5dfd3c5b2eaa4094ea4ee68c41230ebe, type: 3}
 --- !u!1 &1654651144569696
 GameObject:
   m_ObjectHideFlags: 0
