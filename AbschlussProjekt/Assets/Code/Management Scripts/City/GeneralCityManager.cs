@@ -24,9 +24,9 @@ public class GeneralCityManager : Manager, IHandlesCharacterSlots
 
 		for(int i = 0; i < equippedEntities.Length; i++)
 		{
-			if(equippedEntities[i] != null)
+			StoredCharacterSlot tempSlot = panel.EquippedCharSlots[i];
+			if (equippedEntities[i] != null)
 			{
-				StoredCharacterSlot tempSlot = panel.EquippedCharSlots[i];
 				tempSlot.enabled = true;
 				tempSlot.PortraitImage.color = new Color(1f, 1f, 1f, 1f);
 				tempSlot.PortraitImage.sprite = equippedEntities[i].CharDataContainer.Portrait;
@@ -37,8 +37,11 @@ public class GeneralCityManager : Manager, IHandlesCharacterSlots
 			}
 			else
 			{
-				panel.EquippedCharSlots[i].enabled = false;
+				//panel.EquippedCharSlots[i].enabled = false;
 				panel.EquippedCharSlots[i].PortraitImage.color = new Color(1f, 1f, 1f, .2f);
+				tempSlot.ArrayPos = i;
+				tempSlot.OwnSlotType = StoredCharacterSlot.SlotType.EquippedCharacter;
+				tempSlot.RegisterManager(this);
 				panel.EquippedCharSlots[i].PortraitImage.sprite = null;
 			}
 		}
