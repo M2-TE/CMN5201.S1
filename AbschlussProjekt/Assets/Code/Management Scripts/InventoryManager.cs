@@ -20,10 +20,7 @@ using UnityEngine;
         }
     }
 
-    public void AddHandlerToInventory(EquipmentSlot key, UIElementHandler handler)
-    {
-        equippedItems.Add(key, handler);
-    }
+    #region Items
 
     public void PickUpItem(int amount, ItemContainer container)
 	{
@@ -41,7 +38,7 @@ using UnityEngine;
 		{
 			Debug.Log("Item Equiped");
             UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity,slot);
-            inventoryPanel.itemInfoPanel.CloseItemInfo();
+            inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
 		else
 			Debug.Log("Unable to Equip Item");
@@ -54,7 +51,7 @@ using UnityEngine;
         {
             Debug.Log("Item Unequiped");
             UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity, slot);
-            inventoryPanel.itemInfoPanel.CloseItemInfo();
+            inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
         else
             Debug.Log("Unable to Unequip Item");
@@ -66,7 +63,7 @@ using UnityEngine;
         if (inventoryPanel.RemoveSingleItemFromInventory(position, out ItemContainer container))
         {
             Debug.Log("Item Removed (not consumed -> Warning: there is no reference to any character stats yet... unfortunetly)");
-            inventoryPanel.itemInfoPanel.CloseItemInfo();
+            inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
     }
 
@@ -76,7 +73,7 @@ using UnityEngine;
         if(inventoryPanel.RemoveItemsFromInventory(position, out ItemContainer container, out int amount))
         {
             Debug.Log(amount +" Item(s) Removed (not dropped -> Warning: There is no parent to drop the item gameObject yet)");
-            inventoryPanel.itemInfoPanel.CloseItemInfo();
+            inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
 	}
 
@@ -84,23 +81,45 @@ using UnityEngine;
 	{
         ItemContainer item = inventoryPanel.GetItemContainerAtPosition(position);
         if (display && item != null)
-            inventoryPanel.itemInfoPanel.OpenItemInfo(item, ItemInfoType.STORAGE);
+            inventoryPanel.ItemInfoPanel.OpenItemInfo(item, ItemInfoType.STORAGE);
         else
-            inventoryPanel.itemInfoPanel.CloseItemInfo();
+            inventoryPanel.ItemInfoPanel.CloseItemInfo();
 	}
 
     public void DisplayItemInformation(EquipmentSlot slot, bool display)
     {
         ItemContainer item = inventoryPanel.InventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot);
          if (display && item != null)
-            inventoryPanel.itemInfoPanel.OpenItemInfo(item, ItemInfoType.EQUIPPED);
+            inventoryPanel.ItemInfoPanel.OpenItemInfo(item, ItemInfoType.EQUIPPED);
         else
-            inventoryPanel.itemInfoPanel.CloseItemInfo();
+            inventoryPanel.ItemInfoPanel.CloseItemInfo();
     }
 
-    public void OpenCharacterInformationDisplay(Entity character)
-    {
+    #endregion
 
+    #region CharacterInfo
+
+    public void ToggleCharacterDisplay(Entity character)
+    {
+        inventoryPanel.ToggleVisibility();
+        if(inventoryPanel.IsActive)
+            UpdateCharacterDisplay(character);
+    }
+
+    public void OpenCharacterDisplay(Entity character)
+    {
+        inventoryPanel.ToggleVisibility(true);
+        UpdateCharacterDisplay(character);
+    }
+
+    public void CloseCharacterDisplay()
+    {
+        inventoryPanel.ToggleVisibility(false);
+    }
+
+    public void UpdateCharacterDisplay(Entity character)
+    {
+        inventoryPanel.CharacterInfoPanel.DisplayCharacter(character);
         UpdateCharacterEquipmentDisplay(character);
     }
 
@@ -143,7 +162,14 @@ using UnityEngine;
         return false;
     }
 
-	public ItemContainer LoadItemContainer(string name)
+    #endregion
+
+    public void AddHandlerToInventory(EquipmentSlot key, UIElementHandler handler)
+    {
+        equippedItems.Add(key, handler);
+    }
+
+    public ItemContainer LoadItemContainer(string name)
 	{
         if (name != "" && name != null)
             return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);

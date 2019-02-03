@@ -11,7 +11,9 @@ public class InventoryPanel : UIPanel
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
     [SerializeField] private GameObject itemPrefab;
-    [SerializeField] public ItemInfo itemInfoPanel;
+    [SerializeField] public GameObject StoragePanel;
+    [SerializeField] public ItemInfo ItemInfoPanel;
+    [SerializeField] public CharacterInfo CharacterInfoPanel;
 
     private InventoryManager inventoryManager;
 
@@ -20,21 +22,33 @@ public class InventoryPanel : UIPanel
         get;
     }
 
+    public bool IsActive => visibilityToggleNode.activeInHierarchy;
+
+    #region Setup
+
     protected override void Awake()
     {
         base.Awake();
         inventoryManager = AssetManager.Instance.GetManager<InventoryManager>() ?? new InventoryManager();
         inventoryManager.InventoryPanel = this;
-        itemInfoPanel.SetInventoryManager(inventoryManager);
+        ItemInfoPanel.SetInventoryManager(inventoryManager);
     }
 
     private void Start()
     {
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         //void callback(InputAction.CallbackContext _) => ToggleVisibility();
-        manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleVisibility());
+        manager.AddListener(manager.Input.UI.InventoryOpen, ctx => OpenInventory());
 
         InstantiateInventory();
+    }
+
+    public void OpenInventory()
+    {
+        ToggleVisibility();
+        StoragePanel.SetActive(IsActive);
+        if (IsActive)
+            UpdateCharacterDisplay();
     }
 
     private void InstantiateInventory()
@@ -48,6 +62,10 @@ public class InventoryPanel : UIPanel
             });
         }
     }
+
+    #endregion
+
+    #region Items
 
     public bool AddItemToInventory(int stackAmount, ItemContainer container)
     {
@@ -126,6 +144,35 @@ public class InventoryPanel : UIPanel
         }
         return false;
     }
+
+    #endregion
+
+    #region CharacterInfo
+
+    private void UpdateCharacterDisplay()
+    {
+        if (InventoryContainer.CurrentSelectedEntity == null)
+            SwitchCurrentlySelectedCharacter(true);
+        else
+            inventoryManager.UpdateCharacterDisplay(InventoryContainer.CurrentSelectedEntity);
+    }
+
+    public void SwitchCurrentlySelectedCharacter(bool left)
+    {
+        bool anotherCharacter = false;
+        for (int count = 0; count < 4 && !anotherCharacter; count++)
+        {
+            if (!left)
+                inventoryContainer.CurrentSelectedEntityInt = (inventoryContainer.CurrentSelectedEntityInt + 1) % 4;
+            else
+                inventoryContainer.CurrentSelectedEntityInt = (inventoryContainer.CurrentSelectedEntityInt + 3) % 4;
+
+            anotherCharacter = InventoryContainer.CurrentSelectedEntity != null;
+        }
+        inventoryManager.UpdateCharacterDisplay(InventoryContainer.CurrentSelectedEntity);
+    }
+
+    #endregion
 
     public ItemContainer GetItemContainerAtPosition(int position)
     {

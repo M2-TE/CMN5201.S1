@@ -22,6 +22,13 @@ public class ItemInfo : MonoBehaviour
         }
     }
 
+    public void SetInventoryManager(InventoryManager manager)
+    {
+        this.manager = manager;
+    }
+    
+    #region UIReferences
+
     [SerializeField] private GameObject CompareItems, SingleEquipment, Consumable;
     [SerializeField] private Image CompareItemsLeftIcon, CompareItemsRightIcon,
                                    SingleEquipmentIcon,
@@ -32,6 +39,10 @@ public class ItemInfo : MonoBehaviour
                                              SingleEquipmentName, SingleEquipmentHP, SingleEquipmentATK, SingleEquipmentDEF, SingleEquipmentSPD, SingleEquipmentDescription,
                                              ConsumableName, ConsumableEffect, ConsumableDescription,
                                              Action;
+
+    #endregion
+
+    #region Open / Close Panels
 
     public void OpenItemInfo(ItemContainer item, ItemInfoType type)
     {
@@ -123,9 +134,7 @@ public class ItemInfo : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetInventoryManager(InventoryManager manager)
-    {
-        this.manager = manager;
-    }
+    #endregion
+
                                      
 }
