@@ -24,6 +24,8 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
 
     public string itemName;
 
+    #region Setup
+
     private void Start()
 	{
 		inventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
@@ -32,20 +34,33 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
         if (storeType.Equals(StoreType.EQUIPED))
             ConnectToInventoryPanel();
 	}
-    
+
     public void ConnectToInventoryPanel()
     {
         AssetManager.Instance.GetManager<InventoryManager>().AddHandlerToInventory(equipmentSlot, this);
     }
 
-	public void OnSelect(BaseEventData eventData)
+    public void SetPositionInInventory(int position)
     {
-        inventoryManager.DisplayInformation(true);
+        invPosition = position;
+    }
+
+    #endregion
+
+    #region Handlerfunctions
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        inventoryManager.InventoryPanel.ItemInfoPanel.CurrentAction = primaryEventType;
+        if (invPosition >= 0)
+            inventoryManager.DisplayItemInformation(invPosition, true);
+        else
+            inventoryManager.DisplayItemInformation(equipmentSlot, true);
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        inventoryManager.DisplayInformation(false);
+        inventoryManager.DisplayItemInformation(invPosition, false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -99,12 +114,10 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
         {
             primaryEventType = (EventActionType)(Mathf.Min(Enum.GetNames(typeof(EventActionType)).Length-2, ((int)primaryEventType + 1)));
         }
+        inventoryManager.InventoryPanel.ItemInfoPanel.CurrentAction = primaryEventType;
     }
-
-    public void SetPositionInInventory(int position)
-    {
-        invPosition = position;
-    }
+    
+    #endregion
 
     public void SetEmpty()
     {
