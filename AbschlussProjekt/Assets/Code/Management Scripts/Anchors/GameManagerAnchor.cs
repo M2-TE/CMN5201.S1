@@ -5,7 +5,6 @@ public class GameManagerAnchor : MonoBehaviour
 {
 	private GameManager gameManager;
 	private InputManager inputManager;
-	private MusicManager musicManager;
 
 	private void Awake()
 	{

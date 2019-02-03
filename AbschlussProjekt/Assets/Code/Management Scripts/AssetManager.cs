@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using Utilities;
 
 public class AssetManager
 {
@@ -65,9 +64,10 @@ public class AssetManager
 	{
 		Savestate = new Savestate();
 		var gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
-		Savestate.CurrentTeam[0] = new Entity(gunwoman);
-
 		var knight = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Knight");
+		Savestate.CurrentTeam[0] = new Entity(gunwoman);
+		Savestate.CurrentTeam[1] = new Entity(knight);
+		
 		var mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");
 		Savestate.OwnedCharacters.Add(new Entity(knight));
 		Savestate.OwnedCharacters.Add(new Entity(mage));
