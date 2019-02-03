@@ -16,13 +16,13 @@ public class BarracksPanel : UIPanel
 	protected override void Awake()
 	{
 		base.Awake();
-
-		#region DEBUG
-		ToggleVisibility(true);
-		AssetManager.Instance.Load();
-		#endregion
-
 		barracksManager = AssetManager.Instance.GetManager<BarracksManager>() ?? new BarracksManager();
 		barracksManager.RegisterPanel(this);
+	}
+
+	private void Start()
+	{
+		barracksManager.Initialize();
+		ToggleVisibility(true);
 	}
 }

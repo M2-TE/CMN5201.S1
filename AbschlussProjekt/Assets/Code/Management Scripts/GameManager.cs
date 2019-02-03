@@ -31,7 +31,8 @@ public class GameManager : Manager
 
 	public void OnApplicationQuit()
 	{
-		// stuff
+		Debug.Log("Saving");
+		AssetManager.Instance.Save();
 	}
 
 
