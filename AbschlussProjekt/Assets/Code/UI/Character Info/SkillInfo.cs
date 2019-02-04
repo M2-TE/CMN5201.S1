@@ -20,7 +20,7 @@ public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if(sprite != null)
         {
             skillImage.sprite = sprite;
-            skillImage.color = new Vector4(0, 0, 0, 1);
+            skillImage.color = Color.white;
             this.skillDescription = skillDescription;
         }
         else

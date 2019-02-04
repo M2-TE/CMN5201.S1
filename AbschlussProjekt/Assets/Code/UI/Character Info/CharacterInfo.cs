@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CharacterInfo : MonoBehaviour
 {
     public static Vector4 invisColor = Vector4.zero;
-    public static Vector4 opaqueColor = new Vector4(0, 0, 0, 1);
+    public static Color opaqueColor = Color.white;
 
     [SerializeField]
     private TextMeshProUGUI characterName, characterStats, characterSkillInfo;
@@ -22,13 +22,10 @@ public class CharacterInfo : MonoBehaviour
 
     public void DisplayCharacter(Entity character)
     {
-        if (character == null)
-            character = AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.InventoryContainer.CurrentSelectedEntity;
-
         currentCharacter = character;
 
         characterName.text = character.Name;
-        characterStats.text = character.ToString();
+        characterStats.text = character.Stats();
 
         characterPortrait.sprite = character.CharDataContainer.Portrait;
         //characterPreview.sprite = ???

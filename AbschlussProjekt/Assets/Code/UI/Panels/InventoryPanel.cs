@@ -11,6 +11,7 @@ public class InventoryPanel : UIPanel
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
     [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private GameObject RenderCameraPrefab;
     [SerializeField] public GameObject StoragePanel;
     [SerializeField] public ItemInfo ItemInfoPanel;
     [SerializeField] public CharacterInfo CharacterInfoPanel;
@@ -18,6 +19,8 @@ public class InventoryPanel : UIPanel
     private InventoryManager inventoryManager;
 
     public Inventory InventoryContainer => inventoryContainer;
+
+    public GameObject RenderCamera;
 
     public bool IsActive => visibilityToggleNode.activeInHierarchy;
 
@@ -36,7 +39,8 @@ public class InventoryPanel : UIPanel
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         //void callback(InputAction.CallbackContext _) => ToggleVisibility();
         manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleInventory(false));
-
+        RenderCamera = Instantiate(RenderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
+        UpdateCharacterDisplay();
         InstantiateInventory();
     }
 
@@ -124,8 +128,8 @@ public class InventoryPanel : UIPanel
             {
                 slot = ((EquipmentContainer)item).EquipmentType;
                 tempInventorySlot.EmptySlot();
-                AddItemToInventory(1, inventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot));
-                inventoryContainer.CurrentSelectedEntity.SetEquippedItem(slot, (EquipmentContainer)item);
+                AddItemToInventory(1, inventoryManager.CurrentSelectedEntity.GetEquippedItem(slot));
+                inventoryManager.CurrentSelectedEntity.SetEquippedItem(slot, (EquipmentContainer)item);
                 return true;
             }
         }
@@ -134,9 +138,9 @@ public class InventoryPanel : UIPanel
 
     public bool UnequipItem(EquipmentSlot slot)
     {
-        if (AddItemToInventory(1, inventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot)))
+        if (AddItemToInventory(1, inventoryManager.CurrentSelectedEntity.GetEquippedItem(slot)))
         {
-            inventoryContainer.CurrentSelectedEntity.SetEquippedItem(slot, null);
+            inventoryManager.CurrentSelectedEntity.SetEquippedItem(slot, null);
         }
         return false;
     }
@@ -147,10 +151,10 @@ public class InventoryPanel : UIPanel
 
     private void UpdateCharacterDisplay()
     {
-        if (InventoryContainer.CurrentSelectedEntity == null)
+        if (inventoryManager.CurrentSelectedEntity == null)
             SwitchCurrentlySelectedCharacter(true);
         else
-            inventoryManager.UpdateCharacterDisplay(InventoryContainer.CurrentSelectedEntity);
+            inventoryManager.UpdateCharacterDisplay();
     }
 
     public void SwitchCurrentlySelectedCharacter(bool left)
@@ -159,13 +163,12 @@ public class InventoryPanel : UIPanel
         for (int count = 0; count < 4 && !anotherCharacter; count++)
         {
             if (!left)
-                inventoryContainer.CurrentSelectedEntityInt = (inventoryContainer.CurrentSelectedEntityInt + 1) % 4;
+                inventoryManager.CurrentSelectedEntityInt = (inventoryManager.CurrentSelectedEntityInt + 1) % 4;
             else
-                inventoryContainer.CurrentSelectedEntityInt = (inventoryContainer.CurrentSelectedEntityInt + 3) % 4;
+                inventoryManager.CurrentSelectedEntityInt = (inventoryManager.CurrentSelectedEntityInt + 3) % 4;
 
-            anotherCharacter = InventoryContainer.CurrentSelectedEntity != null;
+            anotherCharacter = inventoryManager.CurrentSelectedEntity != null;
         }
-        inventoryManager.UpdateCharacterDisplay(InventoryContainer.CurrentSelectedEntity);
     }
 
     #endregion

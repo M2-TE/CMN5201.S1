@@ -218,6 +218,11 @@ public class Entity
             + currentAttack + " Atk | " + currentDefense + " Def | " + currentSpeed + " Spd";
     }
 
+    public string Stats()
+    {
+        return "Stats:\n HP : " + baseHealth + "/" + currentHealth + "\n Atk  : " + currentAttack + "\n Def : " + currentDefense + "\n Spd : " + currentSpeed;
+    }
+
     public Entity(Character charDataContainer)
     {
         Name = charDataContainer.name;
