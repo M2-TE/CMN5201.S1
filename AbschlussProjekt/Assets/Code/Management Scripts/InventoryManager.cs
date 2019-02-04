@@ -8,7 +8,7 @@ using UnityEngine;
 
     private GameObject CharacterPreviewProxy;
 
-    private int currentSelectedEntityInt;
+    private int currentSelectedEntityInt = 0;
 
     public int CurrentSelectedEntityInt
     {
@@ -160,9 +160,12 @@ using UnityEngine;
 
     public void UpdateCharacterDisplay()
     {
-        inventoryPanel.CharacterInfoPanel.DisplayCharacter(CurrentSelectedEntity);
-        UpdateCharacterEquipmentDisplay();
-        UpdateCharacterProxy();
+        if(CurrentSelectedEntity != null)
+        {
+            inventoryPanel.CharacterInfoPanel.DisplayCharacter(CurrentSelectedEntity);
+            UpdateCharacterEquipmentDisplay();
+            UpdateCharacterProxy();
+        }
     }
 
     public void UpdateCharacterEquipmentDisplay()
@@ -224,9 +227,8 @@ using UnityEngine;
 
     public ItemContainer LoadItemContainer(string name)
 	{
-        if (name != "" && name != null)
-            return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
-        else
+        if (name == "" || name == null)
             return null;
+        return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
 	}
 }

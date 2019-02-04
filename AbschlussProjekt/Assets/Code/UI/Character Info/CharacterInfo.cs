@@ -12,7 +12,7 @@ public class CharacterInfo : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI characterName, characterStats, characterSkillInfo;
     [SerializeField]
-    private Image characterPortrait, characterPreview;
+    private Image characterPortrait;
     [SerializeField]
     private Image[] characterBuffs;
     [SerializeField]
@@ -22,13 +22,14 @@ public class CharacterInfo : MonoBehaviour
 
     public void DisplayCharacter(Entity character)
     {
+        if (character == null)
+            return;
         currentCharacter = character;
 
         characterName.text = character.Name;
         characterStats.text = character.Stats();
 
         characterPortrait.sprite = character.CharDataContainer.Portrait;
-        //characterPreview.sprite = ???
 
         SetBuffImageVisibility();
 

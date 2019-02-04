@@ -21,6 +21,7 @@ public class Entity
     {
         get
         {
+            Debug.Log(amInstance.Paths.PlayableCharactersPath + "|" +entityType);
 			if (charDataContainer != null) return charDataContainer;
 			else return charDataContainer = amInstance.LoadBundle<Character>(amInstance.Paths.PlayableCharactersPath, entityType);
         }
@@ -77,10 +78,12 @@ public class Entity
     {
         if (equippedItems == null)
             equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
+        if (equippedItemStrings == null)
+            equippedItemStrings = new Dictionary<EquipmentSlot, string>();
 
         if (equippedItems.ContainsKey(slot) && equippedItems[slot] != null)
             return equippedItems[slot];
-        else if (equippedItemStrings.ContainsKey(slot) && equippedItemStrings[slot] != "")
+        else if (equippedItemStrings.ContainsKey(slot) && equippedItemStrings[slot] != "" && equippedItemStrings[slot] != null)
             return amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedItemStrings[slot]);
         else
             return null;
@@ -89,6 +92,8 @@ public class Entity
     {
         if (equippedItems == null)
             equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
+        if (equippedItemStrings == null)
+            equippedItemStrings = new Dictionary<EquipmentSlot, string>();
 
         EquipmentContainer previousItem = GetEquippedItem(slot);
         if (equippedItems.ContainsKey(slot))
