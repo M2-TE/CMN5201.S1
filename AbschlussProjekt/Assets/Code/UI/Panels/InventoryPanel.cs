@@ -17,10 +17,7 @@ public class InventoryPanel : UIPanel
 
     private InventoryManager inventoryManager;
 
-    public Inventory InventoryContainer
-    {
-        get;
-    }
+    public Inventory InventoryContainer => inventoryContainer;
 
     public bool IsActive => visibilityToggleNode.activeInHierarchy;
 
@@ -38,17 +35,16 @@ public class InventoryPanel : UIPanel
     {
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         //void callback(InputAction.CallbackContext _) => ToggleVisibility();
-        manager.AddListener(manager.Input.UI.InventoryOpen, ctx => OpenInventory());
+        manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleInventory(false));
 
         InstantiateInventory();
     }
 
-    public void OpenInventory()
+    public void ToggleInventory(bool characterInfoVisibility)
     {
         ToggleVisibility();
         StoragePanel.SetActive(IsActive);
-        if (IsActive)
-            UpdateCharacterDisplay();
+        CharacterInfoPanel.gameObject.SetActive(characterInfoVisibility);
     }
 
     private void InstantiateInventory()

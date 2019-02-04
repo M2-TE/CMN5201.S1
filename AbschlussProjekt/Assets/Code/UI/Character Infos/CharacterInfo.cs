@@ -22,6 +22,9 @@ public class CharacterInfo : MonoBehaviour
 
     public void DisplayCharacter(Entity character)
     {
+        if (character == null)
+            character = AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.InventoryContainer.CurrentSelectedEntity;
+
         currentCharacter = character;
 
         characterName.text = character.Name;
@@ -34,18 +37,20 @@ public class CharacterInfo : MonoBehaviour
 
         for (int i = 0; i < characterSkills.Length; i++)
         {
-            if (i < character.EquippedCombatSkills.Length)
+            if (character.EquippedCombatSkills[i] != null)
                 characterSkills[i].SetUI(character.EquippedCombatSkills[i].SkillIcon, character.EquippedCombatSkills[i].SkillDescription, this);
             else
                 characterSkills[i].SetUI(null, "", this);
         }
-        
-        for (int i = 0; i < character.currentCombatEffects.activeCombatEffectElements.Count; i++)
-        {
-            characterBuffs[i].sprite = character.currentCombatEffects.activeCombatEffectElements[i].CombatEffect.EffectSprite;
-            characterBuffs[i].color = opaqueColor;
-        }
 
+        if(character.currentCombatEffects != null)
+        {
+            for (int i = 0; i < character.currentCombatEffects.activeCombatEffectElements.Count; i++)
+            {
+                characterBuffs[i].sprite = character.currentCombatEffects.activeCombatEffectElements[i].CombatEffect.EffectSprite;
+                characterBuffs[i].color = opaqueColor;
+            }
+        }
     }
 
     private void SetBuffImageVisibility()
@@ -58,7 +63,7 @@ public class CharacterInfo : MonoBehaviour
 
     public void DisplaySkillInfo(string description)
     {
-        if(description != "")
+        if(description != "" && description != null)
             characterSkillInfo.text = "Skill Description:\n"+ description;
     }
 

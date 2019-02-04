@@ -101,14 +101,16 @@ using UnityEngine;
 
     public void ToggleCharacterDisplay(Entity character)
     {
-        inventoryPanel.ToggleVisibility();
-        if(inventoryPanel.IsActive)
-            UpdateCharacterDisplay(character);
+        if (!inventoryPanel.IsActive)
+            OpenCharacterDisplay(character);
+        else
+            CloseCharacterDisplay();
     }
 
     public void OpenCharacterDisplay(Entity character)
     {
         inventoryPanel.ToggleVisibility(true);
+        inventoryPanel.CharacterInfoPanel.gameObject.SetActive(true);
         UpdateCharacterDisplay(character);
     }
 
@@ -146,7 +148,7 @@ using UnityEngine;
             }
         }
         else
-            Debug.Log("An error has been occurred.");
+            Debug.Log("An error has occurred.");
 
     }
 

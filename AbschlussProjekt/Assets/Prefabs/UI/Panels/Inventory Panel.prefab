@@ -2315,7 +2315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &224904785028428692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2957,7 +2957,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 1697248087027412, guid: 5dfd3c5b2eaa4094ea4ee68c41230ebe, type: 3}
   StoragePanel: {fileID: 1433477202935874}
   ItemInfoPanel: {fileID: 8013001463420532034}
-  CharacterInfoPanel: {fileID: 1766514390495440}
+  CharacterInfoPanel: {fileID: 1766514390495441}
 --- !u!1 &1654651144569696
 GameObject:
   m_ObjectHideFlags: 0
