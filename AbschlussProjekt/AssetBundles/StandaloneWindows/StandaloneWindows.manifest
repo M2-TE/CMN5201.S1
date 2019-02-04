@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3354173479
+CRC: 2656136381
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -34,3 +34,7 @@ AssetBundleManifest:
     Info_9:
       Name: storage systems
       Dependencies: {}
+    Info_10:
+      Name: areas/first dungeon
+      Dependencies:
+        Dependency_0: characters/playable characters

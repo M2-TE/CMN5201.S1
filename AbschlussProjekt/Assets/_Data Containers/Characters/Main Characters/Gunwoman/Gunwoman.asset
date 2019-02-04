@@ -26,8 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 410110703fa9c7d4cb507b7970184ee1, type: 2}
   RepositioningSkill: {fileID: 11400000, guid: ec54661d41b23a743bccaed5794fa4be, type: 2}
   PassSkill: {fileID: 11400000, guid: 07ef657865b6e9c42bc59d989ba3b415, type: 2}
-  moveSpeed: 300
+  moveSpeed: 450
   wallSlideVelocity: 0.1
   maxClimbHeight: 0.9
   maxJumps: 2
-  jumpForce: 7
+  jumpForce: 8

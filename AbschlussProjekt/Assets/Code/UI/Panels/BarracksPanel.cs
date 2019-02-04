@@ -23,6 +23,11 @@ public class BarracksPanel : UIPanel
 	private void Start()
 	{
 		barracksManager.Initialize();
-		ToggleVisibility(true);
+	}
+
+	public void ExitBarracks()
+	{
+		ToggleVisibility(false);
+		transform.parent.GetComponentInChildren<DebugCityPanel>().ToggleVisibility(true);
 	}
 }

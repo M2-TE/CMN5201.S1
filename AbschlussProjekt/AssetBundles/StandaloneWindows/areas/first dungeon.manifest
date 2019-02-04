@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 2741189607
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d651df258c557ecd60e653b5053d31d9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a146d9e84d85ac365db989f4b407d2da
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 606680d0cfec52e4ea3b8214cd62c724, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Areas/First Dungeon.asset
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/characters/playable
+  characters
