@@ -13,10 +13,7 @@ public class AssetManager
 	private Paths paths;
 	public Paths Paths
 	{
-		get
-		{
-			return paths ?? (paths = AssetBundle.LoadFromFile("AssetBundles/StandaloneWindows/paths").LoadAsset<Paths>("Paths"));
-		}
+		get { return paths ?? (paths = AssetBundle.LoadFromFile("AssetBundles/StandaloneWindows/paths").LoadAsset<Paths>("Paths")); }
 	}
 	
 	public AreaData LoadArea(string sceneName)
