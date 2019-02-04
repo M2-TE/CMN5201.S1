@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 999646596466474206}
   - component: {fileID: 999646596466474200}
   m_Layer: 5
-  m_Name: Stored Character
+  m_Name: Stored Character Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,4 +207,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76249ddbdd8eb144bc4b74004984181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PortraitImage: {fileID: 999646596117934511}
+  portraitImage: {fileID: 999646596117934511}

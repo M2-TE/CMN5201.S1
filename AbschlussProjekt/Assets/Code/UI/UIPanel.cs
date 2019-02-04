@@ -7,11 +7,12 @@ public abstract class UIPanel : MonoBehaviour
 	[NonSerialized] public EventSystem EventSystem;
 	[SerializeField] protected GameObject firstSelectedElement;
 	[SerializeField] protected GameObject visibilityToggleNode;
+	[SerializeField] private bool visibilityOnAwake;
 
 	protected virtual void Awake()
 	{
 		EventSystem = transform.parent.GetComponentInChildren<EventSystem>();
-		ToggleVisibility(false);
+		ToggleVisibility(visibilityOnAwake);
 	}
 
 	public virtual void ToggleVisibility()

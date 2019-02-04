@@ -1,33 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BarracksPanel : UIPanel
 {
-	[Header("Barracks")]
-	public GameObject StorageSlotPrefab;
-	public GameObject DraggableSlotPrefab;
-	public Transform CharStorageNode;
-	public Vector2 CharStorageStartPos;
-	public Vector2 CharStoragePerSlotOffset;
+	public List<CharacterSlot> barrackSlots;
+	public GameObject characterSlotPrefab;
+	public GameObject draggableSlotPrefab;
+	public RectTransform CharacterStorageNode;
+	public Vector2 StartingSlotOffset;
+	public Vector2 SlotOffset;
 
-	private BarracksManager barracksManager;
+
+	private GeneralCityManager manager;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		barracksManager = AssetManager.Instance.GetManager<BarracksManager>() ?? new BarracksManager();
-		barracksManager.RegisterPanel(this);
+		manager = AssetManager.Instance.GetManager<GeneralCityManager>() ?? new GeneralCityManager();
 	}
 
 	private void Start()
 	{
-		barracksManager.Initialize();
-	}
-
-	public void ExitBarracks()
-	{
-		ToggleVisibility(false);
-		transform.parent.GetComponentInChildren<DebugCityPanel>().ToggleVisibility(true);
+		manager.SetupBarracksPanel(this);
 	}
 }
