@@ -1,18 +1,18 @@
 ManifestFileVersion: 0
-CRC: 1622949144
+CRC: 4055159696
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: daa9ee29fff8ddf0d7ec982607f5600f
+    Hash: 86605b602ece84e2181fd30abe0b39e8
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c78c8872074dbf84589677c7f456c5e1
+    Hash: 55cb87cb81e49d48e32814815d183582
 HashAppended: 0
 ClassTypes:
 - Class: 114
-  Script: {fileID: 11500000, guid: b1580368292627b42946aa0132b715f9, type: 3}
+  Script: {fileID: 11500000, guid: 4f94a6f5b6b548b4bbea4add33c658c3, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/_Data Containers/StorageSystems/Inventory/Inventory.asset
+- Assets/_Data Containers/StorageSystems/Inventory/Main Inventory.asset
 Dependencies: []

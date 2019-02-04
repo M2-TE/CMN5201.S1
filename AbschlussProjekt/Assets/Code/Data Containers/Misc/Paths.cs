@@ -19,7 +19,8 @@ public class Paths : DataContainer
 	public string EquipmentPath = "equipment";
 	public string SkillsPath = "skills";
 
-	[Header("Scene Names")]
+	[Header("Area Names")]
 	public string DefaultLocation = "Starter City";
 	public string MainMenu = "Main Menu";
+	public string FirstDungeon = "First Dungeon";
 }

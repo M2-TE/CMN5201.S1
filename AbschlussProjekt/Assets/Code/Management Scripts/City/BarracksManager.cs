@@ -102,4 +102,9 @@ public class BarracksManager : Manager, IHandlesCharacterSlots
 		slot1.PortraitImage.sprite = slot2.PortraitImage.sprite;
 		slot2.PortraitImage.sprite = bufferImage;
 	}
+
+	public void TogglePanelVisibility()
+	{
+		panel.ToggleVisibility();
+	}
 }

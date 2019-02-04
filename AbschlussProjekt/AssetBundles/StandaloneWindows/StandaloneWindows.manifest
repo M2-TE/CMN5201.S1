@@ -1,35 +1,36 @@
 ManifestFileVersion: 0
-CRC: 2536267301
+CRC: 3354173479
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: settings
-      Dependencies: {}
-    Info_1:
-      Name: characters/[dungeonname] entities/playable
-      Dependencies: {}
-    Info_2:
-      Name: characters/[dungeonname] entities/unplayable
-      Dependencies: {}
-    Info_3:
       Name: items
       Dependencies: {}
-    Info_4:
-      Name: storage systems
+    Info_1:
+      Name: settings
       Dependencies: {}
-    Info_5:
+    Info_2:
+      Name: characters/[dungeonname] entities/playable
+      Dependencies: {}
+    Info_3:
+      Name: characters/[dungeonname] entities/unplayable
+      Dependencies: {}
+    Info_4:
       Name: characters/playable characters
       Dependencies: {}
-    Info_6:
+    Info_5:
       Name: areas/starter city
       Dependencies:
-        Dependency_0: storage systems
-    Info_7:
-      Name: areas/main menu
-      Dependencies: {}
-    Info_8:
+        Dependency_0: items
+        Dependency_1: storage systems
+    Info_6:
       Name: paths
       Dependencies: {}
-    Info_9:
+    Info_7:
       Name: vital assets
+      Dependencies: {}
+    Info_8:
+      Name: areas/main menu
+      Dependencies: {}
+    Info_9:
+      Name: storage systems
       Dependencies: {}

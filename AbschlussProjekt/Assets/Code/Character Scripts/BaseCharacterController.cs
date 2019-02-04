@@ -104,8 +104,9 @@ public class BaseCharacterController : MonoBehaviour {
 
 	private void AdjustSprite()
 	{
-		if(ownRigidbody.velocity.y != 0f) ownAnimator.SetFloat("Movespeed", 0f);
-		else ownAnimator.SetFloat("Movespeed", Mathf.Abs(hMovement));
+		//if(ownRigidbody.velocity.y != 0f) ownAnimator.SetFloat("Movespeed", 0f);
+		//else 
+		ownAnimator.SetFloat("Movespeed", Mathf.Abs(hMovement));
 
 		if (hMovement != 0)
 		{

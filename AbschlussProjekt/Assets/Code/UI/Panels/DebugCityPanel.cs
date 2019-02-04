@@ -6,7 +6,7 @@ public class DebugCityPanel : UIPanel
 {
 	public void OnBarracksSelect()
 	{
-
+		AssetManager.Instance.GetManager<BarracksManager>().TogglePanelVisibility();
 	}
 
 	public void OnAcademySelect()
