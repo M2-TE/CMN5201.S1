@@ -85,6 +85,8 @@ public class CombatPanel : UIPanel
 		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
 		combatManager.RegisterCombatPanel(this);
 		CombatActive = false;
+
+		ToggleVisibility(true);
 	}
 
 	private void Update()

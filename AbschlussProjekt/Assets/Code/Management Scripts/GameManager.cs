@@ -49,7 +49,7 @@ public class GameManager : Manager
 
 		//return; // DEBUG
 
-		CombatManager combatManager = instance.GetManager<CombatManager>();
+		CombatManager combatManager = instance.GetManager<CombatManager>() ?? new CombatManager();
 		combatManager.StartCombat
 			(instance.Savestate.CurrentTeam,
 			new Entity[] {
@@ -62,7 +62,8 @@ public class GameManager : Manager
 	private void SaveDebugging()
 	{
 		AssetManager instance = AssetManager.Instance;
-		instance.Load();
+		//instance.Load();
+		instance.CreateNewSavestate();
 
 		Character gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
 		Character mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");

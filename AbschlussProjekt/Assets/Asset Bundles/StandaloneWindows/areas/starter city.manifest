@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 4147289346
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f5c4b3ab3c55da33fb47c76d347346b2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a146d9e84d85ac365db989f4b407d2da
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 606680d0cfec52e4ea3b8214cd62c724, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Areas/Starter City.asset
+Dependencies:
+- C:/Users/Jan Kuhlmann/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/Assets/Asset
+  Bundles/StandaloneWindows/items
+- C:/Users/Jan Kuhlmann/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/Assets/Asset
+  Bundles/StandaloneWindows/storage systems

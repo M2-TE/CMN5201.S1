@@ -19,4 +19,12 @@ public class GameManagerAnchor : MonoBehaviour
 	{
 		gameManager.OnApplicationQuit();
 	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.U))
+		{
+			gameManager.StartCombatDebugging();
+		}
+	}
 }
