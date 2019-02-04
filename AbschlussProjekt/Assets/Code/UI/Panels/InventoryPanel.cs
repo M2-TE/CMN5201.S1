@@ -11,7 +11,7 @@ public class InventoryPanel : UIPanel
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
     [SerializeField] private GameObject itemPrefab;
-    [SerializeField] private GameObject RenderCameraPrefab;
+    [SerializeField] private GameObject renderCameraPrefab;
     [SerializeField] public GameObject StoragePanel;
     [SerializeField] public ItemInfo ItemInfoPanel;
     [SerializeField] public CharacterInfo CharacterInfoPanel;
@@ -39,9 +39,9 @@ public class InventoryPanel : UIPanel
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         //void callback(InputAction.CallbackContext _) => ToggleVisibility();
         manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleInventory(false));
-        RenderCamera = Instantiate(RenderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
-        UpdateCharacterDisplay();
+        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
         InstantiateInventory();
+        //UpdateCharacterDisplay();
     }
 
     public void ToggleInventory(bool characterInfoVisibility)
@@ -184,6 +184,8 @@ public class InventoryPanel : UIPanel
 
     private ItemContainer LoadItemContainer(string name)
     {
+        if (name == null || name == "")
+            return null;
         return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
     }
 }

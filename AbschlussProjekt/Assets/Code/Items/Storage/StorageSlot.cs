@@ -55,6 +55,7 @@ public class StorageSlot
 
     private Sprite LoadContentSprite()
     {
+        Debug.Log(content);
 		return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, content).ItemIcon;
 	}
 

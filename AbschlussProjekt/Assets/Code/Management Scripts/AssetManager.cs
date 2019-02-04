@@ -33,7 +33,6 @@ public class AssetManager
 			bundle = AssetBundle.LoadFromFile(Paths.AssetBundlePath + bundlePath);
 			loadedAssetBundles.Add(bundlePath, bundle);
 		}
-
 		return bundle.LoadAsset<AssetType>(assetName);
 	}
 
