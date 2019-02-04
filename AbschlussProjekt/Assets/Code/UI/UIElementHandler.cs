@@ -60,7 +60,10 @@ public class UIElementHandler : MonoBehaviour , IPointerEnterHandler,IPointerExi
 
     public void OnDeselect(BaseEventData eventData)
     {
-        inventoryManager.DisplayItemInformation(invPosition, false);
+        if (invPosition >= 0)
+            inventoryManager.DisplayItemInformation(invPosition, false);
+        else
+            inventoryManager.DisplayItemInformation(equipmentSlot, false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

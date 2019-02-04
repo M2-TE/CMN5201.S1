@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CharacterInfo : MonoBehaviour
 {
     public static Vector4 invisColor = Vector4.zero;
-    public static Vector4 opaqueColor = new Vector4(0, 0, 0, 1);
+    public static Color opaqueColor = Color.white;
 
     [SerializeField]
     private TextMeshProUGUI characterName, characterStats, characterSkillInfo;
@@ -25,7 +25,7 @@ public class CharacterInfo : MonoBehaviour
         currentCharacter = character;
 
         characterName.text = character.Name;
-        characterStats.text = character.ToString();
+        characterStats.text = character.Stats();
 
         characterPortrait.sprite = character.CharDataContainer.Portrait;
         //characterPreview.sprite = ???
@@ -34,18 +34,20 @@ public class CharacterInfo : MonoBehaviour
 
         for (int i = 0; i < characterSkills.Length; i++)
         {
-            if (i < character.EquippedCombatSkills.Length)
+            if (character.EquippedCombatSkills[i] != null)
                 characterSkills[i].SetUI(character.EquippedCombatSkills[i].SkillIcon, character.EquippedCombatSkills[i].SkillDescription, this);
             else
                 characterSkills[i].SetUI(null, "", this);
         }
-        
-        for (int i = 0; i < character.currentCombatEffects.activeCombatEffectElements.Count; i++)
-        {
-            characterBuffs[i].sprite = character.currentCombatEffects.activeCombatEffectElements[i].CombatEffect.EffectSprite;
-            characterBuffs[i].color = opaqueColor;
-        }
 
+        if(character.currentCombatEffects != null)
+        {
+            for (int i = 0; i < character.currentCombatEffects.activeCombatEffectElements.Count; i++)
+            {
+                characterBuffs[i].sprite = character.currentCombatEffects.activeCombatEffectElements[i].CombatEffect.EffectSprite;
+                characterBuffs[i].color = opaqueColor;
+            }
+        }
     }
 
     private void SetBuffImageVisibility()
@@ -58,7 +60,7 @@ public class CharacterInfo : MonoBehaviour
 
     public void DisplaySkillInfo(string description)
     {
-        if(description != "")
+        if(description != "" && description != null)
             characterSkillInfo.text = "Skill Description:\n"+ description;
     }
 

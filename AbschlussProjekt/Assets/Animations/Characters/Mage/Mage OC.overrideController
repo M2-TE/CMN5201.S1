@@ -4,7 +4,8 @@
 AnimatorOverrideController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Mage OC
   m_Controller: {fileID: 9100000, guid: e5d4d3c9b8ab62c459e49b6004899309, type: 2}
   m_Clips:
@@ -14,3 +15,5 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: ed7f1ae0b64fb0c4caeef17c9ef1188e, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 0e1bfebfa0238ee44bdda6d5d19ba15d, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 55516da16beb73743b67a3ea82369320, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 94a329f89ad101b4182b49b3434d46b4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 94a329f89ad101b4182b49b3434d46b4, type: 2}

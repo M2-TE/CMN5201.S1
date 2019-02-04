@@ -75,6 +75,9 @@ public class Entity
     [NonSerialized] private Dictionary<EquipmentSlot, EquipmentContainer> equippedItems;
     public EquipmentContainer GetEquippedItem(EquipmentSlot slot)
     {
+        if (equippedItems == null)
+            equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
+
         if (equippedItems.ContainsKey(slot) && equippedItems[slot] != null)
             return equippedItems[slot];
         else if (equippedItemStrings.ContainsKey(slot) && equippedItemStrings[slot] != "")
@@ -84,6 +87,9 @@ public class Entity
     }
     public EquipmentContainer SetEquippedItem(EquipmentSlot slot, EquipmentContainer item)
     {
+        if (equippedItems == null)
+            equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
+
         EquipmentContainer previousItem = GetEquippedItem(slot);
         if (equippedItems.ContainsKey(slot))
             equippedItems[slot] = item;
@@ -210,6 +216,11 @@ public class Entity
     {
         return Name + ": " + baseHealth + " / " + currentHealth + " HP | "
             + currentAttack + " Atk | " + currentDefense + " Def | " + currentSpeed + " Spd";
+    }
+
+    public string Stats()
+    {
+        return "Stats:\n HP : " + baseHealth + "/" + currentHealth + "\n Atk  : " + currentAttack + "\n Def : " + currentDefense + "\n Spd : " + currentSpeed;
     }
 
     public Entity(Character charDataContainer)

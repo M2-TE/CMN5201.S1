@@ -6,6 +6,39 @@ using UnityEngine;
 {
     [SerializeField] private Dictionary<EquipmentSlot, UIElementHandler> equippedItems = new Dictionary<EquipmentSlot, UIElementHandler>();
 
+    private GameObject CharacterPreviewProxy;
+
+    private int currentSelectedEntityInt;
+
+    public int CurrentSelectedEntityInt
+    {
+        get
+        {
+            return currentSelectedEntityInt;
+        }
+        set
+        {
+            currentSelectedEntityInt = value;
+            currentSelectedEntity = AssetManager.Instance.Savestate.CurrentTeam[currentSelectedEntityInt];
+            if(currentSelectedEntity != null)
+                UpdateCharacterDisplay();
+        }
+    }
+
+    private Entity currentSelectedEntity;
+
+    public Entity CurrentSelectedEntity
+    {
+        get
+        {
+            return currentSelectedEntity ?? AssetManager.Instance.Savestate.CurrentTeam[CurrentSelectedEntityInt];
+        }
+        set
+        {
+            currentSelectedEntity = value;
+        }
+    }
+
     private InventoryPanel inventoryPanel;
 
     public InventoryPanel InventoryPanel
@@ -37,7 +70,7 @@ using UnityEngine;
 		if (inventoryPanel.EquipItem(position, out EquipmentSlot slot))
 		{
 			Debug.Log("Item Equiped");
-            UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity,slot);
+            UpdateCharacterEquipmentDisplay(slot);
             inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
 		else
@@ -50,7 +83,7 @@ using UnityEngine;
         if (inventoryPanel.UnequipItem(slot))
         {
             Debug.Log("Item Unequiped");
-            UpdateCharacterEquipmentDisplay(inventoryPanel.InventoryContainer.CurrentSelectedEntity, slot);
+            UpdateCharacterEquipmentDisplay(slot);
             inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
         else
@@ -65,16 +98,20 @@ using UnityEngine;
             Debug.Log("Item Removed (not consumed -> Warning: there is no reference to any character stats yet... unfortunetly)");
             inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
+        else
+            Debug.Log("Unable to Consume Item");
     }
 
 	public void DropItem(int position)
 	{
 		Debug.Log("Drop Item...");
-        if(inventoryPanel.RemoveItemsFromInventory(position, out ItemContainer container, out int amount))
+        if (inventoryPanel.RemoveItemsFromInventory(position, out ItemContainer container, out int amount))
         {
-            Debug.Log(amount +" Item(s) Removed (not dropped -> Warning: There is no parent to drop the item gameObject yet)");
+            Debug.Log(amount + " Item(s) Removed (not dropped -> Warning: There is no parent to drop the item gameObject yet)");
             inventoryPanel.ItemInfoPanel.CloseItemInfo();
         }
+        else
+            Debug.Log("Unable to Drop Item");
 	}
 
 	public void DisplayItemInformation(int position, bool display)
@@ -88,7 +125,7 @@ using UnityEngine;
 
     public void DisplayItemInformation(EquipmentSlot slot, bool display)
     {
-        ItemContainer item = inventoryPanel.InventoryContainer.CurrentSelectedEntity.GetEquippedItem(slot);
+        ItemContainer item = CurrentSelectedEntity.GetEquippedItem(slot);
          if (display && item != null)
             inventoryPanel.ItemInfoPanel.OpenItemInfo(item, ItemInfoType.EQUIPPED);
         else
@@ -101,44 +138,49 @@ using UnityEngine;
 
     public void ToggleCharacterDisplay(Entity character)
     {
-        inventoryPanel.ToggleVisibility();
-        if(inventoryPanel.IsActive)
-            UpdateCharacterDisplay(character);
+        if (!inventoryPanel.IsActive)
+            OpenCharacterDisplay(character);
+        else
+            CloseCharacterDisplay();
     }
 
     public void OpenCharacterDisplay(Entity character)
     {
+        CurrentSelectedEntity = character;
         inventoryPanel.ToggleVisibility(true);
-        UpdateCharacterDisplay(character);
+        inventoryPanel.CharacterInfoPanel.gameObject.SetActive(true);
+        UpdateCharacterDisplay();
     }
 
     public void CloseCharacterDisplay()
     {
+        currentSelectedEntity = null;
         inventoryPanel.ToggleVisibility(false);
     }
 
-    public void UpdateCharacterDisplay(Entity character)
+    public void UpdateCharacterDisplay()
     {
-        inventoryPanel.CharacterInfoPanel.DisplayCharacter(character);
-        UpdateCharacterEquipmentDisplay(character);
+        inventoryPanel.CharacterInfoPanel.DisplayCharacter(CurrentSelectedEntity);
+        UpdateCharacterEquipmentDisplay();
+        UpdateCharacterProxy();
     }
 
-    public void UpdateCharacterEquipmentDisplay(Entity character)
+    public void UpdateCharacterEquipmentDisplay()
     {
         foreach (EquipmentSlot slot in equippedItems.Keys)
         {
-            UpdateCharacterEquipmentDisplay(character, slot);
+            UpdateCharacterEquipmentDisplay(slot);
         }
     }
 
-    public void UpdateCharacterEquipmentDisplay(Entity character, EquipmentSlot slot)
+    public void UpdateCharacterEquipmentDisplay(EquipmentSlot slot)
     {
         if (equippedItems.ContainsKey(slot))
         {
-            if(character.GetEquippedItem(slot) != null)
+            if(CurrentSelectedEntity.GetEquippedItem(slot) != null)
             {
-                equippedItems[slot].itemName = character.GetEquippedItem(slot).ItemName;
-                equippedItems[slot].Icon.sprite = character.GetEquippedItem(slot).ItemIcon;
+                equippedItems[slot].itemName = CurrentSelectedEntity.GetEquippedItem(slot).ItemName;
+                equippedItems[slot].Icon.sprite = CurrentSelectedEntity.GetEquippedItem(slot).ItemIcon;
             }
             else
             {
@@ -146,8 +188,19 @@ using UnityEngine;
             }
         }
         else
-            Debug.Log("An error has been occurred.");
+            Debug.Log("An error has occurred.");
+    }
 
+    private void UpdateCharacterProxy()
+    {
+        if (CharacterPreviewProxy != null)
+            GameObject.Destroy(CharacterPreviewProxy);
+
+        CharacterPreviewProxy = GameObject.Instantiate(CurrentSelectedEntity.CharDataContainer.Prefab,new Vector3(0,0,-99),Quaternion.identity,inventoryPanel.RenderCamera.transform);
+        for (int child = 0; child < CharacterPreviewProxy.transform.childCount; child++)
+        {
+            GameObject.Destroy(CharacterPreviewProxy.transform.GetChild(child).gameObject);
+        }
     }
 
     public bool CheckForEquippedItemAtSlot(EquipmentSlot slot, out EquipmentContainer container)
