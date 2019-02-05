@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2924528, g: 0.18842795, b: 0.09794411, a: 1}
+  m_Color: {r: 0.38679248, g: 0.25378695, b: 0.14048594, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -120,6 +120,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6616551848190006644}
   - component: {fileID: 6616551848190006645}
+  - component: {fileID: 6616551848190006653}
+  - component: {fileID: 6616551848190006652}
   m_Layer: 5
   m_Name: Dungeon UI Panel
   m_TagString: Untagged
@@ -162,3 +164,50 @@ MonoBehaviour:
   firstSelectedElement: {fileID: 0}
   visibilityToggleNode: {fileID: 1723628101}
   visibilityOnAwake: 1
+  MapParent: {fileID: 153760729}
+  DungeonLength: 5
+  MaxSiblings: 5
+  EmptyNodePrefab: {fileID: 8295488010433160052, guid: 400fc04dcb83fb147932874d6414fcb3,
+    type: 3}
+  CampfireNodePrefab: {fileID: 1746683992456495495, guid: 561a5c9fec00f8146aa26b969857bd90,
+    type: 3}
+  CombatNodePrefab: {fileID: 26124357, guid: 2da30a2e907dd564eafa04bedf616cf1, type: 3}
+  UnknownNodePrefab: {fileID: 4676630955416174672, guid: 0f23475bc7a08fd49b4e6e91abfbffa4,
+    type: 3}
+--- !u!222 &6616551848190006653
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616551848190006651}
+  m_CullTransparentMesh: 0
+--- !u!114 &6616551848190006652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616551848190006651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0

@@ -5,6 +5,14 @@ using UnityEngine;
 public class DungeonPanel : UIPanel
 {
 	public GameObject MapParent;
+	public int DungeonLength;
+	public int MaxSiblings;
+
+	[Header("Prefabs")]
+	public GameObject EmptyNodePrefab;
+	public GameObject CampfireNodePrefab;
+	public GameObject CombatNodePrefab;
+	public GameObject UnknownNodePrefab;
 
 	private DungeonManager manager;
 
