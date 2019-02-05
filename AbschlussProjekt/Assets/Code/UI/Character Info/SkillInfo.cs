@@ -8,14 +8,14 @@ public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     private Image skillImage;
     private string skillDescription;
-    private CharacterInfo manager;
+    private CharacterInfoPanel manager;
 
     private void Awake()
     {
         skillImage = GetComponent<Image>();
     }
 
-    public void SetUI(Sprite sprite, string skillDescription, CharacterInfo manager)
+    public void SetUI(Sprite sprite, string skillDescription, CharacterInfoPanel manager)
     {
         if(sprite != null)
         {

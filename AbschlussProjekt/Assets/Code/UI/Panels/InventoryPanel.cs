@@ -7,18 +7,17 @@ public enum EquipmentSlot { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET,
 
 public class InventoryPanel : UIPanel
 {
-    [SerializeField] private Inventory inventoryContainer;
+    [SerializeField] private int inventorySize;
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
-    [SerializeField] private GameObject itemPrefab;
-    [SerializeField] private GameObject renderCameraPrefab;
-    [SerializeField] public GameObject StoragePanel;
-    [SerializeField] public ItemInfo ItemInfoPanel;
-    [SerializeField] public CharacterInfo CharacterInfoPanel;
+    public ItemInfo ItemInfoPanel;
+    //[SerializeField] private GameObject renderCameraPrefab;
+    //[SerializeField] public GameObject StoragePanel;
+    //public CharacterInfoPanel CharacterInfoPanel;
 
     private InventoryManager inventoryManager;
 
-    public Inventory InventoryContainer => inventoryContainer;
+    public int InventorySize => inventorySize;
 
     public GameObject RenderCamera;
 

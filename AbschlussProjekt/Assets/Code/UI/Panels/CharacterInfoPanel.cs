@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterInfo : MonoBehaviour
+public class CharacterInfoPanel : MonoBehaviour
 {
     public static Vector4 invisColor = Vector4.zero;
     public static Color opaqueColor = Color.white;
