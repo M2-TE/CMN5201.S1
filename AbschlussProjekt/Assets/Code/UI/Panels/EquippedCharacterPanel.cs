@@ -9,12 +9,6 @@ public class EquippedCharacterPanel : UIPanel
 	protected override void Awake()
 	{
 		base.Awake();
-
-		// DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
-		AssetManager.Instance.CreateNewSavestate(); // DEBUG
-		AssetManager.Instance.Load(); // DEBUG DEBUG DEBUG
-		// DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
-
 		manager = AssetManager.Instance.GetManager<GeneralCityManager>() ?? new GeneralCityManager();
 	}
 

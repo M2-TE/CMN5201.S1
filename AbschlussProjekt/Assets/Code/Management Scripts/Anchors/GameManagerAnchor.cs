@@ -13,18 +13,17 @@ public class GameManagerAnchor : MonoBehaviour
 
 		InputMaster inputMaster = instance.LoadBundle<VitalAssets>(instance.Paths.VitalAssetsPath, "Vital Assets").InputMaster;
 		inputManager = instance.GetManager<InputManager>() ?? new InputManager(inputMaster);
+		
+
+
+		// DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
+		AssetManager.Instance.CreateNewSavestate(); // DEBUG
+		AssetManager.Instance.Load(); // DEBUG DEBUG DEBUG
+		// DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
 	}
 
 	private void OnApplicationQuit()
 	{
 		gameManager.OnApplicationQuit();
-	}
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.U))
-		{
-			gameManager.StartCombatDebugging();
-		}
 	}
 }
