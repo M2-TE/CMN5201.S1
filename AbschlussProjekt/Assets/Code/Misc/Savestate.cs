@@ -7,7 +7,7 @@ public class Savestate
 {
 	public List<Entity> OwnedCharacters;
 	public Entity[] CurrentTeam;
-    public List<string> Items;
+    public List<StorageSlot> Inventory;
 	public int Gold;
 	public int Souls;
 
@@ -23,7 +23,7 @@ public class Savestate
 	public Savestate()
 	{
 		OwnedCharacters = new List<Entity>();
-        Items = new List<string>();
+        Inventory = new List<StorageSlot>();
 		CurrentTeam = new Entity[4];
 		m_currentLocation = AssetManager.Instance.Paths.DefaultLocation;
 	}

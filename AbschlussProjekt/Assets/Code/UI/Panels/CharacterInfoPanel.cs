@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterInfoPanel : MonoBehaviour
-{
-    public static Vector4 invisColor = Vector4.zero;
-    public static Color opaqueColor = Color.white;
+public enum EquipmentSlot { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET, FINGERONE, FINGERTWO, NECK }
 
+public class CharacterInfoPanel : UIPanel
+{
+    #region UIConnectors
     [SerializeField]
     private TextMeshProUGUI characterName, characterStats, characterSkillInfo;
     [SerializeField]
@@ -18,44 +19,152 @@ public class CharacterInfoPanel : MonoBehaviour
     [SerializeField]
     private SkillInfo[] characterSkills;
 
+    public ItemInfo itemInfo;
+    #endregion
+
+    [SerializeField] private GameObject renderCameraPrefab;
+
+    private GameObject RenderCamera;
+
+    private GameObject characterPreviewProxy;
+
+    private Dictionary<EquipmentSlot, UIEquipmentHandler> equipmentSlots  = new Dictionary<EquipmentSlot, UIEquipmentHandler>();
+
     private Entity currentCharacter;
 
-    public void DisplayCharacter(Entity character)
+    public Entity CurrentCharacter => currentCharacter;
+
+    #region Setup
+    protected override void Awake()
     {
-        if (character == null)
-            return;
+        (AssetManager.Instance.GetManager<CharacterInfoManager>() ?? new CharacterInfoManager()).CharacterInfoPanel = this;
+        base.Awake();
+    }
+    private void Start()
+    {
+        InputManager manager = AssetManager.Instance.GetManager<InputManager>();
+        manager.AddListener(manager.Input.UI.Back, ctx => ToggleVisibility(false));
+
+        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
+
+        AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
+    }
+    public void ConnectUIHandler(UIEquipmentHandler handler, EquipmentSlot key)
+    {
+        equipmentSlots.Add(key, handler);
+    }
+    public override void ToggleVisibility(bool visibleState)
+    {
+        base.ToggleVisibility(visibleState);
+        if(AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager != null)
+            AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager.InventoryPanel.itemInfo.UpdateAction(true);
+    }
+    public override void ToggleVisibility()
+    {
+        base.ToggleVisibility();
+        if (AssetManager.Instance.GetManager<InventoryManager>() != null)
+            AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.itemInfo.UpdateAction(true);
+    }
+    #endregion
+
+    public void OpenCharacterInfo(Entity character)
+    {
         currentCharacter = character;
+        DisplayCharacter();
+    }
 
-        characterName.text = character.Name;
-        characterStats.text = character.Stats();
+    public void CloseCharacterInfo()
+    {
+        ToggleVisibility(false);
+    }
 
-        characterPortrait.sprite = character.CharDataContainer.Portrait;
+    #region Displaying Character
+    public void DisplayCharacter()
+    {
+        ToggleVisibility(true);
+        characterName.text = currentCharacter.Name;
+        characterStats.text = currentCharacter.Stats();
 
-        SetBuffImageVisibility();
+        characterPortrait.sprite = currentCharacter.CharDataContainer.Portrait;
 
+        DisplayCharacterPreview();
+        DisplaySkills();
+        DisplayCombatEffects();
+
+        /*EquipmentSlot slot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot))*/
+        foreach (EquipmentSlot slot in equipmentSlots.Keys)
+        {
+            DisplayEquipmentSlot(slot);
+        }
+    }
+
+    public void DisplayCharacterPreview()
+    {
+        if (characterPreviewProxy != null)
+            GameObject.Destroy(characterPreviewProxy);
+
+        characterPreviewProxy = GameObject.Instantiate(currentCharacter.CharDataContainer.Prefab, new Vector3(0, 0, -99), Quaternion.identity, RenderCamera.transform);
+        for (int child = 0; child < characterPreviewProxy.transform.childCount; child++)
+        {
+            GameObject.Destroy(characterPreviewProxy.transform.GetChild(child).gameObject);
+        }
+    }
+
+    public void DisplayEquipmentSlot(EquipmentSlot slot)
+    {
+        if (equipmentSlots.ContainsKey(slot))
+        {
+            if (currentCharacter.GetEquippedItem(slot) != null)
+            {
+                equipmentSlots[slot].Icon.sprite = currentCharacter.GetEquippedItem(slot).ItemIcon;
+            }
+            else
+            {
+                equipmentSlots[slot].SetEmpty();
+            }
+        }
+        else
+            Debug.Log("An error has occurred.");
+    }
+
+    public void DisplayEquipmentInfo(EquipmentSlot slot, bool show)
+    {
+        EquipmentContainer item = currentCharacter.GetEquippedItem(slot);
+        if (show && item != null)
+            itemInfo.OpenItemInfo(item,false);
+        else
+            itemInfo.CloseItemInfo();
+    }
+
+    public void DisplaySkills()
+    {
         for (int i = 0; i < characterSkills.Length; i++)
         {
-            if (character.EquippedCombatSkills[i] != null)
-                characterSkills[i].SetUI(character.EquippedCombatSkills[i].SkillIcon, character.EquippedCombatSkills[i].SkillDescription, this);
+            if (currentCharacter.EquippedCombatSkills[i] != null)
+                characterSkills[i].SetUI(currentCharacter.EquippedCombatSkills[i].SkillIcon, currentCharacter.EquippedCombatSkills[i].SkillDescription, this);
             else
                 characterSkills[i].SetUI(null, "", this);
         }
+    }
 
-        if(character.currentCombatEffects != null)
+    public void DisplayCombatEffects()
+    {
+        SetCombatEffectVisibility();
+        if (currentCharacter.currentCombatEffects != null)
         {
-            for (int i = 0; i < character.currentCombatEffects.activeCombatEffectElements.Count; i++)
+            for (int i = 0; i < currentCharacter.currentCombatEffects.activeCombatEffectElements.Count; i++)
             {
-                characterBuffs[i].sprite = character.currentCombatEffects.activeCombatEffectElements[i].CombatEffect.EffectSprite;
-                characterBuffs[i].color = opaqueColor;
+                characterBuffs[i].sprite = currentCharacter.currentCombatEffects.activeCombatEffectElements[i].CombatEffect.EffectSprite;
+                characterBuffs[i].color = Color.white;
             }
         }
     }
 
-    private void SetBuffImageVisibility()
+    private void SetCombatEffectVisibility()
     {
         for (int i = 0; i < characterBuffs.Length; i++)
         {
-            characterBuffs[i].color = invisColor;
+            characterBuffs[i].color = Vector4.zero;
         }
     }
 
@@ -69,5 +178,5 @@ public class CharacterInfoPanel : MonoBehaviour
     {
         characterSkillInfo.text = "";
     }
-
+    #endregion
 }

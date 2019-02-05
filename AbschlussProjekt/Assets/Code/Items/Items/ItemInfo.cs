@@ -4,28 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ItemInfoType { STORAGE, EQUIPPED }
-
 public class ItemInfo : MonoBehaviour
 {
-    private InventoryManager manager;
-
-    private EventActionType  currentAction = 0;
-
-    public EventActionType CurrentAction
-    {
-        get => currentAction;
-        set
-        {
-            currentAction = value;
-            UpdateActionPanel();
-        }
-    }
-
-    public void SetInventoryManager(InventoryManager manager)
-    {
-        this.manager = manager;
-    }
     
     #region UIReferences
 
@@ -44,29 +24,9 @@ public class ItemInfo : MonoBehaviour
 
     #region Open / Close Panels
 
-    public void OpenItemInfo(ItemContainer item, ItemInfoType type)
+    public void OpenItemInfo(EquipmentContainer equipment, bool equipAction)
     {
         gameObject.SetActive(true);
-        UpdateActionPanel();
-        if (type.Equals(ItemInfoType.STORAGE))
-        {
-            if (item.GetType().Equals(typeof(MiscContainer)))
-            {
-                OpenCosumableInfo((MiscContainer)item);
-                return;
-            }
-            else if (currentAction.Equals(EventActionType.EQUIP) && manager.CheckForEquippedItemAtSlot(((EquipmentContainer)item).EquipmentType, out EquipmentContainer equipped))
-            {
-                OpenCompareEquipmentInfo((EquipmentContainer)item, equipped);
-                return;
-            }
-        }
-
-        OpenSingleEquipmentInfo((EquipmentContainer)item);
-    }
-
-    private void OpenSingleEquipmentInfo(EquipmentContainer equipment)
-    {
         SingleEquipment.SetActive(true);
         SingleEquipmentIcon.sprite = equipment.ItemIcon;
         SingleEquipmentName.text = equipment.ItemName;
@@ -75,19 +35,23 @@ public class ItemInfo : MonoBehaviour
         SingleEquipmentATK.text = equipment.AttackBonus.ToString();
         SingleEquipmentDEF.text = equipment.DefenseBonus.ToString();
         SingleEquipmentSPD.text = equipment.SpeedBonus.ToString();
+        UpdateAction(equipAction);
     }
     
-    private void OpenCosumableInfo(MiscContainer consumable)
+    public void OpenItemInfo(MiscContainer misc)
     {
+        gameObject.SetActive(true);
         Consumable.SetActive(true);
-        ConsumableIcon.sprite = consumable.ItemIcon;
-        ConsumableName.text = consumable.ItemName;
+        ConsumableIcon.sprite = misc.ItemIcon;
+        ConsumableName.text = misc.ItemName;
         ConsumableEffect.text = "Effect:\n"+"THIS NEEDS TO BE DONE!";
-        ConsumableDescription.text = consumable.ItemDescription;
+        ConsumableDescription.text = misc.ItemDescription;
+        Action.text = misc.IsUsable.Equals(Usability.ALWAYS_USABLE) || misc.IsUsable.Equals(Usability.OUT_OF_COMBAT_ONLY) ? "CONSUME" : "NONE";
     }
 
-    private void OpenCompareEquipmentInfo(EquipmentContainer stored, EquipmentContainer equipped)
+    public void OpenItemInfo(EquipmentContainer stored, EquipmentContainer equipped)
     {
+        gameObject.SetActive(true);
         CompareItems.SetActive(true);
         CompareItemsLeftIcon.sprite = stored.ItemIcon;
         CompareItemsLeftHP.text = stored.HealthBonus.ToString();
@@ -100,30 +64,7 @@ public class ItemInfo : MonoBehaviour
         CompareItemsRightATK.text = equipped.AttackBonus.ToString();
         CompareItemsRightDEF.text = equipped.DefenseBonus.ToString();
         CompareItemsRightSPD.text = equipped.SpeedBonus.ToString();
-    }
-
-    private void UpdateActionPanel()
-    {
-        switch (currentAction)
-        {
-            case EventActionType.NONE:
-                Action.text = "NONE";
-                break;
-            case EventActionType.DROP:
-                Action.text = "DROP";
-                break;
-            case EventActionType.CONSUME:
-                Action.text = "CONSUME";
-                break;
-            case EventActionType.EQUIP:
-                Action.text = "EQUIP";
-                break;
-            case EventActionType.UNEQUIP:
-                Action.text = "UNEQUIP";
-                break;
-            default:
-                break;
-        }
+        Action.text = "EQUIP";
     }
 
     public void CloseItemInfo()
@@ -134,6 +75,20 @@ public class ItemInfo : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void UpdateAction(bool equipAction)
+    {
+        if ((CompareItems.activeInHierarchy || SingleEquipment.activeInHierarchy))
+        {
+            if (equipAction)
+            {
+                Action.text = AssetManager.Instance.GetManager<CharacterInfoManager>()!= null && AssetManager.Instance.GetManager<CharacterInfoManager>().OpenCharacterPanel ? "EQUIP" : "NONE";
+            }
+            else
+            {
+                Action.text = "UNEQUIP";
+            }
+        }
+    }
     #endregion
 
                                      

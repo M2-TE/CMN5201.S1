@@ -55,7 +55,8 @@ public class StoredCharacterSlot : CharacterSlot, IPointerClickHandler, IBeginDr
 				return;
 
 			case -2:
-				AssetManager.Instance.GetManager<InventoryManager>().OpenCharacterDisplay(StoredEntity);
+                Debug.Log(AssetManager.Instance.GetManager<CharacterInfoManager>() == null ? "YES" : "NO");
+				AssetManager.Instance.GetManager<CharacterInfoManager>().CharacterInfoPanel.OpenCharacterInfo(StoredEntity);
 				return;
 
 			default: return;
