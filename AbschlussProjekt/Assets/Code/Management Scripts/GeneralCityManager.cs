@@ -240,7 +240,7 @@ public class GeneralCityManager : Manager
 				}
 
 			case -2:
-				AssetManager.Instance.GetManager<InventoryManager>().OpenCharacterDisplay(characterSlot.StoredEntity);
+				AssetManager.Instance.GetManager<CharacterInfoManager>().CharacterInfoPanel.OpenCharacterInfo(characterSlot.StoredEntity);
 				return;
 
 			default: return;

@@ -22,6 +22,7 @@ public class InputMaster : InputActionAssetReference
         m_UI = asset.GetActionMap("UI");
         m_UI_Back = m_UI.GetAction("Back");
         m_UI_InventoryOpen = m_UI.GetAction("InventoryOpen");
+        m_UI_CharacterInfoClose = m_UI.GetAction("CharacterInfoClose");
         m_Initialized = true;
     }
     private void Uninitialize()
@@ -29,6 +30,7 @@ public class InputMaster : InputActionAssetReference
         m_UI = null;
         m_UI_Back = null;
         m_UI_InventoryOpen = null;
+        m_UI_CharacterInfoClose = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
@@ -52,6 +54,7 @@ public class InputMaster : InputActionAssetReference
         public UIActions(InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @Back { get { return m_Wrapper.m_UI_Back; } }
         public InputAction @InventoryOpen { get { return m_Wrapper.m_UI_InventoryOpen; } }
+        public InputAction @CharacterInfoClose { get { return m_Wrapper.m_UI_CharacterInfoClose; } }
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }

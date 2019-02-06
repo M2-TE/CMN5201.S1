@@ -43,7 +43,7 @@ public class CharacterInfoPanel : UIPanel
     private void Start()
     {
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
-        manager.AddListener(manager.Input.UI.Back, ctx => ToggleVisibility(false));
+        manager.AddListener(manager.Input.UI.CharacterInfoClose, ctx => ToggleVisibility(false));
 
         RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
 

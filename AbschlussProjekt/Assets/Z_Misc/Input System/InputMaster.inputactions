@@ -16,6 +16,12 @@
                     "id": "9cdd348a-73b7-46cd-a0a2-1bdf5e0dfd67",
                     "expectedControlLayout": "Button",
                     "bindings": []
+                },
+                {
+                    "name": "CharacterInfoClose",
+                    "id": "9e96b22b-f5a7-413e-98b1-2543261f61a1",
+                    "expectedControlLayout": "Button",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -50,6 +56,18 @@
                     "processors": "",
                     "groups": "",
                     "action": "InventoryOpen",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Keyboard>/c",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CharacterInfoClose",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,
