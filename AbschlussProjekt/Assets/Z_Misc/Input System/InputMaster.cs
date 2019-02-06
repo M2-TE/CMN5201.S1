@@ -45,6 +45,7 @@ public class InputMaster : InputActionAssetReference
     private InputActionMap m_UI;
     private InputAction m_UI_Back;
     private InputAction m_UI_InventoryOpen;
+    private InputAction m_UI_CharacterInfoClose;
     public struct UIActions
     {
         private InputMaster m_Wrapper;

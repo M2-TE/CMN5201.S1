@@ -8,14 +8,14 @@ public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     private Image skillImage;
     private string skillDescription;
-    private CharacterInfo manager;
+    private CharacterInfoPanel characterInfoPanel;
 
     private void Awake()
     {
         skillImage = GetComponent<Image>();
     }
 
-    public void SetUI(Sprite sprite, string skillDescription, CharacterInfo manager)
+    public void SetUI(Sprite sprite, string skillDescription, CharacterInfoPanel characterInfoPanel)
     {
         if(sprite != null)
         {
@@ -28,16 +28,16 @@ public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             skillImage.color = Vector4.zero;
             skillDescription = "";
         }
-        this.manager = manager;
+        this.characterInfoPanel = characterInfoPanel;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        manager.DisplaySkillInfo(skillDescription);
+        characterInfoPanel.DisplaySkillInfo(skillDescription);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        manager.ClearSkillInfo();
+        characterInfoPanel.ClearSkillInfo();
     }
 }

@@ -3,189 +3,92 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Input;
 
-public enum EquipmentSlot { PRIMARY, SECONDARY, HEAD, CHEST, WAIST, HANDS, FEET, FINGERONE, FINGERTWO, NECK }
-
 public class InventoryPanel : UIPanel
 {
-    [SerializeField] private Inventory inventoryContainer;
+    [SerializeField] private int inventorySize;
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject inventorySlotParent;
-    [SerializeField] private GameObject itemPrefab;
-    [SerializeField] private GameObject renderCameraPrefab;
-    [SerializeField] public GameObject StoragePanel;
-    [SerializeField] public ItemInfo ItemInfoPanel;
-    [SerializeField] public CharacterInfo CharacterInfoPanel;
+    public ItemInfo itemInfo;
+
+    private List<UIStorageHandler> storageSlots = new List<UIStorageHandler>();
 
     private InventoryManager inventoryManager;
 
-    public Inventory InventoryContainer => inventoryContainer;
+    public int InventorySize => inventorySize;
 
-    public GameObject RenderCamera;
-
-    public bool IsActive => visibilityToggleNode.activeInHierarchy;
 
     #region Setup
-
     protected override void Awake()
     {
-        base.Awake();
         inventoryManager = AssetManager.Instance.GetManager<InventoryManager>() ?? new InventoryManager();
         inventoryManager.InventoryPanel = this;
-        ItemInfoPanel.SetInventoryManager(inventoryManager);
+        base.Awake();
     }
-
     private void Start()
     {
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
-        //void callback(InputAction.CallbackContext _) => ToggleVisibility();
-        manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleInventory(false));
-        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
+        manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleVisibility());
+        inventoryManager.CharacterInfoManager = AssetManager.Instance.GetManager<CharacterInfoManager>();
         InstantiateInventory();
-        //UpdateCharacterDisplay();
     }
-
-    public void ToggleInventory(bool characterInfoVisibility)
-    {
-        ToggleVisibility();
-        StoragePanel.SetActive(IsActive);
-        CharacterInfoPanel.gameObject.SetActive(characterInfoVisibility);
-    }
-
     private void InstantiateInventory()
     {
-        for (int slot = 0; slot < inventoryContainer.Size; slot++)
+        for (int slot = 0; slot < inventorySize; slot++)
         {
-            inventoryContainer.StorageSlots.Add(new StorageSlot
-            {
-                Position = slot,
-                Slot = Instantiate(slotPrefab, inventorySlotParent.transform).GetComponent<UIElementHandler>()
-            });
+            storageSlots.Add(Instantiate(slotPrefab, inventorySlotParent.transform).GetComponent<UIStorageHandler>());
+            storageSlots[slot].Connect(this, slot);
         }
     }
-
+    public override void ToggleVisibility()
+    {
+        base.ToggleVisibility();
+        if(inventoryManager.CharacterInfoManager != null)
+            inventoryManager.CharacterInfoManager.CharacterInfoPanel.itemInfo.UpdateAction(false);
+    }
+    public override void ToggleVisibility(bool visibleState)
+    {
+        base.ToggleVisibility(visibleState);
+        if (inventoryManager.CharacterInfoManager != null)
+            inventoryManager.CharacterInfoManager.CharacterInfoPanel.itemInfo.UpdateAction(false);
+    }
     #endregion
 
-    #region Items
 
-    public bool AddItemToInventory(int stackAmount, ItemContainer container)
+    public void DisplayInventory()
     {
-        if (stackAmount > 0 && container != null)
+        List<StorageSlot> Items = AssetManager.Instance.Savestate.Inventory;
+        for (int position = 0; position < inventorySize; position++)
         {
-            for (int position = 0; position < inventoryContainer.StorageSlots.Count; position++)
-            {
-                StorageSlot tempSlot = inventoryContainer.StorageSlots[position];
-                if (container.ItemName.Equals(tempSlot.Content) && container.StackingLimit >= (stackAmount + tempSlot.Amount))
-                {
-                    tempSlot.Amount += stackAmount;
-                    return true;
-                }
-                else if (inventoryContainer.StorageSlots[position].Amount == 0)
-                {
-                    tempSlot.Amount = stackAmount;
-                    tempSlot.Content = container.ItemName;
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public bool RemoveItemsFromInventory(int position, out ItemContainer container, out int amount)
-    {
-        StorageSlot tempSlot = inventoryContainer.StorageSlots[position];
-        container = null;
-        amount = tempSlot.Amount;
-        if (tempSlot.Amount != 0)
-        {
-            container = LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
-            tempSlot.EmptySlot();
-            return true;
-        }
-        return false;
-    }
-
-    public bool RemoveSingleItemFromInventory(int position, out ItemContainer container)
-    {
-        StorageSlot tempSlot = inventoryContainer.StorageSlots[position];
-        container = null;
-        if (tempSlot.Amount != 0)
-        {
-            container = LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
-            tempSlot.Amount -= 1;
-            return true;
-        }
-        return false;
-    }
-
-    public bool EquipItem(int position, out EquipmentSlot slot)
-    {
-        StorageSlot tempInventorySlot = inventoryContainer.StorageSlots[position];
-        slot = 0;
-        if (tempInventorySlot.Amount != 0)
-        {
-            ItemContainer item = LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
-            if (item.GetItemType().Equals(ItemType.EQUIPMENT))
-            {
-                slot = ((EquipmentContainer)item).EquipmentType;
-                tempInventorySlot.EmptySlot();
-                AddItemToInventory(1, inventoryManager.CurrentSelectedEntity.GetEquippedItem(slot));
-                inventoryManager.CurrentSelectedEntity.SetEquippedItem(slot, (EquipmentContainer)item);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public bool UnequipItem(EquipmentSlot slot)
-    {
-        if (AddItemToInventory(1, inventoryManager.CurrentSelectedEntity.GetEquippedItem(slot)))
-        {
-            inventoryManager.CurrentSelectedEntity.SetEquippedItem(slot, null);
-        }
-        return false;
-    }
-
-    #endregion
-
-    #region CharacterInfo
-
-    private void UpdateCharacterDisplay()
-    {
-        if (inventoryManager.CurrentSelectedEntity == null)
-            SwitchCurrentlySelectedCharacter(true);
-        else
-            inventoryManager.UpdateCharacterDisplay();
-    }
-
-    public void SwitchCurrentlySelectedCharacter(bool left)
-    {
-        bool anotherCharacter = false;
-        for (int count = 0; count < 4 && !anotherCharacter; count++)
-        {
-            if (!left)
-                inventoryManager.CurrentSelectedEntityInt = (inventoryManager.CurrentSelectedEntityInt + 1) % 4;
+            if (position < Items.Count)
+                storageSlots[position].DisplayItem(Items[position]);
             else
-                inventoryManager.CurrentSelectedEntityInt = (inventoryManager.CurrentSelectedEntityInt + 3) % 4;
-
-            anotherCharacter = inventoryManager.CurrentSelectedEntity != null;
+                storageSlots[position].SetEmpty();
         }
     }
 
-    #endregion
-
-    public ItemContainer GetItemContainerAtPosition(int position)
+    public void DisplayItemInfo(int position, bool show)
     {
-        StorageSlot tempSlot = inventoryContainer.StorageSlots[position];
-        if (tempSlot.Amount != 0)
-            return LoadItemContainer(inventoryContainer.StorageSlots[position].Content);
+        ItemContainer storedItem = null;
+        if (position < AssetManager.Instance.Savestate.Inventory.Count)
+            storedItem = AssetManager.Instance.Savestate.Inventory[position].Item;
+        if (storedItem == null)
+            return;
+        else if (storedItem.GetType().Equals(typeof(EquipmentContainer)))
+        {
+            EquipmentContainer equippedItem = AssetManager.Instance.GetManager<CharacterInfoManager>().GetItemOfCurrentCharacter(((EquipmentContainer)storedItem).EquipmentType);
+            if (AssetManager.Instance.GetManager<CharacterInfoManager>().OpenCharacterPanel && equippedItem != null)
+            {
+                itemInfo.OpenItemInfo((EquipmentContainer)storedItem, equippedItem);
+            }
+            else
+                itemInfo.OpenItemInfo((EquipmentContainer)storedItem, true);
+        }
         else
-            return null;
+            itemInfo.OpenItemInfo((MiscContainer)storedItem);
     }
 
-    private ItemContainer LoadItemContainer(string name)
+    public void CloseInventoryPanel()
     {
-        if (name == null || name == "")
-            return null;
-        return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
+        ToggleVisibility(false);
     }
 }

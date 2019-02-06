@@ -21,7 +21,6 @@ public class Entity
     {
         get
         {
-            //Debug.Log(amInstance.Paths.PlayableCharactersPath + "|" +entityType);
 			if (charDataContainer != null) return charDataContainer;
 			else return charDataContainer = amInstance.LoadBundle<Character>(amInstance.Paths.PlayableCharactersPath, entityType);
         }
