@@ -165,8 +165,10 @@ MonoBehaviour:
   visibilityToggleNode: {fileID: 1723628101}
   visibilityOnAwake: 1
   MapParent: {fileID: 153760729}
-  DungeonLength: 5
-  MaxSiblings: 5
+  DungeonLength: 8
+  MaxSiblings: 4
+  randomPathingChance: 0.6
+  CurrentStandingColor: {r: 0.5, g: 0, b: 0, a: 1}
   EmptyNodePrefab: {fileID: 8295488010433160052, guid: 400fc04dcb83fb147932874d6414fcb3,
     type: 3}
   CampfireNodePrefab: {fileID: 1746683992456495495, guid: 561a5c9fec00f8146aa26b969857bd90,

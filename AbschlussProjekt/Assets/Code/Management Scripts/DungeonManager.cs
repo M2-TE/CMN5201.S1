@@ -12,13 +12,13 @@ public class DungeonManager : Manager
 	private DungeonNode currentNode;
 	private Color currentNodeColorBuffer;
 	private List<DungeonNode>[] dungeonNodes;
-	private Color currentStandingColor = new Color(.5f, 0f, 0f, 1f);
 
 	public void CreateNewDungeon(DungeonPanel dungeonPanel)
 	{
 		this.dungeonPanel = dungeonPanel;
 		GenerateDungeon();
 		SetAllNodePositions();
+		SetAllNodeFamilies();
 	}
 
 	private void GenerateDungeon()
@@ -30,7 +30,7 @@ public class DungeonManager : Manager
 
 		var image = parent.GetComponent<Image>();
 		currentNodeColorBuffer = image.color;
-		image.color = currentStandingColor;
+		image.color = dungeonPanel.CurrentStandingColor;
 		
 		for (int i = 0; i < dungeonPanel.DungeonLength - 2; i++)
 		{
@@ -83,16 +83,8 @@ public class DungeonManager : Manager
 			nodeToAdd.Depth = 0;
 			currentNode = nodeToAdd;
 		}
-		else
-		{
-			nodeToAdd.Depth = parentNode.Depth + 1;
+		else nodeToAdd.Depth = parentNode.Depth + 1;
 
-			// TODO: conditional parenting
-			//nodeToAdd.ParentNode = parentNode;
-
-			//if (parentNode.ChildNodes == null) parentNode.ChildNodes = new List<DungeonNode>();
-			//parentNode.ChildNodes.Add(nodeToAdd);
-		}
 		(dungeonNodes[nodeToAdd.Depth] ?? (dungeonNodes[nodeToAdd.Depth] = new List<DungeonNode>())).Add(nodeToAdd);
 		return nodeToAdd;
 	}
@@ -106,23 +98,80 @@ public class DungeonManager : Manager
 		for(int i = 0; i < dungeonNodes.Length; i++)
 			for (int x = 0; x < dungeonNodes[i].Count; x++)
 				(dungeonNodes[i][x].transform as RectTransform).anchoredPosition = new Vector2
-					(horizontalNodeStep * dungeonNodes[i][x].Depth + horizontalNodeStep * .25f,
+					(horizontalNodeStep * dungeonNodes[i][x].Depth + horizontalNodeStep / dungeonPanel.DungeonLength,
 					verticalNodeStep * .5f + x * verticalNodeStep - (dungeonNodes[i].Count * verticalNodeStep * .5f));
 	}
 
-	public void MoveToNextNode(DungeonNode newNode)
+	private void SetAllNodeFamilies()
+	{
+		for (int i = 1; i < dungeonPanel.DungeonLength; i++)
+			SetParents(dungeonNodes[i]);
+	}
+
+	private void SetParents(List<DungeonNode> siblings)
+	{
+		List<DungeonNode> parents = dungeonNodes[siblings[0].Depth - 1];
+
+		if (siblings.Count - 1 <= 0)
+			for (int i = 0; i < parents.Count; i++)
+				ConnectNodes(siblings[0], parents[i]);
+
+		else if (siblings.Count >= parents.Count)
+			for (int i = 0; i < siblings.Count; i++)
+				ConnectNodes(siblings[i], parents[(int)(i * (((float)parents.Count - 1f) / ((float)siblings.Count - 1f)))]);
+
+		else
+			for (int i = 0; i < parents.Count; i++)
+				ConnectNodes(siblings[(int)(i * (((float)siblings.Count - 1f) / ((float)parents.Count - 1f)))], parents[i]);
+
+		// RANDOMIZER #1
+		//for(int i = 0; i < siblings.Count; i++)
+		//{
+		//	int parentIndex = Random.Range(0, parents.Count);
+		//	if (!parents[parentIndex].ChildNodes.Contains(siblings[i]) && Random.Range(0f, 1f) > .66f)
+		//		ConnectNodes(siblings[i], parents[parentIndex]);
+		//}
+
+		// RANDOMIZER #2
+		for (int i = 0; i < siblings.Count; i++)
+		{
+			int parentIndex = Random.Range(Mathf.Min(Mathf.Max(i - 1, 0), parents.Count - 1) , Mathf.Min(i + 1, parents.Count - 1));
+			if (!parents[parentIndex].ChildNodes.Contains(siblings[i]) && Random.Range(0f, 1f) > dungeonPanel.randomPathingChance)
+				ConnectNodes(siblings[i], parents[parentIndex]);
+		}
+	}
+
+	private void ConnectNodes(DungeonNode childNode, DungeonNode parentNode)
+	{
+		childNode.ParentNode = parentNode;
+
+		if (parentNode.ChildNodes == null) parentNode.ChildNodes = new List<DungeonNode>();
+		parentNode.ChildNodes.Add(childNode);
+
+		int index = parentNode.OwnLineRenderer.positionCount;
+		parentNode.OwnLineRenderer.positionCount += 3;
+
+		Vector3 parentPos = parentNode.transform.position + new Vector3((parentNode.transform as RectTransform).sizeDelta.x * .005f, 0f, 0f);
+		Vector3 childPos = childNode.transform.position + new Vector3((childNode.transform as RectTransform).sizeDelta.x * .005f, 0f, 0f);
+
+		parentNode.OwnLineRenderer.SetPosition(index, new Vector3(parentPos.x, parentPos.y, -1f));
+		parentNode.OwnLineRenderer.SetPosition(index + 1, new Vector3(childPos.x, childPos.y, -1f));
+		parentNode.OwnLineRenderer.SetPosition(index + 2, new Vector3(parentPos.x, parentPos.y, -1f));
+	}
+
+	private void MoveToNextNode(DungeonNode newNode)
 	{
 		currentNode.GetComponent<Image>().color = currentNodeColorBuffer;
 
 		currentNode = newNode;
 		var image = currentNode.GetComponent<Image>();
 		currentNodeColorBuffer = image.color;
-		image.color = currentStandingColor;
+		image.color = dungeonPanel.CurrentStandingColor;
 	}
 
-	public void ReceiveNodePress(DungeonNode node)
+	public void ExtendNodePress(DungeonNode node)
 	{
-		if (node.Depth == currentNode.Depth + 1)
+		if (currentNode.ChildNodes != null && currentNode.ChildNodes.Contains(node))
 			MoveToNextNode(node);
 		else Debug.Log("Illegal Movement");
 	}

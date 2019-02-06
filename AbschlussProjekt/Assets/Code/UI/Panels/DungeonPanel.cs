@@ -7,6 +7,8 @@ public class DungeonPanel : UIPanel
 	public GameObject MapParent;
 	public int DungeonLength;
 	public int MaxSiblings;
+	public float randomPathingChance;
+	public Color CurrentStandingColor = new Color(.5f, 0f, 0f, 1f);
 
 	[Header("Prefabs")]
 	public GameObject EmptyNodePrefab;

@@ -8,13 +8,17 @@ public abstract class DungeonNode : MonoBehaviour
 
 	[NonSerialized] public DungeonNode ParentNode;
 	[NonSerialized] public List<DungeonNode> ChildNodes;
-
-	public RoomType OwnRoomType;
+	[NonSerialized] public RoomType OwnRoomType;
 	[NonSerialized] public int Depth;
 
-
+	private LineRenderer ownLineRenderer;
+	public LineRenderer OwnLineRenderer
+	{
+		get { return ownLineRenderer ?? (ownLineRenderer = GetComponent<LineRenderer>()); }
+	}
+	
 	public void SignifyPress()
 	{
-		AssetManager.Instance.GetManager<DungeonManager>().ReceiveNodePress(this);
+		AssetManager.Instance.GetManager<DungeonManager>().ExtendNodePress(this);
 	}
 }
