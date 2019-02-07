@@ -148,15 +148,16 @@ public class DungeonManager : Manager
 		if (parentNode.ChildNodes == null) parentNode.ChildNodes = new List<DungeonNode>();
 		parentNode.ChildNodes.Add(childNode);
 
-		int index = parentNode.OwnLineRenderer.positionCount;
-		parentNode.OwnLineRenderer.positionCount += 3;
+		var lineRenderer = Object.Instantiate(dungeonPanel.LineRendererPrefab, parentNode.transform).GetComponent<LineRenderer>();
+		lineRenderer.positionCount = 2;
+		
+		Vector3 parentPos = parentNode.transform.position + new Vector3((parentNode.transform as RectTransform).sizeDelta.x * .005f, 0f, -1f);
+		Vector3 childPos = childNode.transform.position + new Vector3((childNode.transform as RectTransform).sizeDelta.x * .005f, 0f, -1f);
 
-		Vector3 parentPos = parentNode.transform.position + new Vector3((parentNode.transform as RectTransform).sizeDelta.x * .005f, 0f, 0f);
-		Vector3 childPos = childNode.transform.position + new Vector3((childNode.transform as RectTransform).sizeDelta.x * .005f, 0f, 0f);
+		Vector3 distVec = (childPos - parentPos).normalized * (parentNode.transform as RectTransform).sizeDelta.x * .007f;
 
-		parentNode.OwnLineRenderer.SetPosition(index, new Vector3(parentPos.x, parentPos.y, -1f));
-		parentNode.OwnLineRenderer.SetPosition(index + 1, new Vector3(childPos.x, childPos.y, -1f));
-		parentNode.OwnLineRenderer.SetPosition(index + 2, new Vector3(parentPos.x, parentPos.y, -1f));
+		lineRenderer.SetPosition(0, parentPos + distVec);
+		lineRenderer.SetPosition(1, childPos - distVec);
 	}
 
 	private void MoveToNextNode(DungeonNode newNode)

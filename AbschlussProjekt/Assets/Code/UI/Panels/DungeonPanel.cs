@@ -11,6 +11,7 @@ public class DungeonPanel : UIPanel
 	public Color CurrentStandingColor = new Color(.5f, 0f, 0f, 1f);
 
 	[Header("Prefabs")]
+	public GameObject LineRendererPrefab;
 	public GameObject EmptyNodePrefab;
 	public GameObject CampfireNodePrefab;
 	public GameObject CombatNodePrefab;

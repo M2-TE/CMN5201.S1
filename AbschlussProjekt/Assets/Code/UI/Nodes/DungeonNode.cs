@@ -10,12 +10,6 @@ public abstract class DungeonNode : MonoBehaviour
 	[NonSerialized] public List<DungeonNode> ChildNodes;
 	[NonSerialized] public RoomType OwnRoomType;
 	[NonSerialized] public int Depth;
-
-	private LineRenderer ownLineRenderer;
-	public LineRenderer OwnLineRenderer
-	{
-		get { return ownLineRenderer ?? (ownLineRenderer = GetComponent<LineRenderer>()); }
-	}
 	
 	public void SignifyPress()
 	{
