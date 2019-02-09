@@ -60,7 +60,6 @@ public class CombatManager : Manager
 	{
 		this.combatPanel = combatPanel;
 		eventSystem = combatPanel.GetComponentInChildren<EventSystem>();
-
 	}
 
 	public void StartCombat(Entity[] playerTeam, Entity[] opposingTeam)
@@ -68,10 +67,12 @@ public class CombatManager : Manager
 		combatants = new Entity[2, (playerTeam.Length > opposingTeam.Length) ? playerTeam.Length : opposingTeam.Length];
 		proxies = new Proxy[2, combatants.GetLength(1)];
 		selectableTargets = new bool[2, combatants.GetLength(1)];
-
+		
 		for (int x = 0; x < combatants.GetLength(0); x++)
 			for (int y = 0; y < combatants.GetLength(1); y++)
-				combatants[x, y] = (x == 0) ? playerTeam[y] : opposingTeam[y];
+				combatants[x, y] = (x == 0)
+					? playerTeam.Length > y ? playerTeam[y] : null
+					: opposingTeam.Length > y ? opposingTeam[y] : null;
 
 		combatPanel.CombatActive = true;
 		InitializeEntities();
@@ -169,7 +170,6 @@ public class CombatManager : Manager
 	private void HandleCurrentTurn()
 	{
 		HandleCombatEffects(true);
-		currentlySelectedSkill = 0; // change this to first skill of that character
 		ProgressCooldowns();
 		UpdateSkillIcons();
 		UpdateEntityInspectionWindow();
@@ -352,9 +352,9 @@ public class CombatManager : Manager
 				for (int y = 0; y < proxies.GetLength(1); y++)
 				{
 					bool check = combatants[x, y] != null;
-					proxies[x, y].HealthBar.gameObject.SetActive(check);
 					if (check)
 					{
+						//proxies[x, y].HealthBar.gameObject.SetActive(check);
 						proxies[x, y].HealthBar.maxValue = combatants[x, y].currentMaxHealth;
 						proxies[x, y].HealthBar.value =
 							Mathf.MoveTowards
@@ -372,32 +372,8 @@ public class CombatManager : Manager
 
 	private void UpdateSelectableTargets()
 	{
-		//if (currentlySelectedSkill == -1) // move
-		//{
-		//	for (int x = 0; x < proxies.GetLength(0); x++)
-		//	{
-		//		for (int y = 0; y < proxies.GetLength(1); y++)
-		//		{
-		//			selectableTargets[x, y] = x == upcomingTurns[0].x && (y == upcomingTurns[0].y - 1 || y == upcomingTurns[0].y + 1);
-		//			proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
-		//		}
-		//	}
-		//	return;
-		//}
-		//else if (currentlySelectedSkill == -2) // pass
-		//{
-		//	for (int x = 0; x < proxies.GetLength(0); x++)
-		//	{
-		//		for (int y = 0; y < proxies.GetLength(1); y++)
-		//		{
-		//			selectableTargets[x, y] = upcomingTurns[0].x == x && upcomingTurns[0].y == y;
-		//			proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
-		//		}
-		//	}
-		//	return;
-		//}
-
 		CombatSkill skill = GetCurrentlySelectedSkill();
+		if (skill == null) return;
 		for (int x = 0; x < proxies.GetLength(0); x++)
 		{
 			for (int y = 0; y < proxies.GetLength(1); y++)
@@ -424,7 +400,8 @@ public class CombatManager : Manager
 							&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
 							&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
 				}
-				proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+				if(proxies[x, y] != null)
+					proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
 			}
 		}
 	}
@@ -517,7 +494,7 @@ public class CombatManager : Manager
 			if (target.x == 0) target.y += i;
 			else if (target.x == 1)
 			{
-				if (target.y - 1 < 0) Debug.Log("overlap from opponent team to player team"); // when the target overlaps teams
+				if (target.y - 1 < 0) continue; // when the target overlaps teams
 				else target.y -= i;
 			}
 
@@ -533,7 +510,7 @@ public class CombatManager : Manager
 
 			if (target.x == 0)
 			{
-				if (target.y - i < 0) Debug.Log("overlap from player to opponent team"); // when the target overlaps teams
+				if (target.y - i < 0) continue; // when the target overlaps teams
 				else target.y -= i;
 			}
 			else if (target.x == 1) target.y += i;
@@ -764,7 +741,11 @@ public class CombatManager : Manager
 		{
 			case -2: return GetEntity(upcomingTurns[0]).EquippedPassSkill;
 			case -1: return GetEntity(upcomingTurns[0]).EquippedRepositioningSkill;
-			default: return GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+
+			case 0: case 1: case 2: case 3:
+				return GetEntity(upcomingTurns[0]).EquippedCombatSkills[currentlySelectedSkill];
+
+			default: return null;
 		}
 	}
 

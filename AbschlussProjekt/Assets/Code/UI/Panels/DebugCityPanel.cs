@@ -11,7 +11,7 @@ public class DebugCityPanel : UIPanel
 	public void OnBarracksSelect()
 	{
 		ToggleVisibility(false);
-		//AssetManager.Instance.GetManager<BarracksManager>().TogglePanelVisibility();
+		AssetManager.Instance.GetManager<GeneralCityManager>().barracksPanel.ToggleVisibility(true);
 	}
 
 	public void OnAcademySelect()

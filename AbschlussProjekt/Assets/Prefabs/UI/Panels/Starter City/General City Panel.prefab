@@ -123,7 +123,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5907763665450146602}
-  - component: {fileID: 4652235847045665923}
   m_Layer: 5
   m_Name: General City Panel
   m_TagString: Untagged
@@ -151,27 +150,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4652235847045665923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5907763665450146773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64200eeac7f5c2d48866ea5c40226f4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstSelectedElement: {fileID: 0}
-  visibilityToggleNode: {fileID: 2755056555550701007}
-  DraggableSlotPrefab: {fileID: 616545172102209121, guid: efa64be37ac7b7d4b8ca96e7956b4a5c,
-    type: 3}
-  EquippedCharSlots:
-  - {fileID: 6639399351618087043}
-  - {fileID: 6639399353180580539}
-  - {fileID: 6639399352709092357}
-  - {fileID: 6639399352279968514}
 --- !u!1001 &5907763664693663331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -302,18 +280,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5907763664693663331}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6639399353180580539 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 999646596466474200, guid: 59be906c26ebf2a418b0b09aec097192,
-    type: 3}
-  m_PrefabInstance: {fileID: 5907763664693663331}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76249ddbdd8eb144bc4b74004984181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6639399353671690188 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 999646596117934511, guid: 59be906c26ebf2a418b0b09aec097192,
@@ -456,18 +422,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5907763665303562461}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6639399352709092357 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 999646596466474200, guid: 59be906c26ebf2a418b0b09aec097192,
-    type: 3}
-  m_PrefabInstance: {fileID: 5907763665303562461}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76249ddbdd8eb144bc4b74004984181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6639399353073621362 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 999646596117934511, guid: 59be906c26ebf2a418b0b09aec097192,
@@ -610,18 +564,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5907763665613150170}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6639399352279968514 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 999646596466474200, guid: 59be906c26ebf2a418b0b09aec097192,
-    type: 3}
-  m_PrefabInstance: {fileID: 5907763665613150170}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76249ddbdd8eb144bc4b74004984181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6639399352494024309 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 999646596117934511, guid: 59be906c26ebf2a418b0b09aec097192,
@@ -770,18 +712,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5907763666260350043}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6639399351618087043 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 999646596466474200, guid: 59be906c26ebf2a418b0b09aec097192,
-    type: 3}
-  m_PrefabInstance: {fileID: 5907763666260350043}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76249ddbdd8eb144bc4b74004984181, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6639399352083277300 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 999646596117934511, guid: 59be906c26ebf2a418b0b09aec097192,

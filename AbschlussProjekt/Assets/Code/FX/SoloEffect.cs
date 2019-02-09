@@ -69,7 +69,7 @@ public class SoloEffect : BaseEffect
 			yield return waitTime;
 		}
 
-		ownSpriteRenderer.sprite = null;
+		if (this != null) ownSpriteRenderer.sprite = null;
 		yield return new WaitForSeconds(lingeringDuration);
 
 		if (waitForAudio)

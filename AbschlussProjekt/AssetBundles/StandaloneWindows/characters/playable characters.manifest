@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 327536956
+CRC: 1971524241
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1f632f7527772242f3b1a5e105ab31dd
+    Hash: c442b04a62ca08db8fa6c8cd85a96ff1
   TypeTreeHash:
     serializedVersion: 2
     Hash: dab64c0ded77babde00558238acd6066
@@ -80,8 +80,11 @@ ClassTypes:
 - Class: 245
   Script: {instanceID: 0}
 Assets:
+- Assets/_Data Containers/Characters/Main Characters/Robot/Skills/Earthshatter.asset
 - Assets/_Data Containers/Characters/Main Characters/Gunwoman/Gunwoman.asset
 - Assets/_Data Containers/Characters/Main Characters/Gunwoman/Skills/Haste.asset
+- Assets/_Data Containers/Characters/Main Characters/Robot/Robot.asset
+- Assets/_Data Containers/Characters/Main Characters/Robot/Skills/Obliterate.asset
 - Assets/_Data Containers/Characters/Main Characters/Mage/Mage.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight/Knight.asset
 - Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Slash.asset

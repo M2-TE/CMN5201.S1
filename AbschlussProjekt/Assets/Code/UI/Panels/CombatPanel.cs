@@ -74,8 +74,14 @@ public class CombatPanel : UIPanel
 		set
 		{
 			combatActive = value;
-			gameObject.SetActive(value);
+			ToggleVisibility(value);
 		}
+	}
+
+	private EventSystem eventSystem;
+	public new EventSystem EventSystem
+	{
+		get { return eventSystem ?? (eventSystem = transform.parent.GetComponentInChildren<EventSystem>()); }
 	}
 	#endregion
 
@@ -85,13 +91,27 @@ public class CombatPanel : UIPanel
 		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
 		combatManager.RegisterCombatPanel(this);
 		CombatActive = false;
-
-		ToggleVisibility(true);
 	}
 
 	private void Update()
 	{
 		if(CombatActive) combatManager.UpdateCombatManager();
+
+
+		if (Input.GetKeyDown(KeyCode.U))
+		{
+			AssetManager instance = AssetManager.Instance;
+
+			Entity[] ownTeam = instance.Savestate.CurrentTeam;
+			Entity[] enemyTeam = new Entity[]
+			{
+				new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Knight")),
+				new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Mage")),
+				new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Gunwoman"))
+			};
+
+			combatManager.StartCombat(ownTeam, enemyTeam);
+		}
 	}
 
 	public void OnSkillSelect(int skillID)

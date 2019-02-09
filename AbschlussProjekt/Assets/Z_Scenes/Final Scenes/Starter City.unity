@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -454,6 +454,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3208144138530769394}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1036023814 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1470444671297838837, guid: 9139fba2234202641b4c60a7a428a4ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1470444671488048973}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4fe74911345f2e4092458bfaf62577e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1065664962 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6639399351618087043, guid: e19dc6da9d0825e43a61704ac5be6e14,
@@ -981,6 +993,11 @@ PrefabInstance:
       propertyPath: firstSelectedElement
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1470444671297838837, guid: 9139fba2234202641b4c60a7a428a4ae,
+        type: 3}
+      propertyPath: visibilityOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
 --- !u!1001 &3208144138530769394
@@ -990,6 +1007,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 164914626}
     m_Modifications:
+    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
+        type: 3}
+      propertyPath: m_Name
+      value: Barracks Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 404848153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000035641133
+      objectReference: {fileID: 0}
+    - target: {fileID: 341495153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3208144139095691157, guid: f8e6e1f195549a54eaa168081f9ac9db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1095,15 +1125,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
-        type: 3}
-      propertyPath: m_Name
-      value: Barracks Panel
-      objectReference: {fileID: 0}
-    - target: {fileID: 404848153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.000024226263
-      objectReference: {fileID: 0}
     - target: {fileID: 2067387495, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1149,10 +1170,6 @@ PrefabInstance:
       propertyPath: m_FillCenter
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 341495153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1203805752, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_Name
       value: Barracks Exit Button
@@ -1168,6 +1185,18 @@ PrefabInstance:
     - target: {fileID: 572697348, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203805754, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3208144138530769396}
+    - target: {fileID: 1203805754, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBarracksExitButtonPress
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203805754, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
@@ -1191,7 +1220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstSelectedElement: {fileID: 0}
   visibilityToggleNode: {fileID: 1460264129}
-  visibilityOnAwake: 1
+  visibilityOnAwake: 0
+  debugCityPanel: {fileID: 1036023814}
   barrackSlots: []
   characterSlotPrefab: {fileID: 999646596466474202, guid: 59be906c26ebf2a418b0b09aec097192,
     type: 3}

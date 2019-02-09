@@ -3,6 +3,9 @@
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Data Container/Items/Equipment")]
 public class EquipmentContainer : ItemContainer
 {
+	public enum Dodo { Test, Gay, SikeNig }
+
+	public Dodo[] testArray;
     [Space(20)]
     [SerializeField] public Character[] MatchingClasses;
     [Space(10)]
