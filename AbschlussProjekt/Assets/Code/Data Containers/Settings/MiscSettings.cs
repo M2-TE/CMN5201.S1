@@ -4,5 +4,5 @@
 public class MiscSettings : Settings
 {
     public LayerMask GroundLayers;
-	public AnimationCurve charWobbleCurve;
+	public AnimationCurve WobbleCurve;
 }

@@ -21,7 +21,10 @@ MonoBehaviour:
   IsQuestItem: 0
   IsUnique: 0
   StackingLimit: 0
+  testArray: 0100000000000000
   MatchingClasses: []
   EquipmentType: 3
+  HealthBonus: 0
   AttackBonus: 0
   DefenseBonus: 1
+  SpeedBonus: 0

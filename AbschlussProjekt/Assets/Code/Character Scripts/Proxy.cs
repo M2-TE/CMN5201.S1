@@ -25,8 +25,7 @@ public class Proxy : MonoBehaviour
 
 	[SerializeField] private Image allyTargetIndicator;
 	[SerializeField] private Image enemyTargetIndicator;
-	private Vector3 baseScale;
-	private bool wobbling;
+	[SerializeField] private Image selectedIndicator;
 
 	public void SetIndicatorActive(int teamID, bool activeState)
 	{
@@ -35,13 +34,21 @@ public class Proxy : MonoBehaviour
 			case 0:
 				enemyTargetIndicator.enabled = false;
 				allyTargetIndicator.enabled = activeState;
+				if(gameObject.activeInHierarchy) StartCoroutine(IndicatorWobble(allyTargetIndicator));
 				break;
 
 			case 1:
 				allyTargetIndicator.enabled = false;
 				enemyTargetIndicator.enabled = activeState;
+				if (gameObject.activeInHierarchy) StartCoroutine(IndicatorWobble(enemyTargetIndicator));
 				break;
 		}
+
+	}
+
+	public void SetSelected(bool selectedState)
+	{
+		selectedIndicator.enabled = selectedState;
 	}
 
 	public void PlaySfx(AudioClip[] sfxArr)
@@ -49,28 +56,22 @@ public class Proxy : MonoBehaviour
 		if(sfxArr.Length > 0) audioSource.PlayOneShot(sfxArr[Random.Range(0, sfxArr.Length)]);
 	}
 
-	public void Wobble()
+	private IEnumerator IndicatorWobble(Image wobbleImage)
 	{
-		if (!wobbling) StartCoroutine(TriggerWobble());
-	}
-
-	private IEnumerator TriggerWobble()
-	{
-		wobbling = true;
-		baseScale = transform.localScale;
-
-		AnimationCurve wobbleCurve = amInstance.LoadBundle<MiscSettings>(amInstance.Paths.SettingsPath, "Misc Settings").charWobbleCurve;
-		float timer = 0f;
-		float curveLength = wobbleCurve[wobbleCurve.length - 1].time;
-		while(timer < 1f)
+		var wobbleCurve = amInstance.LoadBundle<MiscSettings>(amInstance.Paths.SettingsPath, "Misc Settings").WobbleCurve;
+		var wobbleTrans = wobbleImage.transform;
+		var baseScale = wobbleTrans.localScale;
+		var timer = 0f;
+		var curveLength = wobbleCurve[wobbleCurve.length - 1].time;
+		while (timer < 1f)
 		{
-			transform.localScale = baseScale * wobbleCurve.Evaluate(timer);
+			wobbleTrans.localScale = baseScale * wobbleCurve.Evaluate(timer);
 			timer += Time.deltaTime;
-			yield return null;
+			if (wobbleImage.enabled) yield return null;
+			else break;
 		}
 
-		wobbling = false;
-		transform.localScale = baseScale;
+		wobbleTrans.localScale = baseScale;
 		yield return null;
 	}
 }

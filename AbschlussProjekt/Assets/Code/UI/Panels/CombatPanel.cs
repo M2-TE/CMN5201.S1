@@ -81,13 +81,14 @@ public class CombatPanel : UIPanel
 	private EventSystem eventSystem;
 	public new EventSystem EventSystem
 	{
-		get { return eventSystem ?? (eventSystem = transform.parent.GetComponentInChildren<EventSystem>()); }
+		get { return eventSystem ?? (eventSystem = GetComponentInChildren<EventSystem>()); }
 	}
 	#endregion
 
 	protected override void Awake()
 	{
 		base.Awake();
+		transform.parent.GetComponentInChildren<EventSystem>().gameObject.SetActive(false);
 		combatManager = AssetManager.Instance.GetManager<CombatManager>() ?? new CombatManager();
 		combatManager.RegisterCombatPanel(this);
 		CombatActive = false;

@@ -35,11 +35,9 @@ public class CombatManager : Manager
 		{
 			if (m_currentlyInspectedEntityPos != value)
 			{
-				//GetProxy(value).Wobble();
 				m_currentlyInspectedEntityPos = value;
 				UpdateEntityInspectionWindow();
 			}
-
 		}
 	}
 
@@ -188,7 +186,7 @@ public class CombatManager : Manager
 			combatPanel.EventSystem.SetSelectedGameObject(combatPanel.TeamSkillImage[0].gameObject);
 		}
 
-		UpdateSelectableTargets();
+		GetProxy(upcomingTurns[0]).SetSelected(true);
 	}
 
 	private void ProgressCooldowns()
@@ -204,6 +202,7 @@ public class CombatManager : Manager
 	private void EndTurn()
 	{
 		HandleCombatEffects(false);
+		GetProxy(upcomingTurns[0]).SetSelected(false);
 		GetEntity(upcomingTurns[0]).currentInitiative = 0;
 		upcomingTurns.RemoveAt(0);
 
@@ -213,22 +212,46 @@ public class CombatManager : Manager
 
 	private void ControlOpponentTurn()
 	{
+		Entity opponentEntity = GetEntity(upcomingTurns[0]);
+
 		// select AI's skill
-		currentlySelectedSkill = 0;
-
-		List<Vector2Int> validTargets = new List<Vector2Int>();
-		for (int i = 0; i < combatants.GetLength(1); i++)
-			if (combatants[0, i] != null && combatants[0, i].currentHealth != 0)
-				validTargets.Add(combatants[0, i].currentCombatPosition);
-
-		if (validTargets.Count > 0)
+		List<int> selectableSkills = new List<int>();
+		int counter = 0;
+		foreach (int cooldown in opponentEntity.currentSkillCooldowns.Values)
 		{
-			Vector2Int targetPos;
-			targetPos = validTargets[Random.Range(0, validTargets.Count)];
-			UseCombatSkill(targetPos);
+			if (cooldown == 0) selectableSkills.Add(counter);
+			counter++;
 		}
-		else
-			EndTurn(); // -> do nothing and end turn if no valid target was found
+
+		while (selectableSkills.Count > 0)
+		{
+			currentlySelectedSkill = selectableSkills[Random.Range(0, selectableSkills.Count)];
+
+			//currentlySelectedSkill = 0;
+
+			List<Vector2Int> validTargets = new List<Vector2Int>();
+			for (int x = 0; x < selectableTargets.GetLength(0); x++)
+				for (int y = 0; y < selectableTargets.GetLength(1); y++)
+					if (selectableTargets[x, y] == true) validTargets.Add(new Vector2Int(x, y));
+			if (validTargets.Count == 0)
+			{
+				if (selectableSkills.Count == 0)
+				{
+					EndTurn(); // skip turn if none of the available abilites can hit a target
+					break;
+				}
+				else
+				{
+					selectableSkills.Remove(currentlySelectedSkill);
+					continue;
+				}
+			}
+			else
+			{
+				UseCombatSkill(validTargets[Random.Range(0, validTargets.Count)]);
+				break;
+			}
+		}
 	}
 
 	private void ProgressInits()
@@ -374,34 +397,59 @@ public class CombatManager : Manager
 	{
 		CombatSkill skill = GetCurrentlySelectedSkill();
 		if (skill == null) return;
+
 		for (int x = 0; x < proxies.GetLength(0); x++)
 		{
 			for (int y = 0; y < proxies.GetLength(1); y++)
 			{
 				// dont show indicator if: 1: Its an enemy's turn. 2: The spot is empty. 3: The character is dead (and no revive skill is in use)
 				Vector2Int indicPos = new Vector2Int(x, y);
-				if (upcomingTurns[0].x == 1
-					|| GetEntity(indicPos) == null
+				if (GetEntity(indicPos) == null
 					|| GetEntity(indicPos).currentHealth == 0) selectableTargets[x, y] = false;
 				else
 				{
-					// player team indicator
-					if (x == 0)
+					if (x == 0) // current iterated entity is an ally
 					{
-						if (y == upcomingTurns[0].y) selectableTargets[x, y] = skill.CanHitSelf;
-						else selectableTargets[x, y] =
-								skill.CanHitAllies
-								&& (Mathf.Abs(upcomingTurns[0].y - y) <= skill.MaxRange)
-								&& (Mathf.Abs(upcomingTurns[0].y - y) >= skill.MinRange);
+						if(upcomingTurns[0].x == 0) // ally turn
+						{
+							if (y == upcomingTurns[0].y) selectableTargets[x, y] = skill.CanHitSelf;
+							else selectableTargets[x, y] =
+									skill.CanHitAllies
+									&& (Mathf.Abs(upcomingTurns[0].y - y) <= skill.MaxRange)
+									&& (Mathf.Abs(upcomingTurns[0].y - y) >= skill.MinRange);
+						}
+						else // enemy turn
+						{
+							selectableTargets[x, y] =
+								skill.CanHitEnemies
+								&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
+								&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
+						}
 					}
-					//enemy team indicator
-					else selectableTargets[x, y] =
-							skill.CanHitEnemies
-							&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
-							&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
+					else // current iterated entity is an enemy
+					{
+						if(upcomingTurns[0].x == 0) // ally turn
+						{
+							selectableTargets[x, y] =
+								skill.CanHitEnemies
+								&& (upcomingTurns[0].y + y + 1 <= skill.MaxRange)
+								&& (upcomingTurns[0].y + y + 1 >= skill.MinRange);
+						}
+						else // enemy turn
+						{
+							if (y == upcomingTurns[0].y) selectableTargets[x, y] = skill.CanHitSelf;
+							else selectableTargets[x, y] =
+									skill.CanHitAllies
+									&& (Mathf.Abs(upcomingTurns[0].y - y) <= skill.MaxRange)
+									&& (Mathf.Abs(upcomingTurns[0].y - y) >= skill.MinRange);
+						}
+					}
 				}
-				if(proxies[x, y] != null)
-					proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+				if (proxies[x, y] != null)
+				{
+					if (upcomingTurns[0].x == 0) proxies[x, y].SetIndicatorActive(x, selectableTargets[x, y]);
+					else proxies[x, y].SetIndicatorActive(x, false);
+				}
 			}
 		}
 	}
@@ -682,7 +730,8 @@ public class CombatManager : Manager
 	{
 		upcomingTurns.Remove(dyingCharPos); // TODO: check if this ever throws an exception
 		GetEntity(dyingCharPos).currentInitiative = 0;
-		GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
+		//GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
+		GetProxy(dyingCharPos).gameObject.SetActive(false);
 		//GameObject proxy = GetProxy(dyingCharPos); 
 		//proxy.GetComponent<Animator>().enabled = false; // pause anim
 		//proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
