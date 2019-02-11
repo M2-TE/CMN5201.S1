@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class DungeonManager : Manager
 {
+	public Entity[] BufferedEnemies;
+
 	private DungeonPanel dungeonPanel;
 
 	private DungeonNode currentNode;
@@ -66,6 +68,7 @@ public class DungeonManager : Manager
 			case DungeonNode.RoomType.EliteCombat:
 			case DungeonNode.RoomType.Boss:
 				node = Object.Instantiate(dungeonPanel.CombatNodePrefab, dungeonPanel.MapParent.transform).GetComponent<DungeonNode>();
+				(node as CombatNode).HostileEntities = CreateEnemyGroup(roomType);
 				break;
 
 			case DungeonNode.RoomType.Treasure:
@@ -168,6 +171,43 @@ public class DungeonManager : Manager
 		var image = currentNode.GetComponent<Image>();
 		currentNodeColorBuffer = image.color;
 		image.color = dungeonPanel.CurrentStandingColor;
+
+		switch (newNode.OwnRoomType)
+		{
+			default:
+			case DungeonNode.RoomType.Empty:
+
+				break;
+
+			case DungeonNode.RoomType.Camp:
+
+				break;
+
+			case DungeonNode.RoomType.StandardCombat:
+			case DungeonNode.RoomType.EliteCombat:
+				BufferedEnemies = (newNode as CombatNode).HostileEntities;
+				var instance = AssetManager.Instance;
+				instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
+				break;
+
+			case DungeonNode.RoomType.Boss:
+
+				break;
+
+			case DungeonNode.RoomType.Treasure:
+
+				break;
+		}
+	}
+
+	private Entity[] CreateEnemyGroup(DungeonNode.RoomType roomType)
+	{
+		var instance = AssetManager.Instance;
+		return BufferedEnemies = new Entity[]
+		{
+			//new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Knight"))
+			new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Mage"))
+		};
 	}
 
 	public void ExtendNodePress(DungeonNode node)

@@ -5,19 +5,53 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utilities;
 
 public class GameManager : Manager
 {
 	public AreaData CurrentArea { get; private set; }
+	public AreaData CurrentLoadedCombatArea { get; private set; }
 
 	public void LoadAreaAsync(AreaData areaToLoad)
 	{
 		//AssetManager.Instance.GetManager<InputManager>().RemoveAllListeners();
-		AssetManager.Instance.UnloadBundles();
+		//AssetManager.Instance.UnloadBundles();
 
 		CurrentArea = areaToLoad;
-		SceneManager.LoadSceneAsync(areaToLoad.Scene, areaToLoad.LoadSceneMode);
+		SceneManager.LoadSceneAsync(areaToLoad.Scene, LoadSceneMode.Single);
+	}
+
+	public void LoadCombatAreaAsync(AreaData combatAreaToLoad)
+	{
+		CurrentLoadedCombatArea = combatAreaToLoad;
+
+		var asyncOp = SceneManager.LoadSceneAsync(CurrentLoadedCombatArea.Scene, LoadSceneMode.Additive);
+		asyncOp.completed += CombatAreaLoadCompleted;
+	}
+
+	private void CombatAreaLoadCompleted(AsyncOperation obj)
+	{
+		var objectsToDisable = SceneManager.GetSceneAt(0).GetRootGameObjects();
+		for (int i = 0; i < objectsToDisable.Length; i++)
+			objectsToDisable[i].SetActive(false);
+		
+		SceneManager.SetActiveScene(SceneManager.GetSceneAt(1));
+	}
+
+	public void UnloadCombatAreaAsync()
+	{
+		var asyncOp = SceneManager.UnloadSceneAsync(CurrentLoadedCombatArea.Scene);
+		asyncOp.completed += CombatAreaUnloadCompleted;
+	}
+
+	private void CombatAreaUnloadCompleted(AsyncOperation obj)
+	{
+		CurrentLoadedCombatArea = null;
+
+		var objectsToEnable = SceneManager.GetSceneAt(0).GetRootGameObjects();
+		for (int i = 0; i < objectsToEnable.Length; i++)
+			objectsToEnable[i].SetActive(true);
+
+		SceneManager.SetActiveScene(SceneManager.GetSceneAt(0));
 	}
 
 	public void ExitGame()

@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CombatPanel : UIPanel
@@ -94,25 +95,17 @@ public class CombatPanel : UIPanel
 		CombatActive = false;
 	}
 
+	private void Start()
+	{
+		AssetManager instance = AssetManager.Instance;
+		Entity[] ownTeam = instance.Savestate.CurrentTeam;
+		Entity[] enemyTeam = instance.GetManager<DungeonManager>().BufferedEnemies;
+		combatManager.StartCombat(ownTeam, enemyTeam);
+	}
+
 	private void Update()
 	{
 		if(CombatActive) combatManager.UpdateCombatManager();
-
-
-		if (Input.GetKeyDown(KeyCode.U))
-		{
-			AssetManager instance = AssetManager.Instance;
-
-			Entity[] ownTeam = instance.Savestate.CurrentTeam;
-			Entity[] enemyTeam = new Entity[]
-			{
-				new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Knight")),
-				new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Mage")),
-				new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Gunwoman"))
-			};
-
-			combatManager.StartCombat(ownTeam, enemyTeam);
-		}
 	}
 
 	public void OnSkillSelect(int skillID)

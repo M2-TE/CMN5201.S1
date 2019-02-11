@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1773958589
+CRC: 3671739791
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ee5ee2af0d6c89a1ed878648be9fd2b3
+    Hash: 2dbbc571174a610db2205ffe8f7155ee
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7b30ae070901473b086521b0137cbf8d
@@ -14,5 +14,5 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
-- Assets/_Data Containers/Areas/Main Menu.asset
+- Assets/_Data Containers/Areas/Combat Areas/Standard Combat Area.asset
 Dependencies: []

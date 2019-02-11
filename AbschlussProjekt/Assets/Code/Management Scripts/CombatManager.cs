@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CombatManager : Manager
@@ -779,6 +780,7 @@ public class CombatManager : Manager
 				if (proxies[x, y] != null) Object.Destroy(proxies[x, y].gameObject);
 
 		Debug.Log("Player Victory: " + playerWon);
+		AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
 	}
 	#endregion
 	#endregion

@@ -19,7 +19,7 @@ public class BaseCharacterController : MonoBehaviour {
 	private float hMovement;
 
 	private int jumpCount;
-	private bool grounded;
+	//private bool grounded;
 
 	protected virtual void Awake()
 	{
@@ -76,7 +76,7 @@ public class BaseCharacterController : MonoBehaviour {
 			if(jumpCount != 0 && collision.GetContact(i).point.y < transform.position.y - (mainCollider.size.y * .5f - mainCollider.size.x * .5f))
 			{
 				jumpCount = 0;
-				grounded = true;
+				//grounded = true;
 			}
 		}
 	}
@@ -125,7 +125,7 @@ public class BaseCharacterController : MonoBehaviour {
 		if (jumpCount < charDataContainer.maxJumps && inputBuffer.GetKey(KeyCode.Space))
 		{
 			jumpCount++;
-			grounded = false;
+			//grounded = false;
 			ownRigidbody.velocity = new Vector2(ownRigidbody.velocity.x, 0f);
 			ownRigidbody.AddForce(new Vector2(0f, charDataContainer.jumpForce), ForceMode2D.Impulse);
 		}

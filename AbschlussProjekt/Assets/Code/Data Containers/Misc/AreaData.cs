@@ -6,7 +6,6 @@ using Utilities;
 public class AreaData : DataContainer
 {
 	public SceneField Scene;
-	public LoadSceneMode LoadSceneMode;
 
 	public AudioClip[] MusicPool;
 

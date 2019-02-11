@@ -23,4 +23,6 @@ public class Paths : DataContainer
 	public string DefaultLocation = "Starter City";
 	public string MainMenu = "Main Menu";
 	public string FirstDungeon = "First Dungeon";
+	public string StandardCombatArea = "Standard Combat Area";
+	public string BossCombatArea = "Boss Combat Area";
 }
