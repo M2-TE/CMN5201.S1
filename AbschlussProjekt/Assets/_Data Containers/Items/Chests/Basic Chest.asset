@@ -12,13 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8b4a26e2225c3458dfa9f9729b8c7c, type: 3}
   m_Name: Basic Chest
   m_EditorClassIdentifier: 
-  customChest: 0
-  completeRandomness: 0
-  selectedPools: 00000000
-  probability: 01000000
-  allItems: {fileID: 11400000, guid: 99382285d151ede47bb2f204e734ff65, type: 2}
-  minItems: 1
-  maxItems: 3
+  CustomChest: 0
+  CompleteRandomness: 0
+  SelectedPools: 010101
+  Probability: 020000000300000002000000
+  AllItems: {fileID: 11400000, guid: 99382285d151ede47bb2f204e734ff65, type: 2}
+  minItems: 5
+  maxItems: 8
   Items:
+  - amount: 1
+    content: Potion
+  - amount: 1
+    content: Base Armor
+  - amount: 1
+    content: TestItem
+  - amount: 1
+    content: TestItem
   - amount: 1
     content: Base Armor

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14dd9224a283f1f41ac1c84add6bfd5a, type: 3}
   m_Name: ItemPools
   m_EditorClassIdentifier: 
-  pools:
+  m_Pools:
   - poolName: Common
     items:
     - {fileID: 11400000, guid: c24f6edf3d484c642bde2e8f076d851a, type: 2}
-    - {fileID: 11400000, guid: d85d98ad21131664da86ff76e125dfb6, type: 2}
-    - {fileID: 11400000, guid: a6ebb4f305f954640b01d22d68db11fc, type: 2}
-    - {fileID: 11400000, guid: ed7bf67c9282cc44e90f797637e2f828, type: 2}
   - poolName: Rare
     items:
     - {fileID: 11400000, guid: 8c413bff4a5979644ac6862723eaa9f3, type: 2}
+  - poolName: Epic
+    items:
+    - {fileID: 11400000, guid: a6ebb4f305f954640b01d22d68db11fc, type: 2}

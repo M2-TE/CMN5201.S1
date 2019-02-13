@@ -20,8 +20,6 @@ public class ItemPoolEditor : Editor
 
         HandlePoolProperties();
 
-        if (EditorGUI.EndChangeCheck())
-            Undo.RecordObject(target, "Effect Prop Changed");
         serializedObject.ApplyModifiedProperties();
     }
 

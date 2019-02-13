@@ -4,15 +4,15 @@ using UnityEditor;
 using UnityEngine;
 [CreateAssetMenu(fileName = "New Pool", menuName = "Data Container/Items/Pool")]
 public class ItemPool : DataContainer
-{
-    [SerializeField] private MyDictionary[] pools;
+{ 
+    public MyDictionary[] m_Pools;
 
     public List<List<ItemContainer>> Pools
     {
         get
         {
             List<List<ItemContainer>> result = new List<List<ItemContainer>>();
-            foreach (MyDictionary item in pools)
+            foreach (MyDictionary item in m_Pools)
             {
                 result.Add( new List<ItemContainer>(item.items));
             }
@@ -22,10 +22,10 @@ public class ItemPool : DataContainer
 
     public string[] GetPoolNames()
     {
-        string[] poolsStrings = new string[pools.Length];
-        for (int i = 0; i < pools.Length; i++)
+        string[] poolsStrings = new string[m_Pools.Length];
+        for (int i = 0; i < m_Pools.Length; i++)
         {
-            poolsStrings[i] = pools[i].poolName;
+            poolsStrings[i] = m_Pools[i].poolName;
         }
         return poolsStrings;
     }

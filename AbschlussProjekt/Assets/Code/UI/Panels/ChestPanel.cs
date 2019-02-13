@@ -51,11 +51,11 @@ public class ChestPanel : UIPanel
 
     private void DrawItemsFromContainer()
     {
-        if (!chest.customChest && (chest.completeRandomness || (chest.selectedPools != null && chest.probability != null)))
+        if (!chest.CustomChest && (chest.CompleteRandomness || (chest.SelectedPools != null && chest.Probability != null)))
             chest.SelectRandomItems();
-        else if (chest.customChest)
+        else if (chest.CustomChest)
         {
-            chest.allItems = null;
+            chest.AllItems = null;
             Debug.Log("Custom Chest created");
         }
         else

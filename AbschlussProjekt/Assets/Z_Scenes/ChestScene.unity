@@ -124,11 +124,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest Panel
       objectReference: {fileID: 0}
-    - target: {fileID: 7618554523943837275, guid: b4b5e1933243c084f8370c0e211d4aad,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7618554523943837272, guid: b4b5e1933243c084f8370c0e211d4aad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -234,11 +229,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7618554523943837273, guid: b4b5e1933243c084f8370c0e211d4aad,
-        type: 3}
-      propertyPath: visibilityOnAwake
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 1681862991, guid: b4b5e1933243c084f8370c0e211d4aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2025488590}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4b5e1933243c084f8370c0e211d4aad, type: 3}
 --- !u!1001 &170000220
@@ -635,7 +629,7 @@ PrefabInstance:
     - target: {fileID: 4530618962421593325, guid: b238441705c2c834c8395370ea4175a0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4450767608335581645, guid: b238441705c2c834c8395370ea4175a0,
         type: 3}
@@ -867,11 +861,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory Panel
       objectReference: {fileID: 0}
-    - target: {fileID: 6990986390608604224, guid: 0f67b0c78edd08d419af25ef83853e8e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7070346977645354902, guid: 0f67b0c78edd08d419af25ef83853e8e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -977,5 +966,27 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6959289155032549248, guid: 0f67b0c78edd08d419af25ef83853e8e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6959289155032549248, guid: 0f67b0c78edd08d419af25ef83853e8e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f67b0c78edd08d419af25ef83853e8e, type: 3}
+--- !u!114 &2025488590 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8971022332511770386, guid: 0f67b0c78edd08d419af25ef83853e8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1503078780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b591ff5089dc340a50b2a82ae1475f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
