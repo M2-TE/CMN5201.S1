@@ -12,7 +12,7 @@ public class Chest : MonoBehaviour
     [SerializeField] private int minItems;
     [SerializeField] private int maxItems;
 
-    public List<ItemContainer> Items;
+    public List<StorageSlot> Items;
 
     void Awake()
     {
@@ -26,47 +26,41 @@ public class Chest : MonoBehaviour
 
     private void SelectRandomItems()
     {
-        Items = new List<ItemContainer>();
+        Items = new List<StorageSlot>();
 
-        int itemCount = (int)((maxItems-minItems)/Random.value)+minItems;
+        int itemCount = (int)((maxItems-minItems)*Random.value)+minItems;
         int[] poolValues = new int[itemCount];
         int[] itemValues = new int[itemCount];
+
 
         if (completeRandomness)
         {
             for (int i = 0; i < itemCount; i++)
             {
-                poolValues[i] = CalcRuleOfThree(0, allItems.Pools.Count, Random.value);
-                itemValues[i] = CalcRuleOfThree(0, allItems.Pools[poolValues[i]].Count, Random.value);
+                poolValues[i] = (int)(Mathf.Max(0,allItems.Pools.Count-1)*Random.value);
+                itemValues[i] = (int)(Mathf.Max(0, allItems.Pools[poolValues[i]].Count-1)* Random.value);
 
-                Items.Add(allItems.Pools[poolValues[i]][itemValues[i]]);
+                Items.Add(new StorageSlot(1,allItems.Pools[poolValues[i]][itemValues[i]]));
             }
         }
         else
         {
             List<int> pools = new List<int>();
-            for (int j = 0; j < poolValues.Length; j++)
+            for (int j = 0; j < selectedPools.Length; j++)
             {
                 for (int k = 0; k < probability[j]; k++)
                 {
-                    pools.Add(poolValues[j]);
+                    pools.Add(selectedPools[j]);
                 }
             }
             for (int i = 0; i < itemCount; i++)
             {
-                ShuffleListsRandom.ShuffleList<int>(pools);
-                poolValues[i] = pools[CalcRuleOfThree(0, pools.Count, Random.value)];
-                itemValues[i] = CalcRuleOfThree(0, allItems.Pools[poolValues[i]].Count, Random.value);
-                Items.Add(allItems.Pools[poolValues[i]][itemValues[i]]);
+                poolValues[i] = pools[(int)(Mathf.Max(0, (pools.Count-1)* Random.value))];
+                itemValues[i] = (int)(Mathf.Max(0, allItems.Pools[poolValues[i]].Count - 1) * Random.value);
+                Items.Add(new StorageSlot(1,allItems.Pools[poolValues[i]][itemValues[i]]));
             }
         }
 
         allItems = null;
-    }
-
-    private int CalcRuleOfThree(int first, int second, float percentage)
-    {
-        Debug.Log("Percentage: " + percentage);
-        return (int)((first - second) / (percentage > 0 ? percentage : 0.1f)) + second;
     }
 }

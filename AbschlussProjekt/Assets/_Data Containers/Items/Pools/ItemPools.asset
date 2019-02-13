@@ -20,4 +20,5 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a6ebb4f305f954640b01d22d68db11fc, type: 2}
     - {fileID: 11400000, guid: ed7bf67c9282cc44e90f797637e2f828, type: 2}
   - poolName: Rare
-    items: []
+    items:
+    - {fileID: 11400000, guid: 8c413bff4a5979644ac6862723eaa9f3, type: 2}
