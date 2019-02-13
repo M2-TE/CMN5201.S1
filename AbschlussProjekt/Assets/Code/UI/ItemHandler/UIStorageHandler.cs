@@ -10,29 +10,43 @@ public class UIStorageHandler : UIElementHandler
     [SerializeField] private TextMeshProUGUI amount;
 
     private InventoryPanel inventoryPanel;
-    private int inventoryPosition;
+    private ChestPanel chestPanel;
+    private int position;
 
     public TextMeshProUGUI Amount => amount;
 
     public void Connect(InventoryPanel panel, int inventoryPosition)
     {
         inventoryPanel = panel;
-        this.inventoryPosition = inventoryPosition;
+        position = inventoryPosition;
+    }
+
+    public void Connect(ChestPanel panel, int chestPosition)
+    {
+        chestPanel = panel;
+        position = chestPosition;
     }
 
     public override void OnSelect(BaseEventData eventData)
     {
-        inventoryPanel.DisplayItemInfo(inventoryPosition, true);
+        if(inventoryPanel != null)
+            inventoryPanel.DisplayItemInfo(position, true);
     }
 
     public override void OnDeselect(BaseEventData eventData)
     {
-        inventoryPanel.DisplayItemInfo(inventoryPosition, false);
+        if(inventoryPanel != null)
+            inventoryPanel.DisplayItemInfo(position, false);
     }
 
     protected override void OnPrimaryAction()
     {
-        AssetManager.Instance.GetManager<InventoryManager>().PrimaryActionOnItem(inventoryPosition);
+        if (inventoryPanel != null)
+            AssetManager.Instance.GetManager<InventoryManager>().PrimaryActionOnItem(position);
+        else if (chestPanel != null)
+            AssetManager.Instance.GetManager<ChestManager>().PrimaryActionOnItem(position);
+        else
+            Debug.LogError("An Error has occurred");
     }
 
     public void DisplayItem(StorageSlot item)

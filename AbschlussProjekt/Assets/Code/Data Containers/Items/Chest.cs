@@ -2,29 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chest : MonoBehaviour
+[CreateAssetMenu(fileName = "New Chest", menuName = "Data Container/Items/Chest")]
+public class Chest : DataContainer
 {
-    [SerializeField] private bool completeRandomness = true;
-    [SerializeField] private int[] selectedPools;
-    [SerializeField] private int[] probability;
-    [SerializeField] private ItemPool allItems;
+
+    public bool customChest = false;
+
+    public bool completeRandomness = true;
+    public int[] selectedPools;
+    public int[] probability;
+    public ItemPool allItems;
 
     [SerializeField] private int minItems;
     [SerializeField] private int maxItems;
 
     public List<StorageSlot> Items;
 
-    void Awake()
-    {
-        if (completeRandomness || (selectedPools != null && probability != null))
-            SelectRandomItems();
-        else
-            Debug.LogError("A Chest has a problem choosing items from the Pools");
-
-    }
-
-
-    private void SelectRandomItems()
+    public void SelectRandomItems()
     {
         Items = new List<StorageSlot>();
 
@@ -61,6 +55,7 @@ public class Chest : MonoBehaviour
             }
         }
 
-        allItems = null;
+        //allItems = null;
     }
+
 }

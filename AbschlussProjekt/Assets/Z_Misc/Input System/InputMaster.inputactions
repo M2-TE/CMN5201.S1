@@ -22,6 +22,12 @@
                     "id": "9e96b22b-f5a7-413e-98b1-2543261f61a1",
                     "expectedControlLayout": "Button",
                     "bindings": []
+                },
+                {
+                    "name": "OnMouseButtonLeft",
+                    "id": "7971a4a4-3466-4e1a-b5ad-2fc9370921c9",
+                    "expectedControlLayout": "Button",
+                    "bindings": []
                 }
             ],
             "bindings": [
@@ -68,6 +74,18 @@
                     "processors": "",
                     "groups": "",
                     "action": "CharacterInfoClose",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "PressAndRelease",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMouseButtonLeft",
                     "chainWithPrevious": false,
                     "isComposite": false,
                     "isPartOfComposite": false,

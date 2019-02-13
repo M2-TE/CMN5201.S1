@@ -53,7 +53,6 @@ public class InventoryPanel : UIPanel
     }
     #endregion
 
-
     public void DisplayInventory()
     {
         List<StorageSlot> Items = AssetManager.Instance.Savestate.Inventory;

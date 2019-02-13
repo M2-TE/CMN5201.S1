@@ -23,6 +23,7 @@ public class InputMaster : InputActionAssetReference
         m_UI_Back = m_UI.GetAction("Back");
         m_UI_InventoryOpen = m_UI.GetAction("InventoryOpen");
         m_UI_CharacterInfoClose = m_UI.GetAction("CharacterInfoClose");
+        m_UI_OnMouseButtonLeft = m_UI.GetAction("OnMouseButtonLeft");
         m_Initialized = true;
     }
     private void Uninitialize()
@@ -31,6 +32,7 @@ public class InputMaster : InputActionAssetReference
         m_UI_Back = null;
         m_UI_InventoryOpen = null;
         m_UI_CharacterInfoClose = null;
+        m_UI_OnMouseButtonLeft = null;
         m_Initialized = false;
     }
     public void SetAsset(InputActionAsset newAsset)
@@ -48,6 +50,7 @@ public class InputMaster : InputActionAssetReference
     private InputAction m_UI_Back;
     private InputAction m_UI_InventoryOpen;
     private InputAction m_UI_CharacterInfoClose;
+    private InputAction m_UI_OnMouseButtonLeft;
     public struct UIActions
     {
         private InputMaster m_Wrapper;
@@ -55,6 +58,7 @@ public class InputMaster : InputActionAssetReference
         public InputAction @Back { get { return m_Wrapper.m_UI_Back; } }
         public InputAction @InventoryOpen { get { return m_Wrapper.m_UI_InventoryOpen; } }
         public InputAction @CharacterInfoClose { get { return m_Wrapper.m_UI_CharacterInfoClose; } }
+        public InputAction @OnMouseButtonLeft { get { return m_Wrapper.m_UI_OnMouseButtonLeft; } }
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
