@@ -6,8 +6,8 @@ public class ChestPanel : UIPanel
 {
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject itemSlotsParent;
+    [SerializeField] private Chest chest;
 
-    public Chest Chest;
 
     private List<UIStorageHandler> storageSlots = new List<UIStorageHandler>();
 
@@ -15,47 +15,50 @@ public class ChestPanel : UIPanel
 
     protected override void Awake()
     {
+        DrawItemsFromContainer();
         chestManager = AssetManager.Instance.GetManager<ChestManager>() ?? new ChestManager();
         chestManager.ChestPanel = this;
-        if (!Chest.customChest && (Chest.completeRandomness || (Chest.selectedPools != null && Chest.probability != null)))
-            Chest.SelectRandomItems();
-        else if (Chest.customChest)
-        {
-            Chest.allItems = null;
-            Debug.Log("Custom Chest created");
-        }
-        else
-            Debug.LogError("A Chest has a problem choosing items from the Pools");
+        chestManager.Items = chest.Items;
         base.Awake();
     }
 
     private void Start()
     {
         chestManager.InventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
-        DisplayChestItems(true);
+        InstantiateChest();
+        DisplayItemsInChest();
     }
 
-    public void DisplayChestItems(bool firstTime)
+    public void InstantiateChest()
     {
-        if (!firstTime)
-        {
-            for (int i = 0; i < storageSlots.Count; i++)
-            {
-                Destroy(storageSlots[i].gameObject);
-            }
-        }
-        for (int slot = 0; slot < Chest.Items.Count; slot++)
+        for (int slot = 0; slot < chest.Items.Count; slot++)
         {
             storageSlots.Add(Instantiate(slotPrefab, itemSlotsParent.transform).GetComponent<UIStorageHandler>());
             storageSlots[slot].Connect(this, slot);
-            storageSlots[slot].DisplayItem(Chest.Items[slot]);
         }
     }
 
-    public void OpenChest()
+    public void DisplayItemsInChest()
     {
-        gameObject.SetActive(true);
-        if (AssetManager.Instance.GetManager<InventoryManager>() != null)
-            AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.ToggleVisibility(false);
+        for (int position = 0; position < storageSlots.Count; position++)
+        {
+            if (position < chestManager.Items.Count)
+                storageSlots[position].DisplayItem(chestManager.Items[position]);
+            else
+                storageSlots[position].SetEmpty();
+        }
+    }
+
+    private void DrawItemsFromContainer()
+    {
+        if (!chest.customChest && (chest.completeRandomness || (chest.selectedPools != null && chest.probability != null)))
+            chest.SelectRandomItems();
+        else if (chest.customChest)
+        {
+            chest.allItems = null;
+            Debug.Log("Custom Chest created");
+        }
+        else
+            Debug.LogError("A Chest has a problem choosing items from the Pools");
     }
 }

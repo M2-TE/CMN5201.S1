@@ -51,10 +51,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstSelectedElement: {fileID: 0}
   visibilityToggleNode: {fileID: 7618554525136489879}
-  visibilityOnAwake: 1
+  visibilityOnAwake: 0
   slotPrefab: {fileID: 1043009439146430, guid: 9fd8fa9bc17654d4bb134acbc5d2a029, type: 3}
   itemSlotsParent: {fileID: 7618554524453508317}
-  Chest: {fileID: 11400000, guid: 2bb9bf80b0300ea49985d924bae182be, type: 2}
+  chest: {fileID: 11400000, guid: 2bb9bf80b0300ea49985d924bae182be, type: 2}
 --- !u!1 &7618554524453508317
 GameObject:
   m_ObjectHideFlags: 0

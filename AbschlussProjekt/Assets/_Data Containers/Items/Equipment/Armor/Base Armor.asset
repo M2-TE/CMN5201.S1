@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Base Armor
   m_EditorClassIdentifier: 
   ItemName: Base Armor
-  ItemIcon: {fileID: 21300000, guid: 45d062f8293c0254dbe4132fafb4a048, type: 3}
+  ItemIcon: {fileID: 21300000, guid: 1e5f2c903e20ae243bcb934655d09de1, type: 3}
   ItemDescription: Base Armor Description Test
   EncumbranceValue: 2
   LevelRequirement: 0
@@ -23,5 +23,7 @@ MonoBehaviour:
   StackingLimit: 0
   MatchingClasses: []
   EquipmentType: 3
+  HealthBonus: 0
   AttackBonus: 0
   DefenseBonus: 1
+  SpeedBonus: 0

@@ -8,7 +8,7 @@ public class InventoryManager : Manager
 
     public CharacterInfoManager CharacterInfoManager;
 
-    public bool OpenInvetoryPanel => InventoryPanel.gameObject.activeInHierarchy;
+    public bool OpenInvetoryPanel => InventoryPanel.Open;
 
     #region Actions
 

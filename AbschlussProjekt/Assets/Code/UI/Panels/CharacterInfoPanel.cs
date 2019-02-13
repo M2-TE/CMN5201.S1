@@ -34,6 +34,8 @@ public class CharacterInfoPanel : UIPanel
 
     public Entity CurrentCharacter => currentCharacter;
 
+    public bool Open => visibilityToggleNode.activeInHierarchy;
+
     #region Setup
     protected override void Awake()
     {
@@ -57,13 +59,10 @@ public class CharacterInfoPanel : UIPanel
     {
         base.ToggleVisibility(visibleState);
         if(AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager != null)
+        {
+
             AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager.InventoryPanel.itemInfo.UpdateAction(true);
-    }
-    public override void ToggleVisibility()
-    {
-        base.ToggleVisibility();
-        if (AssetManager.Instance.GetManager<InventoryManager>() != null)
-            AssetManager.Instance.GetManager<InventoryManager>().InventoryPanel.itemInfo.UpdateAction(true);
+        }
     }
     #endregion
 
@@ -117,6 +116,7 @@ public class CharacterInfoPanel : UIPanel
             if (currentCharacter.GetEquippedItem(slot) != null)
             {
                 equipmentSlots[slot].Icon.sprite = currentCharacter.GetEquippedItem(slot).ItemIcon;
+                equipmentSlots[slot].SetEmpty(false);
             }
             else
             {
@@ -131,7 +131,9 @@ public class CharacterInfoPanel : UIPanel
     {
         EquipmentContainer item = currentCharacter.GetEquippedItem(slot);
         if (show && item != null)
+        {
             itemInfo.OpenItemInfo(item,false);
+        }
         else
             itemInfo.CloseItemInfo();
     }

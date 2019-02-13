@@ -8,24 +8,25 @@ public class ChestManager : Manager
 
     public InventoryManager InventoryManager;
 
+    public List<StorageSlot> Items;
+
     public void PrimaryActionOnItem(int position)
     {
-        StorageSlot item = RemoveItem(position);
-        if (item == null)
+        if (position >= Items.Count || Items[position] == null)
             return;
         if (InventoryManager != null)
-            InventoryManager.TakeItem(item.amount, item.content);
+            InventoryManager.TakeItem(Items[position].amount, Items[position].content);
         else
-            AssetManager.Instance.Savestate.Inventory.Add(new StorageSlot(item.amount, item.content));
+            AssetManager.Instance.Savestate.Inventory.Add(new StorageSlot(Items[position].amount, Items[position].content));
+        RemoveItem(position);
     }
 
-    private StorageSlot RemoveItem(int position)
+    private bool RemoveItem(int position)
     {
-        if (position >= ChestPanel.Chest.Items.Count || ChestPanel.Chest.Items[position] == null)
-            return null;
-        StorageSlot outSlot = ChestPanel.Chest.Items[position];
-        ChestPanel.Chest.Items.RemoveAt(position);
-        ChestPanel.DisplayChestItems(false);
-        return outSlot;
+        if (position >= Items.Count || Items[position] == null)
+            return false;
+        Items.RemoveAt(position);
+        ChestPanel.DisplayItemsInChest();
+        return true;
     }
 }
