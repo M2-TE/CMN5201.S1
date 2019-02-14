@@ -16,4 +16,10 @@ using UnityEngine.UI;
         this.amount = amount;
         content = item;
     }
+
+    public StorageSlot(int amount, ItemContainer item)
+    {
+        this.amount = amount;
+        content = item.ItemName;
+    }
 }

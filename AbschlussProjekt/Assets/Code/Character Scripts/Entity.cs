@@ -95,51 +95,27 @@ public class Entity
             equippedItemStrings = new Dictionary<EquipmentSlot, string>();
 
         EquipmentContainer previousItem = GetEquippedItem(slot);
-        if (equippedItems.ContainsKey(slot))
-            equippedItems[slot] = item;
+        if (item != null)
+        {
+            if (equippedItems.ContainsKey(slot))
+                equippedItems[slot] = item;
+            else
+                equippedItems.Add(slot, item);
+            if (equippedItemStrings.ContainsKey(slot))
+                equippedItemStrings[slot] = item.ItemName;
+            else
+                equippedItemStrings.Add(slot, item.ItemName);
+        }
         else
-            equippedItems.Add(slot, item);
-        if (equippedItemStrings.ContainsKey(slot))
-            equippedItemStrings[slot] = item.ItemName;
-        else
-            equippedItemStrings.Add(slot, item.ItemName);
-
+        {
+            if (equippedItems.ContainsKey(slot))
+                equippedItems.Remove(slot);
+            if (equippedItemStrings.ContainsKey(slot))
+                equippedItemStrings.Remove(slot);
+        }
         return previousItem;
     }
 
-	//private string equippedWeaponString;
- //   [NonSerialized] private EquipmentContainer equippedWeapon;
- //   public EquipmentContainer EquippedWeapon
- //   {
- //       get
- //       {
-	//		if (equippedWeapon != null) return equippedWeapon;
-	//		else if (equippedWeaponString != "") return equippedWeapon = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedWeaponString);
-	//		else return null;
- //       }
- //       set
- //       {
- //           equippedWeapon = value;
- //           equippedWeaponString = equippedWeapon.name;
- //       }
- //   }
-
- //   private string equippedArmorString;
- //   [NonSerialized] private EquipmentContainer equippedArmor;
- //   public EquipmentContainer EquippedArmor
- //   {
- //       get
- //       {
- //           if (equippedArmor != null) return equippedArmor;
-	//		else if (equippedArmorString != "") return equippedArmor = amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedArmorString);
- //           else return null;
- //       }
- //       set
- //       {
- //           equippedArmor = value;
- //           equippedArmorString = equippedArmor.name;
- //       }
- //   }
 	#endregion
 
 	#region Combat Skills

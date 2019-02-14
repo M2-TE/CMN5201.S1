@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
-  m_Name: Base Weapon
+  m_Name: TestItem
   m_EditorClassIdentifier: 
-  ItemName: Base Weapon
-  ItemIcon: {fileID: 21300000, guid: 3c10266459be0964fb2214481a929df3, type: 3}
-  ItemDescription: Base Weapon Description test
-  EncumbranceValue: 2
+  ItemName: 
+  ItemIcon: {fileID: 21300000, guid: 59b154d6601cb794db63dc698ea787b4, type: 3}
+  ItemDescription: Item Description Missing
+  EncumbranceValue: 0
   LevelRequirement: 0
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
-  StackingLimit: 0
+  StackingLimit: 1
   MatchingClasses: []
-  EquipmentType: 0
+  EquipmentType: 2
   HealthBonus: 0
-  AttackBonus: 1
+  AttackBonus: 0
   DefenseBonus: 0
   SpeedBonus: 0

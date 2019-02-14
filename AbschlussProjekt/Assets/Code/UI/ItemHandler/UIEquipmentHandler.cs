@@ -18,8 +18,10 @@ public class UIEquipmentHandler : UIElementHandler
 
     public override void OnSelect(BaseEventData eventData)
     {
-        if(!empty)
+        if (!empty)
+        {
             characterInfoPanel.DisplayEquipmentInfo(slotType, true);
+        }
     }
 
     public override void OnDeselect(BaseEventData eventData)
@@ -34,7 +36,13 @@ public class UIEquipmentHandler : UIElementHandler
 
     public override void SetEmpty()
     {
-        empty = true;
-        Icon.sprite = emptySprite;
+        SetEmpty(true);
+    }
+
+    public void SetEmpty(bool state)
+    {
+        empty = state;
+        if(empty)
+            Icon.sprite = emptySprite;
     }
 }

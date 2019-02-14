@@ -15,6 +15,7 @@ public class Paths : DataContainer
 	public string VitalAssetsPath = "vital assets";
 	public string UiPrefabsPath = "ui prefabs";
 	public string ItemsPath = "items";
+    public string ItemPoolsPath = "items/pools";
 	public string SettingsPath = "settings";
 	public string EquipmentPath = "equipment";
 	public string SkillsPath = "skills";

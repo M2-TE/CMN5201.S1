@@ -16,6 +16,7 @@ public class InventoryPanel : UIPanel
 
     public int InventorySize => inventorySize;
 
+    public bool Open => visibilityToggleNode.activeInHierarchy;
 
     #region Setup
     protected override void Awake()
@@ -30,6 +31,7 @@ public class InventoryPanel : UIPanel
         manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleVisibility());
         inventoryManager.CharacterInfoManager = AssetManager.Instance.GetManager<CharacterInfoManager>();
         InstantiateInventory();
+        DisplayInventory();
     }
     private void InstantiateInventory()
     {
@@ -39,12 +41,6 @@ public class InventoryPanel : UIPanel
             storageSlots[slot].Connect(this, slot);
         }
     }
-    public override void ToggleVisibility()
-    {
-        base.ToggleVisibility();
-        if(inventoryManager.CharacterInfoManager != null)
-            inventoryManager.CharacterInfoManager.CharacterInfoPanel.itemInfo.UpdateAction(false);
-    }
     public override void ToggleVisibility(bool visibleState)
     {
         base.ToggleVisibility(visibleState);
@@ -52,7 +48,6 @@ public class InventoryPanel : UIPanel
             inventoryManager.CharacterInfoManager.CharacterInfoPanel.itemInfo.UpdateAction(false);
     }
     #endregion
-
 
     public void DisplayInventory()
     {
@@ -68,6 +63,11 @@ public class InventoryPanel : UIPanel
 
     public void DisplayItemInfo(int position, bool show)
     {
+        if (!show)
+        {
+            itemInfo.CloseItemInfo();
+            return;
+        }
         ItemContainer storedItem = null;
         if (position < AssetManager.Instance.Savestate.Inventory.Count)
             storedItem = AssetManager.Instance.Savestate.Inventory[position].Item;
@@ -75,13 +75,16 @@ public class InventoryPanel : UIPanel
             return;
         else if (storedItem.GetType().Equals(typeof(EquipmentContainer)))
         {
-            EquipmentContainer equippedItem = AssetManager.Instance.GetManager<CharacterInfoManager>().GetItemOfCurrentCharacter(((EquipmentContainer)storedItem).EquipmentType);
-            if (AssetManager.Instance.GetManager<CharacterInfoManager>().OpenCharacterPanel && equippedItem != null)
+            if (AssetManager.Instance.GetManager<CharacterInfoManager>()!= null && AssetManager.Instance.GetManager<CharacterInfoManager>().OpenCharacterPanel)
             {
-                itemInfo.OpenItemInfo((EquipmentContainer)storedItem, equippedItem);
+                EquipmentContainer equippedItem = AssetManager.Instance.GetManager<CharacterInfoManager>().GetItemOfCurrentCharacter(((EquipmentContainer)storedItem).EquipmentType);
+                if(equippedItem != null)
+                {
+                    itemInfo.OpenItemInfo((EquipmentContainer)storedItem, equippedItem);
+                    return;
+                }
             }
-            else
-                itemInfo.OpenItemInfo((EquipmentContainer)storedItem, true);
+            itemInfo.OpenItemInfo((EquipmentContainer)storedItem, true);
         }
         else
             itemInfo.OpenItemInfo((MiscContainer)storedItem);
@@ -91,4 +94,5 @@ public class InventoryPanel : UIPanel
     {
         ToggleVisibility(false);
     }
+
 }

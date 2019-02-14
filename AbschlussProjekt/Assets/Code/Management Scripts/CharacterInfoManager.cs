@@ -8,11 +8,16 @@ public class CharacterInfoManager : Manager
 
     public InventoryManager InventoryManager;
 
-    public bool OpenCharacterPanel => CharacterInfoPanel.gameObject.activeInHierarchy;
+    public bool OpenCharacterPanel => CharacterInfoPanel.Open;
 
     public EquipmentContainer GetItemOfCurrentCharacter(EquipmentSlot slot)
     {
         return CharacterInfoPanel.CurrentCharacter.GetEquippedItem(slot);
+    }
+
+    public EquipmentContainer RemoveItemOfCurrentCharacter(EquipmentSlot slot)
+    {
+        return CharacterInfoPanel.CurrentCharacter.SetEquippedItem(slot, null);
     }
 
     public void SetItemOfCurrentCharacter(EquipmentContainer item)
@@ -30,9 +35,9 @@ public class CharacterInfoManager : Manager
     public void UnequipItem(EquipmentSlot slot)
     {
         if (InventoryManager != null)
-            InventoryManager.TakeItem(1, GetItemOfCurrentCharacter(slot));
+            InventoryManager.TakeItem(1, RemoveItemOfCurrentCharacter(slot));
         else
-            AssetManager.Instance.Savestate.Inventory.Add(new StorageSlot(1, GetItemOfCurrentCharacter(slot).ItemName));
+            AssetManager.Instance.Savestate.Inventory.Add(new StorageSlot(1, RemoveItemOfCurrentCharacter(slot).ItemName));
         CharacterInfoPanel.DisplayEquipmentSlot(slot);
     }
 

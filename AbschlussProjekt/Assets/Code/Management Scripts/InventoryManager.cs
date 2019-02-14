@@ -8,7 +8,7 @@ public class InventoryManager : Manager
 
     public CharacterInfoManager CharacterInfoManager;
 
-    public bool OpenInvetoryPanel => InventoryPanel.gameObject.activeInHierarchy;
+    public bool OpenInvetoryPanel => InventoryPanel.Open;
 
     #region Actions
 
@@ -32,6 +32,7 @@ public class InventoryManager : Manager
 	{
         AddItem(amount, container.ItemName);
 	}
+
     public void TakeItem(int amount, string itemName)
     {
         AddItem(amount, itemName);
