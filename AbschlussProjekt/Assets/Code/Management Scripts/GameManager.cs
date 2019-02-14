@@ -11,6 +11,18 @@ public class GameManager : Manager
 	public AreaData CurrentArea { get; private set; }
 	public AreaData CurrentLoadedCombatArea { get; private set; }
 
+	public GameManager()
+	{
+		var instance = AssetManager.Instance;
+
+		//instance.CreateNewSavestate();
+		instance.Load();
+
+		CurrentArea = instance.LoadArea(instance.Paths.MainMenu);
+
+		//Object.Instantiate(instance.LoadBundle<VitalAssets>(instance.Paths.VitalAssetsPath, "Vital Assets").MusicManagerAnchor);
+	}
+
 	public void LoadAreaAsync(AreaData areaToLoad)
 	{
 		//AssetManager.Instance.GetManager<InputManager>().RemoveAllListeners();
@@ -18,6 +30,8 @@ public class GameManager : Manager
 
 		CurrentArea = areaToLoad;
 		SceneManager.LoadSceneAsync(areaToLoad.Scene, LoadSceneMode.Single);
+		
+		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentArea.MusicPool);
 	}
 
 	public void LoadCombatAreaAsync(AreaData combatAreaToLoad)
@@ -26,6 +40,8 @@ public class GameManager : Manager
 
 		var asyncOp = SceneManager.LoadSceneAsync(CurrentLoadedCombatArea.Scene, LoadSceneMode.Additive);
 		asyncOp.completed += CombatAreaLoadCompleted;
+
+		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentLoadedCombatArea.MusicPool);
 	}
 
 	private void CombatAreaLoadCompleted(AsyncOperation obj)
@@ -41,6 +57,9 @@ public class GameManager : Manager
 	{
 		var asyncOp = SceneManager.UnloadSceneAsync(CurrentLoadedCombatArea.Scene);
 		asyncOp.completed += CombatAreaUnloadCompleted;
+
+
+		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentArea.MusicPool);
 	}
 
 	private void CombatAreaUnloadCompleted(AsyncOperation obj)
@@ -52,6 +71,7 @@ public class GameManager : Manager
 			objectsToEnable[i].SetActive(true);
 
 		SceneManager.SetActiveScene(SceneManager.GetSceneAt(0));
+		AssetManager.Instance.GetManager<AudioManager>().SetNewPlaylist(CurrentArea.MusicPool);
 	}
 
 	public void ExitGame()
@@ -68,7 +88,6 @@ public class GameManager : Manager
 		Debug.Log("Saving");
 		AssetManager.Instance.Save();
 	}
-
 
 	#region Debug
 	public void StartCombatDebugging()

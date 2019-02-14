@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -14,5 +15,5 @@ MonoBehaviour:
   Scene:
     sceneAsset: {fileID: 102900000, guid: 97328d16c5f95054d966d617cba9eea6, type: 3}
     sceneName: Z_Scenes/Final Scenes/Starter City
-  LoadSceneMode: 0
-  MusicPool: []
+  MusicPool:
+  - {fileID: 8300000, guid: c3804ae588357bd4b97dd891d658c932, type: 3}

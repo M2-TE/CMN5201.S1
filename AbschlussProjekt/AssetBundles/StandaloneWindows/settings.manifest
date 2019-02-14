@@ -1,21 +1,24 @@
 ManifestFileVersion: 0
-CRC: 827863703
+CRC: 2725306624
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 63c64c14aef38e2f0b2b1f58d7173b8e
+    Hash: 031bcee5119b74af30b37a5d80c2a3f3
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 694dbe628045762f8b2c3a500e2e5a41
+    Hash: e49e12c13811a2b17f96b7f537eaf9f1
 HashAppended: 0
 ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 209ce64205664e544820f5551f725f05, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: dbf866f6fa969f3418e6d7c35acdab15, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8f9d2d7d88812b844bcc06ffa6bd9bfd, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 Assets:
 - Assets/_Data Containers/Settings/Combat Manager Settings.asset
 - Assets/_Data Containers/Settings/Misc Settings.asset
+- Assets/_Data Containers/Settings/Audio Settings.asset
 Dependencies: []

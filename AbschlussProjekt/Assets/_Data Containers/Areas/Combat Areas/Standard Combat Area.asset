@@ -15,4 +15,5 @@ MonoBehaviour:
   Scene:
     sceneAsset: {fileID: 102900000, guid: 993127e590c1c4d4b9e67fa364a592d4, type: 3}
     sceneName: Z_Scenes/Final Scenes/Combat
-  MusicPool: []
+  MusicPool:
+  - {fileID: 8300000, guid: aa8bfa2ca156bfe4a95584705ff468d5, type: 3}

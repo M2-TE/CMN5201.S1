@@ -15,5 +15,5 @@ MonoBehaviour:
   Scene:
     sceneAsset: {fileID: 102900000, guid: f073694f7484fe146a1500a1d244f8ee, type: 3}
     sceneName: Z_Scenes/Final Scenes/Main Menu
-  LoadSceneMode: 0
-  MusicPool: []
+  MusicPool:
+  - {fileID: 8300000, guid: 0f22faf14bbcc44409c541b4d4914cdd, type: 3}

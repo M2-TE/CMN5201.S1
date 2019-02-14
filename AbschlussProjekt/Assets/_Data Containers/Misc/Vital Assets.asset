@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8684cf2ed6e864a826171a16747fc3, type: 3}
   m_Name: Vital Assets
   m_EditorClassIdentifier: 
-  MusicManagerAnchor: {fileID: 0}
+  MusicManagerAnchor: {fileID: 3156146549978502744, guid: adf1ff7ccbb73354cbf71b4d03d3bf9f,
+    type: 3}
   InputMaster:
     m_Asset: {fileID: 11400000, guid: 29e319258b4ca4548bb788e67abb9263, type: 3}

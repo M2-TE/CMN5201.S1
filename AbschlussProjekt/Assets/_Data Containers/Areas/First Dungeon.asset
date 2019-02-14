@@ -15,5 +15,5 @@ MonoBehaviour:
   Scene:
     sceneAsset: {fileID: 102900000, guid: bb4432f0bb664864893c1d13393aa1fe, type: 3}
     sceneName: Z_Scenes/Final Scenes/First Dungeon
-  LoadSceneMode: 0
-  MusicPool: []
+  MusicPool:
+  - {fileID: 8300000, guid: 8af8229b672fab043b50bcaa6424d722, type: 3}

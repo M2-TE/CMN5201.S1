@@ -45,7 +45,7 @@ public class Entity
 		{
 			if (equippedRepositioningSkill != null) return equippedRepositioningSkill;
 			else if (equippedRepositioningSkillString != null && equippedRepositioningSkillString != "")
-				return equippedRepositioningSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.SkillsPath, equippedRepositioningSkillString);
+				return equippedRepositioningSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.PlayableCharactersPath, equippedRepositioningSkillString);
 			else
 			{
 				equippedRepositioningSkillString = CharDataContainer.RepositioningSkill.name;
@@ -62,7 +62,7 @@ public class Entity
 		{
 			if (equippedPassSkill != null) return equippedPassSkill;
 			else if (equippedPassSkillString != null && equippedPassSkillString != "")
-				return equippedPassSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.SkillsPath, equippedPassSkillString);
+				return equippedPassSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.PlayableCharactersPath, equippedPassSkillString);
 			else
 			{
 				equippedPassSkillString = CharDataContainer.PassSkill.name;

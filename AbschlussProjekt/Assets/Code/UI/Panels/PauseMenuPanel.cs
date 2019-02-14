@@ -8,14 +8,18 @@ public class PauseMenuPanel : UIPanel
 {
 	private void Start()
 	{
-		ToggleVisibility(false);
+		//ToggleVisibility(false);
 
+	}
+
+	private void OnEnable()
+	{
 		InputManager inputManager = AssetManager.Instance.GetManager<InputManager>();
 		void callback(InputAction.CallbackContext ctx) => HandleEscPress();
 		inputManager.AddListener(inputManager.Input.UI.Back, callback);
 	}
 
-	private void OnDestroy()
+	private void OnDisable()
 	{
 		AssetManager.Instance.GetManager<InputManager>().RemoveListeners(this);
 	}

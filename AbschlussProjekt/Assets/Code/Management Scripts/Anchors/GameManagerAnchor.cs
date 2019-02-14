@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class GameManagerAnchor : MonoBehaviour 
+public class GameManagerAnchor : MonoBehaviour
 {
+	[SerializeField] private GameObject MusicManagerPrefab;
 	private GameManager gameManager;
 	private InputManager inputManager;
 
@@ -13,13 +14,8 @@ public class GameManagerAnchor : MonoBehaviour
 
 		InputMaster inputMaster = instance.LoadBundle<VitalAssets>(instance.Paths.VitalAssetsPath, "Vital Assets").InputMaster;
 		inputManager = instance.GetManager<InputManager>() ?? new InputManager(inputMaster);
-		
 
-
-		// DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
-		AssetManager.Instance.CreateNewSavestate(); // DEBUG
-		AssetManager.Instance.Load(); // DEBUG DEBUG DEBUG
-		// DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
+		//if(instance.GetManager<AudioManager>() == null)
 	}
 
 	private void OnApplicationQuit()

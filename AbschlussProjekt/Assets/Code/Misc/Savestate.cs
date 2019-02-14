@@ -5,6 +5,8 @@ using Utilities;
 [Serializable]
 public class Savestate
 {
+	public RuntimeSettings RuntimeSettings;
+
 	public List<Entity> OwnedCharacters;
 	public Entity[] CurrentTeam;
     public List<StorageSlot> Inventory;
@@ -22,6 +24,8 @@ public class Savestate
 
 	public Savestate()
 	{
+		RuntimeSettings = new RuntimeSettings();
+
 		OwnedCharacters = new List<Entity>();
         Inventory = new List<StorageSlot>();
 		CurrentTeam = new Entity[4];
