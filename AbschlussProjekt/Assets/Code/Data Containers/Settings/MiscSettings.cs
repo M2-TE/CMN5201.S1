@@ -5,4 +5,5 @@ public class MiscSettings : Settings
 {
     public LayerMask GroundLayers;
 	public AnimationCurve WobbleCurve;
+	public float loadingScreenFadeDuration;
 }

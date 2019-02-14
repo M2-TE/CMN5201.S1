@@ -1,23 +1,34 @@
 ManifestFileVersion: 0
-CRC: 2475043380
+CRC: 601270976
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7aebe6b062f9d89e40fd832dfc0ba3b9
+    Hash: 3e2425a4d54c3b01d3e84e3067b3c6a0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 20121b87f1339b50914a65fbf239e8f6
+    Hash: 80eb17ca6709ea0a1bf3d27b6bf92ffe
 HashAppended: 0
 ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 505de362506c6c34d9b1a5e82ba5b3e4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 14dd9224a283f1f41ac1c84add6bfd5a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ce8b4a26e2225c3458dfa9f9729b8c7c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
 - Class: 115
   Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
 Assets:
+- Assets/_Data Containers/Items/Chests/Basic Chest.asset
 - Assets/_Data Containers/Items/Misc/Consumable/Potion.asset
 - Assets/_Data Containers/Items/Misc/NonConsumable/NotAPotion.asset
 - Assets/_Data Containers/Items/Equipment/Weapons/Base Weapon.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Base Armor.asset
-Dependencies: []
+- Assets/_Data Containers/Items/Equipment/Rare/TestItem.asset
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools

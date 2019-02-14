@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3900279794
+CRC: 3291433173
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d2c451dc2fc1da667a0b5f85ff58b452
+    Hash: 0a770673e43b4fb6e76dc8da0fc89719
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1001ef275b2b496bc72fee9d6e8c2883
@@ -80,18 +80,19 @@ ClassTypes:
 - Class: 245
   Script: {instanceID: 0}
 Assets:
-- Assets/_Data Containers/Characters/Main Characters/Robot/Skills/Earthshatter.asset
-- Assets/_Data Containers/Characters/Main Characters/Gunwoman/Gunwoman.asset
-- Assets/_Data Containers/Characters/Main Characters/Gunwoman/Skills/Haste.asset
-- Assets/_Data Containers/Characters/Main Characters/Robot/Robot.asset
-- Assets/_Data Containers/Characters/Main Characters/Robot/Skills/Obliterate.asset
-- Assets/_Data Containers/Characters/Main Characters/Mage/Mage.asset
-- Assets/_Data Containers/Characters/Main Characters/Knight/Knight.asset
-- Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Slash.asset
-- Assets/_Data Containers/Characters/Global Abilities/Standard Pass.asset
-- Assets/_Data Containers/Characters/Main Characters/Mage/Skills/Synthesis.asset
-- Assets/_Data Containers/Characters/Main Characters/Gunwoman/Skills/Shot.asset
-- Assets/_Data Containers/Characters/Global Abilities/Standard Move.asset
-- Assets/_Data Containers/Characters/Main Characters/Mage/Skills/Blast.asset
-- Assets/_Data Containers/Characters/Main Characters/Knight/Skills/Shield Up.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Earthshatter.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Gunwoman.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Haste.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Robot.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Obliterate.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Mage.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Knight.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Slash.asset
+- Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Pass.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Synthesis.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Shot.asset
+- Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Move.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Blast.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Shield
+  Up.asset
 Dependencies: []
