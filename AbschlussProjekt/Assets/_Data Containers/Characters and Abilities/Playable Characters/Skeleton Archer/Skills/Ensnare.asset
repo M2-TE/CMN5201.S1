@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
+  m_Name: Ensnare
+  m_EditorClassIdentifier: 
+  SkillIcon: {fileID: 0}
+  FxPrefab: {fileID: 0}
+  castSfx: []
+  impactSfx: []
+  AnimatorTrigger: Attack
+  impactSpawnDelay: 0
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
+  SkillDescription: Skill Description Missing
+  CanHitEnemies: 1
+  CanHitAllies: 0
+  CanHitSelf: 0
+  AttackMultiplier: 1
+  Cooldown: 1
+  MinRange: 0
+  MaxRange: 2
+  SurroundingAffectedUnits: {x: 0, y: 0}
+  AppliedCombatEffects: []
+  SelfInflictedCombatEffects: []
