@@ -6,22 +6,35 @@ using UnityEngine.Experimental.Input;
 
 public class PauseMenuPanel : UIPanel
 {
+	private InputManager inputManager;
+	private bool inputManagerRegistrationBuffered;
 	private void Start()
 	{
-		//ToggleVisibility(false);
-
+		if (inputManagerRegistrationBuffered)
+		{
+			inputManager = AssetManager.Instance.GetManager<InputManager>();
+			RegisterCallbacks();
+		}
 	}
 
 	private void OnEnable()
 	{
-		InputManager inputManager = AssetManager.Instance.GetManager<InputManager>();
-		void callback(InputAction.CallbackContext ctx) => HandleEscPress();
-		inputManager.AddListener(inputManager.Input.UI.Back, callback);
+		inputManager = AssetManager.Instance.GetManager<InputManager>();
+		if (inputManager == null)
+			inputManagerRegistrationBuffered = true;
+		else
+			RegisterCallbacks();
 	}
 
 	private void OnDisable()
 	{
-		AssetManager.Instance.GetManager<InputManager>().RemoveListeners(this);
+		inputManager.RemoveListeners(this);
+	}
+
+	private void RegisterCallbacks()
+	{
+		void callback(InputAction.CallbackContext ctx) => HandleEscPress();
+		inputManager.AddListener(inputManager.Input.UI.Back, callback);
 	}
 
 	public void HandleEscPress()
