@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CustomChest: 0
   CompleteRandomness: 0
-  SelectedPools: 010101
-  Probability: 020000000300000002000000
+  SelectedPools: 000000
+  Probability: 000000000000000000000000
   AllItems: {fileID: 11400000, guid: 99382285d151ede47bb2f204e734ff65, type: 2}
-  minItems: 5
-  maxItems: 8
+  minItems: 1
+  maxItems: 1
   Items:
   - amount: 1
     content: Potion

@@ -64,9 +64,10 @@ public class AssetManager
 		var mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");
 		var robot = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Robot");
 		var wolf = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Wolf");
+		var skeleton = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Skeleton");
 
 		Savestate.CurrentTeam[0] = new Entity(wolf);
-		Savestate.CurrentTeam[1] = new Entity(robot);
+		Savestate.CurrentTeam[1] = new Entity(skeleton);
 		Savestate.CurrentTeam[2] = new Entity(mage);
 		Savestate.CurrentTeam[3] = new Entity(gunwoman);
 		
@@ -75,6 +76,7 @@ public class AssetManager
 		Savestate.OwnedCharacters.Add(new Entity(robot));
 		Savestate.OwnedCharacters.Add(new Entity(gunwoman));
 		Savestate.OwnedCharacters.Add(new Entity(wolf));
+		Savestate.OwnedCharacters.Add(new Entity(robot));
 
 		Save();
 	}

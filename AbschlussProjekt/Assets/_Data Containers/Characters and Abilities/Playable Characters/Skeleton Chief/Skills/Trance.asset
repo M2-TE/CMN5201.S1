@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
   m_Name: Trance
   m_EditorClassIdentifier: 
-  SkillIcon: {fileID: 0}
+  SkillIcon: {fileID: 21300000, guid: 01c899e6ee07194468eb257bf1e49bb2, type: 3}
   FxPrefab: {fileID: 0}
   castSfx: []
   impactSfx: []

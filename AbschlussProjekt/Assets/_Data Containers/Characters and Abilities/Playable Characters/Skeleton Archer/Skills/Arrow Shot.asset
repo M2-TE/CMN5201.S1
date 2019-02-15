@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
   m_Name: Arrow Shot
   m_EditorClassIdentifier: 
-  SkillIcon: {fileID: 0}
+  SkillIcon: {fileID: 21300000, guid: 4f9d796a240b95644ae2ad5fc8d3cc8c, type: 3}
   FxPrefab: {fileID: 0}
   castSfx: []
   impactSfx: []

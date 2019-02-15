@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 601270976
+CRC: 1278361087
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3e2425a4d54c3b01d3e84e3067b3c6a0
+    Hash: 20a2c2639169c77dcb36fc3e600ace38
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 80eb17ca6709ea0a1bf3d27b6bf92ffe
+    Hash: bb3b3a291b081ad986cc18b40bd60b45
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -14,11 +14,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 505de362506c6c34d9b1a5e82ba5b3e4, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 14dd9224a283f1f41ac1c84add6bfd5a, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: ce8b4a26e2225c3458dfa9f9729b8c7c, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -31,4 +31,4 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Armor/Base Armor.asset
 - Assets/_Data Containers/Items/Equipment/Rare/TestItem.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
+- C:/Users/Jan Kuhlmann/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
