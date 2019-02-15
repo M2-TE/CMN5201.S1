@@ -22,8 +22,11 @@ public class AudioManagerAnchor : MonoBehaviour
 		var instance = AssetManager.Instance;
 		musicManager = instance.GetManager<AudioManager>() ?? new AudioManager(this);
 
-		musicManager.SetEffectVolume((1f - instance.Savestate.RuntimeSettings.EffectVolume) * -40f);
-		musicManager.SetMusicVolume((1f - instance.Savestate.RuntimeSettings.MusicVolume) * -40f);
+		var runtimeSettings = instance.Savestate.RuntimeSettings;
+		if (runtimeSettings == null) runtimeSettings = new RuntimeSettings();
+
+		musicManager.SetEffectVolume((1f - runtimeSettings.EffectVolume) * -40f);
+		musicManager.SetMusicVolume((1f - runtimeSettings.MusicVolume) * -40f);
 		musicManager.SetNewPlaylist(instance.GetManager<GameManager>().CurrentArea.MusicPool);
 	}
 }
