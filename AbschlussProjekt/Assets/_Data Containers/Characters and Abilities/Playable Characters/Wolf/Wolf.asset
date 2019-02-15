@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
   m_Name: Wolf
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 0}
-  Portrait: {fileID: 0}
-  BaseHealth: 0
-  BaseAttack: 0
+  Prefab: {fileID: 3128499267987143363, guid: d63507401a777874a8d96eb8fbba3bc7, type: 3}
+  Portrait: {fileID: 21300000, guid: 329d0970d8d9f694ea4f9ade69a875b1, type: 3}
+  BaseHealth: 5
+  BaseAttack: 6
   BaseDefense: 0
-  BaseSpeed: 0
-  FullSkillPool: []
-  FallbackSkills: []
-  RepositioningSkill: {fileID: 0}
-  PassSkill: {fileID: 0}
+  BaseSpeed: 12
+  FullSkillPool:
+  - {fileID: 11400000, guid: ac062c874564f6246b89bf24e6c179df, type: 2}
+  - {fileID: 11400000, guid: ce9ad456816ed844e928707193081d69, type: 2}
+  FallbackSkills:
+  - {fileID: 11400000, guid: ac062c874564f6246b89bf24e6c179df, type: 2}
+  - {fileID: 11400000, guid: ce9ad456816ed844e928707193081d69, type: 2}
+  RepositioningSkill: {fileID: 11400000, guid: ec54661d41b23a743bccaed5794fa4be, type: 2}
+  PassSkill: {fileID: 11400000, guid: 07ef657865b6e9c42bc59d989ba3b415, type: 2}
   moveSpeed: 150
   wallSlideVelocity: 0.1
   maxClimbHeight: 0.9

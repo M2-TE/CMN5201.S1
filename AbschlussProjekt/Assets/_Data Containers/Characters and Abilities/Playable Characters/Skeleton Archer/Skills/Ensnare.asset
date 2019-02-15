@@ -30,5 +30,6 @@ MonoBehaviour:
   MinRange: 0
   MaxRange: 2
   SurroundingAffectedUnits: {x: 0, y: 0}
-  AppliedCombatEffects: []
+  AppliedCombatEffects:
+  - {fileID: 11400000, guid: 4bc38386ceb527d4ba817904d30ed4a0, type: 2}
   SelfInflictedCombatEffects: []

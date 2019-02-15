@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3291433173
+CRC: 1610151794
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0a770673e43b4fb6e76dc8da0fc89719
+    Hash: 8973b4abbaeb7b2490aea8f20e5dfe89
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1001ef275b2b496bc72fee9d6e8c2883
@@ -85,14 +85,31 @@ Assets:
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Haste.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Robot.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Obliterate.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skills/Restrain.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Wolf.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Mage.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Knight.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Invigorate.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Brave
+  Soul.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skeleton.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Shred.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Slash.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skills/Thrash.asset
 - Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Pass.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Ensnare.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Synthesis.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Thunderstorm.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skeleton
+  Archer.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Shot.asset
 - Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Move.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Blast.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Arrow
+  Shot.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Shield
   Up.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Trance.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skeleton
+  Chief.asset
 Dependencies: []

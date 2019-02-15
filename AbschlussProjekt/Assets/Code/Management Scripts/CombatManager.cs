@@ -683,10 +683,10 @@ public class CombatManager : Manager
 		for (int i = 0; i < skill.SelfInflictedCombatEffects.Length; i++)
 		{
 			CombatEffect effect = skill.SelfInflictedCombatEffects[i];
-			if (!GetCombatEffectPool(target).Contains(effect))
-				AddCombatEffectToEntity(target, effect);
-			else GetCombatEffectPool(target).activeCombatEffectElements.Find(x => x.CombatEffect == effect)
-					.Duration = (target == upcomingTurns[0]) ? effect.Duration + 1 : effect.Duration;
+			if (!GetCombatEffectPool(caster).Contains(effect))
+				AddCombatEffectToEntity(caster, effect);
+			else GetCombatEffectPool(caster).activeCombatEffectElements.Find(x => x.CombatEffect == effect)
+					.Duration = (caster == upcomingTurns[0]) ? effect.Duration + 1 : effect.Duration;
 		}
 
 		UpdateEntityInspectionWindow();

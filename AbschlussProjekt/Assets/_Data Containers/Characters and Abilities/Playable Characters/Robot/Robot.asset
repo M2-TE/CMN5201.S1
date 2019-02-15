@@ -15,7 +15,7 @@ MonoBehaviour:
   Prefab: {fileID: 6713642019017304997, guid: 1dbc74516ac203a4795aedce6a797e36, type: 3}
   Portrait: {fileID: 21300000, guid: 9c8174cfc7223154b8843b5694b5eace, type: 3}
   BaseHealth: 15
-  BaseAttack: 5
+  BaseAttack: 4
   BaseDefense: 1
   BaseSpeed: 7
   FullSkillPool:

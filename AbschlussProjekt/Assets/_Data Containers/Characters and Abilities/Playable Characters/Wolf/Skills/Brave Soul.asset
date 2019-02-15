@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
   m_Name: Brave Soul
   m_EditorClassIdentifier: 
-  SkillIcon: {fileID: 0}
-  FxPrefab: {fileID: 0}
-  castSfx: []
+  SkillIcon: {fileID: 21300000, guid: 5748d9b39a0e1864a97a79036643b579, type: 3}
+  FxPrefab: {fileID: 8816466640044642582, guid: ee3bf1c86786b68439eff07ddea7cd84,
+    type: 3}
+  castSfx:
+  - {fileID: 8300000, guid: abe5a3885d34f2341afa3e7b6ac1ef12, type: 3}
+  - {fileID: 8300000, guid: 04ff55b4d331d804b9f9865e33c5ac2f, type: 3}
+  - {fileID: 8300000, guid: d0fb834233601d045be85240c86b2ebe, type: 3}
+  - {fileID: 8300000, guid: d197adef61eac0e45b2e7f265bd0245e, type: 3}
+  - {fileID: 8300000, guid: 2bf9a735010098a4c9ca9fef26cf994e, type: 3}
   impactSfx: []
   AnimatorTrigger: Attack
-  impactSpawnDelay: 0
+  impactSpawnDelay: 0.25
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
@@ -25,7 +31,7 @@ MonoBehaviour:
   CanHitEnemies: 0
   CanHitAllies: 1
   CanHitSelf: 0
-  AttackMultiplier: 1
+  AttackMultiplier: 0
   Cooldown: 5
   MinRange: 0
   MaxRange: 4
@@ -34,7 +40,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1f0084fe453bda943a86804a910ff798, type: 2}
   - {fileID: 11400000, guid: 6d7e423b3d156a54787bbd1673e248b6, type: 2}
   - {fileID: 11400000, guid: 530641114da7fa4408b3ed98007f3a2f, type: 2}
-  SelfInflictedCombatEffects:
-  - {fileID: 11400000, guid: 1f0084fe453bda943a86804a910ff798, type: 2}
-  - {fileID: 11400000, guid: 6d7e423b3d156a54787bbd1673e248b6, type: 2}
-  - {fileID: 11400000, guid: 530641114da7fa4408b3ed98007f3a2f, type: 2}
+  SelfInflictedCombatEffects: []

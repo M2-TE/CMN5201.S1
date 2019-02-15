@@ -25,8 +25,8 @@ MonoBehaviour:
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0
-  AttackMultiplier: 1
-  Cooldown: 1
+  AttackMultiplier: 0.8
+  Cooldown: 3
   MinRange: 2
   MaxRange: 4
   SurroundingAffectedUnits: {x: 4, y: 4}

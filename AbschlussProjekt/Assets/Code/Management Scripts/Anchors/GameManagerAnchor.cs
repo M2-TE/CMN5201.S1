@@ -15,7 +15,7 @@ public class GameManagerAnchor : MonoBehaviour
 		InputMaster inputMaster = instance.LoadBundle<VitalAssets>(instance.Paths.VitalAssetsPath, "Vital Assets").InputMaster;
 		inputManager = instance.GetManager<InputManager>() ?? new InputManager(inputMaster);
 
-		//if(instance.GetManager<AudioManager>() == null)
+		if (instance.GetManager<AudioManager>() == null) Instantiate(MusicManagerPrefab);
 	}
 
 	private void OnApplicationQuit()
