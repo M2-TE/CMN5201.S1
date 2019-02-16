@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Base Weapon
   m_EditorClassIdentifier: 
   ItemName: Base Weapon
-  ItemIcon: {fileID: 21300000, guid: 3c10266459be0964fb2214481a929df3, type: 3}
+  ItemIcon: {fileID: 21300000, guid: ed763839c5233794a99b1ca5b8d1ac73, type: 3}
   ItemDescription: Base Weapon Description test
   EncumbranceValue: 2
   LevelRequirement: 0
@@ -21,6 +21,7 @@ MonoBehaviour:
   IsQuestItem: 0
   IsUnique: 0
   StackingLimit: 0
+  testArray: 
   MatchingClasses: []
   EquipmentType: 0
   HealthBonus: 0
