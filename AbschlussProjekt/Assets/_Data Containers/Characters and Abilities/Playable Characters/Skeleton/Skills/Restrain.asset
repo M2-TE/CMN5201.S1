@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: Restrain
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 15b047894257232488cd70f42437b080, type: 3}
-  FxPrefab: {fileID: 0}
-  castSfx: []
-  impactSfx: []
+  FxPrefab: {fileID: 7428835992938197664, guid: 6895c20427113944ea3102eeb672e4b0,
+    type: 3}
+  castSfx:
+  - {fileID: 8300000, guid: 8a3b5b4b3f608f042bfe8e1db59e58fd, type: 3}
+  - {fileID: 8300000, guid: 4aebbbfb8d45d8246baf653da4ee4359, type: 3}
+  - {fileID: 8300000, guid: f4e2b85349af3d3488824c01ecb9c8bd, type: 3}
+  - {fileID: 8300000, guid: fe90d59cbe622e2428b9f2096bb50cab, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: 058e3eeefa80a4941a3cff8a280c3afa, type: 3}
+  - {fileID: 8300000, guid: 260255c1addfa5d428d5239494d0be7b, type: 3}
   AnimatorTrigger: Attack
-  impactSpawnDelay: 0
+  impactSpawnDelay: 0.6
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0

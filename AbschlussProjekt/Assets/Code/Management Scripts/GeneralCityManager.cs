@@ -47,6 +47,9 @@ public class GeneralCityManager : Manager
 		slot.OwnSlotType = CharacterSlot.SlotType.OwnedCharacter;
 		slot.SlotPos = barracksPanel.CharacterStorageNode.childCount - 1;
 		barracksPanel.barrackSlots.Add(slot);
+
+		barracksPanel.CharacterStorageNode.GetComponent<RectTransform>().sizeDelta 
+			= new Vector2(0f, barracksPanel.barrackSlots.Count * 105f);
 	}
 
 	private void RemoveBarrackSlot(CharacterSlot slotToRemove)

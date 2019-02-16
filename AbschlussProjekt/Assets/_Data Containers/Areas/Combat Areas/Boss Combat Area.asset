@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boss Combat Area
   m_EditorClassIdentifier: 
   Scene:
-    sceneAsset: {fileID: 0}
-    sceneName: 
-  LoadSceneMode: 0
-  MusicPool: []
+    sceneAsset: {fileID: 102900000, guid: 92f450cb3ff74a84490983cbda515ff4, type: 3}
+    sceneName: Z_Scenes/Final Scenes/Boss Combat
+  MusicPool:
+  - {fileID: 8300000, guid: aa8bfa2ca156bfe4a95584705ff468d5, type: 3}

@@ -25,6 +25,7 @@ public abstract class BaseEffect : MonoBehaviour
 	[SerializeField] private float flickeringIntensity = .8f;
 	[SerializeField] private float maxFlickerStep = .4f;
 	[SerializeField] private float maxFlickerMod = .5f;
+	private float baseRange;
 	#endregion
 
 	#region Color
@@ -56,6 +57,7 @@ public abstract class BaseEffect : MonoBehaviour
     {
         ownSpriteRenderer = GetComponent<SpriteRenderer>();
 		baseColor = ownLight.color;
+		baseRange = ownLight.range;
         currentFrame = initialFrameOffset - 1;
     }
 
@@ -152,7 +154,8 @@ public abstract class BaseEffect : MonoBehaviour
 	{
 		float timeStamp = currentFrame + updateCounter / TimeBetweenFrames;
 
-		if (flickeringEnabled) ownLight.range = Mathf.Lerp(ownLight.range, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
+		//if (flickeringEnabled) ownLight.range = Mathf.Lerp(ownLight.range, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
+		if (flickeringEnabled) ownLight.range = Mathf.Lerp(baseRange, lightRangeCurve.Evaluate(timeStamp), flickeringIntensity);
 		
 		if (changingLightColors) ownLight.color = Color.Lerp
 				(baseColor, 

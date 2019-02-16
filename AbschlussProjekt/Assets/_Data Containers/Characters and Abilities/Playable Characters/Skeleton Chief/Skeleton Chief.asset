@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
   m_Name: Skeleton Chief
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 0}
-  Portrait: {fileID: 0}
-  BaseHealth: 0
-  BaseAttack: 0
-  BaseDefense: 0
-  BaseSpeed: 0
-  FullSkillPool: []
-  FallbackSkills: []
-  RepositioningSkill: {fileID: 0}
-  PassSkill: {fileID: 0}
+  Prefab: {fileID: 6056558349726549190, guid: dad75ebe8dbd21b4aa81716ebf93f7c9, type: 3}
+  Portrait: {fileID: 21300000, guid: f11212dcb87fa364891f022213fa6ddb, type: 3}
+  BaseHealth: 15
+  BaseAttack: 5
+  BaseDefense: 1
+  BaseSpeed: 10
+  FullSkillPool:
+  - {fileID: 11400000, guid: 56f2114c9b61793479152aa52d791afc, type: 2}
+  - {fileID: 11400000, guid: 7db1a3e55abecc7498dd540c97819c8d, type: 2}
+  - {fileID: 11400000, guid: f653c4aecb80734428241318406a02ce, type: 2}
+  FallbackSkills:
+  - {fileID: 11400000, guid: 56f2114c9b61793479152aa52d791afc, type: 2}
+  - {fileID: 11400000, guid: 7db1a3e55abecc7498dd540c97819c8d, type: 2}
+  - {fileID: 11400000, guid: f653c4aecb80734428241318406a02ce, type: 2}
+  RepositioningSkill: {fileID: 11400000, guid: ec54661d41b23a743bccaed5794fa4be, type: 2}
+  PassSkill: {fileID: 11400000, guid: 07ef657865b6e9c42bc59d989ba3b415, type: 2}
   moveSpeed: 150
   wallSlideVelocity: 0.1
   maxClimbHeight: 0.9

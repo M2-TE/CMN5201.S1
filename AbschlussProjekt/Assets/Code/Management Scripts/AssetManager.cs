@@ -65,18 +65,22 @@ public class AssetManager
 		var robot = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Robot");
 		var wolf = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Wolf");
 		var skeleton = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Skeleton");
+		var skeletonArcher = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Skeleton Archer");
+		var skeletonChief = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Skeleton Chief");
 
 		Savestate.CurrentTeam[0] = new Entity(wolf);
 		Savestate.CurrentTeam[1] = new Entity(skeleton);
-		Savestate.CurrentTeam[2] = new Entity(mage);
-		Savestate.CurrentTeam[3] = new Entity(gunwoman);
-		
+		Savestate.CurrentTeam[2] = new Entity(skeletonChief);
+		Savestate.CurrentTeam[3] = new Entity(skeletonArcher);
+
+		Savestate.OwnedCharacters.Add(new Entity(gunwoman));
 		Savestate.OwnedCharacters.Add(new Entity(knight));
 		Savestate.OwnedCharacters.Add(new Entity(mage));
 		Savestate.OwnedCharacters.Add(new Entity(robot));
-		Savestate.OwnedCharacters.Add(new Entity(gunwoman));
 		Savestate.OwnedCharacters.Add(new Entity(wolf));
-		Savestate.OwnedCharacters.Add(new Entity(robot));
+		Savestate.OwnedCharacters.Add(new Entity(skeleton));
+		Savestate.OwnedCharacters.Add(new Entity(skeletonArcher));
+		Savestate.OwnedCharacters.Add(new Entity(skeletonChief));
 
 		Save();
 	}

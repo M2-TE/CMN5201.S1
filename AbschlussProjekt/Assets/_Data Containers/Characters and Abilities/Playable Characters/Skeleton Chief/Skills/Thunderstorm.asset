@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Thunderstorm
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 4e28986cf42577c4fbc73a1f666e0c55, type: 3}
-  FxPrefab: {fileID: 0}
+  FxPrefab: {fileID: 7428835992938197664, guid: 42bf1ed72aac21f4da736e07ed882c70,
+    type: 3}
   castSfx: []
   impactSfx: []
   AnimatorTrigger: Attack

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Trance
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 01c899e6ee07194468eb257bf1e49bb2, type: 3}
-  FxPrefab: {fileID: 0}
+  FxPrefab: {fileID: 7428835992938197664, guid: 621e6527b46e60248ac5aee9aba29fb3,
+    type: 3}
   castSfx: []
   impactSfx: []
   AnimatorTrigger: Attack
@@ -26,7 +27,7 @@ MonoBehaviour:
   CanHitAllies: 1
   CanHitSelf: 1
   AttackMultiplier: -0.25
-  Cooldown: 1
+  Cooldown: 5
   MinRange: 0
   MaxRange: 2
   SurroundingAffectedUnits: {x: 4, y: 4}

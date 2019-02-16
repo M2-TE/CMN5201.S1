@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Ensnare
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 4c6d1f46a9230d547914e1856224dc97, type: 3}
-  FxPrefab: {fileID: 0}
+  FxPrefab: {fileID: 1513516707019746631, guid: 22bc6045524128d448e974a931d25781,
+    type: 3}
   castSfx: []
   impactSfx: []
   AnimatorTrigger: Attack
@@ -25,10 +26,10 @@ MonoBehaviour:
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0
-  AttackMultiplier: 1
+  AttackMultiplier: 0.5
   Cooldown: 1
-  MinRange: 0
-  MaxRange: 2
+  MinRange: 4
+  MaxRange: 8
   SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects:
   - {fileID: 11400000, guid: 4bc38386ceb527d4ba817904d30ed4a0, type: 2}

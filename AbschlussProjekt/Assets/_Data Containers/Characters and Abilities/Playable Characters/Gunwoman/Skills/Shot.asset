@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,7 +13,7 @@ MonoBehaviour:
   m_Name: Shot
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 043f958b093559f4c8826c6ca4f28cf9, type: 3}
-  FxPrefab: {fileID: 1272641376283932, guid: 84c943834cd97664bbebd0610fdea158, type: 2}
+  FxPrefab: {fileID: 1272641376283932, guid: 84c943834cd97664bbebd0610fdea158, type: 3}
   castSfx:
   - {fileID: 8300000, guid: 91513dab48ea75f489d7f04015c74de5, type: 3}
   - {fileID: 8300000, guid: 02df56cdd3404b947ae8e239a8182f02, type: 3}
@@ -39,7 +40,7 @@ MonoBehaviour:
   AttackMultiplier: 1
   Cooldown: 1
   MinRange: 4
-  MaxRange: 7
+  MaxRange: 8
   SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects: []
   SelfInflictedCombatEffects: []

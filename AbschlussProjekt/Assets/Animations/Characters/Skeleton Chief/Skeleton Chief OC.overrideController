@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Skeleton Chief OC
+  m_Controller: {fileID: 9100000, guid: e5d4d3c9b8ab62c459e49b6004899309, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 3c02a428829e79a4fb3708de6e4e8877, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e9b68014489e18045b8a3e8397372885, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e13c8567a0c46c241913b915d5aeceb9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2ba66eec3eff0924d9d4fb81ce6d10e7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0e1bfebfa0238ee44bdda6d5d19ba15d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 69d1f87027b358e458f80a6d05fe36d2, type: 2}
