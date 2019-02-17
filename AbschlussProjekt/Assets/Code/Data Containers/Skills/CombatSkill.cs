@@ -10,6 +10,7 @@ public class CombatSkill : DataContainer
 	public AudioClip[] castSfx;
 	public AudioClip[] impactSfx;
 	public string AnimatorTrigger = "Attack";
+	public float castAudioDelay;
 	public float impactSpawnDelay;
 	public float impactAnimationDelay;
 	public float impactAudioDelay;

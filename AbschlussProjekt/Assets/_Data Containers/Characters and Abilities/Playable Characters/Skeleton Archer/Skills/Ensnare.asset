@@ -15,10 +15,22 @@ MonoBehaviour:
   SkillIcon: {fileID: 21300000, guid: 4c6d1f46a9230d547914e1856224dc97, type: 3}
   FxPrefab: {fileID: 1513516707019746631, guid: 22bc6045524128d448e974a931d25781,
     type: 3}
-  castSfx: []
-  impactSfx: []
+  castSfx:
+  - {fileID: 8300000, guid: f3fb8557c3d974d4d9af51e62a273a95, type: 3}
+  - {fileID: 8300000, guid: ef71607f61c56d64e904efe965ef0cca, type: 3}
+  - {fileID: 8300000, guid: 2755f21b387eb3b469251a60782651ac, type: 3}
+  - {fileID: 8300000, guid: 4a2d94741281e4746acd401037bf1cb3, type: 3}
+  - {fileID: 8300000, guid: e40e0d9513a791e4091affb0b8e30c04, type: 3}
+  - {fileID: 8300000, guid: 896b08ab0c0179b48b27d3c993b10e14, type: 3}
+  - {fileID: 8300000, guid: 0fd0e096716d4464cbb89097615de93c, type: 3}
+  - {fileID: 8300000, guid: 6572fa9524d9a9943ba47ae117be677a, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: f5857c43d9c87be4e9da90ca77bd4144, type: 3}
+  - {fileID: 8300000, guid: 00a14605deac981418fd13ee8f383ad3, type: 3}
+  - {fileID: 8300000, guid: c65f007abf70ede46a20e581a02c6a08, type: 3}
   AnimatorTrigger: Attack
-  impactSpawnDelay: 0
+  castAudioDelay: 0.65
+  impactSpawnDelay: 1.1
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0

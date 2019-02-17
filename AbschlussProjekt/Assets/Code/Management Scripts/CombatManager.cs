@@ -573,10 +573,17 @@ public class CombatManager : Manager
 
 		if (skill.AnimatorTrigger != "")
 			proxy.GetComponent<Animator>().SetTrigger(skill.AnimatorTrigger);
-		proxy.PlaySfx(skill.castSfx);
+		//proxy.PlaySfx(skill.castSfx);
+		combatPanel.StartCoroutine(PlayCastSfx(proxy, skill.castSfx, skill.castAudioDelay));
 
 		// spawn attack fx on enemies with a certain delay (after triggering atk anim)
 		combatPanel.StartCoroutine(LaunchAttack(targets, skill));
+	}
+
+	private IEnumerator PlayCastSfx(Proxy proxy, AudioClip[] castSfx, float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		proxy.PlaySfx(castSfx);
 	}
 
 	private IEnumerator LaunchAttack(Vector2Int[] targets, CombatSkill skill)
