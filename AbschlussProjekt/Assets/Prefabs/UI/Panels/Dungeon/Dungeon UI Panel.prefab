@@ -164,7 +164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1723628102
 RectTransform:
   m_ObjectHideFlags: 0
@@ -239,7 +239,9 @@ MonoBehaviour:
   visibilityToggleNode: {fileID: 1723628101}
   visibilityOnAwake: 1
   MapParent: {fileID: 153760729}
-  DungeonLength: 8
+  firstHalfRoomPool: 00000000010000000500000005000000020000000200000002000000020000000200000002000000
+  secondHalfRoomPool: 00000000000000000500000005000000050000000300000003000000030000000300000003000000
+  DungeonLength: 9
   MaxSiblings: 4
   randomPathingChance: 0.6
   CurrentStandingColor: {r: 0.5, g: 0.34117648, b: 0, a: 1}

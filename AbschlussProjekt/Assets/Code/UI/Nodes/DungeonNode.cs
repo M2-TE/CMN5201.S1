@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class DungeonNode : MonoBehaviour
 {
-	public enum RoomType { Empty, Camp, StandardCombat, EliteCombat, Boss, Treasure }
+	public enum RoomType { Empty, Camp, StandardCombat, EliteCombat, Boss, Unknown, Treasure }
 
 	[NonSerialized] public DungeonNode ParentNode;
 	[NonSerialized] public List<DungeonNode> ChildNodes;

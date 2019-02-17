@@ -34,20 +34,27 @@ public class DungeonManager : Manager
 		currentNodeColorBuffer = image.color;
 		image.color = dungeonPanel.CurrentStandingColor;
 		
-		for (int i = 0; i < dungeonPanel.DungeonLength - 2; i++)
+		for (int depth = 0; depth < dungeonPanel.DungeonLength - 2; depth++)
 		{
 			int siblingAmount = Random.Range(1, dungeonPanel.MaxSiblings);
 			for (int x = 0; x < siblingAmount; x++)
-				AddNode(CreateNode(GetRandomRoomType()), parent);
+				AddNode(CreateNode(GetRandomRoomType(depth)), parent);
 
-			parent = AddNode(CreateNode(GetRandomRoomType()), parent);
+			parent = AddNode(CreateNode(GetRandomRoomType(depth)), parent);
 		}
 		AddNode(CreateNode(DungeonNode.RoomType.Boss), parent);
 	}
 
-	private DungeonNode.RoomType GetRandomRoomType()
+	private DungeonNode.RoomType GetRandomRoomType(int depth)
 	{
-		return (DungeonNode.RoomType)Random.Range(0, Enum.GetNames(typeof(DungeonNode.RoomType)).Length);
+		// compensate for gen smoothing
+		int maxDepth = dungeonPanel.DungeonLength - 2; 
+		depth++;
+
+		if (depth == 0) return DungeonNode.RoomType.Empty;
+		else if (depth == maxDepth) return DungeonNode.RoomType.Camp;
+		else if (depth < maxDepth * .5f) return dungeonPanel.firstHalfRoomPool[Random.Range(0, dungeonPanel.firstHalfRoomPool.Length)];
+		else return dungeonPanel.secondHalfRoomPool[Random.Range(0, dungeonPanel.secondHalfRoomPool.Length)];
 	}
 
 	private DungeonNode CreateNode(DungeonNode.RoomType roomType)
@@ -71,7 +78,7 @@ public class DungeonManager : Manager
 				(node as CombatNode).HostileEntities = CreateEnemyGroup(roomType);
 				break;
 
-			case DungeonNode.RoomType.Treasure:
+			case DungeonNode.RoomType.Unknown:
 				node = Object.Instantiate(dungeonPanel.UnknownNodePrefab, dungeonPanel.MapParent.transform).GetComponent<DungeonNode>();
 				break;
 		}
@@ -194,7 +201,7 @@ public class DungeonManager : Manager
 
 				break;
 
-			case DungeonNode.RoomType.Treasure:
+			case DungeonNode.RoomType.Unknown:
 
 				break;
 		}

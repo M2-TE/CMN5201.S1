@@ -539,6 +539,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7832785130224882707, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147239507077289118, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 404957441536587378, guid: a6323785bd24293439b8b85bb1fff482,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -548,6 +558,61 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 168693707197427961, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 168693707197427961, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033762830861180810, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033762830861180810, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033762830861180810, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492498377436963268, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492498377436963268, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875255388108642473, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875255388108642473, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875255388108642473, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837312019112985763, guid: a6323785bd24293439b8b85bb1fff482,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6323785bd24293439b8b85bb1fff482, type: 3}
@@ -1145,6 +1210,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 164914626}
     m_Modifications:
+    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
+        type: 3}
+      propertyPath: m_Name
+      value: Barracks Panel
+      objectReference: {fileID: 0}
     - target: {fileID: 3208144139095691157, guid: f8e6e1f195549a54eaa168081f9ac9db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1250,14 +1320,9 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
-        type: 3}
-      propertyPath: m_Name
-      value: Barracks Panel
-      objectReference: {fileID: 0}
     - target: {fileID: 404848153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000054213506
+      value: 0.0000031361515
       objectReference: {fileID: 0}
     - target: {fileID: 2067387495, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchorMax.x
