@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1278361087
+CRC: 3281756461
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7b1b45e56ae7b11deac30945f6f7f516
+    Hash: 83ea39a0a407cd008be6529ccd3220e4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 80eb17ca6709ea0a1bf3d27b6bf92ffe
@@ -31,4 +31,4 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Armor/Base Armor.asset
 - Assets/_Data Containers/Items/Equipment/Rare/TestItem.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
+- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools

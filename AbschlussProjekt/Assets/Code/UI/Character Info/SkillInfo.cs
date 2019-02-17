@@ -6,14 +6,10 @@ using UnityEngine.UI;
 
 public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField]
     private Image skillImage;
     private string skillDescription;
-    private CharacterInfoPanel characterInfoPanel;
-
-    private void Awake()
-    {
-        skillImage = GetComponent<Image>();
-    }
+    protected CharacterInfoPanel characterInfoPanel;
 
     public void SetUI(Sprite sprite, string skillDescription, CharacterInfoPanel characterInfoPanel)
     {

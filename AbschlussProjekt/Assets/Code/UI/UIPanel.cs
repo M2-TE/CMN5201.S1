@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public abstract class UIPanel : MonoBehaviour
 {
-	[NonSerialized] public EventSystem EventSystem;
+    [NonSerialized] public EventSystem EventSystem;
 	[SerializeField] protected GameObject firstSelectedElement;
 	[SerializeField] protected GameObject visibilityToggleNode;
 	[SerializeField] private bool visibilityOnAwake;

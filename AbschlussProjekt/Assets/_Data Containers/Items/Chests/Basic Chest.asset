@@ -15,18 +15,10 @@ MonoBehaviour:
   CustomChest: 0
   CompleteRandomness: 0
   SelectedPools: 000000
-  Probability: 000000000000000000000000
+  Probability: 010000000000000000000000
   AllItems: {fileID: 11400000, guid: 99382285d151ede47bb2f204e734ff65, type: 2}
   minItems: 1
-  maxItems: 1
+  maxItems: 2
   Items:
-  - amount: 1
-    content: Potion
-  - amount: 1
-    content: Base Armor
-  - amount: 1
-    content: TestItem
-  - amount: 1
-    content: TestItem
   - amount: 1
     content: Base Armor

@@ -18,6 +18,12 @@ public class CharacterInfoPanel : UIPanel
     private Image[] characterBuffs;
     [SerializeField]
     private SkillInfo[] characterSkills;
+    [SerializeField]
+    private GameObject InspectorPanel;
+    [SerializeField]
+    private SkillSelectionPanel skillSelectionPanel;
+
+    private bool inspectorPanel;
 
     public ItemInfo itemInfo;
     #endregion
@@ -50,6 +56,8 @@ public class CharacterInfoPanel : UIPanel
         RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
 
         AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
+
+        skillSelectionPanel.EventSystem = this.EventSystem;
     }
     public void ConnectUIHandler(UIEquipmentHandler handler, EquipmentSlot key)
     {
@@ -60,9 +68,10 @@ public class CharacterInfoPanel : UIPanel
         base.ToggleVisibility(visibleState);
         if(AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager != null)
         {
-
             AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager.InventoryPanel.itemInfo.UpdateAction(true);
         }
+        if (visibleState)
+            inspectorPanel = true;
     }
     #endregion
 
@@ -86,6 +95,7 @@ public class CharacterInfoPanel : UIPanel
 
         characterPortrait.sprite = currentCharacter.CharDataContainer.Portrait;
 
+        SwitchInspectionPanel();
         DisplayCharacterPreview();
         DisplaySkills();
         DisplayCombatEffects();
@@ -95,6 +105,18 @@ public class CharacterInfoPanel : UIPanel
         {
             DisplayEquipmentSlot(slot);
         }
+    }
+
+    public void SwitchInspectionPanel()
+    {
+        SwitchInspectionPanel(inspectorPanel);
+    }
+
+    public void SwitchInspectionPanel(bool inspector)
+    {
+        skillSelectionPanel.ToggleVisibility(!inspector);
+        InspectorPanel.SetActive(inspector);
+        inspectorPanel = !inspector;
     }
 
     public void DisplayCharacterPreview()
@@ -143,9 +165,15 @@ public class CharacterInfoPanel : UIPanel
         for (int i = 0; i < characterSkills.Length; i++)
         {
             if (currentCharacter.EquippedCombatSkills[i] != null)
+            {
                 characterSkills[i].SetUI(currentCharacter.EquippedCombatSkills[i].SkillIcon, currentCharacter.EquippedCombatSkills[i].SkillDescription, this);
+                skillSelectionPanel.characterSkills[i].SetUI(currentCharacter.EquippedCombatSkills[i].SkillIcon, currentCharacter.EquippedCombatSkills[i].SkillDescription, this);
+            }
             else
+            {
                 characterSkills[i].SetUI(null, "", this);
+                skillSelectionPanel.characterSkills[i].SetUI(null, "", this);
+            }
         }
     }
 
@@ -173,12 +201,16 @@ public class CharacterInfoPanel : UIPanel
     public void DisplaySkillInfo(string description)
     {
         if(description != "" && description != null)
+        {
             characterSkillInfo.text = "Skill Description:\n"+ description;
+            skillSelectionPanel.characterSkillInfo.text = "Skill Description:\n" + description;
+        }
     }
 
     public void ClearSkillInfo()
     {
         characterSkillInfo.text = "";
+        skillSelectionPanel.characterSkillInfo.text = "";
     }
     #endregion
 }

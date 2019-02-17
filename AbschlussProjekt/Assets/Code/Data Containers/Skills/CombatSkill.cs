@@ -17,6 +17,9 @@ public class CombatSkill : DataContainer
 	public float impactDmgDelay;
 	[TextArea] public string SkillDescription = "Skill Description Missing";
 
+    [Space(20)]
+    public int LevelRequirement = 1;
+
 	[Space(20)]
 	public bool CanHitEnemies = true;
 	public bool CanHitAllies = false;

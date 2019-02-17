@@ -33,7 +33,6 @@ public class Chest : DataContainer
             {
                 poolValues[i] = (int)(Mathf.Max(0,AllItems.Pools.Count-1)*Random.value);
                 itemValues[i] = (int)(Mathf.Max(0, AllItems.Pools[poolValues[i]].Count-1)* Random.value);
-
                 Items.Add(new StorageSlot(1,AllItems.Pools[poolValues[i]][itemValues[i]]));
             }
         }
@@ -50,13 +49,14 @@ public class Chest : DataContainer
             }
             for (int i = 0; i < itemCount; i++)
             {
-                poolValues[i] = pools[(int)(Mathf.Max(0, (pools.Count-1)* Random.value))];
+                if(pools.Count <= 0)
+                    poolValues[i] = (int)(Mathf.Max(0, AllItems.Pools.Count - 1) * Random.value);
+                else
+                    poolValues[i] = pools[(int)(Mathf.Max(0, (pools.Count-1)* Random.value))];
                 itemValues[i] = (int)(Mathf.Max(0, AllItems.Pools[poolValues[i]].Count - 1) * Random.value);
                 Items.Add(new StorageSlot(1,AllItems.Pools[poolValues[i]][itemValues[i]]));
             }
         }
-
-        //allItems = null;
     }
 
 }

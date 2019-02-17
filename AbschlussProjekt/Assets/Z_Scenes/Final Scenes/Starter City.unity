@@ -779,6 +779,61 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4561847720594238347, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4561847720594238347, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198888877035129899, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198888877035129899, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 123550237010397576, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 123550237010397576, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898371516890002836, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898371516890002836, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7112844079872711820, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchInspectionPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629148226268242510, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629148226268242510, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b238441705c2c834c8395370ea4175a0, type: 3}
 --- !u!1001 &2075383777
@@ -972,15 +1027,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 164914626}
     m_Modifications:
-    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
-        type: 3}
-      propertyPath: m_Name
-      value: Barracks Panel
-      objectReference: {fileID: 0}
-    - target: {fileID: 404848153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.0000002582432
-      objectReference: {fileID: 0}
     - target: {fileID: 3208144139095691157, guid: f8e6e1f195549a54eaa168081f9ac9db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1086,6 +1132,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
+        type: 3}
+      propertyPath: m_Name
+      value: Barracks Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 404848153, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000009333997
+      objectReference: {fileID: 0}
     - target: {fileID: 2067387495, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1098,6 +1153,11 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3208144138530769396, guid: f8e6e1f195549a54eaa168081f9ac9db,
+        type: 3}
+      propertyPath: debugCityPanel
+      value: 
+      objectReference: {fileID: 1036023814}
     - target: {fileID: 554960956, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
@@ -1106,11 +1166,6 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3208144138530769396, guid: f8e6e1f195549a54eaa168081f9ac9db,
-        type: 3}
-      propertyPath: debugCityPanel
-      value: 
-      objectReference: {fileID: 1036023814}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
 --- !u!1001 &5907763665891978666
