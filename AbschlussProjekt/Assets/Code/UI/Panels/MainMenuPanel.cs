@@ -1,13 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuPanel : UIPanel
 {
-
-	protected override void Awake()
-	{
-		base.Awake();
-		ToggleVisibility(true);
-	}
 	public void OnContinuePress()
 	{
 		AssetManager instance = AssetManager.Instance;
@@ -21,8 +16,14 @@ public class MainMenuPanel : UIPanel
 		OnContinuePress();
 	}
 
+	public void OnOptionsPress()
+	{
+		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisiblity();
+	}
+
 	public void OnExitPress()
 	{
 		AssetManager.Instance.GetManager<GameManager>().ExitGame();
 	}
+
 }

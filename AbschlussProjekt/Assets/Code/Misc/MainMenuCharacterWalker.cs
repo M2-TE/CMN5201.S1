@@ -36,6 +36,9 @@ public class MainMenuCharacterWalker : MonoBehaviour
 
 	private IEnumerator ManageProxy(GameObject proxyGO, float xMin, float xMax)
 	{
+		for (int i = 0; i < proxyGO.transform.childCount; i++)
+			proxyGO.transform.GetChild(i).gameObject.SetActive(false);
+
 		var anim = proxyGO.GetComponent<Animator>();
 		var renderer = proxyGO.GetComponent<SpriteRenderer>();
 		while (true) // phase iteration
