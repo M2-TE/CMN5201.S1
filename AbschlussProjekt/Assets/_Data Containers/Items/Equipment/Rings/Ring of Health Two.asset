@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
   m_Name: Ring of Health Two
   m_EditorClassIdentifier: 
-  ItemName: Ring of Health
+  ItemName: Ring of Health Two
   ItemIcon: {fileID: 21300000, guid: 3dae18b0f5f5e9849bf765fb03549c41, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   testArray: 
   MatchingClasses: []
   EquipmentType: 8
-  HealthBonus: 20
+  HealthBonus: 10
   AttackBonus: 0
   DefenseBonus: 0
   SpeedBonus: 0

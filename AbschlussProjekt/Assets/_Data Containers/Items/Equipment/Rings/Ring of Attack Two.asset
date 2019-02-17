@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
   m_Name: Ring of Attack Two
   m_EditorClassIdentifier: 
-  ItemName: Ring of Attack
+  ItemName: Ring of Attack Two
   ItemIcon: {fileID: 21300000, guid: 22f2fa98e9df72448af50019ebd5ed08, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
   MatchingClasses: []
   EquipmentType: 8
   HealthBonus: 0
-  AttackBonus: 10
+  AttackBonus: 4
   DefenseBonus: 0
   SpeedBonus: 0

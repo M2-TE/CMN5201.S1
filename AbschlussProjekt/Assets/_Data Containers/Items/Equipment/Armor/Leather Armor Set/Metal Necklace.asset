@@ -22,8 +22,7 @@ MonoBehaviour:
   IsUnique: 0
   StackingLimit: 0
   testArray: 
-  MatchingClasses:
-  - {fileID: 11400000, guid: cee90cc15cd11804f97bbc0c6f5e054a, type: 2}
+  MatchingClasses: []
   EquipmentType: 9
   HealthBonus: 0
   AttackBonus: 1

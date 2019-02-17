@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
   m_Name: Ring of Speed Two
   m_EditorClassIdentifier: 
-  ItemName: Ring of Speed
+  ItemName: Ring of Speed Two
   ItemIcon: {fileID: 21300000, guid: 1af52ef74f3584748a88f86d15ae4e5c, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
@@ -27,4 +27,4 @@ MonoBehaviour:
   HealthBonus: 0
   AttackBonus: 0
   DefenseBonus: 0
-  SpeedBonus: 5
+  SpeedBonus: 3

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
   m_Name: Ring of Defense Two
   m_EditorClassIdentifier: 
-  ItemName: Ring of Defense
+  ItemName: Ring of Defense Two
   ItemIcon: {fileID: 21300000, guid: 4ce50360265f77640befaba6e15b5688, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
@@ -26,5 +26,5 @@ MonoBehaviour:
   EquipmentType: 8
   HealthBonus: 0
   AttackBonus: 0
-  DefenseBonus: 10
+  DefenseBonus: 5
   SpeedBonus: 0
