@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class MainMenuCharacterWalker : MonoBehaviour
+public class CharacterWalker : MonoBehaviour
 {
 	[SerializeField] private int maxSimChars = 5;
 	[SerializeField] private Rect[] walkableAreas;
