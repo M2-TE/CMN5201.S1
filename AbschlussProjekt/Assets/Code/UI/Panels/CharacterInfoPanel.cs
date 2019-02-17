@@ -78,6 +78,7 @@ public class CharacterInfoPanel : UIPanel
     public void OpenCharacterInfo(Entity character)
     {
         currentCharacter = character;
+        skillSelectionPanel.CurrentEntity = character;
         DisplayCharacter();
     }
 
@@ -97,7 +98,7 @@ public class CharacterInfoPanel : UIPanel
 
         SwitchInspectionPanel();
         DisplayCharacterPreview();
-        DisplaySkills();
+        skillSelectionPanel.DisplayEquippedSkills();
         DisplayCombatEffects();
 
         /*EquipmentSlot slot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot))*/
@@ -165,15 +166,9 @@ public class CharacterInfoPanel : UIPanel
         for (int i = 0; i < characterSkills.Length; i++)
         {
             if (currentCharacter.EquippedCombatSkills[i] != null)
-            {
                 characterSkills[i].SetUI(currentCharacter.EquippedCombatSkills[i].SkillIcon, currentCharacter.EquippedCombatSkills[i].SkillDescription, this);
-                skillSelectionPanel.characterSkills[i].SetUI(currentCharacter.EquippedCombatSkills[i].SkillIcon, currentCharacter.EquippedCombatSkills[i].SkillDescription, this);
-            }
             else
-            {
                 characterSkills[i].SetUI(null, "", this);
-                skillSelectionPanel.characterSkills[i].SetUI(null, "", this);
-            }
         }
     }
 
@@ -201,16 +196,15 @@ public class CharacterInfoPanel : UIPanel
     public void DisplaySkillInfo(string description)
     {
         if(description != "" && description != null)
-        {
             characterSkillInfo.text = "Skill Description:\n"+ description;
-            skillSelectionPanel.characterSkillInfo.text = "Skill Description:\n" + description;
-        }
+        skillSelectionPanel.DisplaySkillInfo(description);
+
     }
 
     public void ClearSkillInfo()
     {
         characterSkillInfo.text = "";
-        skillSelectionPanel.characterSkillInfo.text = "";
+        skillSelectionPanel.ClearSkillInfo();
     }
     #endregion
 }

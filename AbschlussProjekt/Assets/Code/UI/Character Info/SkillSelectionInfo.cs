@@ -5,10 +5,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillSelectionInfo : SkillInfo, IDragHandler, IDropHandler
+public class SkillSelectionInfo : SkillInfo,IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField]
     private TextMeshProUGUI skillName;
+    [SerializeField]
+    private SkillSelectionPanel skillSelectionPanel;
+    [SerializeField] [Range(0,3)]
+    private int position;
 
     public CombatSkill skill;
 
@@ -34,16 +38,15 @@ public class SkillSelectionInfo : SkillInfo, IDragHandler, IDropHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(skill != null)
-        {
-
-        }
-        Debug.Log("DRAG");
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("DROP");
+        throw new System.NotImplementedException();
     }
 
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
 }
