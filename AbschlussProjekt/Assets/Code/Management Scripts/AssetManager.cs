@@ -62,6 +62,7 @@ public class AssetManager
 		var gunwoman = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Gunwoman");
 		var knight = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Knight");
 		var mage = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Mage");
+		var priest = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Priest");
 		var robot = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Robot");
 		var wolf = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Wolf");
 		var skeleton = instance.LoadBundle<Character>(instance.Paths.PlayableCharactersPath, "Skeleton");
@@ -76,6 +77,7 @@ public class AssetManager
 		Savestate.OwnedCharacters.Add(new Entity(gunwoman));
 		Savestate.OwnedCharacters.Add(new Entity(knight));
 		Savestate.OwnedCharacters.Add(new Entity(mage));
+		//Savestate.OwnedCharacters.Add(new Entity(priest));
 		Savestate.OwnedCharacters.Add(new Entity(robot));
 		Savestate.OwnedCharacters.Add(new Entity(wolf));
 		Savestate.OwnedCharacters.Add(new Entity(skeleton));
