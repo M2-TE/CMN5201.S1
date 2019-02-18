@@ -7,6 +7,7 @@ public class CharacterWalker : MonoBehaviour
 {
 	[SerializeField] private int maxSimChars = 5;
 	[SerializeField] private Rect[] walkableAreas;
+	[SerializeField] private bool displaceZ = false;
 
 	[Space][SerializeField] private float yOffset;
 	[SerializeField] private float minActionDuration, maxActionDuration, movementSpeed, walkingTimerModifier;
@@ -25,7 +26,7 @@ public class CharacterWalker : MonoBehaviour
 		{
 			Rect rect = walkableAreas[Random.Range(0, walkableAreas.Length)];
 			float spawnPosX = Random.Range(rect.position.x, rect.position.x + rect.width);
-			var spawnPos = new Vector3(spawnPosX, rect.position.y + yOffset, -.0001f * charIndex + rect.y * .001f);
+			var spawnPos = new Vector3(spawnPosX, rect.position.y + yOffset, .0001f *- charIndex + (displaceZ ? rect.y * .001f : 0f));
 
 			StartCoroutine(ManageProxy(Instantiate
 				(availableChars[charIndex].CharDataContainer.Prefab, 

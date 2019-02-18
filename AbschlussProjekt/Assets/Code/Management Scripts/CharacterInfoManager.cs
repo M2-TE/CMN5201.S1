@@ -53,13 +53,13 @@ public class CharacterInfoManager : Manager
 
     private void HandleStatsEffect(Entity affectedEntity,EquipmentContainer item, Func<int,int> modification)
     {
-        affectedEntity.currentHealth += modification(item.HealthBonus);
+        affectedEntity.CurrentHealth += modification(item.HealthBonus);
 
-        affectedEntity.currentAttack += modification(item.AttackBonus);
+        affectedEntity.CurrentAttack += modification(item.AttackBonus);
 
-        affectedEntity.currentDefense += modification(item.DefenseBonus);
+        affectedEntity.CurrentDefense += modification(item.DefenseBonus);
 
-        affectedEntity.currentSpeed += modification(item.SpeedBonus);
+        affectedEntity.CurrentSpeed += modification(item.SpeedBonus);
 
         CharacterInfoPanel.DisplayCharacterStats();
     }

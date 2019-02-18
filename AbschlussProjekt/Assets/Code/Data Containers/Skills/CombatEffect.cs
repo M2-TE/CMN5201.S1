@@ -50,8 +50,8 @@ public class CombatEffect : DataContainer
 		affectedEntity.CurrentAttack += floatMod(affectedEntity.BaseAttack, AttackModifier);
 		affectedEntity.CurrentAttack += intMod(FlatAttackModifier);
 
-		affectedEntity.currentDefense += floatMod(affectedEntity.BaseDefense, DefenseModifier);
-		affectedEntity.currentDefense += intMod(FlatDefenseModifier);
+		affectedEntity.CurrentDefense += floatMod(affectedEntity.BaseDefense, DefenseModifier);
+		affectedEntity.CurrentDefense += intMod(FlatDefenseModifier);
 		
 		affectedEntity.CurrentSpeed += floatMod(affectedEntity.BaseSpeed, SpeedModifier);
 		affectedEntity.CurrentSpeed += intMod(FlatSpeedModifier);

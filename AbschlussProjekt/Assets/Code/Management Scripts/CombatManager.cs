@@ -500,7 +500,7 @@ public class CombatManager : Manager
 		combatPanel.statDescriptionText.SetText(
 			"HP:	" + GetFormattedStatString(entity.CurrentHealth, entity.CurrentMaxHealth) + " / " + GetFormattedStatString(entity.CurrentMaxHealth, entity.BaseHealth) +
 			"\nATK:	" + GetFormattedStatString(entity.CurrentAttack, entity.BaseAttack) +
-			"\nDEF:	" + GetFormattedStatString(entity.currentDefense, entity.BaseDefense) +
+			"\nDEF:	" + GetFormattedStatString(entity.CurrentDefense, entity.BaseDefense) +
 			"\nSPD:	" + GetFormattedStatString(entity.CurrentSpeed, entity.BaseSpeed));
 	}
 
@@ -628,7 +628,7 @@ public class CombatManager : Manager
 
 		int actualDamage =
 			(skill.AttackMultiplier > 0) // if the attack multiplier is at zero, then its a buff, not an attack (min dmg circumvented) 
-			? Mathf.Max(1, (int)(GetEntity(caster).CurrentAttack * skill.AttackMultiplier - GetEntity(target).currentDefense))
+			? Mathf.Max(1, (int)(GetEntity(caster).CurrentAttack * skill.AttackMultiplier - GetEntity(target).CurrentDefense))
 			: (int)(GetEntity(caster).CurrentAttack * skill.AttackMultiplier);
 
 		ApplyCombatEffects(caster, target, skill);

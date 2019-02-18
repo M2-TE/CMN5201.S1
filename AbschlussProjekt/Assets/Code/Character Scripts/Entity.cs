@@ -172,7 +172,7 @@ public class Entity
     public int CurrentAttack;
 
     public int BaseDefense;
-    public int currentDefense;
+    public int CurrentDefense;
 
     public int BaseSpeed;
     public int CurrentSpeed;
@@ -203,14 +203,14 @@ public class Entity
     public override string ToString()
     {
         return Name + ": " + BaseHealth + " / " + CurrentHealth + " HP | "
-            + CurrentAttack + " Atk | " + currentDefense + " Def | " + CurrentSpeed + " Spd";
+            + CurrentAttack + " Atk | " + CurrentDefense + " Def | " + CurrentSpeed + " Spd";
     }
 
     public string Stats()
     {
 		StringBuilder stringBuilder = new StringBuilder();
 		//throw new System.Exception("Yannick, los mach hier undso!");
-        return "Stats:\n HP : " + BaseHealth + "/" + CurrentHealth + "\n Atk  : " + CurrentAttack + "\n Def : " + currentDefense + "\n Spd : " + CurrentSpeed;
+        return "Stats:\n HP : " + BaseHealth + "/" + CurrentHealth + "\n Atk  : " + CurrentAttack + "\n Def : " + CurrentDefense + "\n Spd : " + CurrentSpeed;
     }
 
 	public void AddExp(int exp)
@@ -238,7 +238,7 @@ public class Entity
 		CurrentHealth = BaseHealth;
 		CurrentMaxHealth = BaseHealth;
 		CurrentAttack = BaseAttack;
-		currentDefense = BaseDefense;
+		CurrentDefense = BaseDefense;
 		CurrentSpeed = BaseSpeed;
 
 		//foreach (CombatSkill skill in currentSkillCooldowns.Keys)
@@ -275,7 +275,7 @@ public class Entity
         CurrentAttack = BaseAttack;
 
         BaseDefense = charDataContainer.BaseDefense;
-        currentDefense = BaseDefense;
+        CurrentDefense = BaseDefense;
 
         BaseSpeed = charDataContainer.BaseSpeed;
         CurrentSpeed = BaseSpeed;
