@@ -6,15 +6,16 @@ public class ChestPanel : UIPanel
 {
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject itemSlotsParent;
-    [SerializeField] private Chest chest;
+    [SerializeField] private Chest[] chests;
 
-
+    private Chest chest;
     private List<UIStorageHandler> storageSlots = new List<UIStorageHandler>();
 
     private ChestManager chestManager;
 
     protected override void Awake()
     {
+        chest = chests[Random.Range(0, chests.Length)];
         DrawItemsFromContainer();
         chestManager = AssetManager.Instance.GetManager<ChestManager>() ?? new ChestManager();
         chestManager.ChestPanel = this;
@@ -31,7 +32,7 @@ public class ChestPanel : UIPanel
 
     public void InstantiateChest()
     {
-        for (int slot = 0; slot < chest.Items.Count; slot++)
+        for (int slot = 0; slot < chestManager.Items.Count; slot++)
         {
             storageSlots.Add(Instantiate(slotPrefab, itemSlotsParent.transform).GetComponent<UIStorageHandler>());
             storageSlots[slot].Connect(this, slot);
@@ -60,5 +61,16 @@ public class ChestPanel : UIPanel
         }
         else
             Debug.LogError("A Chest has a problem choosing items from the Pools");
+    }
+
+
+    public void Open()
+    {
+        ToggleVisibility(true);
+    }
+
+    public void Close()
+    {
+        ToggleVisibility(false);
     }
 }
