@@ -92,16 +92,15 @@ public class CharacterInfoPanel : UIPanel
     {
         ToggleVisibility(true);
         characterName.text = currentCharacter.Name;
-        characterStats.text = currentCharacter.Stats();
-
         characterPortrait.sprite = currentCharacter.CharDataContainer.Portrait;
 
         SwitchInspectionPanel();
+
+        DisplayCharacterStats();
         DisplayCharacterPreview();
         skillSelectionPanel.DisplayEquippedSkills();
         DisplayCombatEffects();
 
-        /*EquipmentSlot slot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot))*/
         foreach (EquipmentSlot slot in equipmentSlots.Keys)
         {
             DisplayEquipmentSlot(slot);
@@ -118,6 +117,11 @@ public class CharacterInfoPanel : UIPanel
         skillSelectionPanel.ToggleVisibility(!inspector, this);
         InspectorPanel.SetActive(inspector);
         inspectorPanel = !inspector;
+    }
+
+    public void DisplayCharacterStats()
+    {
+        characterStats.text = currentCharacter.Stats();
     }
 
     public void DisplayCharacterPreview()

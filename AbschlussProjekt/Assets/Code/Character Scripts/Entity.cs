@@ -87,7 +87,7 @@ public class Entity
         if (equippedItems.ContainsKey(slot) && equippedItems[slot] != null)
             return equippedItems[slot];
         else if (equippedItemStrings.ContainsKey(slot) && equippedItemStrings[slot] != "" && equippedItemStrings[slot] != null)
-            return amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.EquipmentPath, equippedItemStrings[slot]);
+            return amInstance.LoadBundle<EquipmentContainer>(amInstance.Paths.ItemsPath, equippedItemStrings[slot]);
         else
             return null;
     }
@@ -106,9 +106,9 @@ public class Entity
             else
                 equippedItems.Add(slot, item);
             if (equippedItemStrings.ContainsKey(slot))
-                equippedItemStrings[slot] = item.ItemName;
+                equippedItemStrings[slot] = item.name;
             else
-                equippedItemStrings.Add(slot, item.ItemName);
+                equippedItemStrings.Add(slot, item.name);
         }
         else
         {

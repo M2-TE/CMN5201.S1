@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,11 +18,13 @@ public class CharacterInfoManager : Manager
 
     public EquipmentContainer RemoveItemOfCurrentCharacter(EquipmentSlot slot)
     {
+        HandleStatsEffect(CharacterInfoPanel.CurrentCharacter, GetItemOfCurrentCharacter(slot), x => - x);
         return CharacterInfoPanel.CurrentCharacter.SetEquippedItem(slot, null);
     }
 
     public void SetItemOfCurrentCharacter(EquipmentContainer item)
     {
+        HandleStatsEffect(CharacterInfoPanel.CurrentCharacter, item, x => x);
         CharacterInfoPanel.CurrentCharacter.SetEquippedItem(item.EquipmentType, item);
     }
 
@@ -46,5 +49,18 @@ public class CharacterInfoManager : Manager
         PrimaryActionOnItem(item.EquipmentType);
         SetItemOfCurrentCharacter(item);
         CharacterInfoPanel.DisplayEquipmentSlot(item.EquipmentType);
+    }
+
+    private void HandleStatsEffect(Entity affectedEntity,EquipmentContainer item, Func<int,int> modification)
+    {
+        affectedEntity.currentHealth += modification(item.HealthBonus);
+
+        affectedEntity.currentAttack += modification(item.AttackBonus);
+
+        affectedEntity.currentDefense += modification(item.DefenseBonus);
+
+        affectedEntity.currentSpeed += modification(item.SpeedBonus);
+
+        CharacterInfoPanel.DisplayCharacterStats();
     }
 }
