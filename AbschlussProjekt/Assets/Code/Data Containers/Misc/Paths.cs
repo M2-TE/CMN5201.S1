@@ -17,7 +17,6 @@ public class Paths : DataContainer
 	public string ItemsPath = "items";
     public string ItemPoolsPath = "items/pools";
 	public string SettingsPath = "settings";
-	public string EquipmentPath = "equipment";
 	public string SkillsPath = "skills";
 
 	[Header("Area Names")]
