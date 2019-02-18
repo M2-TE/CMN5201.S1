@@ -8,8 +8,13 @@ public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     [SerializeField]
     private Image skillImage;
-    private string skillDescription;
+    protected string skillDescription;
     protected CharacterInfoPanel characterInfoPanel;
+
+    public void Start()
+    {
+        characterInfoPanel = AssetManager.Instance.GetManager<CharacterInfoManager>().CharacterInfoPanel;
+    }
 
     public void SetUI(Sprite sprite, string skillDescription, CharacterInfoPanel characterInfoPanel)
     {
@@ -27,13 +32,17 @@ public class SkillInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         this.characterInfoPanel = characterInfoPanel;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
+        if (characterInfoPanel == null)
+            characterInfoPanel = AssetManager.Instance.GetManager<CharacterInfoManager>().CharacterInfoPanel;
         characterInfoPanel.DisplaySkillInfo(skillDescription);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (characterInfoPanel == null)
+            characterInfoPanel = AssetManager.Instance.GetManager<CharacterInfoManager>().CharacterInfoPanel;
         characterInfoPanel.ClearSkillInfo();
     }
 }

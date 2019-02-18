@@ -115,7 +115,7 @@ public class CharacterInfoPanel : UIPanel
 
     public void SwitchInspectionPanel(bool inspector)
     {
-        skillSelectionPanel.ToggleVisibility(!inspector);
+        skillSelectionPanel.ToggleVisibility(!inspector, this);
         InspectorPanel.SetActive(inspector);
         inspectorPanel = !inspector;
     }

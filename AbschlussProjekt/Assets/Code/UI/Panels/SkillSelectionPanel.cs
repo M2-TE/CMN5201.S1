@@ -7,6 +7,7 @@ public class SkillSelectionPanel : UIPanel
 {
     #region UIConnectors
     public TextMeshProUGUI characterSkillInfo;
+    public TextMeshProUGUI[] RowLevelRequirements;
     public SkillInfo[] characterSkills;
     public SkillSelectionInfo[] possibleSkill;
     #endregion
@@ -16,6 +17,11 @@ public class SkillSelectionPanel : UIPanel
 
     public Entity CurrentEntity;
 
+    public CombatSkill DraggedSkill;
+
+    private int rows;
+    private int columns = 4;
+
     protected override void Awake()
     {
         skillSelectionManager = AssetManager.Instance.GetManager<SkillSelectionManager>() ?? new SkillSelectionManager();
@@ -23,9 +29,47 @@ public class SkillSelectionPanel : UIPanel
         base.Awake();
     }
 
+    public void ToggleVisibility(bool visibleState, CharacterInfoPanel characterInfoPanel)
+    {
+        this.characterInfoPanel = characterInfoPanel;
+        ToggleVisibility(visibleState);
+        if (visibleState)
+            DisplaySkillTree();
+    }
+
     public void DisplaySkillTree()
     {
-        DisplayEquippedSkills();
+        rows = RowLevelRequirements.Length;
+        for (int i = 0; i < rows; i++)
+        {
+            DisplaySkillTreeRow(i);
+            RowLevelRequirements[i].text = CurrentEntity.SkillLevelRequirements[i].ToString();
+        }
+    }
+
+    private void DisplaySkillTreeRow(int row)
+    {
+        for (int i = 0; i < columns; i++)
+        {
+            possibleSkill[row * columns + i].SetUI(SelectItem(row, i));
+        }
+    }
+
+    private CombatSkill SelectItem(int row, int column)
+    {
+        CombatSkill outSkill = null;
+        int foundSkills = 0;
+        for (int i = 0; i < CurrentEntity.CharDataContainer.FullSkillPool.Length; i++)
+        {
+            if (CurrentEntity.CharDataContainer.FullSkillPool[i].LevelRequirement == CurrentEntity.SkillLevelRequirements[row])
+            {
+                if (foundSkills == column)
+                    outSkill = CurrentEntity.CharDataContainer.FullSkillPool[i];
+                foundSkills++;
+            }
+        }
+
+        return outSkill;
     }
 
     public void DisplayEquippedSkills()
@@ -51,4 +95,15 @@ public class SkillSelectionPanel : UIPanel
         characterSkillInfo.text = "";
     }
 
+    public void EquipSkill(int position)
+    {
+        Debug.Log("Equip "+ DraggedSkill.name +" at: " + position);
+        for (int i = 0; i < CurrentEntity.EquippedCombatSkills.Length; i++)
+        {
+            if (CurrentEntity.EquippedCombatSkills[i] != null && CurrentEntity.EquippedCombatSkills[i].name.Equals(DraggedSkill.name))
+                CurrentEntity.SetCombatSkill(i, null);
+        }
+        CurrentEntity.SetCombatSkill(position, DraggedSkill);
+        DisplayEquippedSkills();
+    }
 }

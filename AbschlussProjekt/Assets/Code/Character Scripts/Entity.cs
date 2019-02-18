@@ -7,26 +7,26 @@ using UnityEngine;
 public class Entity
 {
     public string Name;
-	
-	#region Getters and Setters
-	[NonSerialized] private AssetManager _amInstance;
-	private AssetManager amInstance
-	{
-		get { return _amInstance ?? (_amInstance = AssetManager.Instance); }
-	}
 
-	private readonly string entityType;
+    #region Getters and Setters
+    [NonSerialized] private AssetManager _amInstance;
+    private AssetManager amInstance
+    {
+        get { return _amInstance ?? (_amInstance = AssetManager.Instance); }
+    }
+
+    private readonly string entityType;
     [NonSerialized] private Character charDataContainer;
     public Character CharDataContainer
     {
         get
         {
-			if (charDataContainer != null) return charDataContainer;
-			else return charDataContainer = amInstance.LoadBundle<Character>(amInstance.Paths.PlayableCharactersPath, entityType);
+            if (charDataContainer != null) return charDataContainer;
+            else return charDataContainer = amInstance.LoadBundle<Character>(amInstance.Paths.PlayableCharactersPath, entityType);
         }
     }
 
-	private string[] equippedCombatSkillStrings;
+    private string[] equippedCombatSkillStrings;
     [NonSerialized] private CombatSkill[] equippedCombatSkills;
     public CombatSkill[] EquippedCombatSkills
     {
@@ -34,42 +34,45 @@ public class Entity
         {
             if (equippedCombatSkills != null) return equippedCombatSkills;
             else return LoadCombatSkills();
-		}
+        }
     }
 
-	private string equippedRepositioningSkillString;
-	[NonSerialized] private CombatSkill equippedRepositioningSkill;
-	public CombatSkill EquippedRepositioningSkill
-	{
-		get
-		{
-			if (equippedRepositioningSkill != null) return equippedRepositioningSkill;
-			else if (equippedRepositioningSkillString != null && equippedRepositioningSkillString != "")
-				return equippedRepositioningSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.PlayableCharactersPath, equippedRepositioningSkillString);
-			else
-			{
-				equippedRepositioningSkillString = CharDataContainer.RepositioningSkill.name;
-				return equippedRepositioningSkill = CharDataContainer.RepositioningSkill;
-			}
-		}
-	}
+    private string equippedRepositioningSkillString;
+    [NonSerialized] private CombatSkill equippedRepositioningSkill;
+    public CombatSkill EquippedRepositioningSkill
+    {
+        get
+        {
+            if (equippedRepositioningSkill != null) return equippedRepositioningSkill;
+            else if (equippedRepositioningSkillString != null && equippedRepositioningSkillString != "")
+                return equippedRepositioningSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.PlayableCharactersPath, equippedRepositioningSkillString);
+            else
+            {
+                equippedRepositioningSkillString = CharDataContainer.RepositioningSkill.name;
+                return equippedRepositioningSkill = CharDataContainer.RepositioningSkill;
+            }
+        }
+    }
 
-	private string equippedPassSkillString;
-	[NonSerialized] private CombatSkill equippedPassSkill;
-	public CombatSkill EquippedPassSkill
-	{
-		get
-		{
-			if (equippedPassSkill != null) return equippedPassSkill;
-			else if (equippedPassSkillString != null && equippedPassSkillString != "")
-				return equippedPassSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.PlayableCharactersPath, equippedPassSkillString);
-			else
-			{
-				equippedPassSkillString = CharDataContainer.PassSkill.name;
-				return equippedPassSkill = CharDataContainer.PassSkill;
-			}
-		}
-	}
+    private string equippedPassSkillString;
+    [NonSerialized] private CombatSkill equippedPassSkill;
+    public CombatSkill EquippedPassSkill
+    {
+        get
+        {
+            if (equippedPassSkill != null) return equippedPassSkill;
+            else if (equippedPassSkillString != null && equippedPassSkillString != "")
+                return equippedPassSkill = amInstance.LoadBundle<CombatSkill>(amInstance.Paths.PlayableCharactersPath, equippedPassSkillString);
+            else
+            {
+                equippedPassSkillString = CharDataContainer.PassSkill.name;
+                return equippedPassSkill = CharDataContainer.PassSkill;
+            }
+        }
+    }
+
+    private int[] skillLevelRequirements;
+    public int[] SkillLevelRequirements => skillLevelRequirements ?? (skillLevelRequirements = new int[3]{1,3,5});
 
     private Dictionary<EquipmentSlot, string> equippedItemStrings;
     [NonSerialized] private Dictionary<EquipmentSlot, EquipmentContainer> equippedItems;
@@ -132,7 +135,7 @@ public class Entity
 	}
 	public CombatSkill SetCombatSkill(int index, CombatSkill combatSkill)
 	{
-		equippedCombatSkillStrings[index] = combatSkill.name;
+        equippedCombatSkillStrings[index] = combatSkill != null ? combatSkill.name : "";
 		return equippedCombatSkills[index] = combatSkill;
 	}
 	public CombatSkill[] SetCombatSkills(CombatSkill[] skills)
