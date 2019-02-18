@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -8854,7 +8854,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091899374}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.473, y: 3.595, z: 0}
+  m_LocalPosition: {x: 4.473, y: 3.535, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 635852272}
@@ -9025,7 +9025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 785631047, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -21.550049
+      value: -21.549988
       objectReference: {fileID: 0}
     - target: {fileID: 785631047, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
       propertyPath: m_SizeDelta.y
@@ -9033,7 +9033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 785631047, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -427.5503
+      value: -427.55017
       objectReference: {fileID: 0}
     - target: {fileID: 785631047, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
       propertyPath: m_SizeDelta.x
@@ -9285,7 +9285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 976411296, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0003625945
+      value: -0.000014338026
       objectReference: {fileID: 0}
     - target: {fileID: 477710118, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_SizeDelta.y
