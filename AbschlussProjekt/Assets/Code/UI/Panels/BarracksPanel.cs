@@ -10,6 +10,7 @@ public class BarracksPanel : UIPanel
 	public RectTransform CharacterStorageNode;
 	public Vector2 StartingSlotOffset;
 	public Vector2 SlotOffset;
+	public Vector2 SlotViewportSize;
 
 	private GeneralCityManager manager;
 

@@ -25,7 +25,7 @@ public class CharacterWalker : MonoBehaviour
 		{
 			Rect rect = walkableAreas[Random.Range(0, walkableAreas.Length)];
 			float spawnPosX = Random.Range(rect.position.x, rect.position.x + rect.width);
-			var spawnPos = new Vector3(spawnPosX, rect.position.y + yOffset, -.01f * charIndex);
+			var spawnPos = new Vector3(spawnPosX, rect.position.y + yOffset, -.0001f * charIndex + rect.y * .001f);
 
 			StartCoroutine(ManageProxy(Instantiate
 				(availableChars[charIndex].CharDataContainer.Prefab, 
@@ -66,7 +66,7 @@ public class CharacterWalker : MonoBehaviour
 				if (proxyGO.transform.position.x < xMin || proxyGO.transform.position.x > xMax)
 				{
 					walkingLeft = !walkingLeft;
-					renderer.flipX = (bool)walkingLeft;
+					renderer.flipX = walkingLeft != null ? (bool)walkingLeft : true;
 				}
 				switch (walkingLeft)
 				{
