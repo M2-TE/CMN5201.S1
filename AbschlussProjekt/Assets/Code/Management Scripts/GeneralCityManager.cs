@@ -48,8 +48,8 @@ public class GeneralCityManager : Manager
 		slot.SlotPos = barracksPanel.CharacterStorageNode.childCount - 1;
 		barracksPanel.barrackSlots.Add(slot);
 
-		barracksPanel.CharacterStorageNode.GetComponent<RectTransform>().sizeDelta 
-			= new Vector2(0f, barracksPanel.barrackSlots.Count * 105f);
+		barracksPanel.CharacterStorageNode.GetComponent<RectTransform>().sizeDelta
+			= barracksPanel.SlotViewportSize * barracksPanel.barrackSlots.Count;
 	}
 
 	private void RemoveBarrackSlot(CharacterSlot slotToRemove)
@@ -62,6 +62,9 @@ public class GeneralCityManager : Manager
 		slotToRemove = barracksPanel.barrackSlots[barracksPanel.barrackSlots.Count - 1];
 		barracksPanel.barrackSlots.Remove(slotToRemove);
 		Object.Destroy(slotToRemove.gameObject);
+		
+		barracksPanel.CharacterStorageNode.GetComponent<RectTransform>().sizeDelta
+			= barracksPanel.SlotViewportSize * barracksPanel.barrackSlots.Count;
 	}
 
 	private bool SetEquippedSlot(Entity slotEntity, int slotPos)

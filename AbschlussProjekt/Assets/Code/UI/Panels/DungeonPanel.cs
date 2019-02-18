@@ -5,6 +5,8 @@ using UnityEngine;
 public class DungeonPanel : UIPanel
 {
 	public GameObject MapParent;
+	public DungeonNode.RoomType[] firstHalfRoomPool;
+	public DungeonNode.RoomType[] secondHalfRoomPool;
 	public int DungeonLength;
 	public int MaxSiblings;
 	public float randomPathingChance;

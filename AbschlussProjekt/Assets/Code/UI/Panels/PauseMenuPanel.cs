@@ -54,9 +54,9 @@ public class PauseMenuPanel : UIPanel
 		HandleEscPress();
 	}
 
-	public void OnSettingsPress()
+	public void OnOptionsPress()
 	{
-
+		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisiblity();
 	}
 
 	public void OnMainMenuPress()

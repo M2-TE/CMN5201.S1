@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Z_Scenes/Final Scenes/Combat.unity
     guid: 993127e590c1c4d4b9e67fa364a592d4
+  - enabled: 1
+    path: Assets/Z_Scenes/Final Scenes/Boss Combat.unity
+    guid: 92f450cb3ff74a84490983cbda515ff4
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f18e0cd2178ed83468f57fc5ef2e2f00,
       type: 2}

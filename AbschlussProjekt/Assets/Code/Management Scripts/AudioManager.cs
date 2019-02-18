@@ -23,14 +23,36 @@ public class AudioManager : Manager
 		anchor.StartCoroutine(PlaylistChecker());
 	}
 
-	public void SetMusicVolume(float vol)
+	public float GetActualVolume(float convertedVolume)
 	{
-		anchor.MusicMixer.SetFloat("musicVol", vol);
+		return - convertedVolume * convertedVolume;
 	}
 
-	public void SetEffectVolume(float vol)
+	public float GetConvertedVolume(float actualVolume)
 	{
-		anchor.EffectMixer.SetFloat("effectVol", vol);
+		return - Mathf.Sqrt(Mathf.Abs(actualVolume));
+	}
+
+	public void SetMusicVolume(float convertedVol)
+	{
+		anchor.MusicMixer.SetFloat("musicVol", convertedVol);
+	}
+
+	public void SetEffectVolume(float convertedVol)
+	{
+		anchor.EffectMixer.SetFloat("effectVol", convertedVol);
+	}
+
+	public float GetMusicVolume()
+	{
+		anchor.MusicMixer.GetFloat("musicVol", out float volume);
+		return GetConvertedVolume(volume);
+	}
+
+	public float GetEffectVolume()
+	{
+		anchor.EffectMixer.GetFloat("effectVol", out float volume);
+		return GetConvertedVolume(volume);
 	}
 
 	public void SetNewPlaylist(AudioClip[] musicTracks)
