@@ -13,7 +13,19 @@ public abstract class Character : DataContainer
     public int BaseDefense;
     public int BaseSpeed;
 
-    [Header("Combat Skills")]
+	[Header("Combat Stats")]
+	public float HealthGrowth = 1f;
+	public float AttackGrowth = 0f;
+	public float DefenseGrowth = 0f;
+	public float SpeedGrowth = 0f;
+
+	[Header("Leveling")]
+	public float baseExpYield = 5f;
+	public float expYieldGrowth = 1.5f;
+	public float baseExpRequirement = 10f;
+	public float ExpRequirementGrowth = 1.3f;
+
+	[Header("Combat Skills")]
     public CombatSkill[] FullSkillPool;
 	public CombatSkill[] FallbackSkills;
 	public CombatSkill RepositioningSkill;

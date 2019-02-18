@@ -53,7 +53,7 @@ public class CharacterInfoPanel : UIPanel
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         manager.AddListener(manager.Input.UI.CharacterInfoClose, ctx => ToggleVisibility(false));
 
-        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0, 0, -100), Quaternion.identity);
+        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0f, 0f, 1f), Quaternion.identity);
 
         AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
 
@@ -125,7 +125,8 @@ public class CharacterInfoPanel : UIPanel
         if (characterPreviewProxy != null)
             GameObject.Destroy(characterPreviewProxy);
 
-        characterPreviewProxy = GameObject.Instantiate(currentCharacter.CharDataContainer.Prefab, new Vector3(0, 0, -99), Quaternion.identity, RenderCamera.transform);
+        characterPreviewProxy = GameObject.Instantiate(currentCharacter.CharDataContainer.Prefab, RenderCamera.transform);
+		characterPreviewProxy.transform.localPosition = new Vector3(0f, 0f, 1f);
         for (int child = 0; child < characterPreviewProxy.transform.childCount; child++)
         {
             GameObject.Destroy(characterPreviewProxy.transform.GetChild(child).gameObject);

@@ -44,16 +44,16 @@ public class CombatEffect : DataContainer
 
 	private void HandleEffect(Entity affectedEntity, Func<float, float, int> floatMod, Func<int, int> intMod)
 	{
-		affectedEntity.currentMaxHealth += floatMod(affectedEntity.baseHealth, MaxHealthModifier);
-		affectedEntity.currentMaxHealth += intMod(FlatMaxHealthModifier);
+		affectedEntity.CurrentMaxHealth += floatMod(affectedEntity.BaseHealth, MaxHealthModifier);
+		affectedEntity.CurrentMaxHealth += intMod(FlatMaxHealthModifier);
 		
-		affectedEntity.currentAttack += floatMod(affectedEntity.baseAttack, AttackModifier);
-		affectedEntity.currentAttack += intMod(FlatAttackModifier);
+		affectedEntity.CurrentAttack += floatMod(affectedEntity.BaseAttack, AttackModifier);
+		affectedEntity.CurrentAttack += intMod(FlatAttackModifier);
 
-		affectedEntity.currentDefense += floatMod(affectedEntity.baseDefense, DefenseModifier);
+		affectedEntity.currentDefense += floatMod(affectedEntity.BaseDefense, DefenseModifier);
 		affectedEntity.currentDefense += intMod(FlatDefenseModifier);
 		
-		affectedEntity.currentSpeed += floatMod(affectedEntity.baseSpeed, SpeedModifier);
-		affectedEntity.currentSpeed += intMod(FlatSpeedModifier);
+		affectedEntity.CurrentSpeed += floatMod(affectedEntity.BaseSpeed, SpeedModifier);
+		affectedEntity.CurrentSpeed += intMod(FlatSpeedModifier);
 	}
 }

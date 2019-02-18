@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2495217679
+CRC: 4133091325
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2c33ab74abb3719e5109e8729bbe3f80
+    Hash: 50620e156e95759f21c26078a1af7bff
   TypeTreeHash:
     serializedVersion: 2
-    Hash: da4dd3d3a9763242fa0b52d2ce8988df
+    Hash: f5f6f11d86b293e0bc6ebf5bef20181b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -97,14 +97,19 @@ Assets:
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Slash.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skills/Thrash.asset
 - Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Pass.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Skills/Divine
+  Intervention.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Ensnare.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Synthesis.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Priest.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Thunderstorm.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skeleton
   Archer.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Shot.asset
 - Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Move.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Blast.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Skills/Holy
+  Water.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Arrow
   Shot.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Shield

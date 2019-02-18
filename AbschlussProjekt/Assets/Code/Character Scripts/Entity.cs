@@ -1,6 +1,7 @@
 ﻿using CombatEffectElements;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 [Serializable]
@@ -159,19 +160,23 @@ public class Entity
 	#endregion
 
 	#region Combat Stats
-	public int baseHealth;
-	public int currentMaxHealth;
-    public int currentHealth;
+	public int CurrentLevel;
+	private float currentExp;
+	private float requiredExp;
 
-    public int baseAttack;
-    public int currentAttack;
+	public int BaseHealth;
+	public int CurrentMaxHealth;
+    public int CurrentHealth;
 
-    public int baseDefense;
+    public int BaseAttack;
+    public int CurrentAttack;
+
+    public int BaseDefense;
     public int currentDefense;
 
-    public int baseSpeed;
-    public int currentSpeed;
-    public int currentInitiative;
+    public int BaseSpeed;
+    public int CurrentSpeed;
+    public int CurrentInitiative;
 	
 	[NonSerialized] public Vector2Int currentCombatPosition;
 	[NonSerialized] public Dictionary<CombatSkill, int> currentSkillCooldowns;
@@ -197,40 +202,83 @@ public class Entity
 
     public override string ToString()
     {
-        return Name + ": " + baseHealth + " / " + currentHealth + " HP | "
-            + currentAttack + " Atk | " + currentDefense + " Def | " + currentSpeed + " Spd";
+        return Name + ": " + BaseHealth + " / " + CurrentHealth + " HP | "
+            + CurrentAttack + " Atk | " + currentDefense + " Def | " + CurrentSpeed + " Spd";
     }
 
     public string Stats()
     {
-        return "Stats:\n HP : " + baseHealth + "/" + currentHealth + "\n Atk  : " + currentAttack + "\n Def : " + currentDefense + "\n Spd : " + currentSpeed;
+		StringBuilder stringBuilder = new StringBuilder();
+		//throw new System.Exception("Yannick, los mach hier undso!");
+        return "Stats:\n HP : " + BaseHealth + "/" + CurrentHealth + "\n Atk  : " + CurrentAttack + "\n Def : " + currentDefense + "\n Spd : " + CurrentSpeed;
     }
+
+	public void AddExp(int exp)
+	{
+		currentExp += exp;
+		if (currentExp >= requiredExp) SetLevel(CurrentLevel + 1);
+	}
+
+	public void SetLevel(int level)
+	{
+		CurrentLevel = level;
+
+		requiredExp = CharDataContainer.baseExpRequirement * CurrentLevel * CharDataContainer.ExpRequirementGrowth;
+		if (currentExp >= requiredExp)
+		{
+			SetLevel(CurrentLevel + 1);
+			return;
+		}
+
+		BaseHealth = CharDataContainer.BaseHealth + (int)(CharDataContainer.HealthGrowth * (CurrentLevel - 1));
+		BaseAttack = CharDataContainer.BaseAttack + (int)(CharDataContainer.AttackGrowth * (CurrentLevel - 1));
+		BaseDefense = CharDataContainer.BaseDefense + (int)(CharDataContainer.DefenseGrowth * (CurrentLevel - 1));
+		BaseSpeed = CharDataContainer.BaseSpeed + (int)(CharDataContainer.SpeedGrowth * (CurrentLevel - 1));
+
+		CurrentHealth = BaseHealth;
+		CurrentMaxHealth = BaseHealth;
+		CurrentAttack = BaseAttack;
+		currentDefense = BaseDefense;
+		CurrentSpeed = BaseSpeed;
+
+		//foreach (CombatSkill skill in currentSkillCooldowns.Keys)
+		//	currentSkillCooldowns[skill] = 0;
+		//currentSkillCooldowns.Clear();
+		//while (currentCombatEffects.activeCombatEffectElements.Count > 0)
+		//	currentCombatEffects.RemoveCombatEffect(currentCombatEffects.activeCombatEffectElements[0]);
+
+	}
 
     public Entity(Character charDataContainer)
     {
         Name = charDataContainer.name;
 
+
         entityType = charDataContainer.name;
         this.charDataContainer = charDataContainer;
-	  
-        equippedCombatSkillStrings = new string[4];
+		
+		CurrentLevel = 1;
+		currentExp = 0;
+		requiredExp = CharDataContainer.baseExpRequirement;
+
+		equippedCombatSkillStrings = new string[4];
 		ResetCombatSkills();
 
         equippedItems = new Dictionary<EquipmentSlot, EquipmentContainer>();
         equippedItemStrings = new Dictionary<EquipmentSlot, string>();
 
-        baseHealth = charDataContainer.BaseHealth;
-		currentMaxHealth = baseHealth;
-        currentHealth = baseHealth;
+        BaseHealth = charDataContainer.BaseHealth;
+		CurrentMaxHealth = BaseHealth;
+        CurrentHealth = BaseHealth;
 
-        baseAttack = charDataContainer.BaseAttack;
-        currentAttack = baseAttack;
+        BaseAttack = charDataContainer.BaseAttack;
+        CurrentAttack = BaseAttack;
 
-        baseDefense = charDataContainer.BaseDefense;
-        currentDefense = baseDefense;
+        BaseDefense = charDataContainer.BaseDefense;
+        currentDefense = BaseDefense;
 
-        baseSpeed = charDataContainer.BaseSpeed;
-        currentSpeed = baseSpeed;
-        currentInitiative = 0;
+        BaseSpeed = charDataContainer.BaseSpeed;
+        CurrentSpeed = BaseSpeed;
+        CurrentInitiative = 0;
     }
 }

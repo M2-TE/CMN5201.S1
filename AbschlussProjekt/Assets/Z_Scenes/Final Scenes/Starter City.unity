@@ -8716,6 +8716,11 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4529923685433610179, guid: b238441705c2c834c8395370ea4175a0,
+        type: 3}
+      propertyPath: m_Name
+      value: Debuffs
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b238441705c2c834c8395370ea4175a0, type: 3}
 --- !u!1 &1840416610
@@ -9248,7 +9253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 785631047, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -427.55005
+      value: -427.5503
       objectReference: {fileID: 0}
     - target: {fileID: 785631047, guid: 9139fba2234202641b4c60a7a428a4ae, type: 3}
       propertyPath: m_SizeDelta.x
@@ -9500,7 +9505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 976411296, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00007667286
+      value: -0.00000022004276
       objectReference: {fileID: 0}
     - target: {fileID: 477710118, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_SizeDelta.y

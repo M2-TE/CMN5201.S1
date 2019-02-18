@@ -3,7 +3,7 @@ CRC: 3281756461
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 83ea39a0a407cd008be6529ccd3220e4
+    Hash: 07e3a7a39752850c68daf6006801113f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 80eb17ca6709ea0a1bf3d27b6bf92ffe
@@ -31,4 +31,4 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Armor/Base Armor.asset
 - Assets/_Data Containers/Items/Equipment/Rare/TestItem.asset
 Dependencies:
-- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
