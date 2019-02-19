@@ -39,7 +39,8 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 2 - 7\tDamage Modifier: 0.5\nAttack all enemies with roaring
+    thunder."
   LevelRequirement: 1
   CanHitEnemies: 1
   CanHitAllies: 0
@@ -47,7 +48,7 @@ MonoBehaviour:
   AttackMultiplier: 0.3
   Cooldown: 1
   MinRange: 2
-  MaxRange: 4
+  MaxRange: 7
   SurroundingAffectedUnits: {x: 4, y: 4}
   AppliedCombatEffects: []
   SelfInflictedCombatEffects: []

@@ -40,14 +40,16 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 3\tDamage Modifier: -0.75\nHeal the target and strengthen
+    its attack power."
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
   CanHitSelf: 1
   AttackMultiplier: -0.75
   Cooldown: 4
   MinRange: 0
-  MaxRange: 2
+  MaxRange: 3
   SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects:
   - {fileID: 11400000, guid: 1f0084fe453bda943a86804a910ff798, type: 2}

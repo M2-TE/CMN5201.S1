@@ -3,7 +3,7 @@ CRC: 1700172986
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0ed43b9e54d06b5d78764b2e3f8d8eac
+    Hash: e66f6c53546dd0b58902854de28929d2
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0681dea8b72e78680f3bb1b33b702fe5
@@ -17,4 +17,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/_Data Containers/Areas/Combat Areas/Standard Combat Area.asset
-Dependencies: []
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items

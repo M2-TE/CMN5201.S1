@@ -42,12 +42,13 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0.1
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 4\tDamage Modifier: 0.75\nLeap at a target, dealing
+    damage to it and another target behind the first."
   LevelRequirement: 1
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0
-  AttackMultiplier: 0.6
+  AttackMultiplier: 0.75
   Cooldown: 1
   MinRange: 0
   MaxRange: 4

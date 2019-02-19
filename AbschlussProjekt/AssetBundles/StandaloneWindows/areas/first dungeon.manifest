@@ -3,7 +3,7 @@ CRC: 840449628
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fbb4eccea8027207e509b1d8585839d9
+    Hash: a047e41918931d276e921801c43192c5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0681dea8b72e78680f3bb1b33b702fe5
@@ -17,4 +17,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/_Data Containers/Areas/First Dungeon.asset
-Dependencies: []
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items

@@ -23,11 +23,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2bf9a735010098a4c9ca9fef26cf994e, type: 3}
   impactSfx: []
   AnimatorTrigger: Attack
+  castAudioDelay: 0
   impactSpawnDelay: 0.25
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 4\tDamage Modifier: 0\nBolster the attack, defense
+    and speed of an ally."
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
   CanHitSelf: 0

@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,17 +13,20 @@ MonoBehaviour:
   m_Name: Haste
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 2cf45680350cda94f955ce31d7dba22f, type: 3}
-  FxPrefab: {fileID: 1272641376283932, guid: 83f5e7a3a4d71ce499dcd7dd67b51a09, type: 2}
+  FxPrefab: {fileID: 1272641376283932, guid: 83f5e7a3a4d71ce499dcd7dd67b51a09, type: 3}
   castSfx:
   - {fileID: 8300000, guid: f821c9ad65de7344ba3b9055dde81af5, type: 3}
   impactSfx:
   - {fileID: 8300000, guid: 96283fcff402c7e4da2d3d732a2c33ad, type: 3}
   AnimatorTrigger: Attack
+  castAudioDelay: 0
   impactSpawnDelay: 0.45
   impactAnimationDelay: 0.2
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 0\tDamage Modifier: 0\nIncrease the speed of yourself
+    and surrounding allies."
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
   CanHitSelf: 1

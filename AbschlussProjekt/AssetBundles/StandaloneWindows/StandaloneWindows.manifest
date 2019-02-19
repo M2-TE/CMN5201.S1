@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3098747351
+CRC: 3253104923
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -26,13 +26,16 @@ AssetBundleManifest:
       Dependencies: {}
     Info_7:
       Name: areas/first dungeon
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: items
     Info_8:
       Name: areas/boss combat area
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: items
     Info_9:
       Name: areas/standard combat area
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: items
     Info_10:
       Name: pools
       Dependencies:

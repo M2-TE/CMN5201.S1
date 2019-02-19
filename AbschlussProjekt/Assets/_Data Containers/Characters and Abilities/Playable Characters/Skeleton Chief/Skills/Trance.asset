@@ -41,14 +41,18 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 0\tDamage Modifier: -0.2\nPut yourself and all allies
+    in a bloodthirsty trance, while also healing for a small amount."
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
   CanHitSelf: 1
   AttackMultiplier: -0.25
   Cooldown: 5
   MinRange: 0
-  MaxRange: 2
+  MaxRange: 0
   SurroundingAffectedUnits: {x: 4, y: 4}
-  AppliedCombatEffects: []
-  SelfInflictedCombatEffects: []
+  AppliedCombatEffects:
+  - {fileID: 11400000, guid: 1f0084fe453bda943a86804a910ff798, type: 2}
+  SelfInflictedCombatEffects:
+  - {fileID: 11400000, guid: 1f0084fe453bda943a86804a910ff798, type: 2}

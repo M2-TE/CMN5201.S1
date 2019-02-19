@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,7 +13,7 @@ MonoBehaviour:
   m_Name: Shield Up
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: 1378b67a43e1aad4ab807a2c26f236d5, type: 3}
-  FxPrefab: {fileID: 1561797072090252, guid: d38ad48485b602c47836bee2cd3a3e6a, type: 2}
+  FxPrefab: {fileID: 1561797072090252, guid: d38ad48485b602c47836bee2cd3a3e6a, type: 3}
   castSfx:
   - {fileID: 8300000, guid: 8a3b5b4b3f608f042bfe8e1db59e58fd, type: 3}
   - {fileID: 8300000, guid: 4aebbbfb8d45d8246baf653da4ee4359, type: 3}
@@ -21,11 +22,14 @@ MonoBehaviour:
   impactSfx:
   - {fileID: 8300000, guid: c8976506855b7d9468a988464b6e44f5, type: 3}
   AnimatorTrigger: Attack
+  castAudioDelay: 0
   impactSpawnDelay: 0.38
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 0\tDamage Modifier: 0\nIncrease the defense of yourself
+    and those behind you."
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 0
   CanHitSelf: 1

@@ -542,10 +542,14 @@ public class CombatManager : Manager
 		};
 
 		#region Get characters affected by AoE of attack
-		// (surroundingAffectedUnits: x => left units; y => right units)
+		// surroundingAffectedUnits: x => left units; y => right units
+		Vector2Int aoeRange = upcomingTurns[0].x == 0  // swap x and y of aoe on the enemys attacks
+			? skill.SurroundingAffectedUnits 
+			: new Vector2Int(skill.SurroundingAffectedUnits.y, skill.SurroundingAffectedUnits.x);
+
 		Vector2Int target;
 		// get left targets
-		for (int i = 1; i <= skill.SurroundingAffectedUnits.x; i++)
+		for (int i = 1; i <= aoeRange.x; i++)
 		{
 			target = new Vector2Int(mainTarget.x, mainTarget.y);
 
@@ -562,7 +566,7 @@ public class CombatManager : Manager
 			if (GetEntity(target).CurrentHealth != 0) targetList.Add(target);
 		}
 		// get right targets 
-		for (int i = 1; i <= skill.SurroundingAffectedUnits.y; i++)
+		for (int i = 1; i <= aoeRange.y; i++)
 		{
 			target = new Vector2Int(mainTarget.x, mainTarget.y);
 
