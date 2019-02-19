@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
-  m_Name: Ring of Attack One
+  m_Name: Tier 2 Sword
   m_EditorClassIdentifier: 
-  ItemName: Ring of Attack One
-  ItemIcon: {fileID: 21300000, guid: 22f2fa98e9df72448af50019ebd5ed08, type: 3}
+  ItemName: Tier 2 Sword
+  ItemIcon: {fileID: 21300000, guid: 3aceb0fd597652843bea83753f74a8d8, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
   LevelRequirement: 0
@@ -22,9 +22,10 @@ MonoBehaviour:
   IsUnique: 0
   StackingLimit: 0
   testArray: 
-  MatchingClasses: []
-  EquipmentType: 7
+  MatchingClasses:
+  - {fileID: 11400000, guid: 67a174a5467150c438bd4237a0230095, type: 2}
+  EquipmentType: 0
   HealthBonus: 0
-  AttackBonus: 2
+  AttackBonus: 6
   DefenseBonus: 0
   SpeedBonus: 0

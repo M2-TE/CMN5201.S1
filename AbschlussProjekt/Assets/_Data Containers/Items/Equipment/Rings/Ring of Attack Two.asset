@@ -25,6 +25,6 @@ MonoBehaviour:
   MatchingClasses: []
   EquipmentType: 8
   HealthBonus: 0
-  AttackBonus: 4
+  AttackBonus: 2
   DefenseBonus: 0
   SpeedBonus: 0
