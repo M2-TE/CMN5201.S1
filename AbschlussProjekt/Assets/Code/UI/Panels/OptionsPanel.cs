@@ -15,6 +15,13 @@ public class OptionsPanel : UIPanel
 
 	private void Start()
 	{
+		float brightness = AssetManager.Instance.Savestate.RuntimeSettings.Brightness;
+		RenderSettings.ambientLight = new Color(brightness, brightness, brightness);
+		brightnessSlider.value = brightness;
+	}
+
+	private void OnEnable()
+	{
 		var manager = AssetManager.Instance.GetManager<OptionsManager>() ?? new OptionsManager(this);
 		manager.Register(this);
 	}
@@ -32,5 +39,6 @@ public class OptionsPanel : UIPanel
 	public void AdjustBrightness()
 	{
 		RenderSettings.ambientLight = new Color(brightnessSlider.value, brightnessSlider.value, brightnessSlider.value);
+		AssetManager.Instance.Savestate.RuntimeSettings.Brightness = brightnessSlider.value;
 	}
 }

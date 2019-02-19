@@ -6,7 +6,6 @@ public class MainMenuPanel : UIPanel
 	public void OnContinuePress()
 	{
 		AssetManager instance = AssetManager.Instance;
-		instance.Load();
 		instance.GetManager<GameManager>().LoadAreaAsync(instance.Savestate.CurrentLocation);
 	}
 

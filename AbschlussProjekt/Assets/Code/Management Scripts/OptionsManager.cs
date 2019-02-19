@@ -14,18 +14,21 @@ public class OptionsManager : Manager
 
 	public OptionsManager(OptionsPanel panel)
 	{
-		panel.StartCoroutine(InitSlidersOnDelay());
 	}
 
 	private IEnumerator InitSlidersOnDelay()
 	{
 		yield return null;
-		panel.brightnessSlider.value = RenderSettings.ambientLight.r;
+		panel.brightnessSlider.value = AssetManager.Instance.Savestate.RuntimeSettings.Brightness;
 		panel.musicVolumeSlider.value = audioManager.GetMusicVolume();
 		panel.effectVolumeSlider.value = audioManager.GetEffectVolume();
 	}
 
-	public void Register(OptionsPanel panel) { this.panel = panel; }
+	public void Register(OptionsPanel panel)
+	{
+		this.panel = panel;
+		panel.StartCoroutine(InitSlidersOnDelay());
+	}
 
 	public void ToggleVisiblity()
 	{

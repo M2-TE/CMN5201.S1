@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SkillSelectionPanel : UIPanel
 {
@@ -10,13 +11,11 @@ public class SkillSelectionPanel : UIPanel
     public TextMeshProUGUI[] RowLevelRequirements;
     public SkillInfo[] characterSkills;
     public SkillSelectionInfo[] possibleSkill;
-    #endregion
+	#endregion
+	[SerializeField] private EventSystem eventSystem;
     public CharacterInfoPanel characterInfoPanel;
-
     public SkillSelectionManager skillSelectionManager;
-
     public Entity CurrentEntity;
-
     public CombatSkill DraggedSkill;
 
     private int rows;
@@ -29,7 +28,13 @@ public class SkillSelectionPanel : UIPanel
         base.Awake();
     }
 
-    public void ToggleVisibility(bool visibleState, CharacterInfoPanel characterInfoPanel)
+	public override void ToggleVisibility(bool visibleState)
+	{
+		EventSystem = eventSystem;
+		base.ToggleVisibility(visibleState);
+	}
+
+	public void ToggleVisibility(bool visibleState, CharacterInfoPanel characterInfoPanel)
     {
         this.characterInfoPanel = characterInfoPanel;
         ToggleVisibility(visibleState);
