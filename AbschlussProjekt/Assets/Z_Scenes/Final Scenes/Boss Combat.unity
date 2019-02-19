@@ -1073,6 +1073,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7618554523943837273, guid: b4b5e1933243c084f8370c0e211d4aad,
+        type: 3}
+      propertyPath: chests.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 369b7e3f54c98b040a74b8847c2373b4,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4b5e1933243c084f8370c0e211d4aad, type: 3}
 --- !u!20 &1513589661 stripped

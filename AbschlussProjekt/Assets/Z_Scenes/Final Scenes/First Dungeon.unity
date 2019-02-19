@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -229,11 +229,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7618554525136489879, guid: b4b5e1933243c084f8370c0e211d4aad,
+    - target: {fileID: 7618554523943837273, guid: b4b5e1933243c084f8370c0e211d4aad,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: chests.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b75c66a3ad5ea54882d0a0d1d8ca072,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4b5e1933243c084f8370c0e211d4aad, type: 3}
 --- !u!1001 &164914625
@@ -14187,6 +14188,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1885762891093140, guid: c24f45a8dfa0d5c438aff4dae2cf6bae, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
         type: 3}
       propertyPath: m_Enabled
@@ -14241,10 +14246,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RenderShadows
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1885762891093140, guid: c24f45a8dfa0d5c438aff4dae2cf6bae, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c24f45a8dfa0d5c438aff4dae2cf6bae, type: 3}

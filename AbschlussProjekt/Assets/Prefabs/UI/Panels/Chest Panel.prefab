@@ -581,7 +581,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 1043009439146430, guid: 9fd8fa9bc17654d4bb134acbc5d2a029, type: 3}
   itemSlotsParent: {fileID: 7618554524453508317}
   chests:
-  - {fileID: 11400000, guid: 2bb9bf80b0300ea49985d924bae182be, type: 2}
+  - {fileID: 11400000, guid: 8c0b0cc1f80673f46971d553a3c5ba0f, type: 2}
 --- !u!1 &7618554524453508317
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7618554525136489876
 RectTransform:
   m_ObjectHideFlags: 0
