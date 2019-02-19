@@ -102,13 +102,15 @@ public class SkillSelectionPanel : UIPanel
 
     public void EquipSkill(int position)
     {
-        Debug.Log("Equip "+ DraggedSkill.name +" at: " + position);
-        for (int i = 0; i < CurrentEntity.EquippedCombatSkills.Length; i++)
+        if(CurrentEntity.CurrentLevel >= DraggedSkill.LevelRequirement)
         {
-            if (CurrentEntity.EquippedCombatSkills[i] != null && CurrentEntity.EquippedCombatSkills[i].name.Equals(DraggedSkill.name))
-                CurrentEntity.SetCombatSkill(i, null);
+            for (int i = 0; i < CurrentEntity.EquippedCombatSkills.Length; i++)
+            {
+                if (CurrentEntity.EquippedCombatSkills[i] != null && CurrentEntity.EquippedCombatSkills[i].name.Equals(DraggedSkill.name))
+                    CurrentEntity.SetCombatSkill(i, null);
+            }
+            CurrentEntity.SetCombatSkill(position, DraggedSkill);
+            DisplayEquippedSkills();
         }
-        CurrentEntity.SetCombatSkill(position, DraggedSkill);
-        DisplayEquippedSkills();
     }
 }

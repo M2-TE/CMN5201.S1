@@ -11,7 +11,7 @@ public class CharacterInfoPanel : UIPanel
 {
     #region UIConnectors
     [SerializeField]
-    private TextMeshProUGUI characterName, characterStats, characterSkillInfo;
+    private TextMeshProUGUI characterName, characterStats, characterSkillInfo, characterLevel;
     [SerializeField]
     private Image characterPortrait;
     [SerializeField]
@@ -97,6 +97,7 @@ public class CharacterInfoPanel : UIPanel
     {
         ToggleVisibility(true);
         characterName.text = currentCharacter.Name;
+        characterLevel.text = currentCharacter.CurrentLevel.ToString();
         characterPortrait.sprite = currentCharacter.CharDataContainer.Portrait;
 
         SwitchInspectionPanel();
