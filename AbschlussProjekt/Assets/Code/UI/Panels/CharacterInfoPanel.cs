@@ -43,17 +43,19 @@ public class CharacterInfoPanel : UIPanel
     public bool Open => visibilityToggleNode.activeInHierarchy;
 
     #region Setup
+	
     protected override void Awake()
     {
-        (AssetManager.Instance.GetManager<CharacterInfoManager>() ?? new CharacterInfoManager()).CharacterInfoPanel = this;
         base.Awake();
     }
-    private void Start()
-    {
-        InputManager manager = AssetManager.Instance.GetManager<InputManager>();
+	
+	private void Start()
+	{
+		(AssetManager.Instance.GetManager<CharacterInfoManager>() ?? new CharacterInfoManager()).CharacterInfoPanel = this;
+		InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         manager.AddListener(manager.Input.UI.CharacterInfoClose, ctx => ToggleVisibility(false));
 
-        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0f, 0f, 1f), Quaternion.identity);
+        RenderCamera = Instantiate(renderCameraPrefab, new Vector3(0f, 100f, 1f), Quaternion.identity);
 
         AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
 
@@ -66,12 +68,15 @@ public class CharacterInfoPanel : UIPanel
     public override void ToggleVisibility(bool visibleState)
     {
         base.ToggleVisibility(visibleState);
-        if(AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager != null)
-        {
-            AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager.InventoryPanel.itemInfo.UpdateAction(true);
-        }
-        if (visibleState)
-            inspectorPanel = true;
+		if (visibleState)
+		{
+			if (AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager != null)
+			{
+				AssetManager.Instance.GetManager<CharacterInfoManager>().InventoryManager.InventoryPanel.itemInfo.UpdateAction(true);
+			}
+			if (visibleState)
+				inspectorPanel = true;
+		}
     }
     #endregion
 

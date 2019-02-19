@@ -31,7 +31,6 @@ public class OptionsPanel : UIPanel
 
 	public void AdjustBrightness()
 	{
-		Color ambientColor = RenderSettings.ambientLight;
-		var brightnes = brightnessSlider.value;
+		RenderSettings.ambientLight = new Color(brightnessSlider.value, brightnessSlider.value, brightnessSlider.value);
 	}
 }

@@ -61,6 +61,7 @@ public class PauseMenuPanel : UIPanel
 
 	public void OnMainMenuPress()
 	{
+		Time.timeScale = 1f;
 		AssetManager.Instance.GetManager<GameManager>().LoadAreaAsync
 			(AssetManager.Instance.LoadArea(AssetManager.Instance.Paths.MainMenu));
 	}

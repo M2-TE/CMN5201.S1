@@ -20,7 +20,7 @@ public class OptionsManager : Manager
 	private IEnumerator InitSlidersOnDelay()
 	{
 		yield return null;
-		panel.brightnessSlider.value = 0f;
+		panel.brightnessSlider.value = RenderSettings.ambientLight.r;
 		panel.musicVolumeSlider.value = audioManager.GetMusicVolume();
 		panel.effectVolumeSlider.value = audioManager.GetEffectVolume();
 	}

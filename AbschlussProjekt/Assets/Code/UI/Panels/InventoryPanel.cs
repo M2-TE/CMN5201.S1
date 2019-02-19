@@ -33,7 +33,15 @@ public class InventoryPanel : UIPanel
         InstantiateInventory();
         DisplayInventory();
     }
-    private void InstantiateInventory()
+
+	private void OnDestroy()
+	{
+		AssetManager.Instance.ActiveManagers.Remove(inventoryManager.CharacterInfoManager);
+		AssetManager.Instance.ActiveManagers.Remove(inventoryManager);
+		AssetManager.Instance.GetManager<InputManager>().RemoveListeners(this);
+	}
+
+	private void InstantiateInventory()
     {
         for (int slot = 0; slot < inventorySize; slot++)
         {
@@ -94,5 +102,4 @@ public class InventoryPanel : UIPanel
     {
         ToggleVisibility(false);
     }
-
 }
