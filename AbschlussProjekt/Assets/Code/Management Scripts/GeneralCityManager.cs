@@ -133,6 +133,7 @@ public class GeneralCityManager : Manager
 		Entity buffer = fromSlot.StoredEntity;
 		if (SetEquippedSlot(null, fromSlot.SlotPos))
 			AddSlotToBarracks(buffer);
+		SaveTeamState();
 	}
 
 	private void MoveToNextFreeBarrackCharSlots(CharacterSlot fromSlot)
@@ -143,9 +144,21 @@ public class GeneralCityManager : Manager
 			{
 				charPanel.equippedCharSlots[i].StoredEntity = fromSlot.StoredEntity;
 				RemoveBarrackSlot(fromSlot);
+				SaveTeamState();
 				return;
 			}
 		}
+	}
+
+	private void SaveTeamState()
+	{
+		Savestate savestate = AssetManager.Instance.Savestate;
+		for (int i = 0; i < charPanel.equippedCharSlots.Length; i++)
+			savestate.CurrentTeam[i] = charPanel.equippedCharSlots[i].StoredEntity;
+
+		savestate.OwnedCharacters.Clear();
+		for (int i = 0; i < barracksPanel.barrackSlots.Count; i++)
+			savestate.OwnedCharacters.Add(barracksPanel.barrackSlots[i].StoredEntity);
 	}
 
 	private void Swap(CharacterSlot slotOne, CharacterSlot slotTwo)
@@ -156,13 +169,13 @@ public class GeneralCityManager : Manager
 			{
 				case CharacterSlot.SlotType.EquippedCharacter:
 					MoveToNextFreeEquippedCharSlot(slotOne);
-					return;
+					break;
 
 				case CharacterSlot.SlotType.OwnedCharacter:
 					MoveToNextFreeBarrackCharSlots(slotOne);
-					return;
+					break;
 
-				default: return;
+				default: break;
 			}
 		}
 		else if(slotTwo.StoredEntity == null)
@@ -172,15 +185,15 @@ public class GeneralCityManager : Manager
 				case CharacterSlot.SlotType.EquippedCharacter:
 					SetEquippedSlot(slotOne.StoredEntity, slotTwo.SlotPos);
 					SetEquippedSlot(null, slotOne.SlotPos);
-					return;
+					break;
 
 				case CharacterSlot.SlotType.OwnedCharacter:
 					// move entity from barrack slot to an empty equipment slot, thus removing the obsolete barrack slot
 					SetEquippedSlot(slotOne.StoredEntity, slotTwo.SlotPos);
 					RemoveBarrackSlot(slotOne);
-					return;
+					break;
 
-				default: return;
+				default: break;
 			}
 		}
 		else
@@ -190,6 +203,8 @@ public class GeneralCityManager : Manager
 			SetUnkownSlotType(slotOne, slotTwo.StoredEntity);
 			SetUnkownSlotType(slotTwo, buffer);
 		}
+
+		SaveTeamState();
 	}
 
 	#region Event Calls

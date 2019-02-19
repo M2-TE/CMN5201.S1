@@ -646,6 +646,76 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1513589661}
+    - target: {fileID: 114666095045915430, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114666095045915430, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114783964396369488, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114783964396369488, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114343726057914300, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114343726057914300, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114348577705784892, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114348577705784892, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114269101615506100, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114269101615506100, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114399705581730002, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114399705581730002, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946776080607060, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114946776080607060, guid: 4c736a412b7192b41be057273c8b7c18,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c736a412b7192b41be057273c8b7c18, type: 3}
 --- !u!1001 &897452625
@@ -954,6 +1024,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618554525136489879, guid: b4b5e1933243c084f8370c0e211d4aad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8036425290892398250, guid: b4b5e1933243c084f8370c0e211d4aad,
         type: 3}

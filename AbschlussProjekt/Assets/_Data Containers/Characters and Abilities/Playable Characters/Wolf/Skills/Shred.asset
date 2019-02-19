@@ -37,15 +37,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5c7ee64084f1be94f9356d0cb3f00af9, type: 3}
   - {fileID: 8300000, guid: e2957b124b8af8241b394a7b0275f7f9, type: 3}
   AnimatorTrigger: Attack
+  castAudioDelay: 0
   impactSpawnDelay: 0.25
   impactAnimationDelay: 0
   impactAudioDelay: 0.1
   impactDmgDelay: 0
   SkillDescription: Skill Description Missing
+  LevelRequirement: 1
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0
-  AttackMultiplier: 1
+  AttackMultiplier: 0.6
   Cooldown: 1
   MinRange: 0
   MaxRange: 4

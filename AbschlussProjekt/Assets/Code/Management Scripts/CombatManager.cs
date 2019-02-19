@@ -1,6 +1,7 @@
 ﻿using CombatEffectElements;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,6 +16,7 @@ public class CombatManager : Manager
 	private Proxy[,] proxies;
 	private bool[,] selectableTargets;
 	private List<Vector2Int> upcomingTurns = new List<Vector2Int>();
+	private StringBuilder stringBuilder = new StringBuilder();
 
 	private int m_currentlySelectedSkill;
 	private int currentlySelectedSkill
@@ -76,7 +78,7 @@ public class CombatManager : Manager
 		combatPanel.CombatActive = true;
 		InitializeEntities();
 		InstantiateProxyPrefabs();
-		combatPanel.StartCoroutine(UpdateHealthBars());
+		combatPanel.StartCoroutine(UpdateHealthBars(true));
 
 		// initiate combat loop
 		LaunchNextTurn();
@@ -146,7 +148,7 @@ public class CombatManager : Manager
 			if (Input.GetMouseButtonDown(0)) OnCharacterSelect(hitProxy.Entity.currentCombatPosition);
 			else currentlyInspectedEntityPos = hitProxy.Entity.currentCombatPosition;
 		}
-		else currentlyInspectedEntityPos = upcomingTurns[0];
+		else if(combatPanel.CombatActive) currentlyInspectedEntityPos = upcomingTurns[0];
 
 	}
 
@@ -343,7 +345,7 @@ public class CombatManager : Manager
 		}
 	}
 
-	private IEnumerator UpdateHealthBar(Vector2Int target)
+	private IEnumerator UpdateHealthBar(Vector2Int target, bool setInstantly = false)
 	{
 		Entity targetEntity = GetEntity(target);
 		Proxy targetProxy = GetProxy(target);
@@ -362,10 +364,10 @@ public class CombatManager : Manager
 				if (targetProxy.HealthBar.value == targetEntity.CurrentHealth) break;
 			}
 			else break;
-			yield return null;
+			if(!setInstantly) yield return null;
 		}
 	}
-	private IEnumerator UpdateHealthBars()
+	private IEnumerator UpdateHealthBars(bool setInstantly = false)
 	{
 		bool done = false;
 		while (true)
@@ -390,7 +392,7 @@ public class CombatManager : Manager
 				}
 			}
 			if (done) break;
-			yield return null;
+			if(!setInstantly) yield return null;
 		}
 	}
 
@@ -483,7 +485,7 @@ public class CombatManager : Manager
 
 		}
 
-		combatPanel.skillDescriptionText.SetText(skillDescriptionText);
+		combatPanel.SkillDescriptionText.SetText(skillDescriptionText);
 	}
 
 	#region Inspection Window
@@ -491,27 +493,36 @@ public class CombatManager : Manager
 	{
 		Entity entity = GetEntity(currentlyInspectedEntityPos);
 		UpdateInspectionWindowStatText(entity);
-		UpdateInspectionWindowPortrait(entity);
-		UpdateInspectionWindowCombatEffects(entity);
+		combatPanel.EntityInspectionPortrait.sprite = entity.CharDataContainer.Portrait;
+		combatPanel.EntityInspectionEffectPool.CopyCombatEffects(GetCombatEffectPool(currentlyInspectedEntityPos));
+		combatPanel.EntityNameText.text = entity.Name;
+		combatPanel.EntityLevelText.text = "Level " + entity.CurrentLevel;
 	}
 
 	private void UpdateInspectionWindowStatText(Entity entity)
 	{
-		combatPanel.statDescriptionText.SetText(
-			"HP:	" + GetFormattedStatString(entity.CurrentHealth, entity.CurrentMaxHealth) + " / " + GetFormattedStatString(entity.CurrentMaxHealth, entity.BaseHealth) +
-			"\nATK:	" + GetFormattedStatString(entity.CurrentAttack, entity.BaseAttack) +
-			"\nDEF:	" + GetFormattedStatString(entity.CurrentDefense, entity.BaseDefense) +
-			"\nSPD:	" + GetFormattedStatString(entity.CurrentSpeed, entity.BaseSpeed));
-	}
+		stringBuilder.Clear();
+		stringBuilder.Append("HP: ");
+		stringBuilder.Append(GetFormattedStatString(entity.CurrentHealth, entity.CurrentMaxHealth));
+		stringBuilder.Append(" / ");
+		stringBuilder.AppendLine(GetFormattedStatString(entity.CurrentMaxHealth, entity.BaseHealth));
 
-	private void UpdateInspectionWindowPortrait(Entity entity)
-	{
-		combatPanel.EntityInspectionPortrait.sprite = entity.CharDataContainer.Portrait;
-	}
+		stringBuilder.Append("ATK: ");
+		stringBuilder.AppendLine(GetFormattedStatString(entity.CurrentAttack, entity.BaseAttack));
 
-	private void UpdateInspectionWindowCombatEffects(Entity entity)
-	{
-		combatPanel.EntityInspectionEffectPool.CopyCombatEffects(GetCombatEffectPool(currentlyInspectedEntityPos));
+		stringBuilder.Append("DEF: ");
+		stringBuilder.AppendLine(GetFormattedStatString(entity.CurrentDefense, entity.BaseDefense));
+
+		stringBuilder.Append("SPD: ");
+		stringBuilder.Append(GetFormattedStatString(entity.CurrentSpeed, entity.BaseSpeed));
+
+		combatPanel.StatDescriptionText.SetText(stringBuilder.ToString());
+
+		//combatPanel.StatDescriptionText.SetText(
+		//	"HP:	" + GetFormattedStatString(entity.CurrentHealth, entity.CurrentMaxHealth) + " / " + GetFormattedStatString(entity.CurrentMaxHealth, entity.BaseHealth) +
+		//	"\nATK:	" + GetFormattedStatString(entity.CurrentAttack, entity.BaseAttack) +
+		//	"\nDEF:	" + GetFormattedStatString(entity.CurrentDefense, entity.BaseDefense) +
+		//	"\nSPD:	" + GetFormattedStatString(entity.CurrentSpeed, entity.BaseSpeed));
 	}
 	#endregion
 	#endregion
@@ -543,7 +554,7 @@ public class CombatManager : Manager
 			if (target.x == 0) target.y += i;
 			else if (target.x == 1)
 			{
-				if (target.y - 1 < 0) continue; // when the target overlaps teams
+				if (target.y - i < 0) continue; // when the target overlaps teams
 				else target.y -= i;
 			}
 
@@ -738,8 +749,8 @@ public class CombatManager : Manager
 	{
 		upcomingTurns.Remove(dyingCharPos); // TODO: check if this ever throws an exception
 		GetEntity(dyingCharPos).CurrentInitiative = 0;
-		//GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
-		GetProxy(dyingCharPos).gameObject.SetActive(false);
+		GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
+		//GetProxy(dyingCharPos).gameObject.SetActive(false);
 		//GameObject proxy = GetProxy(dyingCharPos); 
 		//proxy.GetComponent<Animator>().enabled = false; // pause anim
 		//proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
@@ -782,13 +793,22 @@ public class CombatManager : Manager
 	{
 		combatPanel.CombatActive = false;
 
-		for (int x = 0; x < proxies.GetLength(0); x++)
-			for (int y = 0; y < proxies.GetLength(1); y++)
-				if (proxies[x, y] != null) Object.Destroy(proxies[x, y].gameObject);
-
 		//Debug.Log("Player Victory: " + playerWon);
-		AwardExp();
-		AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+		if (playerWon == true)
+		{
+			AwardExp();
+			AssetManager.Instance.GetManager<ChestManager>().ChestPanel.Open(OnChestClose);
+		}
+		else
+		{
+			AssetManager.Instance.GetManager<DungeonManager>().HealEntireParty(1f);
+			AssetManager.Instance.LoadArea(AssetManager.Instance.Paths.DefaultLocation);
+		}
+	}
+
+	private void OnChestClose()
+	{
+		AssetManager.Instance.GetManager<DungeonManager>().HandleCombatVictory();
 	}
 
 	private void AwardExp()
@@ -816,6 +836,15 @@ public class CombatManager : Manager
 			tempEntity.AddExp((int)(totalExpAward / allyCount));
 		}
 	}
+
+	//private void UnloadCombatLevel()
+	//{
+	//	for (int x = 0; x < proxies.GetLength(0); x++)
+	//		for (int y = 0; y < proxies.GetLength(1); y++)
+	//			if (proxies[x, y] != null) Object.Destroy(proxies[x, y].gameObject);
+
+	//	AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+	//}
 	#endregion
 	#endregion
 

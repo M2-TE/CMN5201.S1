@@ -50,8 +50,9 @@ public class UIStorageHandler : UIElementHandler
     }
 
     public void DisplayItem(StorageSlot item)
-    {
-        Activate(true);
+	{
+		if (this == null) return;
+		Activate(true);
         Icon.sprite = AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, item.content).ItemIcon;
         Amount.text = item.amount.ToString();
     }
@@ -63,6 +64,7 @@ public class UIStorageHandler : UIElementHandler
 
     private void Activate(bool enabled)
     {
+		if (this == null) return;
         empty = !enabled;
         Icon.enabled = enabled;
         Amount.enabled = enabled;

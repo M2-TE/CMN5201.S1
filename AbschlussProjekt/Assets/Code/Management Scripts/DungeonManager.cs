@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class DungeonManager : Manager
 {
 	public Entity[] BufferedEnemies;
+	public bool CanMove;
 
 	private DungeonPanel dungeonPanel;
 
@@ -15,19 +16,27 @@ public class DungeonManager : Manager
 	private Color currentNodeColorBuffer;
 	private List<DungeonNode>[] dungeonNodes;
 
+	private ChestPanel _chestPanel;
+	private ChestPanel chestPanel
+	{
+		get { return _chestPanel ?? (_chestPanel = AssetManager.Instance.GetManager<ChestManager>().ChestPanel); }
+	}
+
 	public void CreateNewDungeon(DungeonPanel dungeonPanel)
 	{
 		this.dungeonPanel = dungeonPanel;
 		GenerateDungeon();
 		SetAllNodePositions();
 		SetAllNodeFamilies();
+		CanMove = true;
+		HealEntireParty(1f);
 	}
 
 	private void GenerateDungeon()
 	{
 		dungeonNodes = new List<DungeonNode>[dungeonPanel.DungeonLength];
 
-		var parent = AddNode(CreateNode(DungeonNode.RoomType.Empty), null);
+		var parent = AddNode(CreateNode(DungeonNode.RoomType.Empty, 0), null);
 		currentNode = parent;
 
 		var image = parent.GetComponent<Image>();
@@ -38,11 +47,11 @@ public class DungeonManager : Manager
 		{
 			int siblingAmount = Random.Range(1, dungeonPanel.MaxSiblings);
 			for (int x = 0; x < siblingAmount; x++)
-				AddNode(CreateNode(GetRandomRoomType(depth)), parent);
+				AddNode(CreateNode(GetRandomRoomType(depth), depth), parent);
 
-			parent = AddNode(CreateNode(GetRandomRoomType(depth)), parent);
+			parent = AddNode(CreateNode(GetRandomRoomType(depth), depth), parent);
 		}
-		AddNode(CreateNode(DungeonNode.RoomType.Boss), parent);
+		AddNode(CreateNode(DungeonNode.RoomType.Boss, dungeonPanel.DungeonLength), parent);
 	}
 
 	private DungeonNode.RoomType GetRandomRoomType(int depth)
@@ -57,7 +66,7 @@ public class DungeonManager : Manager
 		else return dungeonPanel.secondHalfRoomPool[Random.Range(0, dungeonPanel.secondHalfRoomPool.Length)];
 	}
 
-	private DungeonNode CreateNode(DungeonNode.RoomType roomType)
+	private DungeonNode CreateNode(DungeonNode.RoomType roomType, int depth)
 	{
 		DungeonNode node = null;
 		switch (roomType)
@@ -75,7 +84,7 @@ public class DungeonManager : Manager
 			case DungeonNode.RoomType.EliteCombat:
 			case DungeonNode.RoomType.Boss:
 				node = Object.Instantiate(dungeonPanel.CombatNodePrefab, dungeonPanel.MapParent.transform).GetComponent<DungeonNode>();
-				(node as CombatNode).HostileEntities = CreateEnemyGroup(roomType);
+				(node as CombatNode).HostileEntities = CreateEnemyGroup(roomType, depth);
 				break;
 
 			case DungeonNode.RoomType.Unknown:
@@ -172,6 +181,7 @@ public class DungeonManager : Manager
 
 	private void MoveToNextNode(DungeonNode newNode)
 	{
+		CanMove = false;
 		currentNode.GetComponent<Image>().color = currentNodeColorBuffer;
 
 		currentNode = newNode;
@@ -179,48 +189,103 @@ public class DungeonManager : Manager
 		currentNodeColorBuffer = image.color;
 		image.color = dungeonPanel.CurrentStandingColor;
 
+		var instance = AssetManager.Instance;
 		switch (newNode.OwnRoomType)
 		{
 			default:
 			case DungeonNode.RoomType.Empty:
-
+				CanMove = true;
 				break;
 
 			case DungeonNode.RoomType.Camp:
-
+				HealEntireParty(.5f);
+				CanMove = true;
 				break;
 
 			case DungeonNode.RoomType.StandardCombat:
 			case DungeonNode.RoomType.EliteCombat:
 				BufferedEnemies = (newNode as CombatNode).HostileEntities;
-				var instance = AssetManager.Instance;
 				instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
 				break;
 
 			case DungeonNode.RoomType.Boss:
-
+				BufferedEnemies = (newNode as CombatNode).HostileEntities;
+				instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.BossCombatArea));
 				break;
 
 			case DungeonNode.RoomType.Unknown:
+				int randomRoomType = Random.Range(0, 3);
+				switch (randomRoomType)
+				{
+					case 0:
+						BufferedEnemies = CreateEnemyGroup(DungeonNode.RoomType.StandardCombat, newNode.Depth);
+						instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
+						break;
 
+					case 1:
+						BufferedEnemies = CreateEnemyGroup(DungeonNode.RoomType.EliteCombat, newNode.Depth);
+						instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
+						break;
+
+					case 2:
+						instance.GetManager<ChestManager>().ChestPanel.Open(AfterChestOpen);
+						dungeonPanel.MapParent.SetActive(false);
+						break;
+				}
 				break;
 		}
 	}
 
-	private Entity[] CreateEnemyGroup(DungeonNode.RoomType roomType)
+	private void AfterChestOpen()
+	{
+		CanMove = true;
+		dungeonPanel.MapParent.SetActive(true);
+	}
+
+	public void HealEntireParty(float healPerc)
+	{
+		Entity[] currentTeam = AssetManager.Instance.Savestate.CurrentTeam;
+		for(int i = 0; i < currentTeam.Length; i++)
+			if (currentTeam[i] != null) currentTeam[i].CurrentHealth = Mathf.Min(currentTeam[i].CurrentMaxHealth, currentTeam[i].CurrentHealth + (int)((float)(currentTeam[i].BaseHealth) * healPerc));
+	}
+
+	private Entity[] CreateEnemyGroup(DungeonNode.RoomType roomType, int depth)
 	{
 		var instance = AssetManager.Instance;
-		return BufferedEnemies = new Entity[]
+		BufferedEnemies = new Entity[]
 		{
-			//new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Knight"))
+			new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Knight")),
 			new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Mage"))
 		};
+
+		for(int i = 0; i < BufferedEnemies.Length; i++)
+			BufferedEnemies[i].SetLevel(depth);
+
+		return BufferedEnemies;
 	}
 
 	public void ExtendNodePress(DungeonNode node)
 	{
-		if (currentNode.ChildNodes != null && currentNode.ChildNodes.Contains(node))
+		if (currentNode.ChildNodes != null && currentNode.ChildNodes.Contains(node) && CanMove)
 			MoveToNextNode(node);
-		else Debug.Log("Illegal Movement");
+		//else Debug.Log("Illegal Movement");
+	}
+
+	public void HandleCombatVictory()
+	{
+		CanMove = true;
+		//AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+
+		if (currentNode.OwnRoomType == DungeonNode.RoomType.Boss)
+			FinishDungeon();
+		else
+			AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+	}
+
+	private void FinishDungeon()
+	{
+		AssetManager.Instance.GetManager<GameManager>()
+			.LoadAreaAsync(AssetManager.Instance
+				.LoadArea(AssetManager.Instance.Paths.DefaultLocation));
 	}
 }

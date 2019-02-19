@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class ChestPanel : UIPanel
 {
-    [SerializeField] private GameObject slotPrefab;
+	public delegate void OnClose();
+	private OnClose onClose;
+
+	[SerializeField] private GameObject slotPrefab;
     [SerializeField] private GameObject itemSlotsParent;
     [SerializeField] private Chest[] chests;
 
-    private Chest chest;
+	private Chest chest;
     private List<UIStorageHandler> storageSlots = new List<UIStorageHandler>();
 
     private ChestManager chestManager;
@@ -22,8 +25,12 @@ public class ChestPanel : UIPanel
         chestManager.Items = chest.Items;
         base.Awake();
     }
+	private void OnEnable()
+	{
+		if(chestManager != null) chestManager.ChestPanel = this;
+	}
 
-    private void Start()
+	private void Start()
     {
         chestManager.InventoryManager = AssetManager.Instance.GetManager<InventoryManager>();
         InstantiateChest();
@@ -64,13 +71,19 @@ public class ChestPanel : UIPanel
     }
 
 
-    public void Open()
-    {
-        ToggleVisibility(true);
+	public void Open(OnClose onClose)
+	{
+		chest = chests[Random.Range(0, chests.Length)];
+		DrawItemsFromContainer();
+		DisplayItemsInChest();
+
+		ToggleVisibility(true);
+		this.onClose = onClose;
     }
 
     public void Close()
     {
         ToggleVisibility(false);
+		onClose();
     }
 }

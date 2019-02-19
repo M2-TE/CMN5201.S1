@@ -100,14 +100,15 @@ public class AssetManager
     public void Load()
     {
         string path = Application.persistentDataPath + Paths.SavefilePath;
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            Savestate = formatter.Deserialize(stream) as Savestate;
-            stream.Close();
-        }
-        else Debug.LogError("Savefile not found.");
+		if (File.Exists(path))
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+			Savestate = formatter.Deserialize(stream) as Savestate;
+			stream.Close();
+		}
+		else
+			CreateNewSavestate();
 	}
 
     #region Singleton Implementation

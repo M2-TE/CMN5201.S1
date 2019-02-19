@@ -1,4 +1,6 @@
-﻿public class UnknownNode : DungeonNode // Treasure
+﻿using System;
+
+public class UnknownNode : DungeonNode
 {
-	//public TreasureBox treasureBox;
+
 }

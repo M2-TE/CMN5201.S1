@@ -69,10 +69,11 @@ public class ItemInfo : MonoBehaviour
 
     public void CloseItemInfo()
     {
-        CompareItems.SetActive(false);
-        SingleEquipment.SetActive(false);
-        Consumable.SetActive(false);
-        gameObject.SetActive(false);
+		if (this == null) return;
+		CompareItems.SetActive(false);
+		SingleEquipment.SetActive(false);
+		Consumable.SetActive(false);
+		gameObject.SetActive(false);
     }
 
     public void UpdateAction(bool equipAction)

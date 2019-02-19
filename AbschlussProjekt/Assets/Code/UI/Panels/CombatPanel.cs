@@ -19,11 +19,13 @@ public class CombatPanel : UIPanel
 	public TextMeshProUGUI[] Cooldowns;
 
 	[Header("Entity Inspection Window")]
-	public TextMeshProUGUI skillDescriptionText;
-	public TextMeshProUGUI statDescriptionText;
+	public TextMeshProUGUI SkillDescriptionText;
+	public TextMeshProUGUI StatDescriptionText;
 
 	public Image EntityInspectionPortrait;
 	public CombatEffectPool EntityInspectionEffectPool;
+	public TextMeshProUGUI EntityNameText;
+	public TextMeshProUGUI EntityLevelText;
 
 	[Header("Team Portraits")]
 	[SerializeField] private Image[] playerTeamPortraits;
@@ -101,6 +103,11 @@ public class CombatPanel : UIPanel
 		Entity[] ownTeam = instance.Savestate.CurrentTeam;
 		Entity[] enemyTeam = instance.GetManager<DungeonManager>().BufferedEnemies;
 		combatManager.StartCombat(ownTeam, enemyTeam);
+	}
+
+	private void OnApplicationQuit()
+	{
+		AssetManager.Instance.GetManager<GameManager>().OnApplicationQuit();
 	}
 
 	private void Update()
