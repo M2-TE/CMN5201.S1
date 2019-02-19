@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
-  m_Name: TestItem
+  m_Name: Metal Necklace
   m_EditorClassIdentifier: 
-  ItemName: TestItem
-  ItemIcon: {fileID: 21300000, guid: 59b154d6601cb794db63dc698ea787b4, type: 3}
+  ItemName: Metal Necklace
+  ItemIcon: {fileID: 21300000, guid: a677574885463be428d7cefc771e1fc0, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
   LevelRequirement: 0
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
-  StackingLimit: 1
+  StackingLimit: 0
   testArray: 
   MatchingClasses: []
-  EquipmentType: 2
+  EquipmentType: 9
   HealthBonus: 0
-  AttackBonus: 0
-  DefenseBonus: 0
-  SpeedBonus: 0
+  AttackBonus: 1
+  DefenseBonus: 2
+  SpeedBonus: 1

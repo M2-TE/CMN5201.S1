@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
-  m_Name: TestItem
+  m_Name: Tier 1 Shield
   m_EditorClassIdentifier: 
-  ItemName: TestItem
-  ItemIcon: {fileID: 21300000, guid: 59b154d6601cb794db63dc698ea787b4, type: 3}
+  ItemName: Tier 1 Shield
+  ItemIcon: {fileID: 21300000, guid: e512bf306e5645e4aa24959edd85ddbf, type: 3}
   ItemDescription: Item Description Missing
   EncumbranceValue: 0
   LevelRequirement: 0
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
-  StackingLimit: 1
+  StackingLimit: 0
   testArray: 
-  MatchingClasses: []
-  EquipmentType: 2
+  MatchingClasses:
+  - {fileID: 11400000, guid: 67a174a5467150c438bd4237a0230095, type: 2}
+  EquipmentType: 1
   HealthBonus: 0
   AttackBonus: 0
-  DefenseBonus: 0
+  DefenseBonus: 2
   SpeedBonus: 0
