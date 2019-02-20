@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class MainMenuPanel : UIPanel
 {
+	[SerializeField] private GameObject creditsOverlay;
 	public void OnContinuePress()
 	{
 		AssetManager instance = AssetManager.Instance;
@@ -25,4 +26,13 @@ public class MainMenuPanel : UIPanel
 		AssetManager.Instance.GetManager<GameManager>().ExitGame();
 	}
 
+	public void OnCreditsPress()
+	{
+		creditsOverlay.SetActive(true);
+	}
+
+	public void OnCreditsBackPress()
+	{
+		creditsOverlay.SetActive(false);
+	}
 }
