@@ -22,6 +22,7 @@ public class CombatPanel : UIPanel
 	public TextMeshProUGUI SkillDescriptionText;
 	public TextMeshProUGUI StatDescriptionText;
 
+	public Slider XpSlider;
 	public Image EntityInspectionPortrait;
 	public CombatEffectPool EntityInspectionEffectPool;
 	public TextMeshProUGUI EntityNameText;

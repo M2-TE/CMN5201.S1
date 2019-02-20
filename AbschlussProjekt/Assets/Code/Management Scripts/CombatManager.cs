@@ -520,6 +520,7 @@ public class CombatManager : Manager
 		combatPanel.EntityInspectionEffectPool.CopyCombatEffects(GetCombatEffectPool(currentlyInspectedEntityPos));
 		combatPanel.EntityNameText.text = entity.Name;
 		combatPanel.EntityLevelText.text = "Level " + entity.CurrentLevel;
+		UpdateXpBar();
 	}
 
 	private void UpdateInspectionWindowStatText(Entity entity)
@@ -546,6 +547,24 @@ public class CombatManager : Manager
 		//	"\nATK:	" + GetFormattedStatString(entity.CurrentAttack, entity.BaseAttack) +
 		//	"\nDEF:	" + GetFormattedStatString(entity.CurrentDefense, entity.BaseDefense) +
 		//	"\nSPD:	" + GetFormattedStatString(entity.CurrentSpeed, entity.BaseSpeed));
+	}
+
+	private void UpdateXpBar()
+	{
+		if(currentlyInspectedEntityPos.x == 0)
+		{
+			combatPanel.XpSlider.gameObject.SetActive(true);
+			Entity entity = GetEntity(currentlyInspectedEntityPos);
+			float expEmpty = entity.CharDataContainer.baseExpRequirement * (entity.CurrentLevel - 1) * entity.CharDataContainer.ExpRequirementGrowth;
+			float expFull = entity.CharDataContainer.baseExpRequirement * entity.CurrentLevel * entity.CharDataContainer.ExpRequirementGrowth;
+			combatPanel.XpSlider.minValue = expEmpty;
+			combatPanel.XpSlider.maxValue = expFull;
+			combatPanel.XpSlider.value = entity.CurrentExp;
+		}
+		else
+		{
+			combatPanel.XpSlider.gameObject.SetActive(false);
+		}
 	}
 	#endregion
 	#endregion
@@ -667,7 +686,7 @@ public class CombatManager : Manager
 		int actualDamage =
 			(skill.AttackMultiplier > 0) // if the attack multiplier is at zero, then its a buff, not an attack (min dmg circumvented) 
 			? Mathf.Max(1, (int)(GetEntity(caster).CurrentAttack * skill.AttackMultiplier - GetEntity(target).CurrentDefense))
-			: (int)Mathf.Max(0f, GetEntity(caster).CurrentAttack * skill.AttackMultiplier);
+			: (int)Mathf.Min(skill.AttackMultiplier < 0 ? -1f : 0f, GetEntity(caster).CurrentAttack * skill.AttackMultiplier);
 
 		ApplyCombatEffects(caster, target, skill);
 		ApplyDamage(target, actualDamage);
@@ -861,7 +880,7 @@ public class CombatManager : Manager
 		for (int i = 0; i < entities.GetLength(1); i++)
 		{
 			tempEntity = entities[1, i];
-			if (tempEntity == null || tempEntity.CurrentHealth == 0) continue;
+			if (tempEntity == null) continue;
 			totalExpAward 
 				+= tempEntity.CharDataContainer.baseExpYield 
 				* tempEntity.CharDataContainer.expYieldGrowth 
@@ -870,12 +889,12 @@ public class CombatManager : Manager
 
 		int allyCount = 0;
 		for (int i = 0; i < entities.GetLength(1); i++)
-			if (entities[0, i] != null) allyCount++;
+			if (entities[0, i] != null && entities[0, i].CurrentHealth > 0) allyCount++;
 
 		for (int i = 0; i < entities.GetLength(1); i++)
 		{
 			tempEntity = entities[0, i];
-			if (tempEntity == null) continue;
+			if (tempEntity == null || entities[0, i].CurrentHealth <= 0) continue;
 			tempEntity.AddExp((int)(totalExpAward / allyCount));
 		}
 	}

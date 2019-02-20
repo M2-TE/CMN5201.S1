@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,7 +13,7 @@ MonoBehaviour:
   m_Name: Standard Pass
   m_EditorClassIdentifier: 
   SkillIcon: {fileID: 21300000, guid: e4aa1b7e963e9fd44b35843c6a254893, type: 3}
-  FxPrefab: {fileID: 1215541468341954, guid: bacd6c97ebc06b84ea47cc5ed93e3d28, type: 2}
+  FxPrefab: {fileID: 1215541468341954, guid: bacd6c97ebc06b84ea47cc5ed93e3d28, type: 3}
   castSfx:
   - {fileID: 8300000, guid: eefd97041cf690049aa8846bd13afeaa, type: 3}
   - {fileID: 8300000, guid: f088d18a389008d48a3ca75df60f9a1d, type: 3}
@@ -25,12 +26,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6bed5b9e52b3e61438183a3e3da80f57, type: 3}
   - {fileID: 8300000, guid: 10377b87c85a65f4bb984f0ebc54c38b, type: 3}
   impactSfx: []
-  impactDelay: 0
-  SkillDescription: Pass the round without an action.
+  AnimatorTrigger: Attack
+  castAudioDelay: 0
+  impactSpawnDelay: 0
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
+  SkillDescription: Pass the round without an action, damaging yourself.
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 0
   CanHitSelf: 1
-  AttackMultiplier: 0
+  AttackMultiplier: 1
   Cooldown: 1
   MinRange: 0
   MaxRange: 0

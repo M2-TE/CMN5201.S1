@@ -163,7 +163,7 @@ public class Entity
 
 	#region Combat Stats
 	public int CurrentLevel;
-	private float currentExp;
+	public float CurrentExp;
 	private float requiredExp;
 
 	public int BaseHealth;
@@ -217,8 +217,8 @@ public class Entity
 
 	public void AddExp(int exp)
 	{
-		currentExp += exp;
-		if (currentExp >= requiredExp) SetLevel(CurrentLevel + 1);
+		CurrentExp += exp;
+		if (CurrentExp >= requiredExp) SetLevel(CurrentLevel + 1);
 	}
 
 	public void SetLevel(int level)
@@ -226,7 +226,7 @@ public class Entity
 		CurrentLevel = level;
 
 		requiredExp = CharDataContainer.baseExpRequirement * CurrentLevel * CharDataContainer.ExpRequirementGrowth;
-		if (currentExp >= requiredExp)
+		if (CurrentExp >= requiredExp)
 		{
 			SetLevel(CurrentLevel + 1);
 			return;
@@ -261,7 +261,7 @@ public class Entity
         this.charDataContainer = charDataContainer;
 		
 		CurrentLevel = 1;
-		currentExp = 0;
+		CurrentExp = 0;
 		requiredExp = CharDataContainer.baseExpRequirement;
 
 		equippedCombatSkillStrings = new string[4];
