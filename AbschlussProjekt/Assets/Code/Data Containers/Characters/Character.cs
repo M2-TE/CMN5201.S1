@@ -7,6 +7,8 @@ public abstract class Character : DataContainer
     public GameObject Prefab;
     public Sprite Portrait;
 
+    public PlayableChars CharacterType;
+
     [Header("Combat Stats")]
     public int BaseHealth;
     public int BaseAttack;

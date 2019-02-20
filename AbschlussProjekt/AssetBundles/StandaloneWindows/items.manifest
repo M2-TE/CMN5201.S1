@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2498487131
+CRC: 3483669091
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e7d608dc9af054dc1cb421ced3142272
+    Hash: 58343897c434d46c1a186acc20e110c3
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 19a78901d48fcd6419522d87c5b78fc6
+    Hash: 198bc90fbb596c7b7054741f74fbb164
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -15,8 +15,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 505de362506c6c34d9b1a5e82ba5b3e4, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 14dd9224a283f1f41ac1c84add6bfd5a, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 3b80c2a591348d743afff40aa3ac673d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: ce8b4a26e2225c3458dfa9f9729b8c7c, type: 3}
 - Class: 114
@@ -79,9 +77,5 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Shield.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Boots.asset
 - Assets/_Data Containers/Items/Equipment/Rings/Ring of Health Two.asset
-- Assets/_Data Containers/Items/Equipment/Armor/Base Armor.asset
-- Assets/_Data Containers/Items/Equipment/Rare/TestItem.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/characters/playable
-  characters
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
+- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools

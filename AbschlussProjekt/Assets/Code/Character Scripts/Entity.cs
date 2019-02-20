@@ -9,6 +9,8 @@ public class Entity
 {
     public string Name;
 
+    public PlayableChars CharacterType;
+
     #region Getters and Setters
     [NonSerialized] private AssetManager _amInstance;
     private AssetManager amInstance
@@ -253,6 +255,7 @@ public class Entity
     {
         Name = charDataContainer.name;
 
+        CharacterType = charDataContainer.CharacterType;
 
         entityType = charDataContainer.name;
         this.charDataContainer = charDataContainer;

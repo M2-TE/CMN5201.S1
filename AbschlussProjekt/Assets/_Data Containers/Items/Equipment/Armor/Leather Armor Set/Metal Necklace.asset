@@ -14,15 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Metal Necklace
   ItemIcon: {fileID: 21300000, guid: a677574885463be428d7cefc771e1fc0, type: 3}
-  ItemDescription: Item Description Missing
+  ItemDescription: Can be equipped by the Robot.
   EncumbranceValue: 0
   LevelRequirement: 0
   IsIndestructible: 0
   IsQuestItem: 0
   IsUnique: 0
   StackingLimit: 0
-  testArray: 
-  MatchingClasses: []
+  MatchingClasses: 04000000
   EquipmentType: 9
   HealthBonus: 0
   AttackBonus: 1

@@ -83,7 +83,7 @@ public class InventoryPanel : UIPanel
             return;
         else if (storedItem.GetType().Equals(typeof(EquipmentContainer)))
         {
-            if (AssetManager.Instance.GetManager<CharacterInfoManager>()!= null && AssetManager.Instance.GetManager<CharacterInfoManager>().OpenCharacterPanel)
+            if (AssetManager.Instance.GetManager<CharacterInfoManager>() != null && AssetManager.Instance.GetManager<CharacterInfoManager>().OpenCharacterPanel && ((EquipmentContainer)storedItem).CheckMatchingClass(AssetManager.Instance.GetManager<CharacterInfoManager>().CharacterInfoPanel.CurrentCharacter.CharacterType))
             {
                 EquipmentContainer equippedItem = AssetManager.Instance.GetManager<CharacterInfoManager>().GetItemOfCurrentCharacter(((EquipmentContainer)storedItem).EquipmentType);
                 if(equippedItem != null)
