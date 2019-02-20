@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3925598593
+CRC: 679540028
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9fa1916edbf04a0cef573109196bdfb8
+    Hash: 6c37b0e97808f33bf334bc0b5220cd01
   TypeTreeHash:
     serializedVersion: 2
     Hash: 198bc90fbb596c7b7054741f74fbb164
@@ -29,13 +29,19 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Boots.asset
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Ammunition.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Emerald Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Gloves.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Armor.asset
 - Assets/_Data Containers/Items/Chests/Standart Chest.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Golden Necklace.asset
 - Assets/_Data Containers/Items/Equipment/Primary Weapons/Cultist Weapon.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Gloves.asset
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Shield.asset
 - Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 1 Staff.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Boots.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Armor.asset
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Book.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Boots.asset
@@ -53,10 +59,15 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Sword.asset
 - Assets/_Data Containers/Items/Equipment/Rings/Ring of Attack One.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Armor.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Helmet.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Belt.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Belt.asset
 - Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 1 Sword.asset
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Ammunition.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Sapphire Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Death Knight Weapon.asset
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Brass Knuckels.asset
 - Assets/_Data Containers/Items/Chests/Elite Chest.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Gloves.asset
@@ -71,6 +82,9 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Brass Knuckels.asset
 - Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Hammer.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Death Knight Offhand.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Necklace.asset
 - Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Ranged.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Belt.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Armor.asset
@@ -86,4 +100,4 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Rings/Ring of Health Two.asset
 - Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Hat.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/Realm of Dawn/AssetBundles/StandaloneWindows/pools

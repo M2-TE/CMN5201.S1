@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1496066778
+CRC: 1963024815
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e13c5eb916609b2dd8c4c1c42cdd2caa
+    Hash: 6b7a375916d62977521558c131fc1444
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9b3ac242b6bbff1dae93c61a7fcdc251
@@ -18,4 +18,4 @@ ClassTypes:
 Assets:
 - Assets/_Data Containers/Items/Pools/ItemPools.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/Realm of Dawn/AssetBundles/StandaloneWindows/items
