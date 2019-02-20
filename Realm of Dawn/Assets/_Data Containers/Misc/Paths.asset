@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: Paths
   m_EditorClassIdentifier: 
   SavefilePath: /savefile.sfl
-  AssetBundlePath: AssetBundles/StandaloneWindows/
+  assetBundlePath: AssetBundles/StandaloneWindows/
   AreasPartialPath: areas/
   PlayableCharactersPath: characters/playable characters
-  VitalPrefabsPath: vital assets
+  VitalAssetsPath: vital assets
   UiPrefabsPath: ui prefabs
   ItemsPath: items
+  ItemPoolsPath: items/pools
   SettingsPath: settings
-  EquipmentPath: equipment
   SkillsPath: skills
-  DefaultLocation: Starter City
+  DefaultLocation: starter city
+  MainMenu: main menu
+  FirstDungeon: first dungeon
+  StandardCombatArea: standard combat area
+  BossCombatArea: boss combat area
+  CampSite: camp site
+  Disco: disco

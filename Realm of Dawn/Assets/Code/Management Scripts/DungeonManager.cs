@@ -222,9 +222,10 @@ public class DungeonManager : Manager
 					return;
 				}
 
-				int randomRoomType = Random.Range(0, 11);
+				int randomRoomType = Random.Range(0, 2);
 				switch (randomRoomType)
 				{
+					default:
 					case 0:
 						BufferedEnemies = CreateEnemyGroup(DungeonNode.RoomType.StandardCombat, newNode.Depth);
 						instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
@@ -233,18 +234,6 @@ public class DungeonManager : Manager
 					case 1:
 						BufferedEnemies = CreateEnemyGroup(DungeonNode.RoomType.EliteCombat, newNode.Depth);
 						instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
-						break;
-
-					case 3:
-					case 4:
-					case 5:
-					case 6:
-					case 7:
-					case 8:
-					case 9:
-					case 10:
-						instance.GetManager<ChestManager>().ChestPanel.Open(AfterChestOpen);
-						dungeonPanel.MapParent.SetActive(false);
 						break;
 				}
 				break;
