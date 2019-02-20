@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1496066778
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e13c5eb916609b2dd8c4c1c42cdd2caa
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9b3ac242b6bbff1dae93c61a7fcdc251
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 14dd9224a283f1f41ac1c84add6bfd5a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Items/Pools/ItemPools.asset
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items

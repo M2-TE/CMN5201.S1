@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 1182955623
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0b84c38b15b583da6afe5885fbc483e6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: db8a339bb95d75ea8e93d8e29eb2e7ee
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 39fa3d8997a24136984ca6e2c99902bc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0e8684cf2ed6e864a826171a16747fc3, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Misc/Vital Assets.asset
+Dependencies: []

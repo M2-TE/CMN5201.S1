@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1700172986
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f3b70878a8a5d2b736de7a94ffe7fa37
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0681dea8b72e78680f3bb1b33b702fe5
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 606680d0cfec52e4ea3b8214cd62c724, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Areas/Combat Areas/Standard Combat Area.asset
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items

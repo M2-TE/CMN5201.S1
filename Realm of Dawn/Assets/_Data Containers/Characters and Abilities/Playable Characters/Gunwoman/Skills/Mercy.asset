@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
+  m_Name: Mercy
+  m_EditorClassIdentifier: 
+  SkillIcon: {fileID: 21300000, guid: 8aa8cf7e34694f544a7d48fe8e7ebc07, type: 3}
+  FxPrefab: {fileID: 1272641376283932, guid: 84c943834cd97664bbebd0610fdea158, type: 3}
+  castSfx:
+  - {fileID: 8300000, guid: 91513dab48ea75f489d7f04015c74de5, type: 3}
+  - {fileID: 8300000, guid: 02df56cdd3404b947ae8e239a8182f02, type: 3}
+  - {fileID: 8300000, guid: 82fd0d20ae8d65940b7d5d74e2f1d7c2, type: 3}
+  - {fileID: 8300000, guid: d99541ce3e57061438dd3c318e61e5ef, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: d416777438447e648ac893dca93bd732, type: 3}
+  - {fileID: 8300000, guid: 16826a1ef9c74164180956ef55897f01, type: 3}
+  - {fileID: 8300000, guid: ee4c24b55db29e44ea90f259e444d971, type: 3}
+  - {fileID: 8300000, guid: 986c8ec73969e0546a73f7112d370e90, type: 3}
+  - {fileID: 8300000, guid: 67c691aaaa9508242afc51f0ff7affcc, type: 3}
+  - {fileID: 8300000, guid: 318f2e4d5a95afc488a5d5ca36503bb2, type: 3}
+  - {fileID: 8300000, guid: af4ae78c75e246842a1ef24df0550e28, type: 3}
+  - {fileID: 8300000, guid: 098a17ff1c525f7418ac8fc6dd642e6a, type: 3}
+  AnimatorTrigger: Attack
+  castAudioDelay: 0
+  impactSpawnDelay: 0.4
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
+  SkillDescription: "Range: 1 - 3\tMod: 1\nDeal heavy damage to a single target with
+    perfected precision."
+  LevelRequirement: 5
+  CanHitEnemies: 1
+  CanHitAllies: 0
+  CanHitSelf: 0
+  AttackMultiplier: 1.5
+  Cooldown: 5
+  MinRange: 4
+  MaxRange: 7
+  SurroundingAffectedUnits: {x: 0, y: 0}
+  AppliedCombatEffects: []
+  SelfInflictedCombatEffects: []

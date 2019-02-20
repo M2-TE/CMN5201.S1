@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
+  m_Name: Obliterate
+  m_EditorClassIdentifier: 
+  SkillIcon: {fileID: 21300000, guid: b0518721993606040ac32d22d4eed50a, type: 3}
+  FxPrefab: {fileID: 1680696182, guid: 0e0546f44bbeab5468cc4ce34962ddc0, type: 3}
+  castSfx:
+  - {fileID: 8300000, guid: f17f5178e1616884e8a8ac5b78699d29, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: 24d97d9bfe2b03f4d8429738181a6b16, type: 3}
+  - {fileID: 8300000, guid: 55ac4184c3530a34989a27ef52cb6bae, type: 3}
+  AnimatorTrigger: Attack
+  castAudioDelay: 0
+  impactSpawnDelay: 0.6
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
+  SkillDescription: "Range: 1 - 2\tMod: 1\nSquash the target with a powerful blow."
+  LevelRequirement: 1
+  CanHitEnemies: 1
+  CanHitAllies: 0
+  CanHitSelf: 0
+  AttackMultiplier: 1
+  Cooldown: 1
+  MinRange: 1
+  MaxRange: 2
+  SurroundingAffectedUnits: {x: 0, y: 0}
+  AppliedCombatEffects: []
+  SelfInflictedCombatEffects: []
