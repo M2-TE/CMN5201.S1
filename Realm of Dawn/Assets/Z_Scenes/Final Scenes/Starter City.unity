@@ -5836,11 +5836,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory Panel
       objectReference: {fileID: 0}
-    - target: {fileID: 6990986390608604224, guid: 0f67b0c78edd08d419af25ef83853e8e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7070346977645354902, guid: 0f67b0c78edd08d419af25ef83853e8e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5945,11 +5940,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1835159294089844325, guid: 0f67b0c78edd08d419af25ef83853e8e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f67b0c78edd08d419af25ef83853e8e, type: 3}
@@ -9416,11 +9406,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 164914626}
     m_Modifications:
-    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
-        type: 3}
-      propertyPath: m_Name
-      value: Barracks Panel
-      objectReference: {fileID: 0}
     - target: {fileID: 3208144139095691157, guid: f8e6e1f195549a54eaa168081f9ac9db,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9526,11 +9511,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3208144138530769396, guid: f8e6e1f195549a54eaa168081f9ac9db,
+    - target: {fileID: 3208144139095691156, guid: f8e6e1f195549a54eaa168081f9ac9db,
         type: 3}
-      propertyPath: debugCityPanel
-      value: 
-      objectReference: {fileID: 1036023814}
+      propertyPath: m_Name
+      value: Barracks Panel
+      objectReference: {fileID: 0}
     - target: {fileID: 20817602, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchorMin.x
       value: 1
@@ -9571,13 +9556,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 137.4
       objectReference: {fileID: 0}
+    - target: {fileID: 3208144138530769396, guid: f8e6e1f195549a54eaa168081f9ac9db,
+        type: 3}
+      propertyPath: debugCityPanel
+      value: 
+      objectReference: {fileID: 1036023814}
     - target: {fileID: 477710118, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_SizeDelta.y
       value: 22.5
       objectReference: {fileID: 0}
     - target: {fileID: 976411296, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000009446097
+      value: -0.00027068146
       objectReference: {fileID: 0}
     - target: {fileID: 70441977, guid: f8e6e1f195549a54eaa168081f9ac9db, type: 3}
       propertyPath: m_AnchorMax.x

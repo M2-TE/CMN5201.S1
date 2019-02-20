@@ -22,6 +22,8 @@ public class CharacterInfoPanel : UIPanel
     private GameObject InspectorPanel;
     [SerializeField]
     private SkillSelectionPanel skillSelectionPanel;
+    [SerializeField]
+    private Slider expSlider;
 
     private bool inspectorPanel;
 
@@ -97,12 +99,13 @@ public class CharacterInfoPanel : UIPanel
     {
         ToggleVisibility(true);
         characterName.text = currentCharacter.Name;
-        characterLevel.text = currentCharacter.CurrentLevel.ToString();
+       
         characterPortrait.sprite = currentCharacter.CharDataContainer.Portrait;
 
         SwitchInspectionPanel();
 
         DisplayCharacterStats();
+        DisplayLevel();
         DisplayCharacterPreview();
         skillSelectionPanel.DisplayEquippedSkills();
         DisplayCombatEffects();
@@ -128,6 +131,14 @@ public class CharacterInfoPanel : UIPanel
     public void DisplayCharacterStats()
     {
         characterStats.text = currentCharacter.Stats();
+    }
+
+    public void DisplayLevel()
+    {
+        characterLevel.text = currentCharacter.CurrentLevel.ToString();
+        expSlider.minValue = currentCharacter.CharDataContainer.baseExpRequirement * currentCharacter.CurrentLevel - 1 * currentCharacter.CharDataContainer.ExpRequirementGrowth;
+        expSlider.maxValue = currentCharacter.CharDataContainer.baseExpRequirement * currentCharacter.CurrentLevel - 1 * currentCharacter.CharDataContainer.ExpRequirementGrowth;
+        expSlider.value = currentCharacter.CurrentExp;
     }
 
     public void DisplayCharacterPreview()
