@@ -30,6 +30,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56f2114c9b61793479152aa52d791afc, type: 2}
   - {fileID: 11400000, guid: 7db1a3e55abecc7498dd540c97819c8d, type: 2}
   - {fileID: 11400000, guid: f653c4aecb80734428241318406a02ce, type: 2}
+  - {fileID: 11400000, guid: 6c5d7176ea6ac384badae7dd626c7124, type: 2}
   FallbackSkills:
   - {fileID: 11400000, guid: 56f2114c9b61793479152aa52d791afc, type: 2}
   - {fileID: 11400000, guid: 7db1a3e55abecc7498dd540c97819c8d, type: 2}

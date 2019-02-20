@@ -778,9 +778,7 @@ public class CombatManager : Manager
 		entity.CurrentInitiative = 0;
 		GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
 
-		var pool = GetCombatEffectPool(dyingCharPos);
-		while (pool.activeCombatEffectElements.Count > 0)
-			pool.RemoveCombatEffect(pool.activeCombatEffectElements[0]);
+		PurgeCombatEffects(entity);
 
 		upcomingTurns.Remove(dyingCharPos);
 	}
@@ -839,6 +837,19 @@ public class CombatManager : Manager
 		AssetManager.Instance.GetManager<DungeonManager>().HandleCombatVictory();
 	}
 
+	private void PurgeAllCombatEffects()
+	{
+		for (int i = 0; i < entities.GetLength(1); i++)
+			if (entities[0, i] != null) PurgeCombatEffects(entities[0, i]);
+	}
+
+	private void PurgeCombatEffects(Entity target)
+	{
+		var pool = GetCombatEffectPool(target.currentCombatPosition);
+		while (pool.activeCombatEffectElements.Count > 0)
+			pool.RemoveCombatEffect(pool.activeCombatEffectElements[0]);
+	}
+
 	private void AwardExp()
 	{
 		Entity tempEntity;
@@ -846,7 +857,7 @@ public class CombatManager : Manager
 		for (int i = 0; i < entities.GetLength(1); i++)
 		{
 			tempEntity = entities[1, i];
-			if (tempEntity == null) continue;
+			if (tempEntity == null || tempEntity.CurrentHealth == 0) continue;
 			totalExpAward 
 				+= tempEntity.CharDataContainer.baseExpYield 
 				* tempEntity.CharDataContainer.expYieldGrowth 

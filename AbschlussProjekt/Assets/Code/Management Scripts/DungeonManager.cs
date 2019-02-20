@@ -181,6 +181,7 @@ public class DungeonManager : Manager
 
 	private void MoveToNextNode(DungeonNode newNode)
 	{
+		AssetManager.Instance.StripAllCombatEffects();
 		CanMove = false;
 		currentNode.GetComponent<Image>().color = currentNodeColorBuffer;
 
@@ -260,13 +261,13 @@ public class DungeonManager : Manager
 	{
 		var instance = AssetManager.Instance;
 		BufferedEnemies = new Entity[4];
-		for (int i = 0; i < 2; i++)
-		{
-			BufferedEnemies[i] = new Entity
-				(instance.LoadBundle<PlayableCharacter>
-					(instance.Paths.PlayableCharactersPath,
-					dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
-		}
+		//for (int i = 0; i < 2; i++)
+		//{
+		//	BufferedEnemies[i] = new Entity
+		//		(instance.LoadBundle<PlayableCharacter>
+		//			(instance.Paths.PlayableCharactersPath,
+		//			dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
+		//}
 
 		int rangedCap;
 		switch (roomType)
@@ -283,6 +284,7 @@ public class DungeonManager : Manager
 				(instance.LoadBundle<PlayableCharacter>
 					(instance.Paths.PlayableCharactersPath,
 					dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
+			BufferedEnemies[i].SetLevel(depth);
 		}
 
 		for (int i = 2; i < 2 + rangedCap; i++)
@@ -290,7 +292,8 @@ public class DungeonManager : Manager
 			BufferedEnemies[i] = new Entity
 				(instance.LoadBundle<PlayableCharacter>
 					(instance.Paths.PlayableCharactersPath,
-					dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
+					dungeonPanel.rangedPool[Random.Range(0, dungeonPanel.rangedPool.Length)]));
+			BufferedEnemies[i].SetLevel(depth);
 		}
 
 		return BufferedEnemies;
@@ -328,8 +331,14 @@ public class DungeonManager : Manager
 
 	private void FinishDungeon()
 	{
-		AssetManager.Instance.GetManager<GameManager>()
-			.LoadAreaAsync(AssetManager.Instance
-				.LoadArea(AssetManager.Instance.Paths.DefaultLocation));
+		var instance = AssetManager.Instance;
+		var hostileEntities = (currentNode as CombatNode).HostileEntities;
+		Entity rewardEntity = hostileEntities[Random.Range(0, hostileEntities.Length)];
+		rewardEntity.SetLevel(1);
+		instance.Savestate.OwnedCharacters.Add(rewardEntity);
+
+		instance.GetManager<GameManager>()
+			.LoadAreaAsync(instance
+				.LoadArea(instance.Paths.DefaultLocation));
 	}
 }

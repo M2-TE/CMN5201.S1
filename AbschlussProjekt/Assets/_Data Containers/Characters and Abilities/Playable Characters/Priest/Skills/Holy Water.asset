@@ -40,7 +40,8 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 3\tMod: -0,1\nSplash a single ally with holy water.
+    Gay analogy, but trust me, it works."
   LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
@@ -48,7 +49,7 @@ MonoBehaviour:
   AttackMultiplier: -0.1
   Cooldown: 1
   MinRange: 0
-  MaxRange: 4
+  MaxRange: 3
   SurroundingAffectedUnits: {x: 0, y: 0}
   AppliedCombatEffects: []
   SelfInflictedCombatEffects: []

@@ -40,8 +40,8 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: "Range: 0 - 3\tDamage Modifier: -0.75\nHeal the target and strengthen
-    its attack power."
+  SkillDescription: "Range: 0 - 3\tMod: -0.75\nHeal the target and strengthen its
+    attack power."
   LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1

@@ -40,7 +40,7 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: Skill Description Missing
+  SkillDescription: "Range: 0 - 3\tMod: -0.4\nHeal all allies with a holy prayer."
   LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
   AttackMultiplier: -0.4
   Cooldown: 5
   MinRange: 0
-  MaxRange: 4
+  MaxRange: 3
   SurroundingAffectedUnits: {x: 4, y: 4}
   AppliedCombatEffects: []
   SelfInflictedCombatEffects: []

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2081299391
+CRC: 4001361255
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ed35259a4d4b137ce806d51755eb86a0
+    Hash: 6ce0d0217a020e30b9be5214645f361e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8f99cd4451a5e9c5327d06a3425d8e87
@@ -83,25 +83,43 @@ Assets:
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Earthshatter.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Gunwoman.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Haste.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Buckshot.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Robot.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Obliterate.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skills/Restrain.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Wolf.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Skills/Revive.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Windup
+  Shot.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Heavy
+  Throw.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Robot/Skills/Repair.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Shred.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Mage.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Knight.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Invigorate.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skills/Double
+  Slash.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Brave
   Soul.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Thundercrash.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skeleton.asset
-- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Shred.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Bite.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Slash.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Skills/Purging
+  Water.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton/Skills/Thrash.asset
 - Assets/_Data Containers/Characters and Abilities/Global Abilities/Standard Pass.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Gunwoman/Skills/Mercy.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Skills/Divine
   Intervention.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Preparation.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Implosion.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Ensnare.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Wolf/Skills/Flank.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Synthesis.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Priest/Priest.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Mage/Skills/Explosion.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Thunderstorm.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skeleton
   Archer.asset
@@ -112,9 +130,12 @@ Assets:
   Water.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Archer/Skills/Arrow
   Shot.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Disabling
+  Blow.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Shield
   Up.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skills/Trance.asset
 - Assets/_Data Containers/Characters and Abilities/Playable Characters/Skeleton Chief/Skeleton
   Chief.asset
+- Assets/_Data Containers/Characters and Abilities/Playable Characters/Knight/Skills/Warcry.asset
 Dependencies: []

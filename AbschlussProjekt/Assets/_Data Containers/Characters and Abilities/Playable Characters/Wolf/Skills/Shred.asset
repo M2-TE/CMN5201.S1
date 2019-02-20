@@ -42,9 +42,9 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0.1
   impactDmgDelay: 0
-  SkillDescription: "Range: 0 - 4\tDamage Modifier: 0.75\nLeap at a target, dealing
-    damage to it and another target behind the first."
-  LevelRequirement: 1
+  SkillDescription: "Range: 1 - 4\tMod: 0.75\nLeap at a target, dealing damage to
+    it and another target behind the first."
+  LevelRequirement: 3
   CanHitEnemies: 1
   CanHitAllies: 0
   CanHitSelf: 0

@@ -29,6 +29,8 @@ MonoBehaviour:
   FullSkillPool:
   - {fileID: 11400000, guid: e280c0d716a3d174fa59f4fdb3037baa, type: 2}
   - {fileID: 11400000, guid: 9137e4bdc6b7d6941bc39390b355c163, type: 2}
+  - {fileID: 11400000, guid: 7455b79d7043cac418bb7d4f9c7df49b, type: 2}
+  - {fileID: 11400000, guid: b3e5f70f9b6a8134f8a962a819139c27, type: 2}
   FallbackSkills:
   - {fileID: 11400000, guid: e280c0d716a3d174fa59f4fdb3037baa, type: 2}
   - {fileID: 11400000, guid: 9137e4bdc6b7d6941bc39390b355c163, type: 2}

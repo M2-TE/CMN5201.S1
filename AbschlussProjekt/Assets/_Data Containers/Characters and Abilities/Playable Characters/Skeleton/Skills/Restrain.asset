@@ -29,8 +29,8 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: "Range: 1 - 2\tDamage Modifier: 0.2\nSlash the target with a poisoned
-    blade, decreasing their attack and defense, while also dealing low damage."
+  SkillDescription: "Range: 1 - 2\tMod: 0.2\nSlash the target with a poisoned blade,
+    decreasing their attack and defense, while also dealing low damage."
   LevelRequirement: 1
   CanHitEnemies: 1
   CanHitAllies: 0

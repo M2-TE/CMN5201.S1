@@ -29,7 +29,7 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: "Range: 1 - 2\tDamage Modifier: 1\nVicously slash the target."
+  SkillDescription: "Range: 1 - 2\tMod: 1\nVicously slash the target."
   LevelRequirement: 1
   CanHitEnemies: 1
   CanHitAllies: 0

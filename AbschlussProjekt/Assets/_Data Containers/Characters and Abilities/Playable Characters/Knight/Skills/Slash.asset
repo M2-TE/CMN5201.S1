@@ -28,7 +28,7 @@ MonoBehaviour:
   impactAnimationDelay: 0.075
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: "Range: 1 - 2\tDamage Modifier: 1\nSlash a single target"
+  SkillDescription: "Range: 1 - 2\tMod: 1\nSlash a single target"
   LevelRequirement: 1
   CanHitEnemies: 1
   CanHitAllies: 0

@@ -24,8 +24,8 @@ MonoBehaviour:
   impactAnimationDelay: 0.2
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: "Range: 0 - 0\tModifier: 0\nIncrease the speed of yourself and
-    surrounding allies."
+  SkillDescription: "Range: 0 - 0\tMod: 0\nIncrease the speed of yourself and surrounding
+    allies."
   LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1

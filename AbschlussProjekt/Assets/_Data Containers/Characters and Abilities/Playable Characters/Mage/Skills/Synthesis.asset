@@ -35,8 +35,8 @@ MonoBehaviour:
   impactAnimationDelay: 0
   impactAudioDelay: 0
   impactDmgDelay: 0
-  SkillDescription: "Range: 0 - 0\tDamage Modifier: -0.3\nHeal yourself, while increasing
-    attack and decreasing speed."
+  SkillDescription: "Range: 0 - 0\tMod: -0.3\nHeal yourself, while increasing attack
+    and decreasing speed."
   LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 0
