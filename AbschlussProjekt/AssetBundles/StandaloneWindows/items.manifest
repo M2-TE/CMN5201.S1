@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2842945391
+CRC: 3483669091
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 06aac1448383202efc79e352f9bab306
+    Hash: f60c7c686db31a434ae216e6afec2806
   TypeTreeHash:
     serializedVersion: 2
     Hash: 198bc90fbb596c7b7054741f74fbb164
@@ -78,4 +78,4 @@ Assets:
 - Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Boots.asset
 - Assets/_Data Containers/Items/Equipment/Rings/Ring of Health Two.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools
+- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/pools

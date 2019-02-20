@@ -3,7 +3,7 @@ CRC: 3883628640
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 91cd8da60a71e83529731b4bc2cc65b3
+    Hash: 0f6718db7b3b9a4f7d3854c31819aac8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9b3ac242b6bbff1dae93c61a7fcdc251
@@ -18,4 +18,4 @@ ClassTypes:
 Assets:
 - Assets/_Data Containers/Items/Pools/ItemPools.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items
+- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items
