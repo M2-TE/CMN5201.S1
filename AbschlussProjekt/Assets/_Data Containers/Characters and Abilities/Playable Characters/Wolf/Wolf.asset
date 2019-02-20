@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 3128499267987143363, guid: d63507401a777874a8d96eb8fbba3bc7, type: 3}
   Portrait: {fileID: 21300000, guid: 329d0970d8d9f694ea4f9ade69a875b1, type: 3}
+  CharacterType: 8
   BaseHealth: 5
   BaseAttack: 6
   BaseDefense: 0

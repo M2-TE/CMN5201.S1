@@ -40,7 +40,7 @@ public class InventoryManager : Manager
 
     public bool EquipItem(EquipmentContainer item)
     {
-        if (CharacterInfoManager == null || !CharacterInfoManager.OpenCharacterPanel)
+        if (CharacterInfoManager == null || !CharacterInfoManager.OpenCharacterPanel || !item.CheckMatchingClass(CharacterInfoManager.CharacterInfoPanel.CurrentCharacter.CharacterType))
             return false;
         CharacterInfoManager.EquipItem(item);
         return true;

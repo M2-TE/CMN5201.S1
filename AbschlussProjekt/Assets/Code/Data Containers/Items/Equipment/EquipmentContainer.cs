@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
+public enum PlayableChars { GUNWOMAN, KNIGHT, MAGE, PRIEST, ROBOT, SKELETON, SKELETON_ARCHER, SKELETON_CHIEF, WOLF}
+
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Data Container/Items/Equipment")]
 public class EquipmentContainer : ItemContainer
 {
-	public enum Dodo { Test, Gay, SikeNig }
 
-	public Dodo[] testArray;
     [Space(20)]
-    [SerializeField] public Character[] MatchingClasses;
+    [SerializeField] public PlayableChars[] MatchingClasses;
     [Space(10)]
     [SerializeField] public EquipmentSlot EquipmentType = 0;
 
@@ -23,5 +23,18 @@ public class EquipmentContainer : ItemContainer
     public override ItemType GetItemType()
     {
         return ItemType.EQUIPMENT;
+    }
+
+    public bool CheckMatchingClass(PlayableChars m_class)
+    {
+        Debug.Log(m_class.ToString());
+        if (MatchingClasses == null || MatchingClasses.Length == 0)
+            return true;
+        for (int i = 0; i < MatchingClasses.Length; i++)
+        {
+            if (MatchingClasses[i].Equals(m_class))
+                return true;
+        }
+        return false;
     }
 }
