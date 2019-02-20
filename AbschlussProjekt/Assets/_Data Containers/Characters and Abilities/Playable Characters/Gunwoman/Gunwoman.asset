@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1384919901097706, guid: f5ed942b2c6d51d41966cc1d21e4ee68, type: 3}
   Portrait: {fileID: 21300000, guid: 73d61b000b9d6394ab55e9697f73a325, type: 3}
+  CharacterType: 0
   BaseHealth: 10
   BaseAttack: 4
   BaseDefense: 0
@@ -25,7 +26,7 @@ MonoBehaviour:
   baseExpYield: 4
   expYieldGrowth: 1.5
   baseExpRequirement: 10
-  ExpRequirementGrowth: 1.5
+  ExpRequirementGrowth: 2.5
   FullSkillPool:
   - {fileID: 11400000, guid: e6a79bfcb47739249b5c4b98f1cf8722, type: 2}
   - {fileID: 11400000, guid: 410110703fa9c7d4cb507b7970184ee1, type: 2}

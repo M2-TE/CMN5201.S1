@@ -26,7 +26,7 @@ MonoBehaviour:
   baseExpYield: 4
   expYieldGrowth: 1.5
   baseExpRequirement: 10
-  ExpRequirementGrowth: 1.5
+  ExpRequirementGrowth: 2.5
   FullSkillPool:
   - {fileID: 11400000, guid: ac062c874564f6246b89bf24e6c179df, type: 2}
   - {fileID: 11400000, guid: ce9ad456816ed844e928707193081d69, type: 2}

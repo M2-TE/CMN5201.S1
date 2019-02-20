@@ -23,6 +23,11 @@ public class GameManager : Manager
 		//Object.Instantiate(instance.LoadBundle<VitalAssets>(instance.Paths.VitalAssetsPath, "Vital Assets").MusicManagerAnchor);
 	}
 
+	public void UnloadAllAreas(AreaData newAreaToLoad)
+	{
+		UnloadCombatAreaAsync();
+		LoadAreaAsync(newAreaToLoad);
+	}
 	public void LoadAreaAsync(AreaData areaToLoad)
 	{
 		//AssetManager.Instance.GetManager<InputManager>().RemoveAllListeners();

@@ -217,10 +217,13 @@ public class CombatManager : Manager
 
 	private void EndTurn()
 	{
-		HandleCombatEffects(false);
-		GetProxy(upcomingTurns[0]).SetSelected(false);
-		GetEntity(upcomingTurns[0]).CurrentInitiative = 0;
-		upcomingTurns.RemoveAt(0);
+		if(upcomingTurns.Count > 0)
+		{
+			HandleCombatEffects(false);
+			GetProxy(upcomingTurns[0]).SetSelected(false);
+			GetEntity(upcomingTurns[0]).CurrentInitiative = 0;
+			upcomingTurns.RemoveAt(0);
+		}
 
 		// start next turn if combat is still ongoing
 		if (!CheckForCombatEnd()) LaunchNextTurn();
@@ -269,7 +272,14 @@ public class CombatManager : Manager
 			}
 		}
 
-		if(selectableSkills.Count == 0) EndTurn();
+		if(selectableSkills.Count == 0)
+		{
+			//currentlySelectedSkill = -2;
+			//UseCombatSkill(upcomingTurns[0]);
+			GetEntity(upcomingTurns[0]).CurrentHealth -= 2;
+			if (GetEntity(upcomingTurns[0]).CurrentHealth <= 0) TriggerDeath(upcomingTurns[0]);
+			EndTurn();
+		}
 	}
 
 	private void ProgressInits()
@@ -846,8 +856,7 @@ public class CombatManager : Manager
 		else
 		{
 			AssetManager.Instance.GetManager<DungeonManager>().HealEntireParty(1f);
-			AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
-			AssetManager.Instance.LoadArea(AssetManager.Instance.Paths.DefaultLocation);
+			AssetManager.Instance.GetManager<GameManager>().UnloadAllAreas(AssetManager.Instance.LoadArea(AssetManager.Instance.Paths.DefaultLocation));
 		}
 	}
 
