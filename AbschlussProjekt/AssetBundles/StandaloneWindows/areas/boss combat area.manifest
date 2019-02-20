@@ -3,7 +3,7 @@ CRC: 3912075963
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6bcca155bf00ddf06ead32614ab6e27d
+    Hash: d074a3442cfcff199b226765353a4f5a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0681dea8b72e78680f3bb1b33b702fe5
@@ -18,4 +18,4 @@ ClassTypes:
 Assets:
 - Assets/_Data Containers/Areas/Combat Areas/Boss Combat Area.asset
 Dependencies:
-- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items
+- D:/Benutzer/Dokumente/GitHub/CMN5201.S1/AbschlussProjekt/AssetBundles/StandaloneWindows/items

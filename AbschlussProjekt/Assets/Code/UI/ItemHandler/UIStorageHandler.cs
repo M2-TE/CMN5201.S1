@@ -30,13 +30,19 @@ public class UIStorageHandler : UIElementHandler
     public override void OnSelect(BaseEventData eventData)
     {
         if(inventoryPanel != null)
+        {
             inventoryPanel.DisplayItemInfo(position, true);
+            inventoryPanel.currentHover = position;
+        }
     }
 
     public override void OnDeselect(BaseEventData eventData)
     {
         if(inventoryPanel != null)
+        {
             inventoryPanel.DisplayItemInfo(position, false);
+            inventoryPanel.currentHover = -1;
+        }
     }
 
     protected override void OnPrimaryAction()

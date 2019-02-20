@@ -86,5 +86,11 @@ public class InventoryManager : Manager
         return AssetManager.Instance.LoadBundle<ItemContainer>(AssetManager.Instance.Paths.ItemsPath, name);
 	}
 
+    public void TryRemoveItem()
+    {
+        if(InventoryPanel.currentHover >= 0)
+            RemoveItem(InventoryPanel.currentHover);
+    }
+
     #endregion
 }
