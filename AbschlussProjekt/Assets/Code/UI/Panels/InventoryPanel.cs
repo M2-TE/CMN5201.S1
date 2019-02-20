@@ -10,6 +10,8 @@ public class InventoryPanel : UIPanel
     [SerializeField] private GameObject inventorySlotParent;
     public ItemInfo itemInfo;
 
+    [HideInInspector] public int currentHover = -1;
+
     private List<UIStorageHandler> storageSlots = new List<UIStorageHandler>();
 
     private InventoryManager inventoryManager;
@@ -29,6 +31,7 @@ public class InventoryPanel : UIPanel
     {
         InputManager manager = AssetManager.Instance.GetManager<InputManager>();
         manager.AddListener(manager.Input.UI.InventoryOpen, ctx => ToggleVisibility());
+        manager.AddListener(manager.Input.UI.DeleteItem, ctx => inventoryManager.TryRemoveItem());
         inventoryManager.CharacterInfoManager = AssetManager.Instance.GetManager<CharacterInfoManager>();
         InstantiateInventory();
         DisplayInventory();

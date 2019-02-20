@@ -6,6 +6,7 @@ ScriptedImporter:
     11400002: UI/Back
     11400004: UI/InventoryOpen
     11400006: UI/CharacterInfoClose
+    11400008: UI/DeleteItem
   externalObjects: {}
   userData: 
   assetBundleName: 

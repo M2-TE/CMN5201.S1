@@ -1,14 +1,14 @@
 ManifestFileVersion: 0
-CRC: 1509918820
+CRC: 232691838
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
+      Name: settings
+      Dependencies: {}
+    Info_1:
       Name: items
       Dependencies:
         Dependency_0: pools
-    Info_1:
-      Name: settings
-      Dependencies: {}
     Info_2:
       Name: characters/playable characters
       Dependencies: {}
@@ -16,20 +16,20 @@ AssetBundleManifest:
       Name: areas/starter city
       Dependencies: {}
     Info_4:
-      Name: paths
+      Name: areas/main menu
       Dependencies: {}
     Info_5:
-      Name: vital assets
+      Name: paths
       Dependencies: {}
     Info_6:
-      Name: areas/main menu
+      Name: vital assets
       Dependencies: {}
     Info_7:
       Name: areas/first dungeon
       Dependencies:
         Dependency_0: items
     Info_8:
-      Name: areas/boss combat area
+      Name: pools
       Dependencies:
         Dependency_0: items
     Info_9:
@@ -37,7 +37,7 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: items
     Info_10:
-      Name: pools
+      Name: areas/boss combat area
       Dependencies:
         Dependency_0: items
     Info_11:
