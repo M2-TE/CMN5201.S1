@@ -89,6 +89,8 @@ public class AssetManager
 
     public void Save()
     {
+		StripAllCombatEffects();
+
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + Paths.SavefilePath;
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -109,6 +111,19 @@ public class AssetManager
 		}
 		else
 			CreateNewSavestate();
+	}
+
+	private void StripAllCombatEffects()
+	{
+		for(int i = 0; i < Savestate.CurrentTeam.Length; i++)
+		{
+			// CODE
+		}
+
+		for(int i = 0; i < Savestate.OwnedCharacters.Count; i++)
+		{
+			// CODE
+		}
 	}
 
     #region Singleton Implementation
