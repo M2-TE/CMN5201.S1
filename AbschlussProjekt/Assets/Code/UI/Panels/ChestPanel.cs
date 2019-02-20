@@ -74,8 +74,8 @@ public class ChestPanel : UIPanel
 	public void Open(OnClose onClose)
 	{
 		chest = chests[Random.Range(0, chests.Length)];
-		DrawItemsFromContainer();
-		DisplayItemsInChest();
+		//DrawItemsFromContainer();
+		//DisplayItemsInChest();
 
 		ToggleVisibility(true);
 		this.onClose = onClose;

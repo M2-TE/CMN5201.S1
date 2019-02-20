@@ -222,7 +222,7 @@ public class DungeonManager : Manager
 					return;
 				}
 
-				int randomRoomType = Random.Range(0, 3);
+				int randomRoomType = Random.Range(0, 11);
 				switch (randomRoomType)
 				{
 					case 0:
@@ -235,7 +235,14 @@ public class DungeonManager : Manager
 						instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.StandardCombatArea));
 						break;
 
-					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+					case 10:
 						instance.GetManager<ChestManager>().ChestPanel.Open(AfterChestOpen);
 						dungeonPanel.MapParent.SetActive(false);
 						break;
