@@ -34,4 +34,5 @@ public class DungeonPanel : UIPanel
 	{
 		manager.CreateNewDungeon(this);
 	}
+
 }

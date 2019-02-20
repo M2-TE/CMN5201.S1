@@ -667,7 +667,7 @@ public class CombatManager : Manager
 		int actualDamage =
 			(skill.AttackMultiplier > 0) // if the attack multiplier is at zero, then its a buff, not an attack (min dmg circumvented) 
 			? Mathf.Max(1, (int)(GetEntity(caster).CurrentAttack * skill.AttackMultiplier - GetEntity(target).CurrentDefense))
-			: (int)(GetEntity(caster).CurrentAttack * skill.AttackMultiplier);
+			: (int)Mathf.Max(0f, GetEntity(caster).CurrentAttack * skill.AttackMultiplier);
 
 		ApplyCombatEffects(caster, target, skill);
 		ApplyDamage(target, actualDamage);
@@ -826,8 +826,8 @@ public class CombatManager : Manager
 		}
 		else
 		{
-			Debug.Log("lost");
 			AssetManager.Instance.GetManager<DungeonManager>().HealEntireParty(1f);
+			AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
 			AssetManager.Instance.LoadArea(AssetManager.Instance.Paths.DefaultLocation);
 		}
 	}
@@ -837,17 +837,21 @@ public class CombatManager : Manager
 		AssetManager.Instance.GetManager<DungeonManager>().HandleCombatVictory();
 	}
 
-	private void PurgeAllCombatEffects()
+	public void PurgeAllCombatEffects()
 	{
 		for (int i = 0; i < entities.GetLength(1); i++)
-			if (entities[0, i] != null) PurgeCombatEffects(entities[0, i]);
+			if (entities[0, i] != null)
+				PurgeCombatEffects(entities[0, i]);
 	}
 
 	private void PurgeCombatEffects(Entity target)
 	{
 		var pool = GetCombatEffectPool(target.currentCombatPosition);
 		while (pool.activeCombatEffectElements.Count > 0)
+		{
+			pool.activeCombatEffectElements[0].CombatEffect.RemoveCombatEffectModifiers(target);
 			pool.RemoveCombatEffect(pool.activeCombatEffectElements[0]);
+		}
 	}
 
 	private void AwardExp()

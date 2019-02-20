@@ -17,7 +17,7 @@ MonoBehaviour:
   CharacterType: 5
   BaseHealth: 10
   BaseAttack: 4
-  BaseDefense: 2
+  BaseDefense: 1
   BaseSpeed: 9
   HealthGrowth: 3
   AttackGrowth: 1

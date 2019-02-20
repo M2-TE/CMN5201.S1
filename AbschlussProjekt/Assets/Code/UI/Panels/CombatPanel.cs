@@ -107,6 +107,7 @@ public class CombatPanel : UIPanel
 
 	private void OnApplicationQuit()
 	{
+		combatManager.PurgeAllCombatEffects();
 		AssetManager.Instance.GetManager<GameManager>().OnApplicationQuit();
 	}
 

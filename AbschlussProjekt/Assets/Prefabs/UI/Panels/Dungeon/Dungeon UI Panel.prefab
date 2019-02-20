@@ -255,6 +255,7 @@ MonoBehaviour:
   DungeonLength: 9
   MaxSiblings: 4
   randomPathingChance: 0.6
+  discoChance: 10
   CurrentStandingColor: {r: 0.5, g: 0.34117648, b: 0, a: 1}
   LineRendererPrefab: {fileID: 4740623602944560557, guid: 9637cefbf8c02e14b833e29a2b3712e8,
     type: 3}
