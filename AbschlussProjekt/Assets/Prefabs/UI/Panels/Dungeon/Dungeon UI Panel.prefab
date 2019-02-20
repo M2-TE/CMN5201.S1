@@ -241,6 +241,17 @@ MonoBehaviour:
   MapParent: {fileID: 153760729}
   firstHalfRoomPool: 00000000010000000500000005000000020000000200000002000000020000000200000002000000
   secondHalfRoomPool: 00000000000000000500000005000000050000000300000003000000030000000300000003000000
+  meleePool:
+  - Knight
+  - Robot
+  - Skeleton
+  - Wolf
+  rangedPool:
+  - Gunwoman
+  - Mage
+  - Priest
+  - Skeleton Archer
+  - Skeleton Chief
   DungeonLength: 9
   MaxSiblings: 4
   randomPathingChance: 0.6

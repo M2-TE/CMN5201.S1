@@ -40,6 +40,7 @@ public class PauseMenuPanel : UIPanel
 	public void HandleEscPress()
 	{
 		ToggleVisibility();
+		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisibility(false);
 	}
 
 	public override void ToggleVisibility(bool visibleState)
@@ -56,7 +57,7 @@ public class PauseMenuPanel : UIPanel
 
 	public void OnOptionsPress()
 	{
-		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisiblity();
+		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisibility();
 	}
 
 	public void OnMainMenuPress()

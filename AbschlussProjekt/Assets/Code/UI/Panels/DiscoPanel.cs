@@ -6,6 +6,6 @@ public class DiscoPanel : UIPanel
 {
     public void Continue()
     {
-
+		AssetManager.Instance.GetManager<DungeonManager>().FinishCrabRave();
     }
 }

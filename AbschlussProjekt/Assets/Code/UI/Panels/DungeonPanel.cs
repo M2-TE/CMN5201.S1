@@ -7,9 +7,12 @@ public class DungeonPanel : UIPanel
 	public GameObject MapParent;
 	public DungeonNode.RoomType[] firstHalfRoomPool;
 	public DungeonNode.RoomType[] secondHalfRoomPool;
+	public string[] meleePool;
+	public string[] rangedPool;
 	public int DungeonLength;
 	public int MaxSiblings;
 	public float randomPathingChance;
+	public float discoChance;
 	public Color CurrentStandingColor = new Color(.5f, 0f, 0f, 1f);
 
 	[Header("Prefabs")]

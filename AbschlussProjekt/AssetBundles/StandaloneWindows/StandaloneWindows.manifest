@@ -1,11 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3459707663
+CRC: 704981267
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: items
       Dependencies:
-        Dependency_0: pools
+        Dependency_0: characters/playable characters
+        Dependency_1: pools
     Info_1:
       Name: settings
       Dependencies: {}
@@ -40,3 +41,9 @@ AssetBundleManifest:
       Name: pools
       Dependencies:
         Dependency_0: items
+    Info_11:
+      Name: areas/disco
+      Dependencies: {}
+    Info_12:
+      Name: areas/camp site
+      Dependencies: {}

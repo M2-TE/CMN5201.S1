@@ -18,6 +18,14 @@ MonoBehaviour:
   BaseAttack: 5
   BaseDefense: 0
   BaseSpeed: 11
+  HealthGrowth: 3
+  AttackGrowth: 1
+  DefenseGrowth: 1
+  SpeedGrowth: 1
+  baseExpYield: 4
+  expYieldGrowth: 1.5
+  baseExpRequirement: 10
+  ExpRequirementGrowth: 1.5
   FullSkillPool:
   - {fileID: 11400000, guid: b0e5738df2b71c444a4f81546ad92ce5, type: 2}
   - {fileID: 11400000, guid: 109dc95948484c7408a503c55cb4c142, type: 2}

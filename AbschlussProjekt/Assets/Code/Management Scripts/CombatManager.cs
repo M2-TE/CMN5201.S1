@@ -79,6 +79,7 @@ public class CombatManager : Manager
 		InitializeEntities();
 		InstantiateProxyPrefabs();
 		combatPanel.StartCoroutine(UpdateHealthBars(true));
+		CheckEntityHPs();
 
 		// initiate combat loop
 		LaunchNextTurn();
@@ -134,6 +135,17 @@ public class CombatManager : Manager
 			}
 		}
 	}
+
+	private void CheckEntityHPs()
+	{
+		for (int x = 0; x < entities.GetLength(0); x++)
+			for (int y = 0; y < entities.GetLength(1); y++)
+			{
+				Vector2Int entityPos = new Vector2Int(x, y);
+				Entity entity = GetEntity(entityPos);
+				if (entity != null && entity.CurrentHealth <= 0) TriggerDeath(entityPos);
+			}
+	}
 	#endregion
 
 	#region Combat Loop
@@ -165,6 +177,7 @@ public class CombatManager : Manager
 	private void LaunchNextTurn()
 	{
 		if (upcomingTurns.Count == 0) ProgressInits();
+		UpdateInitBars();
 		HandleCurrentTurn();
 	}
 
@@ -255,6 +268,8 @@ public class CombatManager : Manager
 				break;
 			}
 		}
+
+		if(selectableSkills.Count == 0) EndTurn();
 	}
 
 	private void ProgressInits()
@@ -394,6 +409,14 @@ public class CombatManager : Manager
 			if (done) break;
 			if(!setInstantly) yield return null;
 		}
+	}
+
+	private void UpdateInitBars()
+	{
+		for (int x = 0; x < proxies.GetLength(0); x++)
+			for (int y = 0; y < proxies.GetLength(1); y++)
+				if (proxies[x, y] != null)
+					proxies[x, y].InitBar.value = Mathf.Min(100f, GetEntity(new Vector2Int(x, y)).CurrentInitiative);
 	}
 
 	private void UpdateSelectableTargets()
@@ -751,15 +774,15 @@ public class CombatManager : Manager
 
 	private void TriggerDeath(Vector2Int dyingCharPos)
 	{
-		upcomingTurns.Remove(dyingCharPos); // TODO: check if this ever throws an exception
-		GetEntity(dyingCharPos).CurrentInitiative = 0;
+		var entity = GetEntity(dyingCharPos);
+		entity.CurrentInitiative = 0;
 		GetProxy(dyingCharPos).GetComponent<Animator>().enabled = false;
-		//GetProxy(dyingCharPos).gameObject.SetActive(false);
-		//GameObject proxy = GetProxy(dyingCharPos); 
-		//proxy.GetComponent<Animator>().enabled = false; // pause anim
-		//proxy.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .25f); // slight transparency
 
-		// TODO edit portrait
+		var pool = GetCombatEffectPool(dyingCharPos);
+		while (pool.activeCombatEffectElements.Count > 0)
+			pool.RemoveCombatEffect(pool.activeCombatEffectElements[0]);
+
+		upcomingTurns.Remove(dyingCharPos);
 	}
 	#endregion
 
@@ -805,6 +828,7 @@ public class CombatManager : Manager
 		}
 		else
 		{
+			Debug.Log("lost");
 			AssetManager.Instance.GetManager<DungeonManager>().HealEntireParty(1f);
 			AssetManager.Instance.LoadArea(AssetManager.Instance.Paths.DefaultLocation);
 		}

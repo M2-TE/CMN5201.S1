@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2782,16 +2782,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 485484082703941813, guid: a6323785bd24293439b8b85bb1fff482,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 404957441536587378, guid: a6323785bd24293439b8b85bb1fff482,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6323785bd24293439b8b85bb1fff482, type: 3}
@@ -14156,6 +14146,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
+        type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
+        type: 3}
+      propertyPath: m_AllowMSAA
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 3873
+      objectReference: {fileID: 0}
+    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
+        type: 3}
+      propertyPath: far clip plane
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4832673996787124, guid: c24f45a8dfa0d5c438aff4dae2cf6bae, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.344174
@@ -14191,31 +14206,6 @@ PrefabInstance:
     - target: {fileID: 1885762891093140, guid: c24f45a8dfa0d5c438aff4dae2cf6bae, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
-        type: 3}
-      propertyPath: m_OcclusionCulling
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
-        type: 3}
-      propertyPath: m_AllowMSAA
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 3873
-      objectReference: {fileID: 0}
-    - target: {fileID: 20179208589507680, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
-        type: 3}
-      propertyPath: far clip plane
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114298543782573722, guid: c24f45a8dfa0d5c438aff4dae2cf6bae,
         type: 3}
@@ -15395,6 +15385,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616551848190006645, guid: 95a1d31f78e923045a0d2727a6388a16,
+        type: 3}
+      propertyPath: discoChance
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95a1d31f78e923045a0d2727a6388a16, type: 3}

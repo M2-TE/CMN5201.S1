@@ -27,23 +27,22 @@ public class GameManager : Manager
 	{
 		//AssetManager.Instance.GetManager<InputManager>().RemoveAllListeners();
 		//AssetManager.Instance.UnloadBundles();
+		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentArea.MusicPool);
+		AssetManager.Instance.GetManager<LoadingScreenManager>().ShowLoadingScreen();
 
 		CurrentArea = areaToLoad;
 		SceneManager.LoadSceneAsync(areaToLoad.Scene, LoadSceneMode.Single);
 		
-		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentArea.MusicPool);
-		AssetManager.Instance.GetManager<LoadingScreenManager>().ShowLoadingScreen();
 	}
 
 	public void LoadCombatAreaAsync(AreaData combatAreaToLoad)
 	{
 		CurrentLoadedCombatArea = combatAreaToLoad;
+		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentLoadedCombatArea.MusicPool);
+		AssetManager.Instance.GetManager<LoadingScreenManager>().ShowLoadingScreen();
 
 		var asyncOp = SceneManager.LoadSceneAsync(CurrentLoadedCombatArea.Scene, LoadSceneMode.Additive);
 		asyncOp.completed += CombatAreaLoadCompleted;
-
-		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentLoadedCombatArea.MusicPool);
-		AssetManager.Instance.GetManager<LoadingScreenManager>().ShowLoadingScreen();
 	}
 
 	private void CombatAreaLoadCompleted(AsyncOperation obj)
@@ -57,12 +56,11 @@ public class GameManager : Manager
 
 	public void UnloadCombatAreaAsync()
 	{
-		var asyncOp = SceneManager.UnloadSceneAsync(CurrentLoadedCombatArea.Scene);
-		asyncOp.completed += CombatAreaUnloadCompleted;
-
-
 		AssetManager.Instance.GetManager<AudioManager>().FadeToNewPlaylist(CurrentArea.MusicPool);
 		AssetManager.Instance.GetManager<LoadingScreenManager>().ShowLoadingScreen();
+
+		var asyncOp = SceneManager.UnloadSceneAsync(CurrentLoadedCombatArea.Scene);
+		asyncOp.completed += CombatAreaUnloadCompleted;
 	}
 
 	private void CombatAreaUnloadCompleted(AsyncOperation obj)

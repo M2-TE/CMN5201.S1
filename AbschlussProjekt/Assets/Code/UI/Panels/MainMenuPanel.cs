@@ -17,7 +17,7 @@ public class MainMenuPanel : UIPanel
 
 	public void OnOptionsPress()
 	{
-		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisiblity();
+		AssetManager.Instance.GetManager<OptionsManager>().ToggleVisibility();
 	}
 
 	public void OnExitPress()

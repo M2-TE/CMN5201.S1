@@ -199,7 +199,7 @@ public class DungeonManager : Manager
 
 			case DungeonNode.RoomType.Camp:
 				HealEntireParty(.5f);
-				CanMove = true;
+				instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.CampSite));
 				break;
 
 			case DungeonNode.RoomType.StandardCombat:
@@ -214,6 +214,13 @@ public class DungeonManager : Manager
 				break;
 
 			case DungeonNode.RoomType.Unknown:
+				float diceRoll = Random.Range(0f, 100f);
+				if(diceRoll < dungeonPanel.discoChance)
+				{
+					instance.GetManager<GameManager>().LoadCombatAreaAsync(instance.LoadArea(instance.Paths.Disco));
+					return;
+				}
+
 				int randomRoomType = Random.Range(0, 3);
 				switch (randomRoomType)
 				{
@@ -252,14 +259,39 @@ public class DungeonManager : Manager
 	private Entity[] CreateEnemyGroup(DungeonNode.RoomType roomType, int depth)
 	{
 		var instance = AssetManager.Instance;
-		BufferedEnemies = new Entity[]
+		BufferedEnemies = new Entity[4];
+		for (int i = 0; i < 2; i++)
 		{
-			new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Knight")),
-			new Entity(instance.LoadBundle<PlayableCharacter>(instance.Paths.PlayableCharactersPath, "Mage"))
-		};
+			BufferedEnemies[i] = new Entity
+				(instance.LoadBundle<PlayableCharacter>
+					(instance.Paths.PlayableCharactersPath,
+					dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
+		}
 
-		for(int i = 0; i < BufferedEnemies.Length; i++)
-			BufferedEnemies[i].SetLevel(depth);
+		int rangedCap;
+		switch (roomType)
+		{
+			default: rangedCap = 0; break;
+			case DungeonNode.RoomType.StandardCombat: rangedCap = 0; break;
+			case DungeonNode.RoomType.EliteCombat: rangedCap = 1; break;
+			case DungeonNode.RoomType.Boss: rangedCap = 2; break;
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			BufferedEnemies[i] = new Entity
+				(instance.LoadBundle<PlayableCharacter>
+					(instance.Paths.PlayableCharactersPath,
+					dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
+		}
+
+		for (int i = 2; i < 2 + rangedCap; i++)
+		{
+			BufferedEnemies[i] = new Entity
+				(instance.LoadBundle<PlayableCharacter>
+					(instance.Paths.PlayableCharactersPath,
+					dungeonPanel.meleePool[Random.Range(0, dungeonPanel.meleePool.Length)]));
+		}
 
 		return BufferedEnemies;
 	}
@@ -280,6 +312,18 @@ public class DungeonManager : Manager
 			FinishDungeon();
 		else
 			AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+	}
+
+	public void FinishCampRest()
+	{
+		AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+		CanMove = true;
+	}
+
+	public void FinishCrabRave()
+	{
+		AssetManager.Instance.GetManager<GameManager>().UnloadCombatAreaAsync();
+		CanMove = true;
 	}
 
 	private void FinishDungeon()

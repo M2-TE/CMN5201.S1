@@ -14,11 +14,11 @@ public class LoadingScreenManager : Manager
 
 	public void ShowLoadingScreen()
 	{
-		panel.StartCoroutine(HideScene());
+		if(panel.gameObject.activeInHierarchy) panel.StartCoroutine(HideScene());
 	}
 	public void HideLoadingScreen()
 	{
-		panel.StartCoroutine(RevealScene());
+		if (panel.gameObject.activeInHierarchy) panel.StartCoroutine(RevealScene());
 	}
 
 	private IEnumerator RevealScene()

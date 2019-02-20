@@ -30,8 +30,13 @@ public class OptionsManager : Manager
 		panel.StartCoroutine(InitSlidersOnDelay());
 	}
 
-	public void ToggleVisiblity()
+	public void ToggleVisibility()
 	{
 		panel.ToggleVisibility();
+	}
+
+	public void ToggleVisibility(bool visibleState)
+	{
+		panel.ToggleVisibility(visibleState);
 	}
 }

@@ -92,11 +92,6 @@ namespace CombatEffectElements
 			return (FindCombatEffectElement(combatEffect) != null);
 		}
 
-		public void CountdownCombatEffectDurations(int countdownVal = -1)
-		{
-			// TODO
-		}
-
 		public void CopyCombatEffects(CombatEffectPool pool)
 		{
 			for (int i = 0; i < pool.activeCombatEffectElements.Count || i < activeCombatEffectElements.Count; i++)

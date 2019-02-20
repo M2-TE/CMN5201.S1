@@ -25,4 +25,6 @@ public class Paths : DataContainer
 	public string FirstDungeon = "First Dungeon";
 	public string StandardCombatArea = "Standard Combat Area";
 	public string BossCombatArea = "Boss Combat Area";
+	public string CampSite = "Camp Site";
+	public string Disco = "Disco";
 }

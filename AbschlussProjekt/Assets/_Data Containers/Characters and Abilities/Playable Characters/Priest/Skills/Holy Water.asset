@@ -15,8 +15,25 @@ MonoBehaviour:
   SkillIcon: {fileID: 21300000, guid: 034394be7a7bd0f44b827750adfea2f2, type: 3}
   FxPrefab: {fileID: 7428835992938197664, guid: 79c5fdf58996b9145b544738be20f665,
     type: 3}
-  castSfx: []
-  impactSfx: []
+  castSfx:
+  - {fileID: 8300000, guid: f7cb045cf7923984892686db873a1694, type: 3}
+  - {fileID: 8300000, guid: bd1531ff76150ce47af3266656d0ca80, type: 3}
+  - {fileID: 8300000, guid: 95b74cffef73a8c43985542a459c9489, type: 3}
+  - {fileID: 8300000, guid: b6b191f7114252f488314a1bb29eb3cc, type: 3}
+  - {fileID: 8300000, guid: 5c7f296c1e962324d9380e5316067822, type: 3}
+  - {fileID: 8300000, guid: eaaf306ceb6cfc8418649ec3bb6dca1e, type: 3}
+  - {fileID: 8300000, guid: b96f0e877dee51a44927f4d6e139bdcf, type: 3}
+  - {fileID: 8300000, guid: efb631b5b26a2e24dac4fae74216bf18, type: 3}
+  - {fileID: 8300000, guid: b20a32f530ed86b4691e6047450e1aa5, type: 3}
+  - {fileID: 8300000, guid: c4c43f1bee3d2cf44bd4cbf739c18898, type: 3}
+  - {fileID: 8300000, guid: 4792d616b6a028a49af2081afe89f51e, type: 3}
+  - {fileID: 8300000, guid: a04dd4d831ba66f42838972f061df1ff, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: 9e4883d87691f5244b8ab5ded99cc188, type: 3}
+  - {fileID: 8300000, guid: 07d9ab99a4e97af4ab84a222d9ba3d48, type: 3}
+  - {fileID: 8300000, guid: de6ee913368267b4f84730ef9ea5dcc2, type: 3}
+  - {fileID: 8300000, guid: 8a0748ea7f22d8747bcf9d8bfbbeed0e, type: 3}
+  - {fileID: 8300000, guid: 2432f41d5bad2dc4093b9b71661e0975, type: 3}
   AnimatorTrigger: Attack
   castAudioDelay: 0
   impactSpawnDelay: 0
@@ -24,10 +41,11 @@ MonoBehaviour:
   impactAudioDelay: 0
   impactDmgDelay: 0
   SkillDescription: Skill Description Missing
+  LevelRequirement: 1
   CanHitEnemies: 0
   CanHitAllies: 1
   CanHitSelf: 0
-  AttackMultiplier: -0.25
+  AttackMultiplier: -0.1
   Cooldown: 1
   MinRange: 0
   MaxRange: 4

@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class Proxy : MonoBehaviour
 {
 	public Entity Entity;
+	public Slider InitBar;
 	public Slider HealthBar;
 	public CombatEffectPool CombatEffectPool;
 
