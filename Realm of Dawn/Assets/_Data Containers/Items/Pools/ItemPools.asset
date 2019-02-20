@@ -40,6 +40,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c0f0c8b324c5bde4eb513be093407907, type: 2}
     - {fileID: 11400000, guid: dc97c264e04b9214ea4defb2941e031f, type: 2}
     - {fileID: 11400000, guid: 4d6d3e18e80e140478ffde8a3d06c8fe, type: 2}
+    - {fileID: 11400000, guid: 71ea4258980c7ce48a03f0f0ba6d117c, type: 2}
+    - {fileID: 11400000, guid: cfee7f818838aec4487ffb0b177eb6d4, type: 2}
+    - {fileID: 11400000, guid: b85b0833fcdd8484589f2f6191387995, type: 2}
+    - {fileID: 11400000, guid: a29efaa843b921440947a973962c8fc1, type: 2}
+    - {fileID: 11400000, guid: 5a7708b1dd1f9c048a89bce2602d809b, type: 2}
   - poolName: Elite
     items:
     - {fileID: 11400000, guid: e28ae4715014fa444932500d86b63f25, type: 2}
@@ -75,3 +80,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 806a09fd8d2603749a7af918f6109512, type: 2}
     - {fileID: 11400000, guid: e904c86d961100146b9e6e3234812dcf, type: 2}
     - {fileID: 11400000, guid: 8a4c08141046811459895da753768f24, type: 2}
+    - {fileID: 11400000, guid: 049790cd99fc2fa4f88e3d3e3a45f6d8, type: 2}
