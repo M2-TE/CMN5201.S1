@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 3325297066
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b8aee0f126633f19de34f011ab711156
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0681dea8b72e78680f3bb1b33b702fe5
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 606680d0cfec52e4ea3b8214cd62c724, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Areas/Main Menu.asset
+Dependencies: []

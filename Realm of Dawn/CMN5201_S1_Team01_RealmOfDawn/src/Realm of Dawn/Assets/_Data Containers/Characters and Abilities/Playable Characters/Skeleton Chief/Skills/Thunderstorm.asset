@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c780a4f1ef844904390d82c1e249151f, type: 3}
+  m_Name: Thunderstorm
+  m_EditorClassIdentifier: 
+  SkillIcon: {fileID: 21300000, guid: 4e28986cf42577c4fbc73a1f666e0c55, type: 3}
+  FxPrefab: {fileID: 7428835992938197664, guid: 42bf1ed72aac21f4da736e07ed882c70,
+    type: 3}
+  castSfx:
+  - {fileID: 8300000, guid: f7cb045cf7923984892686db873a1694, type: 3}
+  - {fileID: 8300000, guid: bd1531ff76150ce47af3266656d0ca80, type: 3}
+  - {fileID: 8300000, guid: 95b74cffef73a8c43985542a459c9489, type: 3}
+  - {fileID: 8300000, guid: b6b191f7114252f488314a1bb29eb3cc, type: 3}
+  - {fileID: 8300000, guid: 5c7f296c1e962324d9380e5316067822, type: 3}
+  - {fileID: 8300000, guid: eaaf306ceb6cfc8418649ec3bb6dca1e, type: 3}
+  - {fileID: 8300000, guid: b96f0e877dee51a44927f4d6e139bdcf, type: 3}
+  - {fileID: 8300000, guid: efb631b5b26a2e24dac4fae74216bf18, type: 3}
+  - {fileID: 8300000, guid: b20a32f530ed86b4691e6047450e1aa5, type: 3}
+  - {fileID: 8300000, guid: c4c43f1bee3d2cf44bd4cbf739c18898, type: 3}
+  - {fileID: 8300000, guid: 4792d616b6a028a49af2081afe89f51e, type: 3}
+  - {fileID: 8300000, guid: a04dd4d831ba66f42838972f061df1ff, type: 3}
+  impactSfx:
+  - {fileID: 8300000, guid: 55224b6b877c71e44918afcfbcb80f0f, type: 3}
+  - {fileID: 8300000, guid: 9c40f930cda31eb458e34c7193fbab33, type: 3}
+  - {fileID: 8300000, guid: 61a89d231af93bd4880abb560100e722, type: 3}
+  - {fileID: 8300000, guid: 791ace84ef47b714ca2acb3b01dcdc26, type: 3}
+  AnimatorTrigger: Attack
+  castAudioDelay: 0
+  impactSpawnDelay: 0.6
+  impactAnimationDelay: 0
+  impactAudioDelay: 0
+  impactDmgDelay: 0
+  SkillDescription: "Range: 2 - 7\tMod: 0.5\nAttack all enemies with roaring thunder."
+  LevelRequirement: 1
+  CanHitEnemies: 1
+  CanHitAllies: 0
+  CanHitSelf: 0
+  AttackMultiplier: 0.5
+  Cooldown: 1
+  MinRange: 2
+  MaxRange: 7
+  SurroundingAffectedUnits: {x: 4, y: 4}
+  AppliedCombatEffects: []
+  SelfInflictedCombatEffects: []

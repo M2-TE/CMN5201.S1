@@ -1,0 +1,103 @@
+ManifestFileVersion: 0
+CRC: 679540028
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6c37b0e97808f33bf334bc0b5220cd01
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 198bc90fbb596c7b7054741f74fbb164
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 505de362506c6c34d9b1a5e82ba5b3e4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 14dd9224a283f1f41ac1c84add6bfd5a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ce8b4a26e2225c3458dfa9f9729b8c7c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 253771c7d35653c4c9f1e6bc49e77118, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Attack Two.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Cultist Offhand.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Boots.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Ammunition.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Emerald Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Armor.asset
+- Assets/_Data Containers/Items/Chests/Standart Chest.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Golden Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Cultist Weapon.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Shield.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 1 Staff.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Boots.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Armor.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Book.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Boots.asset
+- Assets/_Data Containers/Items/Misc/Consumable/Potion.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Ruby Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Helmet.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Belt.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Boots.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Hat.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Boots.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Book.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Armor.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Metal Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Armor.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Sword.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Attack One.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Armor.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Helmet.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Belt.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Belt.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 1 Sword.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Ammunition.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Sapphire Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Death Knight Weapon.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 1 Brass Knuckels.asset
+- Assets/_Data Containers/Items/Chests/Elite Chest.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Defense Two.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 1 Ranged.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Helmet.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Defense One.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Health One.asset
+- Assets/_Data Containers/Items/Misc/NonConsumable/NotAPotion.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Helmet.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Speed One.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Brass Knuckels.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Hammer.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Iron Armor Set/Iron Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Death Knight Offhand.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Death Knight Armor Set/Death Knight
+  Necklace.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Ranged.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Belt.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Armor.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cloth Armor Set/Cloth Belt.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Belt.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Sniper Armor Set/Sniper Gloves.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 2 Staff.asset
+- Assets/_Data Containers/Items/Chests/Boss Chest.asset
+- Assets/_Data Containers/Items/Equipment/Primary Weapons/Tier 1 Hammer.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Speed Two.asset
+- Assets/_Data Containers/Items/Equipment/Secondary Weapons/Tier 2 Shield.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Leather Armor Set/Leather Boots.asset
+- Assets/_Data Containers/Items/Equipment/Rings/Ring of Health Two.asset
+- Assets/_Data Containers/Items/Equipment/Armor/Cultist Armor Set/Cultist Hat.asset
+Dependencies:
+- C:/Users/ku-j/Desktop/Repositories/CMN5201.S1/Realm of Dawn/AssetBundles/StandaloneWindows/pools
